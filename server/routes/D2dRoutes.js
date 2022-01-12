@@ -8,9 +8,9 @@ router.get('/schedule', async (req, res) => {
     res.send(scheduleList)
 })
 
-router.post('/superhero', async (req, res) => {
+router.post('/schedule', async (req, res) => {
     let newSchedule = req.body
-    let createdId = await scheduleModel.createSuperhero(newSchedule)
+    let createdId = await scheduleModel.createSchedule(newSchedule)
     res.send(createdId)
 })
 

@@ -1,10 +1,11 @@
-
-import WeekSingleEmployee from './components/WeekSingleEmployee';
+import WeekSingleEmployee from "./components/WeekSingleEmployee";
+import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
 
 function App() {
   return (
     <div className="App">
-      <WeekSingleEmployee />
+      <DynamicScheduleTrial />
+      {/* <WeekSingleEmployee /> */}
     </div>
   );
 }

@@ -42,7 +42,9 @@ async function deleteSchedule(id) {
 
 module.exports = {
   createSchedule,
-  listSchedule,
+  listScheduleDay,
+  listScheduleWeek,
+  listScheduleMonth,
   findById,
   update,
   deleteSchedule,

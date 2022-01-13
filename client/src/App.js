@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+
+import WeekSingleEmployee from './components/WeekSingleEmployee';
 
 function App() {
   return (
     <div className="App">
-      
+      <WeekSingleEmployee />
     </div>
   );
 }

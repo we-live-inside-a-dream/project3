@@ -2,14 +2,14 @@ const express = require("express");
 
 const path = require("path");
 require("dotenv").config();
-
-// const D2dRoutes = require('./routes/D2dRoutes')
+const scheduleRoutes = require("./routes/scheduleRoutes");
 
 const app = express();
 const port = process.env.PORT || 5001;
 
-// app.use('/api',D2dRoutes)//
+app.use("/api/schedule", scheduleRoutes); //
 app.use("/", express.static("../client/build"));
+
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });

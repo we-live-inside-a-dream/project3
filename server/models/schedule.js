@@ -1,9 +1,10 @@
-const mongoose = require('../../../../test/d2d/server/models/mongooseDb')
+const mongoose = require('./mongooseDb')
 
 const Schedule = mongoose.model('schedule', {
-    name: String,
+    employeeId: String,
     start: String,
     end: String,
+    break:String
 })
 
 
@@ -15,6 +16,7 @@ async function createSchedule(ScheduleData) {
 }
 
 async function listSchedule() {
+    
     return Schedule.find({})
 }
 

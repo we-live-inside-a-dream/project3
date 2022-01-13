@@ -27,6 +27,48 @@ const EmployeeRow = ({ name, start, end, onRowSelected }) => (
     <td onClick={() => onRowSelected()}>{name}</td>
 
     {/* <MustBeLoggedIn>
+import React from 'react'
+import React, {useEffect, useState} from 'react';
+
+let employeeData = [
+    {
+        "name": "Julie",
+        "start": "15",
+        "end": "4"
+
+    },
+    {
+        "name": "Derek",
+        "start": "8",
+        "end": "4"
+
+    },
+    {
+        "name": "Reza",
+        "start": "9",
+        "end": "4"
+
+    },
+    {
+        "name": "Brian",
+        "start": "12",
+        "end": "4"
+
+    }
+]
+
+const EmployeeRow = ({
+    name,
+    start,
+    end,
+    onRowSelected
+}) => (
+    <tr>
+        <td onClick={() => onRowSelected()}>{name}</td>
+        <td>{start}</td>
+        <td>{end}</td>
+        
+        {/* <MustBeLoggedIn>
             <td>
                 <ColoredBackground color="green">
                     <StyledButton

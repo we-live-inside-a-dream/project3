@@ -1,9 +1,10 @@
 import React from 'react'
+import React, {useEffect, useState} from 'react';
 
 let employeeData = [
     {
         "name": "Julie",
-        "start": "8",
+        "start": "15",
         "end": "4"
 
     },
@@ -15,18 +16,18 @@ let employeeData = [
     },
     {
         "name": "Reza",
-        "start": "8",
+        "start": "9",
         "end": "4"
 
     },
     {
         "name": "Brian",
-        "start": "8",
+        "start": "12",
         "end": "4"
 
     }
- 
 ]
+
 const EmployeeRow = ({
     name,
     start,
@@ -35,6 +36,8 @@ const EmployeeRow = ({
 }) => (
     <tr>
         <td onClick={() => onRowSelected()}>{name}</td>
+        <td>{start}</td>
+        <td>{end}</td>
         
         {/* <MustBeLoggedIn>
             <td>
@@ -82,6 +85,7 @@ function WeekSingleEmployee() {
                                 //     selectEmployee(emp._id)
                                 // }
                                 name={emp.name}
+                                start={emp.start}
                                 // deleteSuperhero={() =>
                                 //     deleteSuperhero(hero._id)
                                 // }

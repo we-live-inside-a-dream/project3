@@ -1,4 +1,4 @@
-const mongoose = require('../../../../test/d2d/server/models/mongooseDb')
+const mongoose = require('./mongooseDb')
 
 const Schedule = mongoose.model('schedule', {
     name: String,

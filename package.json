@@ -7,7 +7,7 @@
     "node": "14.18.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "install": "npm run install-client && npm run install-server",
     "install-client": "cd client && npm install && cd ..",
     "install-server": "cd server && npm install && cd ..",
@@ -28,5 +28,8 @@
   "homepage": "https://github.com/we-live-inside-a-dream/project3#readme",
   "dependencies": {
     "react-table": "^7.7.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
   }
 }

@@ -26,6 +26,16 @@ let employeeData = [
 function DynamicScheduleTrial() {
   const [schedule, setSchedule] = useState({});
 
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      let fetchResult = await fetch('/api/schedule/'+superheroId)
+      let fetchedHero = await fetchResult.json()
+      setHero(fetchedHero)
+    }
+    fetchSuperhero()
+  }, [superheroId])
+  console.log(hero)
+
   let startTime = 8;
   let endTime = 18;
   let businessHours = [];

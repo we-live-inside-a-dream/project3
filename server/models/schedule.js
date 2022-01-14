@@ -1,4 +1,4 @@
-const mongoose = require("../config/mongooseDb");
+const mongoose = require("mongoose");
 
 const Schedule = mongoose.model("schedule", {
   name: String,

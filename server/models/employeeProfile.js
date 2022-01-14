@@ -1,5 +1,5 @@
 //Employee profile schema
-const mongoose = require("./mongooseDb");
+const mongoose = require("mongoose");
 
 /*
 -User_ID
@@ -41,7 +41,6 @@ const employeeProfileSchema = new mongoose.Schema({
   resume: {
     type: Buffer,
   },
-  timestamps: true,
 });
 
 const employeeProfileModel = mongoose.model(
@@ -62,8 +61,8 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
 };
 
 //get Employee Profile by Profile id
-const getEmployeeProfileByProfileId = async (Profile_id) => {
-  return employeeProfileModel.findById(Profile_id);
+const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
+  return employeeProfileModel.findById(employeeProfile_id);
 };
 
 //get Employee Profile by User id

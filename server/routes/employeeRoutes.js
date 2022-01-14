@@ -9,11 +9,6 @@ const {
   deleteEmployeeProfile,
 } = require("../model/employeeProfile");
 
-// const {
-//   createWorkExperience,
-//   getByProfileId,
-//   deleteWorkExperience,
-// } = require('../model/workExperience')
 
 // const mustBeLoggedIn = async (req, res, next) => {
 //   if (req.user) {
@@ -42,20 +37,6 @@ router.post("/create", async (req, res) => {
   res.status(200).send(profile);
 });
 
-/* 
- create a Work experience for the user profile
-  param: profile, workExperience (see the schema)
-  return: status 200 and created profile if successful, status 500 otherwise
-*/
-// router.post("/workExperience", async (req, res) => {
-//   console.log(req.body);
-//   let profile_id = req.body.profile._id;
-//   let workExperience = req.body.workExperience;
-//   let created = await createWorkExperience(profile_id, workExperience);
-//   if (!created) res.status(500).send("failed to create");
-
-//   res.status(200).send(created);
-// });
 
 /* 
   
@@ -89,17 +70,6 @@ router.get("/getByUserId/:userId", mustBeLoggedIn, async (req, res) => {
 });
 
 /* 
-   get list of all work experience for that profile
-  param: profile
-  return: work exprience objects
-*/
-// router.get("/workExperience/:profile_id", mustBeLoggedIn, async (req, res) => {
-//   let profile_id = req.params.profile_id;
-//   let workExperiences = await getEmployeeProfileByProfileId(profile_id);
-//   res.status(200).send(workExperiences);
-// });
-
-/* 
  get user profile using profileId
   param: profile id
   return: profile object
@@ -110,10 +80,6 @@ router.get("/getEmployeeByProfileId/:profileId", mustBeLoggedIn, async (req, res
   res.status(200).send(profile);
 });
 
-// router.delete("/workExperience/:id", async (req, res) => {
-//   let deleted = await deleteWorkExperience(req.params.id);
-//   res.status(200).send(deleted);
-// });
 
 /* 
  delete profile

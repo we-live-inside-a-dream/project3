@@ -7,8 +7,7 @@ const {
   getEmployeeProfileByUserId,
   updateEmployeeProfile,
   deleteEmployeeProfile,
-} = require("../model/employeeProfile");
-
+} = require("../models/employeeProfile");
 
 // const mustBeLoggedIn = async (req, res, next) => {
 //   if (req.user) {
@@ -37,7 +36,6 @@ router.post("/create", async (req, res) => {
   res.status(200).send(profile);
 });
 
-
 /* 
   
   @test: curl -X POST http://localhost:5000/profile/update -H 'Content-Type: application/json' -d '{
@@ -51,7 +49,7 @@ router.post("/create", async (req, res) => {
   param: new profile 
   return: updated profile model
 */
-router.put("/update", mustBeLoggedIn, async (req, res) => {
+router.put("/update", async (req, res) => {
   let employeeProfile = req.body;
   updateEmployeeProfile(profile, (updatedModel) => {
     res.status(200).send(updatedModel);
@@ -63,7 +61,7 @@ router.put("/update", mustBeLoggedIn, async (req, res) => {
   param: user id
   return: profile object
 */
-router.get("/getByUserId/:userId", mustBeLoggedIn, async (req, res) => {
+router.get("/getByUserId/:userId", async (req, res) => {
   let userId = req.params.userId;
   let profile = await getEmployeeProfileByUserId(userId);
   res.status(200).send(profile);
@@ -74,12 +72,11 @@ router.get("/getByUserId/:userId", mustBeLoggedIn, async (req, res) => {
   param: profile id
   return: profile object
 */
-router.get("/getByProfileId/:profileId", mustBeLoggedIn, async (req, res) => {
+router.get("/getByProfileId/:profileId", async (req, res) => {
   let profileId = req.params.profileId;
   let profile = await getEmployeeProfileByProfileId(profileId);
   res.status(200).send(profile);
 });
-
 
 /* 
  delete profile
@@ -111,7 +108,7 @@ router.delete("/deleteProfile/:profile_id", async (req, res) => {
 //     }
 //   );
 
-router.put("/updateProfilePicture", mustBeLoggedIn, async (req, res) => {
+router.put("/updateProfilePicture", async (req, res) => {
   updateProfile(req.body, (updatedModel) => {
     res.status(200).send(updatedModel);
   });

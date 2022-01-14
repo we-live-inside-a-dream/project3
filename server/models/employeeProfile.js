@@ -41,7 +41,6 @@ const employeeProfileSchema = new mongoose.Schema({
   resume: {
     type: Buffer,
   },
-  timestamps: true,
 });
 
 const employeeProfileModel = mongoose.model(

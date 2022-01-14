@@ -1,5 +1,5 @@
 //Employee profile schema
-const mongoose = require("./mongooseDb");
+const mongoose = require("mongoose");
 
 /*
 -User_ID

@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availabilitySchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "EmployeeProfile",
-    required: true,
-  },
+//   userId: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "EmployeeProfile",
+//     required: true,
+//   },
   firstName: {
     type: String,
     required: true,

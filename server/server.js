@@ -9,7 +9,7 @@ const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const connectDB = require("./db/connect");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 dotenv.config();
 
 const start = async () => {

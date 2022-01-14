@@ -74,7 +74,7 @@ router.get("/getByUserId/:userId", mustBeLoggedIn, async (req, res) => {
   param: profile id
   return: profile object
 */
-router.get("/getEmployeeByProfileId/:profileId", mustBeLoggedIn, async (req, res) => {
+router.get("/getByProfileId/:profileId", mustBeLoggedIn, async (req, res) => {
   let profileId = req.params.profileId;
   let profile = await getEmployeeProfileByProfileId(profileId);
   res.status(200).send(profile);
@@ -87,7 +87,7 @@ router.get("/getEmployeeByProfileId/:profileId", mustBeLoggedIn, async (req, res
 return: true if succeed false otherwise
 
 */
-router.delete("/deleteEmployeeProfile/:profile_id", async (req, res) => {
+router.delete("/deleteProfile/:profile_id", async (req, res) => {
   database
     .collection("EmployeeProfiles")
     .deleteOne({ id: parseInt(req.params.id) }, (err, result) => {

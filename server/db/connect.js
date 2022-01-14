@@ -5,8 +5,6 @@ const connectDB = (url) => {
     process.env.MONGO_URL || "mongodb://localhost:27017/Day2Day",
     {
       useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
       useUnifiedTopology: true,
     }
   );

@@ -19,13 +19,13 @@ async function createSchedule(ScheduleData) {
 
 // {date:{$gte:ISODate("2021-01-01"),$lte:ISODate("2020-05-01"}}
 
-async function listScheduleDay(day) {
+async function listScheduleByDay(day) {
   return Schedule.find({ date: day });
 }
-async function listScheduleWeek(start, end) {
+async function listScheduleByWeek(start, end) {
   return Schedule.find({ date: { $gte: ISODate(start), $lte: ISODate(end) } });
 }
-async function listScheduleMonth(month) {
+async function listScheduleByMonth(month) {
   return Schedule.find({ date: month });
 }
 
@@ -45,9 +45,9 @@ async function deleteSchedule(id) {
 
 module.exports = {
   createSchedule,
-  listScheduleDay,
-  listScheduleWeek,
-  listScheduleMonth,
+  listScheduleByDay,
+  listScheduleByWeek,
+  listScheduleByMonth,
   findById,
   update,
   deleteSchedule,

@@ -1,17 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors")
+const cors = require("cors");
 const path = require("path");
-const scheduleRoutes = require("./routes/scheduleRoutes");
-const employeeRouter = require('./routes/employeeRoutes')
+const scheduleRouter = require("./routes/scheduleRoutes");
+const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 // const userRouter = require('./routes/userRoutes')
-const connectDB = require('./db/connect')
+const connectDB = require("./db/connect");
 
 const app = express();
 const port = process.env.PORT || 5000;
 dotenv.config();
-
 
 const start = async () => {
   try {
@@ -23,10 +22,10 @@ const start = async () => {
 };
 start();
 
-app.use("/api/schedule", scheduleRoutes); //
+app.use("/api/schedule", scheduleRouter); //
 app.use("/", express.static("../client/build"));
 
-app.use("/employeeProfile", employeeRouter)
+app.use("/employeeProfile", employeeProfileRouter);
 
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
@@ -41,4 +40,3 @@ app.use("*", (req, res) => {
 // app.listen(port, () => {
 //   console.log(`Server is listening on port ${port}...`);
 // });
-

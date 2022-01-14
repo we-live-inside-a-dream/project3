@@ -1,27 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-// let employeeData = [
-//   {
-//     name: "Julie",
-//     start: 8,
-//     end: 16,
-//   },
-//   {
-//     name: "Derek",
-//     start: 9,
-//     end: 17,
-//   },
-//   {
-//     name: "Reza",
-//     start: 10,
-//     end: 18,
-//   },
-//   {
-//     name: "Brian",
-//     start: 11,
-//     end: 18,
-//   },
-// ];
+import "./schedule.css";
+import DayPicker from "./DatePicker";
 
 function DynamicScheduleTrial() {
   const [schedule, setSchedule] = useState([]);
@@ -44,23 +23,28 @@ function DynamicScheduleTrial() {
   let startTime = 8;
   let endTime = 18;
   let businessHours = [];
-  for (let i = startTime; i < endTime; i += 0.25) businessHours.push(i);
+  let headerHours = [];
+  for (let i = startTime; i < endTime; i++) {
+    businessHours.push(i);
+    headerHours.push(i <= 13 ? i : i - 12);
+  }
   console.log(businessHours);
 
   return (
     <div className="container">
-      <h1>Employee One Day Schedule for {day}</h1>
+      <h1>Staff Schedule for {day}</h1>
 
       <table>
         <thead>
           <tr>
             <th>NAME</th>
-            {businessHours?.map((hour) => {
+            {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
-                return <th>{hour}:00</th>;
-              } else if (hour - 0.5 === Math.floor(hour)) {
-                return <th>{hour - 0.5}:30</th>;
+                return <th>{hour}</th>;
               } else return <th>|</th>;
+
+              /* else if (hour - 0.5 === Math.floor(hour)) {
+                return <th>{hour - 0.5}:30</th>; */
             })}
           </tr>
         </thead>
@@ -68,10 +52,21 @@ function DynamicScheduleTrial() {
           {schedule?.map((employee, index) => (
             <tr key={index}>
               <td key={index}>{employee.name}</td>
+
               {businessHours?.map((hour, index) => {
                 if (hour >= employee.start && hour < employee.end) {
                   return (
-                    <td key={index} style={{ backgroundColor: "blue" }}></td>
+                    <td key={index}>
+                      <div
+                        style={{
+                          backgroundColor: "blue",
+                          height: "10px",
+                          padding: "0px",
+                          border: "5px solid blue",
+                          margin: "5px 0",
+                        }}
+                      ></div>
+                    </td>
                   );
                 } else {
                   return <td key={index}></td>;

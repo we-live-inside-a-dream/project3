@@ -1,0 +1,28 @@
+table {
+  border-collapse: collapse;
+  border: 1px solid grey;
+  border-spacing: 0;
+  width: 60%;
+  margin: left;
+}
+
+table td {
+  /* border-right: 0.5px solid grey;
+  border-left: 0.5px solid grey; */
+  /* border: 0.25px solid lightgrey; */
+  border-top: 1px solid #f2f2f2;
+  padding: 0;
+  margin: 0;
+}
+table th {
+  width: 8%;
+  text-align: left;
+}
+
+table tr {
+  margin: 3px;
+  padding-top: 5px;
+}
+td:nth-child(even) {
+  background-color: #f2f2f2;
+}

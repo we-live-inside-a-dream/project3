@@ -4,21 +4,20 @@ const dotenv = require("dotenv");
 const path = require("path");
 const scheduleRoutes = require("./routes/scheduleRoutes");
 
+
 const app = express();
 
 dotenv.config();
 const port = process.env.PORT || 5000;
 
-
-
-const start = async () => {
-  try {
-    await connectDB();
-    app.listen(port, console.log(`Server is listening on port ${port}...`));
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const start = async () => {
+//   try {
+//     await connectDB();
+//     app.listen(port, console.log(`Server is listening on port ${port}...`));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 app.use("/api/schedule", scheduleRoutes); //
 app.use("/", express.static("../client/build"));
@@ -43,6 +42,6 @@ db.once('open', function () {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server is listening on port ${port}...`);
 });
 

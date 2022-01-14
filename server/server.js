@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
 const scheduleRoutes = require("./routes/scheduleRoutes");
-
+const connectDB = require('./db/connect')
 
 const app = express();
 
@@ -25,15 +25,6 @@ app.use("/", express.static("../client/build"));
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
-
-const connectDB = (url) => {
-mongoose.connect(process.env.MONGO_URL || "mongodb://localhost:27017/Day2Day", {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-})
-};
 
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error: '))

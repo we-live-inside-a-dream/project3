@@ -28,13 +28,13 @@ function DynamicScheduleTrial() {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      let fetchResult = await fetch('/api/schedule/'+superheroId)
-      let fetchedHero = await fetchResult.json()
-      setHero(fetchedHero)
+      let fetchResult = await fetch(`/api/schedule/day?day=${dayValue}`)
+      let fetchedDay = await fetchResult.json()
+      setSchedule(fetchedDay)
     }
-    fetchSuperhero()
-  }, [superheroId])
-  console.log(hero)
+    fetchSchedule()
+  }, [dayValue])
+  console.log(dayValue)
 
   let startTime = 8;
   let endTime = 18;
@@ -75,7 +75,7 @@ function DynamicScheduleTrial() {
       </table>
       <input
         type="date"
-        id="date"
+        id="single-day"
         name="day-view"
         value={(e) => e.target.value}
       />

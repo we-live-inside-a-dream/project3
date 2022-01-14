@@ -1,11 +1,10 @@
-const mongoose = require('../config/mongooseDb')
+const mongoose = require(/.);
 
-const User = mongoose.model('schedule', {
-    name: String,
-    phone: String,
-    email: String,
-})
-
+const User = mongoose.model("schedule", {
+  name: String,
+  phone: String,
+  email: String,
+});
 
 // const mongoose = require('mongoose');
 

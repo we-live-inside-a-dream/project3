@@ -1,10 +1,13 @@
 const express = require("express");
-
+const mongoose = require('mongoose')
+const dotenv = require("dotenv")
 const path = require("path");
-require("dotenv").config();
 const scheduleRoutes = require("./routes/scheduleRoutes");
 
 const app = express();
+
+
+dotenv.config()
 const port = process.env.PORT || 5001;
 
 const start = async () => {

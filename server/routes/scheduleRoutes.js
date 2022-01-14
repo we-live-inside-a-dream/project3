@@ -5,8 +5,10 @@ const scheduleModel = require("../models/schedule");
 
 router.get("/day", async (req, res) => {
   let day = req.query.day;
+  console.log("from API day", day);
   let scheduleList = await scheduleModel.listScheduleByDay(day);
-  res.send(scheduleList);
+  console.log("from API scheduleList", scheduleList);
+  res.json(scheduleList);
 });
 router.get("/week", async (req, res) => {
   let start = req.query.start;

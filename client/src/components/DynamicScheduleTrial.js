@@ -1,41 +1,45 @@
 import React, { useEffect, useState } from "react";
 
-let employeeData = [
-  {
-    name: "Julie",
-    start: 8,
-    end: 16,
-  },
-  {
-    name: "Derek",
-    start: 9,
-    end: 17,
-  },
-  {
-    name: "Reza",
-    start: 10,
-    end: 18,
-  },
-  {
-    name: "Brian",
-    start: 11,
-    end: 18,
-  },
-];
+// let employeeData = [
+//   {
+//     name: "Julie",
+//     start: 8,
+//     end: 16,
+//   },
+//   {
+//     name: "Derek",
+//     start: 9,
+//     end: 17,
+//   },
+//   {
+//     name: "Reza",
+//     start: 10,
+//     end: 18,
+//   },
+//   {
+//     name: "Brian",
+//     start: 11,
+//     end: 18,
+//   },
+// ];
 
 function DynamicScheduleTrial() {
-  const [schedule, setSchedule] = useState({});
-  const [day, setDay] = useState()
-  let dayValue 
+  const [schedule, setSchedule] = useState([]);
+  const [day, setDay] = useState("2022-01-13");
+
   useEffect(() => {
+    console.log("day is ", day);
     const fetchSchedule = async () => {
-      let fetchResult = await fetch(`/api/schedule/day?day=${day}`)
-      let fetchedDay = await fetchResult.json()
-      setSchedule(fetchedDay)
-    }
-    fetchSchedule()
-  }, [day])
-  console.log(day)
+      let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
+      console.log("fetch result", fetchResult);
+      let fetchedDay = await fetchResult.json();
+      console.log("fetchedDay is", fetchedDay);
+
+      setSchedule(fetchedDay);
+    };
+    fetchSchedule();
+  }, [day]);
+  console.log(day);
 
   let startTime = 8;
   let endTime = 18;
@@ -45,12 +49,13 @@ function DynamicScheduleTrial() {
 
   return (
     <div className="container">
-      <h1>Employee One Day Schedule</h1>
+      <h1>Employee One Day Schedule for {day}</h1>
+
       <table>
         <thead>
           <tr>
             <th>NAME</th>
-            {businessHours.map((hour) => {
+            {businessHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
                 return <th>{hour}:00</th>;
               } else if (hour - 0.5 === Math.floor(hour)) {
@@ -60,14 +65,16 @@ function DynamicScheduleTrial() {
           </tr>
         </thead>
         <tbody>
-          {employeeData.map((employee) => (
-            <tr key={employee.name}>
-              <td>{employee.name}</td>
-              {businessHours.map((hour) => {
+          {schedule?.map((employee, index) => (
+            <tr key={index}>
+              <td key={index}>{employee.name}</td>
+              {businessHours?.map((hour, index) => {
                 if (hour >= employee.start && hour < employee.end) {
-                  return <td style={{ backgroundColor: "blue" }}></td>;
+                  return (
+                    <td key={index} style={{ backgroundColor: "blue" }}></td>
+                  );
                 } else {
-                  return <td></td>;
+                  return <td key={index}></td>;
                 }
               })}
             </tr>
@@ -78,16 +85,16 @@ function DynamicScheduleTrial() {
         type="date"
         id="single-day"
         name="day"
-        value = {day}
+        value={day}
         onChange={(e) => setDay(e.target.value)}
         // value={(e) => e.target.value}
       />
-      <input
+      {/* <input
         type="date"
         id="date"
         name="day-view"
         value={(e) => e.target.value}
-      />
+      /> */}
     </div>
   );
 }

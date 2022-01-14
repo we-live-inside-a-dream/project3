@@ -5,21 +5,21 @@ const Schedule = mongoose.model("schedule", {
   start: Number,
   end: Number,
   date: String,
- // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
+  // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
 });
 
 async function createSchedule(ScheduleData) {
-  
   let newSchedule = new Schedule(ScheduleData);
 
   let createdSchedule = await newSchedule.save();
-  console.log('trying to create schedule')
+  console.log("trying to create schedule");
   return createdSchedule.id;
 }
 
 // {date:{$gte:ISODate("2021-01-01"),$lte:ISODate("2020-05-01"}}
 
 async function listScheduleByDay(day) {
+  console.log("from model,", day);
   return Schedule.find({ date: day });
 }
 async function listScheduleByWeek(start, end) {
@@ -35,7 +35,7 @@ async function findById(id) {
 
 async function update(id, newScheduleData) {
   return Schedule.findByIdAndUpdate(id, newScheduleData, {
-     returnDocument: "after",
+    returnDocument: "after",
   });
 }
 

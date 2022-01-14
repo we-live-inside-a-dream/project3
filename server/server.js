@@ -7,7 +7,7 @@ const scheduleRoutes = require("./routes/scheduleRoutes");
 const app = express();
 
 dotenv.config();
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 
 

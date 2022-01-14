@@ -69,6 +69,12 @@ function DynamicScheduleTrial() {
         name="day-view"
         value={(e) => e.target.value}
       />
+      <input
+        type="date"
+        id="date"
+        name="day-view"
+        value={(e) => e.target.value}
+      />
     </div>
   );
 }

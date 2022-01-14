@@ -1,7 +1,7 @@
 const { application } = require("express");
 const express = require("express");
 const router = express.Router();
-const app = express()
+
 const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
@@ -33,21 +33,11 @@ let testProfileJson = {
   return: status 200 and created profile if successful, status 500 otherwise
 */
 
-app.get("getUser", (req, res) => {
-  userModel.find({}, (err, result) => {
-    if (err) {
-      res.json(err)
-    } else {
-      res.json(result)
-    }
-  })
-})
-
-// router.post("/create", async (req, res) => {
-//   let profile = await createEmployeeProfile(testProfileJson);
-//   if (!profile) res.status(500).send("failed to create");
-//   res.status(200).send(profile);
-// });
+router.post("/create", async (req, res) => {
+  let profile = await createEmployeeProfile(testProfileJson);
+  if (!profile) res.status(500).send("failed to create");
+  res.status(200).send(profile);
+});
 
 /* 
   

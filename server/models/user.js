@@ -1,4 +1,4 @@
-const mongoose = require(/.);
+const mongoose = require("mongoose");
 
 const User = mongoose.model("schedule", {
   name: String,

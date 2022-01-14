@@ -1,4 +1,4 @@
-const mongoose = require ('../models/mongooseDb')
+const mongoose = require ('../config/mongooseDb')
 
 const scheduleModel = require('../models/schedule')
 
@@ -40,8 +40,8 @@ describe('Schedule model', ()=>{
    
     })
 
-    it('should'()=>{
+    // it('should'()=>{
 
-        
-    })
+
+    // })
 })

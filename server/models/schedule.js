@@ -1,16 +1,19 @@
-const mongoose = require("./mongooseDb");
+const mongoose = require("../config/mongooseDb");
 
 const Schedule = mongoose.model("schedule", {
   name: String,
   start: Number,
   end: Number,
   date: String,
-  breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
+ // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
 });
 
 async function createSchedule(ScheduleData) {
+  
   let newSchedule = new Schedule(ScheduleData);
+
   let createdSchedule = await newSchedule.save();
+  console.log('trying to create schedule')
   return createdSchedule.id;
 }
 

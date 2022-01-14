@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
 
-const User = mongoose.model("schedule", {
-  name: String,
-  phone: String,
-  email: String,
-});
-
-const mongoose = require('mongoose');
+// const User = mongoose.model("schedule", {
+//   name: String,
+//   phone: String,
+//   email: String,
+// });
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true },

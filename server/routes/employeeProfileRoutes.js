@@ -1,6 +1,7 @@
+const { application } = require("express");
 const express = require("express");
 const router = express.Router();
-
+const app = express()
 const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
@@ -8,6 +9,7 @@ const {
   updateEmployeeProfile,
   deleteEmployeeProfile,
 } = require("../models/employeeProfile");
+const { userModel } = require("../models/user");
 
 // const mustBeLoggedIn = async (req, res, next) => {
 //   if (req.user) {
@@ -19,10 +21,10 @@ const {
 
 let testProfileJson = {
   _id: { $oid: "61e097e23837027a49643b8c" },
-  firstName: "Brian",
-  lastName: "Sauco",
-  email: "brian.sauco@gmail.com",
-  phoneNumber: "4031244567",
+  firstName: "Bruce",
+  lastName: "Wayne",
+  email: "bruce.wayne@gmail.com",
+  phoneNumber: "4031234567",
 };
 
 /* 
@@ -30,11 +32,22 @@ let testProfileJson = {
   param: same as profile schema
   return: status 200 and created profile if successful, status 500 otherwise
 */
-router.post("/create", async (req, res) => {
-  let profile = await createEmployeeProfile(testProfileJson);
-  if (!profile) res.status(500).send("failed to create");
-  res.status(200).send(profile);
-});
+
+app.get("getUser", (req, res) => {
+  userModel.find({}, (err, result) => {
+    if (err) {
+      res.json(err)
+    } else {
+      res.json(result)
+    }
+  })
+})
+
+// router.post("/create", async (req, res) => {
+//   let profile = await createEmployeeProfile(testProfileJson);
+//   if (!profile) res.status(500).send("failed to create");
+//   res.status(200).send(profile);
+// });
 
 /* 
   

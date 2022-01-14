@@ -11,12 +11,12 @@ router.get("/day", async (req, res) => {
 router.get("/week", async (req, res) => {
   let start = req.query.start;
   let end = req.query.end;
-  let scheduleList = await scheduleModel.listScheduleWeek(start, end);
+  let scheduleList = await scheduleModel.listScheduleByWeek(start, end);
   res.send(scheduleList);
 });
 router.get("/month", async (req, res) => {
   let month = req.query.month;
-  let scheduleList = await scheduleModel.listScheduleMonth(month);
+  let scheduleList = await scheduleModel.listScheduleByMonth(month);
   res.send(scheduleList);
 });
 

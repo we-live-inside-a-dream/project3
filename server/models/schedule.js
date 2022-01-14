@@ -32,7 +32,7 @@ async function findById(id) {
 
 async function update(id, newScheduleData) {
   return Schedule.findByIdAndUpdate(id, newScheduleData, {
-    returnDocument: "after",
+     returnDocument: "after",
   });
 }
 

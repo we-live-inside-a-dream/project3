@@ -10,50 +10,38 @@ describe('Schedule model', ()=>{
         return mongoose.disconnect()
     })
     
-    it('should create a schedule',async () => {
+    it('should create a schedule',async() => {
         //setup
 
         //execute
         let createdId = await scheduleModel.createSchedule({
-            name: 'Brian', start:8,end:4
+            name:'Brian'
         })
 
         //verify
-        let newSchedule = await scheduleModel.findById(createdId)
-        expect(newSchedule.name).toBe('Brian')
-        expect(newSchedule.start).toBe(8)
-        expect(newSchedule.end).toBe(4)
+        
+        let foundSchedule = await scheduleModel.findById(createdId)
+        expect(foundSchedule.name).toBe('Brian')
+        
     })
 
-    it('should...',()=>{
+    it('should find id and update',async()=>{
         //setup
+        let createdId = await scheduleModel.createSchedule(
+            {name:'Brian',start:8,end:4 })
+        let schedule =  await scheduleModel.findById(createdId)
+        console.log(schedule) 
 
         //execute
-        
-
-        //assert / verify
-          
+        newSchedule = await scheduleModel.update(createdId, {start:2,end:20})
+        console.log("newSchedule",newSchedule)
+        //verify
+        expect(newSchedule.start).toBe(schedule.start-6)
+   
     })
 
-    it('should...',()=>{
-        //setup
+    it('should'()=>{
 
-        //execute
         
-
-        //assert / verify
-          
     })
-    
-
-    it('should...',()=>{
-        //setup
-
-        //execute
-        
-
-        //assert / verify
-          
-    })
-
 })

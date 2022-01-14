@@ -24,9 +24,8 @@ let employeeData = [
 ];
 
 function DynamicScheduleTrial() {
-  let hoursArray = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+  const [schedule, setSchedule] = useState({});
 
-  let shiftHours = () => {};
   let startTime = 8;
   let endTime = 18;
   let businessHours = [];
@@ -64,6 +63,12 @@ function DynamicScheduleTrial() {
           ))}
         </tbody>
       </table>
+      <input
+        type="date"
+        id="date"
+        name="day-view"
+        value={(e) => e.target.value}
+      />
     </div>
   );
 }

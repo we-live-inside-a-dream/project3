@@ -10,7 +10,6 @@ const Schedule = mongoose.model("schedule", {
 
 async function createSchedule(ScheduleData) {
   let newSchedule = new Schedule(ScheduleData);
-
   let createdSchedule = await newSchedule.save();
   console.log("trying to create schedule");
   return createdSchedule.id;

@@ -23,7 +23,9 @@ router.get("/month", async (req, res) => {
 });
 
 router.post("/schedule", async (req, res) => {
+  console.log(req.body)
   let newSchedule = req.body;
+  console.log(newSchedule)
   let createdId = await scheduleModel.createSchedule(newSchedule);
   res.send(createdId);
 });

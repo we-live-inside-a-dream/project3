@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./schedule.css";
-import DayPicker from "./DatePicker";
+import DatePicker from "./DatePicker";
 
 function DynamicScheduleTrial() {
   const [schedule, setSchedule] = useState([]);
@@ -18,7 +18,7 @@ function DynamicScheduleTrial() {
     };
     fetchSchedule();
   }, [day]);
-  console.log(day);
+  console.log("AFTER USE EFFECT", day);
 
   let startTime = 8;
   let endTime = 18;
@@ -29,6 +29,16 @@ function DynamicScheduleTrial() {
     headerHours.push(i <= 13 ? i : i - 12);
   }
   console.log(businessHours);
+
+  // let onDayChangeValue = (day) => {
+  //   setDay(day);
+  //   console.log("THE NEW DAY IS", day);
+  // };
+
+  function selectTheDay(day) {
+    console.log("THE DAY FROM THE FUNCTION IS", day);
+    setDay(day);
+  }
 
   return (
     <div className="container">
@@ -41,7 +51,7 @@ function DynamicScheduleTrial() {
             {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
                 return <th>{hour}</th>;
-              } else return <th>|</th>;
+              } else return <th>{hour}</th>;
 
               /* else if (hour - 0.5 === Math.floor(hour)) {
                 return <th>{hour - 0.5}:30</th>; */
@@ -76,19 +86,19 @@ function DynamicScheduleTrial() {
           ))}
         </tbody>
       </table>
-      <input
+      <DatePicker
+        setDay={setDay}
+        selectTheDay={selectTheDay}
+
+        // onDayChangeValue={onDayChangeValue}
+      />
+      {/* <input
         type="date"
         id="single-day"
         name="day"
         value={day}
         onChange={(e) => setDay(e.target.value)}
         // value={(e) => e.target.value}
-      />
-      {/* <input
-        type="date"
-        id="date"
-        name="day-view"
-        value={(e) => e.target.value}
       /> */}
     </div>
   );

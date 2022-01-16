@@ -16,7 +16,7 @@ function App() {
         {/* <DynamicScheduleTrial />
 
       <EditSchedule /> */}
-        <MuiDatePicker />
+        {/* <MuiDatePicker /> */}
         <CalendarComponent />
         <CalendarNewShiftForm />
         {/* <DynamicScheduleTrial /> */}

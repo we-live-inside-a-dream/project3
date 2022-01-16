@@ -3,29 +3,45 @@ import 'date-fns'
 import { DatePicker, TimePicker, DateTimePicker } from '@material-ui/pickers';
 
 function MuiDatePicker() {
-    const [dateSelected, setDateSelected] = useState(new Date())
-  
-    console.log("date selected",dateSelected)
+    const [date, setDate] = useState(new Date())
+    const [start, setStart] = useState()
+    console.log()
   
     return (
+       
       <div className="App">
         <div>
-          <lable>date</lable>
-          <DatePicker value={dateSelected} onChange={setDateSelected}/>
+          <label>date</label>
+          <DatePicker value={date} onChange={setDate}/>
         </div>
   
         <div>
-          <lable>Hour</lable>
-          <TimePicker value={dateSelected} onChange={setDateSelected}/>
+          <label>Hour</label>
+          <TimePicker value={date} onChange={setDate}/>
         </div>
   
         <div>
-          <lable>Date and Time</lable>
-          <DateTimePicker value={dateSelected} onChange={setDateSelected}/>
+          <label>Date and Time</label>
+          <DateTimePicker value={date} onChange={setDate}/>
         </div>
         
       </div>
     );
   }
+
+//   <DayPickerInput
+//         ref={datePickerRef}
+//         hideOnDayClick={true}
+//         onDayChange={(day) => {
+//           setDate(
+//             day.toLocaleDateString([], {
+//               day: "numeric",
+//               month: "numeric",
+//               year: "numeric",
+//             })
+//           );
+//             datePickerRef.current.showDayPicker();
+//         }}
+//       />
 
   export default MuiDatePicker

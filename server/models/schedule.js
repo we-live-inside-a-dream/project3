@@ -2,9 +2,11 @@ const mongoose = require("../config/mongooseDb");
 
 const Schedule = mongoose.model("schedule", {
   name: String,
-  start: Number,
-  end: Number,
   date: String,
+  // end: String,
+  // date: String,
+  start: Date,
+  end: Date,
   // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
 });
 

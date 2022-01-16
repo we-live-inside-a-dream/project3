@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import TimePicker from "@mui/lab/TimePicker";
 import TextField from "@mui/material/TextField";
-import SubmitButton from "./StyledComponents/StyledSubmitButton";
-import DatePicker from "./DatePicker";
-import DateFnsUtils from "@date-io/date-fns";
-import TimeInput from "./StyledComponents/StyledSubmitButton";
-import DateInput from "./StyledComponents";
+import StyledInput from "./StyledComponents/StyledInput";
+import StyledButton from "./StyledComponents/StyledButton";
 
 // import AdapterDateFns from "@mui/lab/AdapterDateFns";
 // import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -109,25 +104,26 @@ function CalendarNewShiftForm() {
         })}
       </Select>
 
-      <input
+      <StyledInput
+        label="shift day"
         type="date"
         value={date}
         onChange={(event) => onInputUpdate(event, setDate)}
       />
-      <input
-        label="end time"
+      <StyledInput
+        label="start time"
         type="time"
         value={start}
-        onChange={(event) => onInputUpdate(event, setDate)}
+        onChange={(event) => onInputUpdate(event, setStart)}
       />
-      <TimeInput
+      <StyledInput
         label="end time"
         type="time"
         value={end}
-        onChange={(event) => onInputUpdate(event, setDate)}
+        onChange={(event) => onInputUpdate(event, setEnd)}
       />
 
-      <SubmitButton title={"SUBMIT"} onClick={console.log(date, name)} />
+      <StyledButton onClick={postData}>SUBMIT</StyledButton>
     </div>
   );
 }

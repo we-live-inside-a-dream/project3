@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 
-function EditSchedule() {
+function EditSchedule({onClose}) {
   const [name, setName] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -71,7 +71,7 @@ function EditSchedule() {
 
 
 
-      <button onClick={postData}>Save Shift</button>
+      <button onClick={postData&&onClose}>Save Shift</button>
     </div>
   );
 }

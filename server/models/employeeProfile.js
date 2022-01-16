@@ -11,7 +11,7 @@ const mongoose = require("mongoose");
 -Resume/File -> brief summary
 */
 
-const employeeProfileSchema = new mongoose.Schema({
+const employeeProfile = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -27,8 +27,9 @@ const employeeProfileSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
     required: true,
+    unique: true,
+    lowercase: true,  
   },
   phoneNumber: {
     type: Number,
@@ -43,14 +44,11 @@ const employeeProfileSchema = new mongoose.Schema({
   },
 });
 
-const employeeProfileModel = mongoose.model(
-  "EmployeeProfile",
-  employeeProfileSchema
-);
+const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
-const createEmployeeProfile = async (employeeProfileInfo) => {
-  let employeeProfile = new employeeProfileModel(employeeProfileInfo);
+const createEmployeeProfile = async (employeeProfileData) => {
+  let employeeProfile = new employeeProfileModel(employeeProfileData);
   try {
     await employeeProfile.save();
     return employeeProfile;

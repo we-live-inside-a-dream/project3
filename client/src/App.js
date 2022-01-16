@@ -17,14 +17,13 @@ function App() {
       <EditSchedule /> */}
         <CalendarComponent />
         <CalendarNewShiftForm />
-        <DynamicScheduleTrial />
+        {/* <DynamicScheduleTrial /> */}
 
         <button onClick={() => setIsOpen(true)}> Schedule</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule onClose={onclose} />
         </Modal>
       </div>
-      <div></div>
     </>
   );
 }

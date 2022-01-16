@@ -8,8 +8,8 @@ import TextField from "@mui/material/TextField";
 import SubmitButton from "./StyledComponents/StyledSubmitButton";
 import DatePicker from "./DatePicker";
 import DateFnsUtils from "@date-io/date-fns";
-import TimeInput from "./StyledComponents/StyledSubmitButton";
-import DateInput from "./StyledComponents";
+// import TimeInput from "./StyledComponents/StyledSubmitButton";
+// import DateInput from "./StyledComponents";
 
 // import AdapterDateFns from "@mui/lab/AdapterDateFns";
 // import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -120,12 +120,12 @@ function CalendarNewShiftForm() {
         value={start}
         onChange={(event) => onInputUpdate(event, setDate)}
       />
-      <TimeInput
+      {/* <TimeInput
         label="end time"
         type="time"
         value={end}
         onChange={(event) => onInputUpdate(event, setDate)}
-      />
+      /> */}
 
       <SubmitButton title={"SUBMIT"} onClick={console.log(date, name)} />
     </div>

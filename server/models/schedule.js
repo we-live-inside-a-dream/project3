@@ -1,3 +1,4 @@
+const { Timestamp } = require("mongodb");
 const mongoose = require("../config/mongooseDb");
 
 const Schedule = mongoose.model("schedule", {
@@ -5,8 +6,8 @@ const Schedule = mongoose.model("schedule", {
   date: String,
   // end: String,
   // date: String,
-  start: Date,
-  end: Date,
+  start: String,
+  end: String,
   // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
 });
 

@@ -6,7 +6,7 @@ import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
 import EditSchedule from "./components/EditSchedule";
 import Modal from "./Modal";
 import { useState } from "react";
-import MuiDatePicker from "./components/MuiDatePicker";
+// import MuiDatePicker from "./components/MuiDatePicker";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,9 +17,9 @@ function App() {
 
       <EditSchedule /> */}
         {/* <MuiDatePicker /> */}
-        <CalendarComponent />
+         <CalendarComponent />
         <CalendarNewShiftForm />
-        {/* <DynamicScheduleTrial /> */}
+        <DynamicScheduleTrial />
 
         <button onClick={() => setIsOpen(true)}> Schedule</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>

@@ -27,6 +27,9 @@
   },
   "homepage": "https://github.com/we-live-inside-a-dream/project3#readme",
   "dependencies": {
+    "@date-io/date-fns": "^2.11.0",
+    "@mui/lab": "^5.0.0-alpha.64",
+    "@mui/material": "^5.2.8",
     "react-table": "^7.7.0"
   },
   "devDependencies": {

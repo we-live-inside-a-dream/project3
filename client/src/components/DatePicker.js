@@ -2,8 +2,7 @@ import React, { useRef, useEffect } from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 
-export default function DatePicker({ selectTheDay, setDay }) {
-  const datePickerRef = useRef();
+export default function DatePicker({ selectTheDay, setDate }) {
   //   useEffect(() => {
   //     datePickerRef.current.showDayPicker();
   //   }, [datePickerRef]);
@@ -13,9 +12,9 @@ export default function DatePicker({ selectTheDay, setDay }) {
       <p>Please type a day:</p>
       <DayPickerInput
         // ref={datePickerRef}
-        hideOnDayClick={false}
+        hideOnDayClick={true}
         onDayChange={(day) => {
-          setDay(
+          setDate(
             day.toLocaleDateString([], {
               day: "numeric",
               month: "numeric",

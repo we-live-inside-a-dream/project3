@@ -26,14 +26,6 @@
     "url": "https://github.com/we-live-inside-a-dream/project3/issues"
   },
   "homepage": "https://github.com/we-live-inside-a-dream/project3#readme",
-  "dependencies": {
-    "@date-io/date-fns": "^2.11.0",
-    "@mui/lab": "^5.0.0-alpha.64",
-    "@mui/material": "^5.2.8",
-    "react-table": "^7.7.0",
-    "styled-components": "^5.3.3"
-  },
-  "devDependencies": {
-    "jest": "^27.4.7"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

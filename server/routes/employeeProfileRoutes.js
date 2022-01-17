@@ -53,8 +53,9 @@ router.post("/create", async (req, res) => {
   return: updated profile model
 */
 router.put("/update", async (req, res) => {
-  let employeeProfile = req.body;
-  updateEmployeeProfile(profile, (updatedModel) => {
+  console.log(req.body)
+  let updateEmployeeProfile = req.body;
+  updateEmployeeProfile(employeeProfile, (updatedModel) => {
     res.status(200).send(updatedModel);
   });
 });

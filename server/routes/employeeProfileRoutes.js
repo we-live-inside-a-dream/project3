@@ -5,11 +5,10 @@ const router = express.Router();
 const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
-  getEmployeeProfileByUserId,
   updateEmployeeProfile,
   deleteEmployeeProfile,
 } = require("../models/employeeProfile");
-const { userModel } = require("../models/user");
+
 
 // const mustBeLoggedIn = async (req, res, next) => {
 //   if (req.user) {
@@ -39,19 +38,7 @@ router.post("/create", async (req, res) => {
   res.status(200).send(profile);
 });
 
-/* 
-  
-  @test: curl -X POST http://localhost:5000/profile/update -H 'Content-Type: application/json' -d '{
-  _id: { $oid: "61e097e23837027a49643b8c" },
-  firstName: "Brian",
-  lastName: "Sauco",
-  email: "brian.sauco@gmail.com",
-  phoneNumber: "4031244567",
-}'
-  update existing profile 
-  param: new profile 
-  return: updated profile model
-*/
+
 router.put("/update", async (req, res) => {
   console.log(req.body)
   let updateEmployeeProfile = req.body;

@@ -18,7 +18,7 @@ function App() {
       <EditSchedule /> */}
         {/* <MuiDatePicker /> */}
          <CalendarComponent />
-        <CalendarNewShiftForm />
+        {/* <CalendarNewShiftForm /> */}
         <DynamicScheduleTrial />
 
         <button onClick={() => setIsOpen(true)}> Schedule</button>

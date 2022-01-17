@@ -50,23 +50,6 @@ function App() {
             <div className="App">
               {/* <DynamicScheduleTrial />
 
-<<<<<<< HEAD
-      <EditSchedule /> */}
-        {/* <MuiDatePicker /> */}
-        {/* <CalendarComponent /> */}
-        <CalendarNewShiftForm />
-        <DynamicScheduleTrial />
-        <button onClick={() => setIsOpen(true)}> Schedule</button>
-        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          <EditSchedule onClose={onclose} />
-        </Modal>{" "}
-        {/* <CalendarComponent /> */}
-        {/* <CalendarNewShiftForm style={{ margin: "Auto" }} /> */}
-        {/* <EditSchedule /> */}
-        <EmployeeProfileList />
-        <MomentTest />
-      </div>
-=======
             <EditSchedule /> */}
               {/* <MuiDatePicker /> */}
               <CalendarComponent />
@@ -83,7 +66,6 @@ function App() {
             
           </div>
         
->>>>>>> 8b1dd9cc331ae52fe7f46b6894eda9ec78be5af5
     </>
   );
 }

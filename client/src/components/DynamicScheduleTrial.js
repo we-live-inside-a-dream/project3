@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./schedule.css";
-import DatePicker from "./DatePicker";
 
 function DynamicScheduleTrial() {
   const [schedule, setSchedule] = useState([]);
@@ -86,12 +85,12 @@ function DynamicScheduleTrial() {
           ))}
         </tbody>
       </table>
-      <DatePicker
+      {/* <DatePicker
         setDay={setDay}
         selectTheDay={selectTheDay}
 
         // onDayChangeValue={onDayChangeValue}
-      />
+      /> */}
       {/* <input
         type="date"
         id="single-day"

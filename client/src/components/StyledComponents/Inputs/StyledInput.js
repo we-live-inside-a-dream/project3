@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DateInput = styled.input`
+const StyledInput = styled.input`
   font-size: 1rem;
   padding: 10px;
   margin: 10px;
@@ -12,4 +12,4 @@ const DateInput = styled.input`
     color: palevioletred;
   }
 `;
-export default DateInput;
+export default StyledInput;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import TimePicker from "@mui/lab/TimePicker";
 import TextField from "@mui/material/TextField";
-import SubmitButton from "./StyledComponents/StyledSubmitButton";
-import DatePicker from "./DatePicker";
+import StyledInput from "./StyledComponents/Inputs/StyledInput";
+import StyledButton from "./StyledComponents/Inputs/StyledButton";
+import StyledDropDownInput from "./StyledComponents/Inputs/StyledDropDownInput";
+import DatePicker from "./StyledComponents/DatePicker";
 import DateFnsUtils from "@date-io/date-fns";
 // import TimeInput from "./StyledComponents/StyledSubmitButton";
 // import DateInput from "./StyledComponents";
@@ -95,7 +95,16 @@ function CalendarNewShiftForm() {
         value={name}
         label="name"
         onChange={(event) => onInputUpdate(event, setName)}
-        style={{ width: "300px" }}
+        style={{
+          width: "300px",
+          height: "3rem",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#fc4445",
+          backgroundColor: "white",
+          border: "2px solid #fc4445",
+          filter: "drop-shadow(5px 5px 10px grey)",
+        }}
       >
         <MenuItem value="name">
           <em>None</em>
@@ -109,25 +118,26 @@ function CalendarNewShiftForm() {
         })}
       </Select>
 
-      <input
+      <StyledInput
+        label="shift day"
         type="date"
         value={date}
         onChange={(event) => onInputUpdate(event, setDate)}
       />
-      <input
-        label="end time"
+      <StyledInput
+        label="start time"
         type="time"
         value={start}
-        onChange={(event) => onInputUpdate(event, setDate)}
+        onChange={(event) => onInputUpdate(event, setStart)}
       />
-      {/* <TimeInput
+      <StyledInput
         label="end time"
         type="time"
         value={end}
-        onChange={(event) => onInputUpdate(event, setDate)}
-      /> */}
+        onChange={(event) => onInputUpdate(event, setEnd)}
+      />
 
-      <SubmitButton title={"SUBMIT"} onClick={console.log(date, name)} />
+      <StyledButton onClick={postData}>SUBMIT</StyledButton>
     </div>
   );
 }

@@ -10,36 +10,22 @@ const {
 } = require("../models/employeeProfile");
 
 
-// const mustBeLoggedIn = async (req, res, next) => {
-//   if (req.user) {
-//     next();
-//     return;
-//   }
-//   res.sendStatus(401);
-// };
-
-let testProfileJson = {
-  _id: { $oid: "61e097e23837027a49643b8c" },
-  firstName: "Bruce",
-  lastName: "Wayne",
-  email: "bruce.wayne@gmail.com",
-  phoneNumber: "4031234567",
+const mustBeLoggedIn = async (req, res, next) => {
+  if (req.user) {
+    next();
+    return;
+  }
+  res.sendStatus(401);
 };
 
-/* 
- create a new profile for user
-  param: same as profile schema
-  return: status 200 and created profile if successful, status 500 otherwise
-*/
-
-router.post("/create", async (req, res) => {
-  let profile = await createEmployeeProfile(testProfileJson);
+router.post("/create", mustBeLoggedIn, async (req, res) => {
+  let newEmployeeProfile = req.body;
+  let employeeProfileId = await createEmployeeProfile(newEmployeeProfile)
   if (!profile) res.status(500).send("failed to create");
   res.status(200).send(profile);
 });
 
-
-router.put("/update", async (req, res) => {
+router.put("/update", mustBeLoggedIn, async (req, res) => {
   console.log(req.body)
   let updateEmployeeProfile = req.body;
   updateEmployeeProfile(employeeProfile, (updatedModel) => {
@@ -47,57 +33,22 @@ router.put("/update", async (req, res) => {
   });
 });
 
-/* 
-   get user profile using userId
-  param: user id
-  return: profile object
-*/
-router.get("/getByUserId/:userId", async (req, res) => {
-  let userId = req.params.userId;
-  let profile = await getEmployeeProfileByUserId(userId);
+router.get('/employees', async (req, res) => {
+  let employeeList = await employeeProfileModel.listOfEmployees()
+  res.send(employeeList)
+})
+
+router.get("/getByEmail/:email", mustBeLoggedIn, async (req, res) => {
+  let email = req.params.email;
+  let employeeEmail = await findEmployeeByProfileEmail(email);
   res.status(200).send(profile);
 });
 
-/* 
- get user profile using profileId
-  param: profile id
-  return: profile object
-*/
-router.get("/getByProfileId/:profileId", async (req, res) => {
+router.get("/getByProfileId/:profileId", mustBeLoggedIn, async (req, res) => {
   let profileId = req.params.profileId;
   let profile = await getEmployeeProfileByProfileId(profileId);
   res.status(200).send(profile);
 });
-
-/* 
- delete profile
-  param: profile id
-return: true if succeed false otherwise
-
-*/
-router.delete("/deleteProfile/:profile_id", async (req, res) => {
-  database
-    .collection("EmployeeProfiles")
-    .deleteOne({ id: parseInt(req.params.id) }, (err, result) => {
-      if (err) throw error;
-      res.send("Employee Profile has been deleted.");
-    });
-});
-
-// router.delete(
-//     '/',
-//     passport.authenticate('jwt', { session: false }),
-//     async (req, res) => {
-//       const { id } = req.user;
-//       try {
-//         await EmployeeProfile.findOneAndDelete({ user: id });
-//         await User.findOneAndDelete({ _id: id });
-//         res.json({ message: "Success" });
-//       } catch(e) {
-//          res.sendStatus(500)
-//       }
-//     }
-//   );
 
 router.put("/updateProfilePicture", async (req, res) => {
   updateProfile(req.body, (updatedModel) => {

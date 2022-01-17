@@ -1,6 +1,6 @@
 //Employee profile schema
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 /*
 -employeeProfile_ID
@@ -30,7 +30,7 @@ const employeeProfile = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase: true,  
+    lowercase: true,
   },
   password: {
     type: String,
@@ -83,12 +83,16 @@ const signIn = async (employeeProfileData) => {
   return employeeProfile;
 };
 
+const listOfEmployees = async (EmployeeProfileData) => {
+  return employeeProfileModel.find({})
+}
+
 //get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return employeeProfileModel.findById(employeeProfile_id);
 };
 
-const findUserByProfileEmail = async (email) => {
+const findEmployeeByProfileEmail = async (email) => {
   let employeeProfile = await employeeProfileModel.findOne({ email });
   return employeeProfile;
 };
@@ -116,9 +120,10 @@ const deleteEmployeeProfile = async (profile_id) => {
 
 module.exports = {
   createEmployeeProfile,
+  listOfEmployees,
   getEmployeeProfileByProfileId,
-  findUserByProfileEmail,
+  findEmployeeByProfileEmail,
   updateEmployeeProfile,
   deleteEmployeeProfile,
-  signIn
+  signIn,
 };

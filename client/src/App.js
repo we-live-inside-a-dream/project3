@@ -3,7 +3,7 @@ import "./App.css";
 // import EditSchedule from "./components/EditSchedule";
 import CalendarComponent from "./components/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
-// import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
+import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
 import EditSchedule from "./components/EditSchedule";
 import Modal from "./Modal";
 import "./App.css";
@@ -43,7 +43,6 @@ function App() {
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule onClose={onclose} />
         </Modal>{" "}
-        */}
         <CalendarComponent />
         <CalendarNewShiftForm style={{ margin: "Auto" }} />
         {/* <EditSchedule /> */}

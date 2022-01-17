@@ -3,18 +3,18 @@ import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import StyledInput from "./StyledComponents/StyledInput";
-import StyledButton from "./StyledComponents/StyledButton";
-
+import StyledInput from "./StyledComponents/Inputs/StyledInput";
+import StyledButton from "./StyledComponents/Inputs/StyledButton";
 
 const events = [
+  {name:""},
   {name:"Julie"},
   {name:"Derek"},
   {name:"Reza"},
   {name:"Brian"}
 ]
 
-function EditSchedule({onClose}) {
+function EditSchedule({ onClose }) {
   const [name, setName] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -41,68 +41,64 @@ function EditSchedule({onClose}) {
       name,
       start,
       end,
-      date
+      date,
     };
     console.log("Saving volunteer", newShift);
     await updateShift(newShift);
   }
   return (
     <div>
-
       <div>
-      <InputLabel id="demo-simple-select-helper-label">
-        Employee Name
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-helper-label"
-        id="name-imput"
-        value={name}
-        label="name"
-        onChange={(event) => onInputUpdate(event, setName)}
-        style={{ width: "300px" }}
-      >
-        <MenuItem value="name">
-          <em>None</em>
-        </MenuItem>
-        {events?.map((event, index) => {
-          return (
-            <MenuItem key={index} value={event.name}>
-              {event.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
+        <InputLabel id="demo-simple-select-helper-label">
+          Employee Name
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-helper-label"
+          id="name-imput"
+          value={name}
+          label="name"
+          onChange={(event) => onInputUpdate(event, setName)}
+          style={{ width: "300px" }}
+        >
+          <MenuItem value="name">
+            <em>None</em>
+          </MenuItem>
+          {events?.map((event, index) => {
+            return (
+              <MenuItem key={index} value={event.name}>
+                {event.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
       </div>
 
       <div>
-      <StyledInput
-        label="shift day"
-        type="date"
-        value={date}
-        onChange={(event) => onInputUpdate(event, setDate)}
-      />
+        <StyledInput
+          label="shift day"
+          type="date"
+          value={date}
+          onChange={(event) => onInputUpdate(event, setDate)}
+        />
       </div>
 
       <div>
-      <StyledInput
-        label="start time"
-        type="time"
-        value={start}
-        onChange={(event) => onInputUpdate(event, setStart)}
-      />
+        <StyledInput
+          label="start time"
+          type="time"
+          value={start}
+          onChange={(event) => onInputUpdate(event, setStart)}
+        />
       </div>
 
       <div>
-      <StyledInput
-        label="end time"
-        type="time"
-        value={end}
-        onChange={(event) => onInputUpdate(event, setEnd)}
-      />
+        <StyledInput
+          label="end time"
+          type="time"
+          value={end}
+          onChange={(event) => onInputUpdate(event, setEnd)}
+        />
       </div>
-
-
-
 
       <StyledButton onClick={postData}>SUBMIT</StyledButton>
     </div>

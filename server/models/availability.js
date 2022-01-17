@@ -28,11 +28,8 @@ const availability = new mongoose.Schema({
       end_time: {
         type: Number,
       },
-      start_day: {
-        type: Date,
-      },
-      end_day: {
-        type: Date,
+      availableDays: {
+        type: [Date],
       },
     },
   ],

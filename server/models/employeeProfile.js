@@ -36,6 +36,10 @@ const employeeProfile = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  Position: {
+    type: String,
+    required: true,
+  },
   profile_picture: {
     type: Buffer,
   },

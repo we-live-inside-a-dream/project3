@@ -3,10 +3,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-import StyledInput from "./StyledComponents/StyledInput";
-import StyledButton from "./StyledComponents/StyledButton";
-// import SubmitButton from "./StyledComponents/StyledSubmitButton";
-import DatePicker from "./DatePicker";
+import StyledInput from "./StyledComponents/Inputs/StyledInput";
+import StyledButton from "./StyledComponents/Inputs/StyledButton";
+import StyledDropDownInput from "./StyledComponents/Inputs/StyledDropDownInput";
+import DatePicker from "./StyledComponents/DatePicker";
 import DateFnsUtils from "@date-io/date-fns";
 // import TimeInput from "./StyledComponents/StyledSubmitButton";
 // import DateInput from "./StyledComponents";
@@ -95,7 +95,16 @@ function CalendarNewShiftForm() {
         value={name}
         label="name"
         onChange={(event) => onInputUpdate(event, setName)}
-        style={{ width: "300px" }}
+        style={{
+          width: "300px",
+          height: "3rem",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#fc4445",
+          backgroundColor: "white",
+          border: "2px solid #fc4445",
+          filter: "drop-shadow(5px 5px 10px grey)",
+        }}
       >
         <MenuItem value="name">
           <em>None</em>

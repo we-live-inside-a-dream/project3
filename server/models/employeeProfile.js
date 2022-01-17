@@ -83,7 +83,7 @@ const signIn = async (employeeProfileData) => {
   return employeeProfile;
 };
 
-const listOfEmployees = async (EmployeeProfileData) => {
+const listOfEmployees = async () => {
   return employeeProfileModel.find({})
 }
 

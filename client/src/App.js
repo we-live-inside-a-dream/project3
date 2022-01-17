@@ -3,13 +3,15 @@ import "./App.css";
 // import EditSchedule from "./components/EditSchedule";
 import CalendarComponent from "./components/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
-import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
 import EditSchedule from "./components/EditSchedule";
 import Modal from "./Modal";
 import "./App.css";
 import { useState } from "react";
 import background from "./otherPic.jpg";
+import DynamicSchedule from "./components/StyledComponents/tables/DynamicSchedule";
 import EmployeeProfileList from "./components/StyledComponents/tables/EmployeeProfileList";
+import CalendarScratch from "./components/calendar/CalendarScratch";
+import DaySchedule from "./components/pages/DaySchedule";
 // import MuiDatePicker from "./components/MuiDatePicker";
 
 function App() {
@@ -23,30 +25,24 @@ function App() {
           backgroundSize: "cover",
           backgroundPositionY: "70%",
           backgroundPositionX: "center",
-          width: "100%",
+          width: "full",
           height: "100vh",
           backgroundRepeat: "no-repeat",
+          margin: "auto",
         }}
       >
-        {/* <EditSchedule />
-        <CalendarComponent />
-    
-      <div className="App">
-        {/* <DynamicScheduleTrial />
-
+        <DaySchedule />
+        {/*        
       <EditSchedule /> */}
         {/* <MuiDatePicker /> */}
-        <CalendarComponent />
-        <CalendarNewShiftForm />
-        <DynamicScheduleTrial />
+        {/* <CalendarNewShiftForm />
         <button onClick={() => setIsOpen(true)}> Schedule</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule onClose={onclose} />
-        </Modal>{" "}
+        </Modal>
         <CalendarComponent />
         <CalendarNewShiftForm style={{ margin: "Auto" }} />
-        {/* <EditSchedule /> */}
-        <EmployeeProfileList />
+        <EmployeeProfileList /> */}
       </div>
     </>
   );

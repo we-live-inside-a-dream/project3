@@ -1,6 +1,6 @@
 import StyledTable from "./StyledTable";
 import StyledTableHeader from "./StyledTableHeader";
-import StyledTableRow from "./StyledTableRow";
+import StyledTableRow from "../StyledTableRow";
 import StyledTableData from "./StyledTableData.js";
 import React from "react";
 

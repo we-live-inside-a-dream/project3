@@ -1,33 +1,31 @@
-import React, { useState } from 'react'
-import 'date-fns'
-import { DatePicker, TimePicker, DateTimePicker } from '@material-ui/pickers';
+import React, { useState } from "react";
+import "date-fns";
+import { DatePicker, TimePicker, DateTimePicker } from "@material-ui/pickers";
 
 function MuiDatePicker() {
-    const [date, setDate] = useState(new Date())
-    const [start, setStart] = useState()
-    console.log()
-  
-    return (
-       
-      <div className="App">
-        <div>
-          <label>date</label>
-          <DatePicker value={date} onChange={setDate}/>
-        </div>
-  
-        <div>
-          <label>Hour</label>
-          <TimePicker value={date} onChange={setDate}/>
-        </div>
-  
-        <div>
-          <label>Date and Time</label>
-          <DateTimePicker value={date} onChange={setDate}/>
-        </div>
-        
+  const [date, setDate] = useState(new Date());
+  const [start, setStart] = useState();
+  console.log();
+
+  return (
+    <div className="App">
+      <div>
+        <label>date</label>
+        <DatePicker value={date} onChange={setDate} />
       </div>
-    );
-  }
+
+      <div>
+        <label>Hour</label>
+        <TimePicker value={date} onChange={setDate} />
+      </div>
+
+      <div>
+        <label>Date and Time</label>
+        <DateTimePicker value={date} onChange={setDate} />
+      </div>
+    </div>
+  );
+}
 
 //   <DayPickerInput
 //         ref={datePickerRef}
@@ -44,4 +42,4 @@ function MuiDatePicker() {
 //         }}
 //       />
 
-  export default MuiDatePicker
+export default MuiDatePicker;

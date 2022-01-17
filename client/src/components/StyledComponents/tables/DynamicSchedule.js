@@ -1,0 +1,149 @@
+import React, { useEffect, useState } from "react";
+// import "./schedule.css";
+import StyledTableData from "./StyledTableData";
+import StyledTableHeader from "./StyledTableHeader";
+import StyledTableRow from "../StyledTableRow";
+import StyledTable from "./StyledTable";
+
+function DynamicSchedule() {
+  const [schedule, setSchedule] = useState([]);
+  const [day, setDay] = useState("2022-01-14");
+
+  useEffect(() => {
+    console.log("day is ", day);
+    const fetchSchedule = async () => {
+      let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
+      console.log("fetch result", fetchResult);
+      let fetchedDay = await fetchResult.json();
+      console.log("fetchedDay is", fetchedDay);
+
+      setSchedule(fetchedDay);
+    };
+    fetchSchedule();
+  }, [day]);
+  console.log("AFTER USE EFFECT", day);
+
+  let startTime = 8;
+  let endTime = 18;
+  let businessHours = [];
+  let headerHours = [];
+  for (let i = startTime; i < endTime; i++) {
+    businessHours.push(i);
+    headerHours.push(i <= 13 ? i : i - 12);
+  }
+  console.log(businessHours);
+
+  function selectTheDay(day) {
+    console.log("THE DAY FROM THE FUNCTION IS", day);
+    setDay(day);
+  }
+
+  return (
+    <div className="container">
+      <h1
+        style={{
+          fontWeight: "400",
+          fontFamily: "Arial, Helvetica, sans-serif",
+          textAlign: "center",
+          textShadow: "1px 1px 2px grey",
+          color: "#4488AB",
+          marginTop: "20px",
+          marginBottom: "0px",
+        }}
+      >
+        Staff Schedule for {day}
+      </h1>
+
+      <StyledTable>
+        <thead>
+          <StyledTableRow>
+            <StyledTableHeader>NAME</StyledTableHeader>
+            {headerHours?.map((hour) => {
+              if (hour === Math.floor(hour)) {
+                return <StyledTableHeader>{hour}</StyledTableHeader>;
+              } else return <StyledTableHeader>{hour}</StyledTableHeader>;
+
+              /* else if (hour - 0.5 === Math.floor(hour)) {
+                return <th>{hour - 0.5}:30</th>; */
+            })}
+          </StyledTableRow>
+        </thead>
+        <tbody>
+          {schedule?.map((employee, index) => (
+            <StyledTableRow key={index}>
+              <td key={index}>
+                <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{
+                      backgroundColor: "grey",
+                      height: "3rem",
+                      width: "2rem",
+                      marginRight: "10px",
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      margin: "auto 10px auto 10px",
+                      color: "#4488AB",
+                      fontWeight: "600",
+                    }}
+                  >
+                    <p>{employee.name}</p>
+                  </div>
+                </div>
+              </td>
+
+              {businessHours?.map((hour, index) => {
+                if (hour >= employee.start && hour < employee.end) {
+                  console.log(hour, employee.start);
+                  return (
+                    <td key={index}>
+                      <div
+                        style={{
+                          backgroundColor: "#5AB9EA",
+                          height: "25px",
+                          padding: "0px",
+                          border: "1px solid #5AB9EA",
+                          margin: "5px 0",
+                        }}
+                      >
+                        {hour.toString() === employee.start ? (
+                          <p
+                            style={{
+                              fontSize: ".9rem",
+                              color: "black",
+                              margin: "8% auto 25% auto",
+                            }}
+                          >
+                            {employee.start}-{employee.end}
+                          </p>
+                        ) : null}
+                      </div>
+                    </td>
+                  );
+                } else {
+                  return <td key={index}></td>;
+                }
+              })}
+            </StyledTableRow>
+          ))}
+        </tbody>
+      </StyledTable>
+      {/* <DatePicker
+        setDay={setDay}
+        selectTheDay={selectTheDay}
+
+        // onDayChangeValue={onDayChangeValue}
+      /> */}
+      {/* <input
+        type="date"
+        id="single-day"
+        name="day"
+        value={day}
+        onChange={(e) => setDay(e.target.value)}
+        // value={(e) => e.target.value}
+      /> */}
+    </div>
+  );
+}
+export default DynamicSchedule;

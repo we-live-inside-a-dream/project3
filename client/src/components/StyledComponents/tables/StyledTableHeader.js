@@ -12,6 +12,7 @@ const StyledTableHeader = styled.th`
   border-radius: 0px;
   padding: 10px 40px;
   border-collapse: collapse;
+  border-spacing: 0;
   box-shadow: 0 4px 2px -2px gray;
 `;
 

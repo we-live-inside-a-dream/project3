@@ -10,6 +10,7 @@ import "./App.css";
 import { useState } from "react";
 import background from "./otherPic.jpg";
 import EmployeeProfileList from "./components/StyledComponents/tables/EmployeeProfileList";
+// import MuiDatePicker from "./components/MuiDatePicker";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,10 +31,19 @@ function App() {
         {/* <EditSchedule />
         <CalendarComponent />
     
+      <div className="App">
+        {/* <DynamicScheduleTrial />
+
+      <EditSchedule /> */}
+        {/* <MuiDatePicker /> */}
+        <CalendarComponent />
+        <CalendarNewShiftForm />
+        <DynamicScheduleTrial />
         <button onClick={() => setIsOpen(true)}> Schedule</button>
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule onClose={onclose} />
-        </Modal> */}
+        </Modal>{" "}
+        */}
         <CalendarComponent />
         <CalendarNewShiftForm style={{ margin: "Auto" }} />
         {/* <EditSchedule /> */}

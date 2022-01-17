@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
-const availabilitySchema = new mongoose.Schema({
-  //   userId: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "EmployeeProfile",
-  //     required: true,
-  //   },
+const availability = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "EmployeeProfile",
+    required: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -24,24 +24,24 @@ const availabilitySchema = new mongoose.Schema({
     {
       start_time: {
         type: Number,
-        },
+      },
       end_time: {
-          type: Number,
+        type: Number,
       },
       start_day: {
-          type: Date,
-        },
+        type: Date,
+      },
       end_day: {
-          type: Date,
+        type: Date,
       },
     },
   ],
 });
 
-const availabilityModel = mongoose.model("Availability", availabilitySchema);
+const availabilityModel = mongoose.model("Availability", availability);
 
-const createAvailability = async (availabilityInfo) => {
-  let availability = new availabilityModel(availabilityInfo);
+const createAvailability = async (availabilityData) => {
+  let availability = new availabilityModel(availabilityData);
   try {
     await availability.save();
     return availability;
@@ -75,7 +75,7 @@ const updateAvailability = (newAvailability, callback) => {
 };
 
 const deleteAvailability = async (profile_id) => {
-  return true;
+  return availability.findByIdAndDelete(profile_id);
 };
 
 module.exports = {

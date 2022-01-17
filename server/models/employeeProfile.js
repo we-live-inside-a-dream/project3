@@ -1,8 +1,9 @@
 //Employee profile schema
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 /*
--User_ID
+-employeeProfile_ID
 -Profile Pic
 -First Name
 -Last Name
@@ -12,9 +13,9 @@ const mongoose = require("mongoose");
 */
 
 const employeeProfile = new mongoose.Schema({
-  userId: {
+  employeeProfileId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: "employeeProfile",
     required: true,
   },
   firstName: {
@@ -29,11 +30,20 @@ const employeeProfile = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    lowercase: true,  
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    unique: true,
+    required: true,
   },
   phoneNumber: {
     type: Number,
     unique: true,
+    required: true,
+  },
+  Position: {
+    type: String,
     required: true,
   },
   profile_picture: {
@@ -44,10 +54,17 @@ const employeeProfile = new mongoose.Schema({
   },
 });
 
+const hashPassword = (password) => {
+  return password;
+};
+
+let hashedPassword = hashPassword(employeeProfileData.password);
+
 const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileData) => {
+  let hashedPassword = hashPassword(employeeProfileData.password);
   let employeeProfile = new employeeProfileModel(employeeProfileData);
   try {
     await employeeProfile.save();
@@ -58,14 +75,26 @@ const createEmployeeProfile = async (employeeProfileData) => {
   }
 };
 
+const signIn = async (employeeProfileData) => {
+  let employeeProfile = await employeeProfileModel.find({
+    email: employeeProfileData.email,
+    password: employeeProfileData.password,
+  });
+  return employeeProfile;
+};
+
+const listOfEmployees = async () => {
+  return employeeProfileModel.find({})
+}
+
 //get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return employeeProfileModel.findById(employeeProfile_id);
 };
 
-//get Employee Profile by User id
-const getEmployeeProfileByUserId = async (userId) => {
-  return employeeProfileModel.findOne({ userId }).exec();
+const findEmployeeByProfileEmail = async (email) => {
+  let employeeProfile = await employeeProfileModel.findOne({ email });
+  return employeeProfile;
 };
 
 // update Employee Profile
@@ -91,8 +120,10 @@ const deleteEmployeeProfile = async (profile_id) => {
 
 module.exports = {
   createEmployeeProfile,
+  listOfEmployees,
   getEmployeeProfileByProfileId,
-  getEmployeeProfileByUserId,
+  findEmployeeByProfileEmail,
   updateEmployeeProfile,
   deleteEmployeeProfile,
+  signIn,
 };

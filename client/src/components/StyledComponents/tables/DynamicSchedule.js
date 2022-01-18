@@ -50,7 +50,7 @@ function DynamicSchedule() {
           marginBottom: "0px",
         }}
       >
-        Staff Schedule for {day}{" "}
+        Staff Schedule for {day}
         <input
           type="date"
           id="single-day"

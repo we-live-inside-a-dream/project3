@@ -13,6 +13,10 @@ const port = process.env.PORT || 5001;
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+app.use('/employeeProfile', employeeProfileRouter)
+// app.use('/availability', availabilityRouter)
+
+
 
 app.use("/api/schedule", scheduleRoutes); 
 app.use("/", express.static("../client/build"));

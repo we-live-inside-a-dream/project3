@@ -16,8 +16,8 @@ const app = express();
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
-app.use("/employeeProfile", employeeProfileRouter);
-app.use("/availability", availabilityRouter);
+app.use("/api/employeeProfile", employeeProfileRouter);
+app.use("/api/availability", availabilityRouter);
 
 app.use("/api/schedule", scheduleRouter);
 app.use("/", express.static("../client/build"));

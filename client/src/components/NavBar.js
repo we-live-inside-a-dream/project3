@@ -34,7 +34,7 @@ function NavBar() {
             ></img>
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
-            <NavbarLink to="/dayView">Schedules</NavbarLink>
+            <NavbarLink to="/dayView">Schedule</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

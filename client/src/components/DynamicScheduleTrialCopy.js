@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import StyledTable from "./StyledComponents/tables/StyledTable";
+import StyledTableData from "./StyledComponents/tables/StyledTableData";
+import StyledTableHeader from "./StyledComponents/tables/StyledTableHeader";
+import StyledTableRow from "./StyledComponents/tables/StyledTableRow";
 import "./schedule.css";
 
-function DynamicScheduleTrial() {
+function DynamicScheduleTrialCopy() {
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState("2022-01-13");
 
@@ -43,28 +47,29 @@ function DynamicScheduleTrial() {
     <div className="container">
       <h1>Staff Schedule for {day}</h1>
 
-      <table>
+      <StyledTable>
         <thead>
-          <tr>
-            <th>NAME</th>
+          <StyledTableRow>
+            <StyledTableHeader>NAME</StyledTableHeader>
             {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
-                return <th>{hour}</th>;
-              } else if (hour - 0.5 === Math.floor(hour)) {
-                return <th>{hour}</th>;
-              } else return null;
+                return <StyledTableHeader>{hour}</StyledTableHeader>;
+              } else return <StyledTableHeader>{hour}</StyledTableHeader>;
+
+              /* else if (hour - 0.5 === Math.floor(hour)) {
+                return <th>{hour - 0.5}:30</th>; */
             })}
-          </tr>
+          </StyledTableRow>
         </thead>
         <tbody>
           {schedule?.map((employee, index) => (
-            <tr key={index}>
-              <td key={index}>{employee.name}</td>
+            <StyledTableRow key={index}>
+              <StyledTableData key={index}>{employee.name}</StyledTableData>
 
               {businessHours?.map((hour, index) => {
                 if (hour >= employee.start && hour < employee.end) {
                   return (
-                    <td key={index}>
+                    <StyledTableData key={index}>
                       <div
                         style={{
                           backgroundColor: "blue",
@@ -74,16 +79,16 @@ function DynamicScheduleTrial() {
                           margin: "5px 0",
                         }}
                       ></div>
-                    </td>
+                    </StyledTableData>
                   );
                 } else {
-                  return <td key={index}></td>;
+                  return <StyledTableData key={index}></StyledTableData>;
                 }
               })}
-            </tr>
+            </StyledTableRow>
           ))}
         </tbody>
-      </table>
+      </StyledTable>
       {/* <DatePicker
         setDay={setDay}
         selectTheDay={selectTheDay}
@@ -101,4 +106,4 @@ function DynamicScheduleTrial() {
     </div>
   );
 }
-export default DynamicScheduleTrial;
+export default DynamicScheduleTrialCopy;

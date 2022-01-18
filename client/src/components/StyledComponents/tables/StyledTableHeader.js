@@ -10,8 +10,9 @@ const StyledTableHeader = styled.th`
   background-color: #dbdbfc;
   border: none;
   border-radius: 0px;
-  padding: 10px 40px;
+  padding: 10px 0px;
   border-collapse: collapse;
+  border-spacing: 0;
   box-shadow: 0 4px 2px -2px gray;
 `;
 

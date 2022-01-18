@@ -6,9 +6,7 @@ const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
-  deleteEmployeeProfile,
 } = require("../models/employeeProfile");
-
 
 // const mustBeLoggedIn = async (req, res, next) => {
 //   if (req.user) {
@@ -20,23 +18,25 @@ const {
 
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
-  let employeeProfileId = await createEmployeeProfile(newEmployeeProfile)
+  let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
   if (!profile) res.status(500).send("failed to create");
   res.status(200).send(profile);
 });
 
-router.put("/update", async (req, res) => {
-  console.log(req.body)
-  let updateEmployeeProfile = req.body;
+router.patch("/updateEmployeeProfile", async (req, res) => {
+  console.log(req.body);
+  let updatedEmployeeProfile = req.body;
+  console.log("Updating availability", id, "with", updatedEmployeeProfile);
+  let availability = await availabilityModel.update(id, updatedAvailability);
   updateEmployeeProfile(employeeProfile, (updatedModel) => {
     res.status(200).send(updatedModel);
   });
 });
 
-router.get('/employees', async (req, res) => {
-  let employeeList = await employeeProfileModel.listOfEmployees()
-  res.send(employeeList)
-})
+router.get("/employees", async (req, res) => {
+  let employeeList = await employeeProfileModel.listOfEmployees();
+  res.send(employeeList);
+});
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

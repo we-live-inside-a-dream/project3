@@ -1,0 +1,35 @@
+/* .grid-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  flex-wrap: wrap;
+} */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  justify-items: stretch;
+  align-items: stretch;
+  /* column-gap: 1rem;
+  row-gap: 1rem; */
+  width: 77rem;
+  margin-top: 100px;
+  background-color: white;
+  margin: auto;
+  margin-top: 8rem;
+}
+.grid-item {
+  height: 8rem;
+  width: 11rem;
+  border: 1px solid lightgrey;
+  /* box-shadow: 2px 2px 10px lightgrey;
+  box-shadow: lightgrey; */
+}
+.main-page {
+  width: 85rem;
+  height: 100rem;
+  background-color: white;
+}

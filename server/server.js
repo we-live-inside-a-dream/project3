@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 const path = require("path");
 require("dotenv").config();
 const scheduleRouter = require("./routes/scheduleRoutes");
-// const availabilityRouter = require("./availabilityRoutes");
+// const availabilityRouter = require("./routes/availabilityRoutes");
+// const employeeProfileRouter = require("./routes/employeeRoutes")
 
 const app = express();
 const port = process.env.PORT || 5001;

@@ -20,8 +20,8 @@ function NavBar() {
       <LeftContainer>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
             <NavbarLink to="/">Home</NavbarLink>
-            <NavbarLink to="/employeeList">Employee List</NavbarLink>
-            <NavbarLink to="/dayView">Schedule Day View</NavbarLink>
+            <NavbarLink to="/employeeList">Employees</NavbarLink>
+            <NavbarLink to="/dayView">Schedule</NavbarLink>
             <OpenLinksButton onClick={() => {
                 setExtendNavbar((curr) => !curr);
             }}

@@ -7,7 +7,11 @@ const Schedule = mongoose.model("schedule", {
 
   start: String,
   end: String,
-  // breaks: [{ name: String, start: Number, end: Number, paid: Boolean }],
+  breaks: [
+    { name: String, start: Number, end: Number, paid: Boolean, duration: },
+    { name: String, start: Number, end: Number, paid: Boolean, duration: },
+    { name: String, start: Number, end: Number, paid: Boolean, duration: },
+  ],
 });
 
 async function createSchedule(ScheduleData) {

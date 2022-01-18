@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import "./schedule.css";
-import StyledTableData from "./StyledTableData";
+
 import StyledTableHeader from "./StyledTableHeader";
-import StyledTableRow from "../StyledTableRow";
+
 import StyledTable from "./StyledTable";
 
 function DynamicSchedule() {
@@ -27,9 +26,9 @@ function DynamicSchedule() {
   let endTime = 18;
   let businessHours = [];
   let headerHours = [];
-  for (let i = startTime; i < endTime; i++) {
+  for (let i = startTime; i < endTime; i += 0.25) {
     businessHours.push(i);
-    headerHours.push(i <= 13 ? i : i - 12);
+    headerHours.push(i < 13 ? i : i - 12);
   }
   console.log(businessHours);
 
@@ -56,21 +55,39 @@ function DynamicSchedule() {
 
       <StyledTable>
         <thead>
-          <StyledTableRow>
-            <StyledTableHeader>NAME</StyledTableHeader>
+          <tr>
+            <th>NAME</th>
             {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
-                return <StyledTableHeader>{hour}</StyledTableHeader>;
-              } else return <StyledTableHeader>{hour}</StyledTableHeader>;
-
-              /* else if (hour - 0.5 === Math.floor(hour)) {
-                return <th>{hour - 0.5}:30</th>; */
+                return (
+                  <StyledTableHeader style={{ width: "50px", padding: "0px" }}>
+                    {hour}
+                  </StyledTableHeader>
+                );
+              } else if (hour - 0.5 === Math.floor(hour)) {
+                return (
+                  <StyledTableHeader
+                    style={{
+                      width: "50px",
+                      padding: "0px",
+                    }}
+                  ></StyledTableHeader>
+                );
+              } else
+                return (
+                  <StyledTableHeader
+                    style={{
+                      width: "50px",
+                      padding: "0px",
+                    }}
+                  ></StyledTableHeader>
+                );
             })}
-          </StyledTableRow>
+          </tr>
         </thead>
         <tbody>
           {schedule?.map((employee, index) => (
-            <StyledTableRow key={index}>
+            <tr key={index}>
               <td key={index}>
                 <div style={{ display: "inline-flex" }}>
                   <div
@@ -79,6 +96,7 @@ function DynamicSchedule() {
                       height: "3rem",
                       width: "2rem",
                       marginRight: "10px",
+                      alignSelf: "center",
                     }}
                   ></div>
                   <div
@@ -86,9 +104,19 @@ function DynamicSchedule() {
                       margin: "auto 10px auto 10px",
                       color: "#4488AB",
                       fontWeight: "600",
+                      display: "block",
                     }}
                   >
                     <p>{employee.name}</p>
+                    <p
+                      style={{
+                        textShadow: "none",
+                        color: "#545454",
+                        fontSize: ".7rem",
+                      }}
+                    >
+                      {employee.start}-{employee.end}
+                    </p>
                   </div>
                 </div>
               </td>
@@ -101,13 +129,13 @@ function DynamicSchedule() {
                       <div
                         style={{
                           backgroundColor: "#5AB9EA",
-                          height: "25px",
+                          height: "45px",
                           padding: "0px",
                           border: "1px solid #5AB9EA",
-                          margin: "5px 0",
+                          margin: "25px 0",
                         }}
                       >
-                        {hour.toString() === employee.start ? (
+                        {/* {hour.toString() === employee.start ? (
                           <p
                             style={{
                               fontSize: ".9rem",
@@ -117,7 +145,7 @@ function DynamicSchedule() {
                           >
                             {employee.start}-{employee.end}
                           </p>
-                        ) : null}
+                        ) : null} */}
                       </div>
                     </td>
                   );
@@ -125,7 +153,7 @@ function DynamicSchedule() {
                   return <td key={index}></td>;
                 }
               })}
-            </StyledTableRow>
+            </tr>
           ))}
         </tbody>
       </StyledTable>

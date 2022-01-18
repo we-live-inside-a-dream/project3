@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledPage = styled.div`
   background-color: white;
-  width: 80%;
+  width: 70%;
   margin: auto;
 `;
 

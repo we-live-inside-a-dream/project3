@@ -50,10 +50,9 @@ function DynamicScheduleTrial() {
             {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
                 return <th>{hour}</th>;
-              } else return <th>{hour}</th>;
-
-              /* else if (hour - 0.5 === Math.floor(hour)) {
-                return <th>{hour - 0.5}:30</th>; */
+              } else if (hour - 0.5 === Math.floor(hour)) {
+                return <th>{hour}</th>;
+              } else return null;
             })}
           </tr>
         </thead>

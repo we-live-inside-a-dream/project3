@@ -7,6 +7,7 @@ import StyledInput from "./StyledComponents/Inputs/StyledInput";
 import StyledButton from "./StyledComponents/Inputs/StyledButton";
 
 const events = [
+  { name: "" },
   { name: "Julie" },
   { name: "Derek" },
   { name: "Reza" },

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
-  userId: {
+  employeeProfileId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "EmployeeProfile",
     required: true,
@@ -28,11 +28,8 @@ const availability = new mongoose.Schema({
       end_time: {
         type: Number,
       },
-      start_day: {
-        type: Date,
-      },
-      end_day: {
-        type: Date,
+      availableDays: {
+        type: [Date],
       },
     },
   ],
@@ -52,11 +49,7 @@ const createAvailability = async (availabilityData) => {
 };
 
 const getAvailabilityByEmployeeProfileId = async (employeeProfile_id) => {
-  return availabilityModel.findById(employeeProfile_id);
-};
-
-const getAvailabilityByUserId = async (userId) => {
-  return availabilityModel.findOne({ userId }).exec();
+  return availabilityModel.findOne({ employeeProfile_id }).exec();
 };
 
 const updateAvailability = (newAvailability, callback) => {
@@ -82,6 +75,5 @@ module.exports = {
   createAvailability,
   updateAvailability,
   getAvailabilityByEmployeeProfileId,
-  getAvailabilityByUserId,
   deleteAvailability,
 };

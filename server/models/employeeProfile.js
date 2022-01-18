@@ -66,14 +66,12 @@ const hashPassword = (password) => {
   return password;
 };
 
-let hashedPassword = hashPassword(employeeProfileData.password);
-
 const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
-const createEmployeeProfile = async (employeeProfileData) => {
-  let hashedPassword = hashPassword(employeeProfileData.password);
-  let employeeProfile = new employeeProfileModel(employeeProfileData);
+const createEmployeeProfile = async (employeeProfileInfo) => {
+  let hashedPassword = hashPassword(employeeProfileInfo.password);
+  let employeeProfile = new employeeProfileModel(employeeProfileInfo);
   try {
     await employeeProfile.save();
     return employeeProfile;
@@ -83,10 +81,10 @@ const createEmployeeProfile = async (employeeProfileData) => {
   }
 };
 
-const signIn = async (employeeProfileData) => {
+const signIn = async (employeeProfileInfo) => {
   let employeeProfile = await employeeProfileModel.find({
-    email: employeeProfileData.email,
-    password: employeeProfileData.password,
+    email: employeeProfileInfo.email,
+    password: employeeProfileInfo.password,
   });
   return employeeProfile;
 };

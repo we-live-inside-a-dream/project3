@@ -84,8 +84,8 @@ const signIn = async (employeeProfileData) => {
 };
 
 const listOfEmployees = async () => {
-  return employeeProfileModel.find({})
-}
+  return employeeProfileModel.find({});
+};
 
 //get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {

@@ -1,14 +1,14 @@
 import "./App.css";
-import CalendarComponent from "./components/CalendarComponent";
+import CalendarComponent from "./components/UNUSED/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
 import EditSchedule from "./components/EditSchedule";
 import Modal from "./Modal";
 import { useState } from "react";
 import background from "./otherPic.jpg";
+import DaySchedule from "./components/pages/DaySchedule";
 // import DynamicSchedule from "./components/StyledComponents/tables/DynamicSchedule";
-import EmployeeProfileList from "./components/StyledComponents/tables/EmployeeProfileList";
 import { MomentTest } from "./components/MomentTest";
-
+import EmployeesList from "./components/pages/EmployeesList";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import StyledLink from "./components/StyledComponents/NavBar/StyledNavBar";
 import NavBar from "./components/NavBar";
@@ -38,8 +38,8 @@ function App() {
                   </nav> */}
       <Routes>
         <Route path="/" element={<CalendarComponent />} />
-        <Route path="/employeeList" element={<EmployeeProfileList />} />
-        <Route path="/dayView" element={<DynamicScheduleTrial />} />
+        <Route path="/employeeList" element={<EmployeesList />} />
+        <Route path="/dayView" element={<DaySchedule />} />
       </Routes>
       {/* <EditSchedule />
               <CalendarComponent />
@@ -49,15 +49,14 @@ function App() {
 
               <EditSchedule /> */}
       {/* <MuiDatePicker /> */}
-      <CalendarComponent />
+      {/* <CalendarComponent />
       <CalendarNewShiftForm />
-      <DynamicScheduleTrial />
       <button onClick={() => setIsOpen(true)}> Schedule</button>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={onclose} />
       </Modal>{" "}
       <CalendarComponent />
-      <CalendarNewShiftForm style={{ margin: "Auto" }} />
+      <CalendarNewShiftForm style={{ margin: "Auto" }} /> */}
       {/* <EditSchedule /> */}
     </div>
   );

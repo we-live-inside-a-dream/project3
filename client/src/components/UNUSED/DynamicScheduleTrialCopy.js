@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import StyledTable from "./StyledComponents/tables/StyledTable";
-import StyledTableData from "./StyledComponents/tables/StyledTableData";
-import StyledTableHeader from "./StyledComponents/tables/StyledTableHeader";
+import StyledTable from "../StyledComponents/tables/StyledTable";
+import StyledTableData from "../StyledComponents/tables/StyledTableData";
+import StyledTableHeader from "../StyledComponents/tables/StyledTableHeader";
 import StyledTableRow from "./StyledComponents/tables/StyledTableRow";
 import "./schedule.css";
 

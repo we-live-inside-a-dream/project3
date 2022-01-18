@@ -7,7 +7,7 @@ import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import StyledCalendar from "./StyledCalendar";
+import StyledCalendar from "../StyledCalendar";
 // import CalendarNewShiftForm from "./CalendarNewShiftForm";
 
 const locales = {

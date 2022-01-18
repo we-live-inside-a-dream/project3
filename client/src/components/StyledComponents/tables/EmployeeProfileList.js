@@ -3,46 +3,84 @@ import StyledTableHeader from "./StyledTableHeader";
 import StyledTableRow from "../StyledTableRow";
 import StyledTableData from "./StyledTableData.js";
 import React from "react";
+import { useState, useEffect } from "react";
+import { LeftContainer } from "../NavBar/StyledNavBar";
 
 let employees = [
   {
-    name: "Julie Weir",
+    firstName: "Julie",
+    lastName: "Weir",
     email: "address@gmail.com",
-    phone: "xxx-xxx-xxxx",
+    phoneNumber: "xxx-xxx-xxxx",
     positions: ["cashier", "sales"],
-    active: true,
+    status: true,
     permissions: "manager",
   },
   {
-    name: "Derek Birtwistle",
+    firstName: "Derek",
+    lastName: "Birtwistle",
     email: "address@gmail.com",
-    phone: "xxx-xxx-xxxx",
+    phoneNumber: "xxx-xxx-xxxx",
     positions: ["cashier", "supervisor"],
-    active: true,
+    status: true,
     permissions: "admin",
   },
   {
-    name: "Reza Naeim",
+    firstName: "Reza",
+    lastName: "Naeim",
     email: "address@gmail.com",
-    phone: "xxx-xxx-xxxx",
+    phoneNumber: "xxx-xxx-xxxx",
     positions: ["cashier", "driver"],
-    active: true,
+    status: true,
     permissions: "user",
   },
   {
-    name: "Brian Sauco",
+    firstName: "Brian",
+    lastName: "Sauco",
     email: "address@gmail.com",
-    phone: "xxx-xxx-xxxx",
+    phoneNumber: "xxx-xxx-xxxx",
     positions: ["cashier"],
-    active: true,
+    status: true,
     permissions: "user",
   },
 ];
 
 function EmployeeProfileList() {
+  // const [employees, setEmployees] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchEmployeesList = async () => {
+  //     let fetchResult = await fetch(`/api/employees`);
+  //     console.log("fetch result", fetchResult);
+  //     let employeeList = await fetchResult.json();
+  //     console.log("fetching employee list", employeeList);
+
+  //     setEmployees(employeeList);
+  //   };
+  //   fetchEmployeesList();
+  // }, [employees]);
+  // console.log("AFTER USE EFFECT", employees);
+
   return (
     <div>
-      <StyledTable>
+      <h1
+        style={{
+          fontWeight: "400",
+          fontFamily: "Arial, Helvetica, sans-serif",
+          textAlign: "center",
+          textShadow: "1px 1px 2px grey",
+          color: "#4488AB",
+          marginTop: "0px",
+          paddingBottom: "0px",
+          paddingTop: "25px",
+        }}
+      >
+        Employee Infomation
+      </h1>
+      ;
+      <StyledTable
+        style={{ paddingTop: "0px", marginTop: "0px", paddingBottom: "20px" }}
+      >
         <thead>
           <StyledTableHeader>NAME</StyledTableHeader>
           <StyledTableHeader>EMAIL</StyledTableHeader>
@@ -56,7 +94,13 @@ function EmployeeProfileList() {
             return (
               <StyledTableRow>
                 <StyledTableData>
-                  <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      padding: "0px 20px",
+                      alignItems: "left",
+                    }}
+                  >
                     <div
                       style={{
                         backgroundColor: "grey",
@@ -72,17 +116,24 @@ function EmployeeProfileList() {
                         fontWeight: "600",
                       }}
                     >
-                      {" "}
-                      {employee.name}
+                      {employee.firstName}
+                      <br />
+                      {employee.lastName}
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />
                 </StyledTableData>
                 <StyledTableData>{employee.email}</StyledTableData>
-                <StyledTableData>{employee.phone}</StyledTableData>
-                <StyledTableData>{employee.positions}</StyledTableData>
+                <StyledTableData>{employee.phoneNumber}</StyledTableData>
                 <StyledTableData>
-                  {employee.active === true ? "active" : "inactive"}
+                  <ul style={{ listStyleType: "none" }}>
+                    {employee.positions.map((position, index) => {
+                      return <li key={{ index }}>{position}</li>;
+                    })}
+                  </ul>
+                </StyledTableData>
+                <StyledTableData>
+                  {employee.status === true ? "active" : "inactive"}
                 </StyledTableData>
                 <StyledTableData>{employee.permissions}</StyledTableData>
               </StyledTableRow>

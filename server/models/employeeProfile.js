@@ -42,7 +42,15 @@ const employeeProfile = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  Position: {
+  positions: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: Boolean,
+    required: true,
+  },
+  permissions: {
     type: String,
     required: true,
   },

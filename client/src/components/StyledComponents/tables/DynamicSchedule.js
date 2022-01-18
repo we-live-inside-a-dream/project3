@@ -50,9 +50,15 @@ function DynamicSchedule() {
           marginBottom: "0px",
         }}
       >
-        Staff Schedule for {day}
+        Staff Schedule for {day}{" "}
+        <input
+          type="date"
+          id="single-day"
+          name="day"
+          value={day}
+          onChange={(e) => setDay(e.target.value)}
+        />
       </h1>
-
       <StyledTable>
         <thead>
           <tr>
@@ -134,19 +140,7 @@ function DynamicSchedule() {
                           border: "1px solid #5AB9EA",
                           margin: "25px 0",
                         }}
-                      >
-                        {/* {hour.toString() === employee.start ? (
-                          <p
-                            style={{
-                              fontSize: ".9rem",
-                              color: "black",
-                              margin: "8% auto 25% auto",
-                            }}
-                          >
-                            {employee.start}-{employee.end}
-                          </p>
-                        ) : null} */}
-                      </div>
+                      ></div>
                     </td>
                   );
                 } else {
@@ -157,20 +151,6 @@ function DynamicSchedule() {
           ))}
         </tbody>
       </StyledTable>
-      {/* <DatePicker
-        setDay={setDay}
-        selectTheDay={selectTheDay}
-
-        // onDayChangeValue={onDayChangeValue}
-      /> */}
-      {/* <input
-        type="date"
-        id="single-day"
-        name="day"
-        value={day}
-        onChange={(e) => setDay(e.target.value)}
-        // value={(e) => e.target.value}
-      /> */}
     </div>
   );
 }

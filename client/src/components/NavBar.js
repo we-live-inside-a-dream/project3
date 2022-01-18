@@ -21,9 +21,9 @@ function NavBar() {
       {""}
       <NavbarInnerContainer>
       <LeftContainer>
-      
+      <Logo src={LogoImg}></Logo>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
-            <img
+            {/* <img
               src={Logo}
               alt="calendar logo"
               style={{
@@ -32,7 +32,7 @@ function NavBar() {
                 backgroundColor: "black",
                 margin: "auto",
               }}
-            ></img>
+            ></img> */}
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/dayView">Schedule</NavbarLink>

@@ -14,7 +14,7 @@ export const LeftContainer = styled.div`
   flex: 70%;
   display: flex;
   align-items: center;
-  padding-left: 5%;
+  padding-left: 1%;
 `;
 
 export const RightContainer = styled.div`
@@ -27,10 +27,19 @@ export const RightContainer = styled.div`
     height: 80px;
   }
 `;
-export const Logo = styled.image`
+// export const Logo = styled.image`
+//   height: auto;
+//   max-width: 200px;
+//   margin: 15px;
+// `;
+
+export const Logo = styled.img`
+  display: flex;
+  
+  margin: auto;
+  max-width: 80px;
   height: auto;
-  max-width: 200px;
-  margin: 15px;
+  background-color: #35a1b9;
 `;
 
 export const NavbarExtendedContainer = styled.div`
@@ -62,11 +71,7 @@ export const NavbarLinkExtended = styled(Link)`
   text-decoration: none;
 `;
 
-// export const Logo = styled.img`
-//   margin: 10px;
-//   max-width: 180px;
-//   height: auto;
-// `;
+
 
 export const OpenLinksButton = styled.button`
   width: 70px;

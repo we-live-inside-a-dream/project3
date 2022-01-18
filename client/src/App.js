@@ -2,7 +2,8 @@ import "./App.css";
 import CalendarComponent from "./components/UNUSED/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
 import EditSchedule from "./components/EditSchedule";
-import Modal from "./Modal";
+import Modal from "./components/Modal";
+import "./App.css";
 import { useState } from "react";
 import background from "./otherPic.jpg";
 import DaySchedule from "./components/pages/DaySchedule";
@@ -59,6 +60,23 @@ function App() {
       <CalendarNewShiftForm style={{ margin: "Auto" }} /> */}
       {/* <EditSchedule /> */}
     </div>
+    //     {/* <EditSchedule /> */}
+    //       {/* <MuiDatePicker /> */}
+    //       <CalendarComponent />
+    //       <CalendarNewShiftForm />
+    //       <DynamicScheduleTrial />
+
+    //       <button onClick={() => setIsOpen(true)}> Schedule</button>
+    //       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+    //         <EditSchedule onClose={onclose} />
+    //       </Modal>{" "}
+
+    //       <CalendarComponent />
+    //       <CalendarNewShiftForm style={{ margin: "Auto" }} />
+    //       {/* <EditSchedule /> */}
+
+    //   </div>
+    //  */}
   );
 }
 

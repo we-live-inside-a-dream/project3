@@ -4,9 +4,9 @@ const mongoose = require("../config/mongooseDb");
 const Schedule = mongoose.model("schedule", {
   name: String,
   date: String,
-
   start: String,
   end: String,
+<<<<<<< HEAD
   breaks: [
     {
       name: String,
@@ -16,12 +16,15 @@ const Schedule = mongoose.model("schedule", {
       duration: Number,
     },
   ],
+=======
+  breaks: [{ name: String, start: String, end: String, paid: Boolean }],
+>>>>>>> 03d213858ec1226b344e12c20b381faccca9da1f
 });
 
 async function createSchedule(ScheduleData) {
   let newSchedule = new Schedule(ScheduleData);
   let createdSchedule = await newSchedule.save();
-  console.log("trying to create schedule");
+  console.log("trying to create schedule",createdSchedule);
   return createdSchedule.id;
 }
 

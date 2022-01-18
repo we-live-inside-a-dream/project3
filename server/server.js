@@ -1,13 +1,14 @@
+const dotenv = require("dotenv");
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const dotenv = require("dotenv")
 
 const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
-const employeeProfileRouter = require("./routes/employeeProfileRoutes")
+const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 
-dotenv.config()
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 5001;
 
@@ -28,4 +29,3 @@ app.use("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-

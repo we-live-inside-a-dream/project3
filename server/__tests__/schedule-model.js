@@ -1,4 +1,4 @@
-const mongoose = require ('../config/mongooseDb')
+const mongoose = require ('../models/mongooseDb')
 
 const scheduleModel = require('../models/schedule')
 

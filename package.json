@@ -27,5 +27,7 @@
   },
   "homepage": "https://github.com/we-live-inside-a-dream/project3#readme",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^27.4.7"
+  }
 }

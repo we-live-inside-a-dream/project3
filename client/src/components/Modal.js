@@ -1,16 +1,25 @@
 import React from 'react'
+import StyledButton from './StyledComponents/Inputs/StyledButton'
+import styled from "styled-components";
+
+
+
 
 const MODAL_STYLES ={
+   
     position:'fixed',
     top: '50%',
     left:'50%',
     transform:'translate(-50%,-50%)',
     backgroundColor:'#FFF',
-    ppadding:'50px',
-    zIndex:1000
+    padding:'100px',
+    zIndex:1000,
+    border:'10px solid #fc4445',
+    borderRadius:'10px'
 }
 
 const OVERLAY_STYLES = {
+    border:"10px",
     position:'fixed',
     top:'0',
     left:'0',
@@ -25,10 +34,11 @@ function Modal({open,children,onClose}) {
     return (
         <>
         <div style={OVERLAY_STYLES}/>
-        <div style={MODAL_STYLES}>
-            <button onClick={onClose}>Close Modal</button>
+        { <div style = {MODAL_STYLES}>
             {children}
-        </div>
+            <StyledButton onClick={onClose}>Close Modal</StyledButton>
+        </div> }
+       
         </>
     )
 }

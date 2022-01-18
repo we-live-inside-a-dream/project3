@@ -8,8 +8,10 @@ import {
     NavbarLinkContainer,
     NavbarLink,
     NavbarLinkExtended,
-    OpenLinksButton
+    OpenLinksButton,
+    Logo
 } from "./StyledComponents/NavBar/StyledNavBar"
+import LogoImg from '../assets/logo.png'
 
 
 function NavBar() {
@@ -18,6 +20,7 @@ function NavBar() {
       {""}
       <NavbarInnerContainer>
       <LeftContainer>
+      
           <NavbarLinkContainer extendNavbar={extendNavbar}>
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>

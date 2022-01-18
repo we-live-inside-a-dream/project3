@@ -1,16 +1,14 @@
 const dotenv = require("dotenv");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-
+dotenv.config();
+const port = process.env.PORT || 5001;
 const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
 const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 
-dotenv.config();
 const app = express();
-const port = process.env.PORT || 5001;
 
 // app.use(bodyParser.urlencoded({ extended: false, limit:'10mb' }));
 // app.use(bodyParser.urlencoded({ extended: false }))

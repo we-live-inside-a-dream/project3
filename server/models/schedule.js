@@ -1,5 +1,5 @@
 const { Timestamp } = require("mongodb");
-const mongoose = require("../config/mongooseDb");
+const mongoose = require("./mongooseDb");
 
 const Schedule = mongoose.model("schedule", {
   name: String,

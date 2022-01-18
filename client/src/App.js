@@ -12,7 +12,7 @@ import EmployeeProfileList from "./components/StyledComponents/tables/EmployeePr
 import { MomentTest } from "./components/MomentTest";
 
 import {BrowserRouter, Router, Routes, Route, Link} from 'react-router-dom'
-import StyledLink from "./components/StyledComponents/navBar/StyledNavLink";
+import StyledLink from "./components/StyledComponents/NavBar/StyledNavBar";
 import NavBar from "./components/NavBar";
 
 // import MuiDatePicker from "./components/MuiDatePicker";
@@ -34,8 +34,6 @@ function App() {
             >
             
               <NavBar />
-              
-                
                   {/* <nav>
                     <Link to="/">Home</Link>
                     <Link to="/employeeList">Employee List</Link>

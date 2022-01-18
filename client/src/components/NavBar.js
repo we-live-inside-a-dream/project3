@@ -9,7 +9,7 @@ import {
     NavbarLink,
     NavbarLinkExtended,
     OpenLinksButton
-} from "./StyledComponents/navBar/StyledNavLink"
+} from "./StyledComponents/NavBar/StyledNavBar"
 
 
 function NavBar() {

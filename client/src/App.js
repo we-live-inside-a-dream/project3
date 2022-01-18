@@ -1,6 +1,5 @@
 import "./App.css";
-// import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
-// import EditSchedule from "./components/EditSchedule";
+
 import CalendarComponent from "./components/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
 import DynamicScheduleTrial from "./components/DynamicScheduleTrial";
@@ -10,6 +9,8 @@ import "./App.css";
 import { useState } from "react";
 import background from "./otherPic.jpg";
 import EmployeeProfileList from "./components/StyledComponents/tables/EmployeeProfileList";
+import { MomentTest } from "./components/MomentTest";
+
 import {BrowserRouter, Router, Routes, Route, Link} from 'react-router-dom'
 import StyledLink from "./components/StyledComponents/navBar/StyledNavLink";
 import NavBar from "./components/NavBar";

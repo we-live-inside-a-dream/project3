@@ -27,6 +27,11 @@ export const RightContainer = styled.div`
     height: 80px;
   }
 `;
+export const Logo = styled.image`
+  height: auto;
+  max-width: 200px;
+  margin: 15px;
+`;
 
 export const NavbarExtendedContainer = styled.div`
   width: 100%;

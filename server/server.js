@@ -1,12 +1,13 @@
 const express = require("express");
-const mongoose = require("mongoose")
 const bodyParser = require("body-parser");
 const path = require("path");
+const dotenv = require("dotenv")
 
 const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
 const employeeProfileRouter = require("./routes/employeeProfileRoutes")
 
+dotenv.config()
 const app = express();
 const port = process.env.PORT || 5001;
 

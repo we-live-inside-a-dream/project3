@@ -62,7 +62,7 @@ function EditSchedule({ onClose }) {
       breaks,
     };
 
-    console.log("Saving volunteer", newShift);
+    console.log("Saving Shift", newShift);
     await updateShift(newShift);
   }
 

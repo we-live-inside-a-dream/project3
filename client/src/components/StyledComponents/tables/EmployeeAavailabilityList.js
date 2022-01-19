@@ -1,14 +1,14 @@
 import StyledTable from "./StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
-import EmployeesList from "../../pages/EmployeesList";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
 
   useEffect(() => {
     const fetchAvailabilityList = async () => {
-      let fetchResult = await fetch(`/api/availability-all`);
+      console.log("from useEffect, trying to fetch endpoint");
+      let fetchResult = await fetch(`/api/availability/availability-all`);
       console.log("fetch result", fetchResult);
       let theAvailabilityList = await fetchResult.json();
       console.log("fetching employee availability list", theAvailabilityList);
@@ -16,7 +16,7 @@ function EmployeeAvailabilityList() {
       setAvailabilityList(theAvailabilityList);
     };
     fetchAvailabilityList();
-  }, [availabilityList]);
+  }, []);
   console.log("AFTER USE EFFECT", availabilityList);
   let businessDays = [
     "Sunday",
@@ -27,6 +27,19 @@ function EmployeeAvailabilityList() {
     "Friday",
     "Saturday",
   ];
+
+  let renderAvailability = function (dayObject) {
+    if (dayObject.availabile === false) {
+      return "--";
+    } else if (dayObject.availabile === true && dayObject.allDay === true) {
+      return "all day";
+    } else if (dayObject.availabile === true && dayObject.allDay === false) {
+      return `${
+        dayObject.start > 12 ? dayObject.start - 12 : dayObject.start
+      } - ${dayObject.end > 12 ? dayObject.end - 12 : dayObject.end}`;
+    } else return "?";
+  };
+
   return (
     <div>
       <h1
@@ -41,25 +54,25 @@ function EmployeeAvailabilityList() {
           paddingTop: "25px",
         }}
       >
-        Employee Availability List
+        Employee Recurring Availability List
       </h1>
-      ;
+
       <StyledTable
         style={{ paddingTop: "0px", marginTop: "0px", paddingBottom: "20px" }}
       >
         <thead>
-          <th>NAME</th>
-          <th>Max Weekly Hours</th>
-          {businessDays.map((day, index) => {
-            return <th key={index}>{day}</th>;
-          })}
-
-          <th>PERMISSIONS</th>
+          <tr>
+            <th>NAME</th>
+            <th>Max Weekly Hours</th>
+            {businessDays.map((day, index) => {
+              return <th key={index}>{day}</th>;
+            })}
+          </tr>
         </thead>
         <tbody>
           {availabilityList?.map((employee, index) => {
             return (
-              <tr>
+              <tr key={index}>
                 <td>
                   <div
                     style={{
@@ -91,10 +104,9 @@ function EmployeeAvailabilityList() {
                   <div style={{ height: "5px" }} />
                 </td>
                 <td>{employee.maxHoursPerWeek}</td>
-                {EmployeesList.map(())}
-
-                <td>{employee.status === true ? "active" : "inactive"}</td>
-                <td>{employee.permissions}</td>
+                {employee?.days?.map((day, index) => {
+                  return <td key={index}>{renderAvailability(day)}</td>;
+                })}
               </tr>
             );
           })}

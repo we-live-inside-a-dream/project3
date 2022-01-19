@@ -1,17 +1,27 @@
-const mongoose = require ('../config/mongooseDb')
+const mongoose = require("../models/mongooseDb");
 
-const scheduleModel = require('../models/schedule')
+const employeeProfileModel = require("../models/employeeProfile");
 
-describe('EmployeeProfile model', ()=>{
+describe("EmployeeProfile model", () => {
+  it("Creating employee Profile", async () => {
     // setup
     // execute
-    let employeeProfile = await createEmployeeProfile({
-        firstName: "Brian",
-        lastName: "Sauco",
-});
+    let employeeId = await employeeProfileModel.createEmployeeProfile({
+      firstName: "Bruce",
+      lastName: "Sauco1",
+      email: "brian.sauco1@gmail.com",
+      password: "icarus1",
+      phoneNumber: "5551111180",
+      positions: "Supervisor",
+      status: "Active",
+    });
     // verify
-    let findEmployee = await employeeProfileModel.findOne({employeeProfile})
-    expect(findEmployee).toBe('Brian', 'Sauco')
-    console.log(findEmployee, 'Find Employee')
-    console.log(employeeProfile, 'Employee Profile')
-})
+
+    let findEmployee = await employeeProfileModel.getEmployeeProfileByProfileId(
+      employeeId
+    );
+    console.log("findEmployee.firstName is ", findEmployee.firstName);
+    console.log("Employee id is ", employeeId);
+    expect(findEmployee.firstName).toBe("Bruce");
+  });
+});

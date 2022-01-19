@@ -13,11 +13,7 @@ const Schema = mongoose.Schema;
 */
 
 const employeeProfile = new mongoose.Schema({
-  employeeProfileId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  firstName: {
+    firstName: {
     type: String,
     required: true,
   },

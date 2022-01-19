@@ -112,7 +112,7 @@ const updateEmployeeProfile = (newEmployeeProfile, callback) => {
 };
 
 // delete Employee Profile
-const deleteEmployeeProfile = async (profile_id) => {
+const deleteEmployeeProfile = async (employeeProfile_id) => {
   return true;
 };
 

@@ -38,14 +38,14 @@ const availabilityModel = require("../models/availability");
 //   res.sendStatus(401);
 // };
 
-router.post("/availability", mustBeLoggedIn, async (req, res) => {
+router.post("/availability", async (req, res) => {
   let newAvailability = req.body;
   let availability = await createAvailability(newAvailability);
   if (!profile) res.status(500).send("failed to create");
   res.status(200).send(availability);
 });
 
-router.patch("/availability/:id", mustBeLoggedIn, async (req, res) => {
+router.patch("/availability/:id", async (req, res) => {
   let id = req.params.id;
   let updatedAvailability = req.body;
   console.log("Updating availability", id, "with", updatedAvailability);
@@ -55,11 +55,11 @@ router.patch("/availability/:id", mustBeLoggedIn, async (req, res) => {
   });
 });
 
-// router.get("/availability/:id", mustBeLoggedIn, async (req, res) => {
+// router.get("/availability/:id", async (req, res) => {
 //   let availabilityList = await availabilityModel.listAvailabilities();
 //   res.send(availabilityList);
 // });
-router.get("/availability-all", mustBeLoggedIn, async (req, res) => {
+router.get("/availability-all", async (req, res) => {
   let availabilityList = await availabilityModel.listOfEmployees();
   res.send(availabilityList);
 });

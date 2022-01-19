@@ -42,7 +42,7 @@ const employeeProfile = new mongoose.Schema({
     required: true,
   },
   positions: {
-    type: String,
+    type: Array,
     required: true,
   },
   status: {

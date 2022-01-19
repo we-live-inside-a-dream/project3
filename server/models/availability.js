@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 const availability = new mongoose.Schema({
   employeeProfileId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "EmployeeProfile",
-    required: true,
+    ref: "User",
   },
   firstName: {
     type: String,

@@ -9,10 +9,9 @@ import {
   NavbarLink,
   NavbarLinkExtended,
   OpenLinksButton,
-  //   Logo,
+  Logo,
 } from "./StyledComponents/NavBar/StyledNavBar";
-// import LogoImage from "../../public/assets/calendar-icon.png";
-import Logo from "./circle-calendar1.png";
+import LogoImg from "../assets/logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -20,9 +19,10 @@ function NavBar() {
     <NavbarContainer>
       {""}
       <NavbarInnerContainer>
-        <LeftContainer style={{ margin: "2%", padding: "0%" }}>
+        <LeftContainer>
+          <Logo src={LogoImg}></Logo>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
-            <img
+            {/* <img
               src={Logo}
               alt="calendar logo"
               style={{
@@ -31,9 +31,10 @@ function NavBar() {
                 backgroundColor: "black",
                 margin: "auto",
               }}
-            ></img>
+            ></img> */}
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
+            <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
             <NavbarLink to="/dayView">Schedule</NavbarLink>
             <OpenLinksButton
               onClick={() => {

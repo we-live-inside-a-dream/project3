@@ -3,67 +3,33 @@ const mongoose = require("./mongooseDb");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
+  // employeeProfileId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
   employeeProfileId: {
     type: Number,
+    required: true,
   },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
   maxHoursPerWeek: {
     type: Number,
   },
   days: [
     {
-      // monday: {
       day: String,
       allDay: Boolean,
       start: Number,
       end: Number,
-      // },
     },
   ],
-  //   {
-  //     tuesday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  //   {
-  //     wednesday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  //   {
-  //     thursday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  //   {
-  //     friday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  //   {
-  //     saturday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  //   {
-  //     sunday: {
-  //       allDay: Boolean,
-  //       start: Number,
-  //       end: Number,
-  //     },
-  //   },
-  // ],
 });
 
 const Availability = mongoose.model("Availability", availability);
@@ -102,8 +68,8 @@ const updateAvailability = (newAvailability, callback) => {
   );
 };
 
-const deleteAvailability = async (profile_id) => {
-  return availability.findByIdAndDelete(profile_id);
+const deleteAvailability = async (employeeProfile_id) => {
+  return availability.findByIdAndDelete(employeeProfile_id);
 };
 
 module.exports = {

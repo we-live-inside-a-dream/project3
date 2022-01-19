@@ -20,7 +20,7 @@ router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
   let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
   if (!profile) res.status(500).send("failed to create");
-  res.status(200).send(profile);
+  res.status(200).send(employeeProfileId);
 });
 
 router.patch("/updateEmployeeProfile", async (req, res) => {
@@ -41,7 +41,7 @@ router.get("/employees", async (req, res) => {
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;
   let employeeEmail = await findEmployeeByProfileEmail(email);
-  res.status(200).send(profile);
+  res.status(200).send(employeeEmail);
 });
 
 router.get("/getByProfileId/:profileId", async (req, res) => {

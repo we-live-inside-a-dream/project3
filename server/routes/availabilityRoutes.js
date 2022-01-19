@@ -27,5 +27,8 @@ router.get("/availability/:id", async (req, res) => {
   let availabilityList = await availabilityModel.listAvailabilities();
   res.send(availabilityList);
 });
-
+router.get("/availability-all", async (req, res) => {
+  let availabilityList = await availabilityModel.listOfEmployees();
+  res.send(availabilityList);
+});
 module.exports = router;

@@ -1,44 +1,75 @@
-const mongoose = require("mongoose");
+const mongoose = require("./mongooseDb");
 
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
   employeeProfileId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "EmployeeProfile",
-    required: true,
-  },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  hoursPerWeek: {
     type: Number,
-    required: true,
   },
-  availability: [
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  maxHoursPerWeek: {
+    type: Number,
+  },
+  days: [
     {
-      start_time: {
-        type: Number,
-      },
-      end_time: {
-        type: Number,
-      },
-      availableDays: {
-        type: [String],
-      },
+      // monday: {
+      day: String,
+      allDay: Boolean,
+      start: Number,
+      end: Number,
+      // },
     },
   ],
+  //   {
+  //     tuesday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  //   {
+  //     wednesday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  //   {
+  //     thursday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  //   {
+  //     friday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  //   {
+  //     saturday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  //   {
+  //     sunday: {
+  //       allDay: Boolean,
+  //       start: Number,
+  //       end: Number,
+  //     },
+  //   },
+  // ],
 });
 
-const availabilityModel = mongoose.model("Availability", availability);
+const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (availabilityData) => {
-  let availability = new availabilityModel(availabilityData);
+  let availability = new Availability(availabilityData);
   try {
     await availability.save();
     return availability;
@@ -49,11 +80,11 @@ const createAvailability = async (availabilityData) => {
 };
 
 const getAvailabilityByEmployeeProfileId = async (employeeProfile_id) => {
-  return availabilityModel.findOne({ employeeProfile_id }).exec();
+  return Availability.findOne({ employeeProfile_id }).exec();
 };
 
 const availabilityList = async () => {
-  return availabilityModel.find({});
+  return Availability.find({});
 };
 
 const updateAvailability = (newAvailability, callback) => {

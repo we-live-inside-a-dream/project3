@@ -20,7 +20,7 @@ function NavBar() {
     <NavbarContainer>
       {""}
       <NavbarInnerContainer>
-        <LeftContainer>
+        <LeftContainer style={{ margin: "2%", padding: "0%" }}>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
             <img
               src={Logo}

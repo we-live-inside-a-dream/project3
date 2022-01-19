@@ -5,7 +5,7 @@ import EditSchedule from "./components/EditSchedule";
 import Modal from "./components/Modal";
 import "./App.css";
 import { useState } from "react";
-import background from "./otherPic.jpg";
+import background from "./boldPic.jpg";
 import DaySchedule from "./components/pages/DaySchedule";
 // import DynamicSchedule from "./components/StyledComponents/tables/DynamicSchedule";
 import { MomentTest } from "./components/MomentTest";

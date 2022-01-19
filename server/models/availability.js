@@ -70,8 +70,8 @@ const updateAvailability = (newAvailability, callback) => {
   );
 };
 
-const deleteAvailability = async (profile_id) => {
-  return availability.findByIdAndDelete(profile_id);
+const deleteAvailability = async (employeeProfile_id) => {
+  return availability.findByIdAndDelete(employeeProfile_id);
 };
 
 module.exports = {

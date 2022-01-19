@@ -4,7 +4,7 @@ const path = require('path')
  
 dotenv.config({path:path.join(__dirname,'../.env')});
 console.log(__dirname)
-const dbUrl = process.env.MONGO_URI;
+const dbUrl = process.env.MONGO_URI ||5001;
 
 mongoose.connect(dbUrl, () => {
   console.log("Connected to mongoDB");

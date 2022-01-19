@@ -1,14 +1,14 @@
 import "./App.css";
 import CalendarComponent from "./components/UNUSED/CalendarComponent";
 import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
-import EditSchedule from "./components/EditSchedule";
-import Modal from "./components/Modal";
+import EditSchedule from "./components/editSchedule/EditSchedule";
+
 import "./App.css";
 import { useState } from "react";
 import background from "./otherPic.jpg";
 import DaySchedule from "./components/pages/DaySchedule";
 // import DynamicSchedule from "./components/StyledComponents/tables/DynamicSchedule";
-import { MomentTest } from "./components/MomentTest";
+
 import EmployeesList from "./components/pages/EmployeesList";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import StyledLink from "./components/StyledComponents/NavBar/StyledNavBar";

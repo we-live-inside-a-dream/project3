@@ -1,18 +1,19 @@
 // import StyledButton from "./StyledComponents/Inputs/StyledButton";
 
-const BreakysComponent = (props) => {
+
+
+
+
+
+
+const BreaksComponent = (props) => {
     const myIndex = props.index;
     const myBreakys = props.breakys;
     const onRemoveBreak=props.onRemoveBreak
   
 
-    //  onRemoveBreak(index) {
-    //     console.log("removing superpower at index", index);
-    //     let newBreak = [...breaks];
-    //     newBreak.splice(index, 1);
-    //     console.log("superpowers are now", newBreak);
-    //     // setBreaks(newBreak);
-    //   }  
+   
+  
     return (
     
             <div key={myIndex}>
@@ -27,4 +28,4 @@ const BreakysComponent = (props) => {
               </div>);
   };
   
-  export default BreakysComponent
+  export default BreaksComponent

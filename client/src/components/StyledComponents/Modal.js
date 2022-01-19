@@ -1,5 +1,5 @@
 import React from "react";
-import StyledButton from "./StyledComponents/Inputs/StyledButton";
+import StyledButton from "./Inputs/StyledButton";
 import styled from "styled-components";
 
 const ModalInner = styled.div`
@@ -10,7 +10,7 @@ const ModalInner = styled.div`
   background-color: #fff;
   padding: 100px;
   z-index: 1000;
-  border: 10px solid #fc4445;
+  border: 10px solid #4488AB;
   border-radius: 10px;
 `;
 

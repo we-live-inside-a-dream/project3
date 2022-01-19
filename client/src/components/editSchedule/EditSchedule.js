@@ -1,11 +1,18 @@
 import React from "react";
 import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import StyledInput from "./StyledComponents/Inputs/StyledInput";
-import StyledButton from "./StyledComponents/Inputs/StyledButton";
-import BreakysComponent from "./BreakysComponent";
+
+import { Menu, Select, MenuItem } from "@mui/material";
+import MenuPopupState from "../UNUSED/MenuPopupState";
+
+import {
+  usePopupState,
+  bindTrigger,
+  bindMenu,
+} from "material-ui-popup-state/hooks";
+import StyledInput from "../StyledComponents/Inputs/StyledInput";
+import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import BreaksComponent from "./BreaksComponent";
 
 //events will be from employee.name DB
 
@@ -88,21 +95,11 @@ function EditSchedule({ onClose }) {
     setBreaks(newBreak);
   }
 
-  //   setBreaks(something)
-  //   const something ={
-  //     name:"",
-  //     start:0,
-  //     end:0,
-  //     paid:false
-  //   }
-
-  // something.name = thing
-  // thing.start = 8
-  // thing.end = 16
-  // thing.paid = false
+  // const PopupState = () => {
+  //   const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })}
 
   return (
-<>
+    <>
       <div>
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
@@ -115,6 +112,7 @@ function EditSchedule({ onClose }) {
           onChange={(event) => onInputUpdate(event, setName)}
           style={{ width: "300px" }}
         >
+          {name}
           <MenuItem value="name">
             <em>None</em>
           </MenuItem>
@@ -126,6 +124,11 @@ function EditSchedule({ onClose }) {
             );
           })}
         </Select>
+
+        {/* <div>
+
+<MenuPopupState/>
+      </div> */}
       </div>
 
       <div>
@@ -159,54 +162,43 @@ function EditSchedule({ onClose }) {
       </div>
       <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
       <div>
-        {breaks?.map((breakys, index) => <BreakysComponent breakys={breakys} index={index} onRemoveBreak={onRemoveBreak} />)}
-      
-
-      {/*<div>
-        {breaks?.map((breakys, index) => {
-          <div key={index}>
-            name: {breakys.name}
-     
-            <StyledButton
-              onClick={() => {
-                onRemoveBreak(index);
-              }}
-            >
-              X
-            </StyledButton>
-          </div>;
-        })} */}
+        
+        {breaks?.map((breakys, index) => (
+          <BreaksComponent
+            breakys={breakys}
+            index={index}
+            onRemoveBreak={onRemoveBreak}
+          />
+        ))}
         <div>
-          <div>hello</div>
-          <input
+          <StyledInput
             value={breakName}
             onChange={(event) => {
               onInputUpdate(event, setBreakName);
             }}
           />
-          <StyledButton onClick={onAddBreak}>Add</StyledButton>
+          <StyledButton onClick={onAddBreak}>+</StyledButton>
         </div>
       </div>
 
-    <div>
-      <StyledInput
-        label="break start time"
-        type="time"
-        value={breakStart}
-        onChange={(event) => onInputUpdate(event, setBreakStart)}
+      <div>
+        <StyledInput
+          label="break start time"
+          type="time"
+          value={breakStart}
+          onChange={(event) => onInputUpdate(event, setBreakStart)}
         />
 
-      <StyledInput
-        label="break end time"
-        type="time"
-        value={breakEnd}
-        onChange={(event) => onInputUpdate(event, setBreakEnd)}
+        <StyledInput
+          label="break end time"
+          type="time"
+          value={breakEnd}
+          onChange={(event) => onInputUpdate(event, setBreakEnd)}
         />
       </div>
-      
 
       <StyledButton onClick={postData}>SUBMIT</StyledButton>
-</>
+    </>
   );
 } //final brace
 

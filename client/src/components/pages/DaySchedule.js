@@ -1,7 +1,7 @@
 import DynamicSchedule from "../StyledComponents/tables/DynamicSchedule";
 import { useState } from "react";
-import Modal from "../Modal";
-import EditSchedule from "../EditSchedule";
+import Modal from "../StyledComponents/Modal";
+import EditSchedule from "../editSchedule/EditSchedule";
 import StyledPage from "../StyledComponents/StyledPage";
 
 function DaySchedule() {

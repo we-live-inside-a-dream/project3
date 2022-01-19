@@ -15,21 +15,25 @@ const availability = new mongoose.Schema({
     type: String,
     required: true,
   },
-  hoursPerWeek: {
+  maxHoursPerWeek: {
     type: Number,
     required: true,
   },
   availability: [
     {
-      start_time: {
-        type: Number,
-      },
-      end_time: {
-        type: Number,
-      },
-      availableDays: {
-        type: [String],
-      },
+      daysAvailable: [
+        {
+          dayOfTheWeek: {
+            type: Array,
+          },
+          start_time: {
+            type: Number,
+          },
+          end_time: {
+            type: Number,
+          },
+        },
+      ],
     },
   ],
 });

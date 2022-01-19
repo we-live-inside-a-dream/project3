@@ -15,8 +15,7 @@ const Schema = mongoose.Schema;
 const employeeProfile = new mongoose.Schema({
   employeeProfileId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "employeeProfile",
-    required: true,
+    ref: "User",
   },
   firstName: {
     type: String,
@@ -43,22 +42,12 @@ const employeeProfile = new mongoose.Schema({
     required: true,
   },
   positions: {
-    type: String,
+    type: Array,
     required: true,
   },
   status: {
-    type: Boolean,
-    required: true,
-  },
-  permissions: {
     type: String,
     required: true,
-  },
-  profile_picture: {
-    type: Buffer,
-  },
-  resume: {
-    type: Buffer,
   },
 });
 
@@ -70,15 +59,15 @@ const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
-  let hashedPassword = hashPassword(employeeProfileInfo.password);
+  // let hashedPassword = hashPassword(employeeProfileInfo.password);
   let employeeProfile = new employeeProfileModel(employeeProfileInfo);
-  try {
-    await employeeProfile.save();
-    return employeeProfile;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  // try {
+  await employeeProfile.save();
+  return employeeProfile.id;
+  // } catch (error) {
+  //   console.error(error);
+  //   return false;
+  // }
 };
 
 const signIn = async (employeeProfileInfo) => {
@@ -93,10 +82,13 @@ const listOfEmployees = async () => {
   return employeeProfileModel.find({});
 };
 
-//get Employee Profile by Profile id
+// get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return employeeProfileModel.findById(employeeProfile_id);
 };
+// async function findById(id) {
+//   return EmployeeProfile.findById(id);
+// }
 
 const findEmployeeByProfileEmail = async (email) => {
   let employeeProfile = await employeeProfileModel.findOne({ email });
@@ -120,7 +112,7 @@ const updateEmployeeProfile = (newEmployeeProfile, callback) => {
 };
 
 // delete Employee Profile
-const deleteEmployeeProfile = async (profile_id) => {
+const deleteEmployeeProfile = async (employeeProfile_id) => {
   return true;
 };
 

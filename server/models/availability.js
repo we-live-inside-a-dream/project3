@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 const availability = new mongoose.Schema({
   employeeProfileId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "EmployeeProfile",
-    required: true,
+    ref: "User",
   },
   firstName: {
     type: String,
@@ -16,21 +15,25 @@ const availability = new mongoose.Schema({
     type: String,
     required: true,
   },
-  hoursPerWeek: {
+  maxHoursPerWeek: {
     type: Number,
     required: true,
   },
   availability: [
     {
-      start_time: {
-        type: Number,
-      },
-      end_time: {
-        type: Number,
-      },
-      availableDays: {
-        type: [String],
-      },
+      daysAvailable: [
+        {
+          dayOfTheWeek: {
+            type: Array,
+          },
+          start_time: {
+            type: Number,
+          },
+          end_time: {
+            type: Number,
+          },
+        },
+      ],
     },
   ],
 });
@@ -71,8 +74,8 @@ const updateAvailability = (newAvailability, callback) => {
   );
 };
 
-const deleteAvailability = async (profile_id) => {
-  return availability.findByIdAndDelete(profile_id);
+const deleteAvailability = async (employeeProfile_id) => {
+  return availability.findByIdAndDelete(employeeProfile_id);
 };
 
 module.exports = {

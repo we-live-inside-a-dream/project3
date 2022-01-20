@@ -15,8 +15,6 @@ function DaySchedule() {
       <Modal  open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={() => setIsOpen(false)} />
       </Modal>{" "}
-
-
     </StyledPage>
   );
 }

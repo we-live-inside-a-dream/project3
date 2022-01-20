@@ -1,0 +1,28 @@
+[
+  {
+    "employeeProfileId": 1,
+    "firstName": "Adam",
+    "lastName": "Adamson",
+    "maxHoursPerWeek": 40,
+    "days": [
+      {
+        "day": "monday",
+        "allDay": true,
+        "start": 0,
+        "end": 0
+      },
+
+      { "day": "tuesday", "allDay": true, "start": 0, "end": 0 },
+
+      { "day": "wednesday", "allDay": false, "start": 12, "end": 17 },
+
+      { "day": "thursday", "allDay": true, "start": 0, "end": 0 },
+
+      { "day": "friday", "allDay": false, "start": 8, "end": 1 },
+
+      { "day": "saturday", "allDay": false, "start": 10, "end": 2 },
+
+      { "day": "sunday", "allDay": true, "start": 0, "end": 0 }
+    ]
+  }
+]

@@ -16,12 +16,30 @@ const {
 //   res.sendStatus(401);
 // };
 
+// const mustBeManager = async (req, res, next) => {
+//     if (req.user && req.user.isManager) {
+//         next()
+//         return
+//     }
+//     res.sendStatus(401)
+// }
+
+/* Creates a new employee profile.
+ Params: same as employeeProfile Schema
+ return:-status 200 and created profile if successful
+        -status 500 if it fails.
+*/
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
   let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
   if (!profile) res.status(500).send("failed to create");
   res.status(200).send(employeeProfileId);
 });
+
+/* Update: Existing profile in database
+   Params: New Profile 
+   Return: Updated Profile Model
+ */
 
 router.patch("/updateEmployeeProfile", async (req, res) => {
   console.log(req.body);
@@ -33,10 +51,17 @@ router.patch("/updateEmployeeProfile", async (req, res) => {
   });
 });
 
+/** Get: All employees in database
+ *  Param: All profiles
+ *  Return: All profiles
+ */
+
 router.get("/employees", async (req, res) => {
   let employeeList = await employeeProfileModel.listOfEmployees();
   res.send(employeeList);
 });
+
+
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

@@ -1,5 +1,5 @@
 import React from "react";
-import StyledButton from "./StyledComponents/Inputs/StyledButton";
+import StyledButton from "./Inputs/StyledButton";
 import styled from "styled-components";
 
 const ModalInner = styled.div`
@@ -8,9 +8,9 @@ const ModalInner = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 100px;
+  padding: 10px;
   z-index: 1000;
-  border: 10px solid #fc4445;
+  border: 10px solid #4488AB;
   border-radius: 10px;
 `;
 
@@ -31,11 +31,11 @@ function Modal({ open, children, onClose }) {
 
   return (
     <>
-      <ModalOverlay border={"15px"} onClick={onClose} />
+      <ModalOverlay onClick={onClose} />
       {
-        <ModalInner>
+        <ModalInner >
           {children}
-          <StyledButton onClick={onClose}>Close Modal</StyledButton>
+          {/* <StyledButton onClick={onClose}>Close Modal</StyledButton> */}
         </ModalInner>
       }
     </>

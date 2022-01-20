@@ -13,11 +13,7 @@ const Schema = mongoose.Schema;
 */
 
 const employeeProfile = new mongoose.Schema({
-  employeeProfileId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  firstName: {
+    firstName: {
     type: String,
     required: true,
   },
@@ -59,15 +55,10 @@ const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
-  // let hashedPassword = hashPassword(employeeProfileInfo.password);
+  let hashedPassword = hashPassword(employeeProfileInfo.password);
   let employeeProfile = new employeeProfileModel(employeeProfileInfo);
-  // try {
   await employeeProfile.save();
   return employeeProfile.id;
-  // } catch (error) {
-  //   console.error(error);
-  //   return false;
-  // }
 };
 
 const signIn = async (employeeProfileInfo) => {
@@ -86,9 +77,6 @@ const listOfEmployees = async () => {
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return employeeProfileModel.findById(employeeProfile_id);
 };
-// async function findById(id) {
-//   return EmployeeProfile.findById(id);
-// }
 
 const findEmployeeByProfileEmail = async (email) => {
   let employeeProfile = await employeeProfileModel.findOne({ email });
@@ -96,19 +84,12 @@ const findEmployeeByProfileEmail = async (email) => {
 };
 
 // update Employee Profile
-const updateEmployeeProfile = (newEmployeeProfile, callback) => {
-  employeeProfileModel.findByIdAndUpdate(
-    newEmployeeProfile._id,
-    newEmployeeProfile,
-    { new: true },
-    (err, model) => {
-      if (err) {
-        console.error(err.message);
-        return false;
-      }
-      callback(model);
-    }
+const updateEmployeeProfile = async (id, newEmployeeProfile) => {
+  let updatedProfile = await employeeProfileModel.findByIdAndUpdate(
+    id,
+    newEmployeeProfile
   );
+  return updatedProfile;
 };
 
 // delete Employee Profile

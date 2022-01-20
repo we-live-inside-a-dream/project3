@@ -8,7 +8,7 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   font-size:${(props)=>props.fontSize ||"1em"};
   padding: ${(props)=>props.padding || "0.8rem"};
-  margin:${(props)=>props.margin};
+  margin:${(props)=>props.margin|| "1em"};
   text-align: center;
   color: white;
   background-color: #4488AB;

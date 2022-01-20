@@ -9,13 +9,10 @@ function DaySchedule() {
   return (
     <StyledPage style={{ margin: "auto 50px" }}>
       <DynamicSchedule style={{ margin: " auto" }} />
-
       <button onClick={() => setIsOpen(true)}> Schedule</button>
-      <Modal  open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={onclose} />
       </Modal>{" "}
-
-
     </StyledPage>
   );
 }

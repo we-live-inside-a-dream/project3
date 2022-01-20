@@ -10,9 +10,13 @@ import {
   bindTrigger,
   bindMenu,
 } from "material-ui-popup-state/hooks";
+import StyledLabel from "../StyledComponents/Inputs/StyledLabel";
+import CenterStyle from "../StyledComponents/Inputs/CenterStyle";
+
 import StyledInput from "../StyledComponents/Inputs/StyledInput";
 import StyledButton from "../StyledComponents/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
+import StyledDropDownInput from "../StyledComponents/Inputs/StyledDropDownInput";
 
 //events will be from employee.name DB
 
@@ -68,7 +72,7 @@ function EditSchedule({ onClose }) {
       date,
       breaks,
     };
-
+    onClose()
     console.log("Saving volunteer", newShift);
     await updateShift(newShift);
   }
@@ -97,20 +101,29 @@ function EditSchedule({ onClose }) {
 
   // const PopupState = () => {
   //   const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })}
-
+// let emp = [derek,julie,brian]
   return (
     <>
       <div>
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
         </InputLabel>
-        <Select
+        
+
+          <Select
           labelId="demo-simple-select-helper-label"
           id="name-imput"
           value={name}
           label="name"
           onChange={(event) => onInputUpdate(event, setName)}
-          style={{ width: "300px" }}
+          style={{ width: "300px",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#4488AB",
+          backgroundColor: "white", 
+          border: "2px solid #4488AB",
+          filter: "dropShadow(5px 5px 10px grey)",
+           }}
         >
           {name}
           <MenuItem value="name">
@@ -123,6 +136,7 @@ function EditSchedule({ onClose }) {
               </MenuItem>
             );
           })}
+          
         </Select>
 
         {/* <div>
@@ -137,67 +151,73 @@ function EditSchedule({ onClose }) {
           label="shift day"
           type="date"
           value={date}
+         
           onChange={(event) => onInputUpdate(event, setDate)}
         />
       </div>
 
       <div>
-        <InputLabel id="demo-simple-select-helper-label">Start Time</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">Start Time - End Time</InputLabel>
         <StyledInput
           label="start time"
           type="time"
           value={start}
+         
           onChange={(event) => onInputUpdate(event, setStart)}
         />
-      </div>
-
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">End Time</InputLabel>
+  
+        {/* <InputLabel id="demo-simple-select-helper-label">End Time</InputLabel> */}
         <StyledInput
           label="end time"
           type="time"
           value={end}
+         
           onChange={(event) => onInputUpdate(event, setEnd)}
         />
+
       </div>
       <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
-      <div>
-        
-        {breaks?.map((breakys, index) => (
-          <BreaksComponent
-            breakys={breakys}
-            index={index}
-            onRemoveBreak={onRemoveBreak}
-          />
-        ))}
-        <div>
-          <StyledInput
-            value={breakName}
-            onChange={(event) => {
-              onInputUpdate(event, setBreakName);
-            }}
-          />
-          <StyledButton onClick={onAddBreak}>+</StyledButton>
-        </div>
-      </div>
+
 
       <div>
         <StyledInput
           label="break start time"
           type="time"
           value={breakStart}
+          
           onChange={(event) => onInputUpdate(event, setBreakStart)}
-        />
+          />
 
         <StyledInput
           label="break end time"
           type="time"
           value={breakEnd}
+          
           onChange={(event) => onInputUpdate(event, setBreakEnd)}
         />
       </div>
-
+        <div>
+          <StyledInput
+            value={breakName}
+           
+            onChange={(event) => {
+              onInputUpdate(event, setBreakName);
+            }}
+            />
+        <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>+</StyledButton>
+        </div>
+              <CenterStyle>
+            <div>
+              {breaks?.map((breakys, index) => (
+                <BreaksComponent
+                  breakys={breakys}
+                  index={index}
+                  onRemoveBreak={onRemoveBreak}
+                />
+              ))}
+            </div>
       <StyledButton onClick={postData}>SUBMIT</StyledButton>
+            </CenterStyle>
     </>
   );
 } //final brace

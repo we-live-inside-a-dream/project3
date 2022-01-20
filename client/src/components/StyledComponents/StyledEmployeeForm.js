@@ -62,7 +62,8 @@ export const StyledButton = styled.button`
   border: 0;
   border-radius: 5px;
   height: 40px;
-  padding: 0 20px;
+  padding: 0px 20px;
+  margin-bottom: 10px;
   cursor: pointer;
   box-sizing: border-box;
 `;

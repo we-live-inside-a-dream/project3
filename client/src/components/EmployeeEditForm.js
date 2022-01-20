@@ -83,44 +83,44 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
               onChange={(event) => onInputUpdate(event, setFirstName)}
             />
             <label>Last Name</label>
-            <input
+            <StyledInput
               value={lastName}
               onChange={(event) => onInputUpdate(event, setLastName)}
             />
             <label>Email</label>
-            <input
+            <StyledInput
               value={email}
               onChange={(event) => onInputUpdate(event, setEmail)}
             />
             <label>password</label>
-            <input
+            <StyledInput
               value={password}
               type="password"
               onChange={(event) => onInputUpdate(event, setPassword)}
             />
             <label>Phone Number</label>
-            <input
+            <StyledInput
               value={phoneNumber}
               onChange={(event) => onInputUpdate(event, setPhoneNumber)}
             />
             <label>Positions</label>
-            <div className="field-value">
+            <div>
               {positions.map((position, index) => (
                 <div key={index}>{position}</div>
               ))}
               <div>
-                <input
+                <StyledInput
                   value={positionToAdd}
                   onChange={(event) => onInputUpdate(event, setPositionToAdd)}
                 />
                 <StyledButton onClick={onAddPosition}>Add</StyledButton>
               </div>
-              <input
+              {/* <StyledInput
                 value={positions}
                 onChange={(event) => onInputUpdate(event, setPositions)}
-              />
+              /> */}
               <label>Status</label>
-              <input
+              <StyledInput
                 value={status}
                 onChange={(event) => onInputUpdate(event, setStatus)}
               />

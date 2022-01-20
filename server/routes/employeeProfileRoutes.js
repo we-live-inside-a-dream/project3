@@ -48,12 +48,13 @@ router.post("/create", async (req, res) => {
  */
 
 router.patch("/updateEmployeeProfile", async (req, res) => {
-  console.log(req.body);
+  let id = req.params.id;
   let updatedEmployeeProfile = req.body;
-  console.log("Updating availability", id, "with", updatedEmployeeProfile);
-  let availability = await availabilityModel.update(id, updatedAvailability);
+  console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
+  let employeeProfile = await employeeProfileModel.update(id, updatedEmployeeProfile);
   updateEmployeeProfile(employeeProfile, (updatedModel) => {
     res.status(200).send(updatedModel);
+    console.log(updatedModel)
   });
 });
 

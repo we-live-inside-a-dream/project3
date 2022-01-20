@@ -1,4 +1,4 @@
-// import StyledButton from "./StyledComponents/Inputs/StyledButton";
+import StyledButton from "../StyledComponents/Inputs/StyledButton";
 
 
 
@@ -17,13 +17,15 @@ const BreaksComponent = (props) => {
     return (
     
             <div key={myIndex}>
-              <div>{myBreakys.name},{myBreakys.start},{myBreakys.end}
-                <button
+              <div>{myBreakys.name}:{myBreakys.start}-{myBreakys.end}
+                <StyledButton
+                  padding ={"0px"}
+                  margin ={"5px"}
                    onClick={() => {
                        onRemoveBreak(myIndex);
                     }}>
-                  X
-                </button>
+                  x
+                </StyledButton>
                      </div> 
               </div>);
   };

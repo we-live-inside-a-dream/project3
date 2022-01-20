@@ -35,7 +35,7 @@ const EmployeeDetail = ({employeeId}) => {
           <div>Last Name</div>
           <div>{employee?.lastName}</div>
           <div>Email</div>
-          <div>{employee?.email}</div>
+          <div>{employee?.email}</div> 
           <div>Password</div>
           <div>{employee?.password}</div> 
           <div>Phone Number</div>

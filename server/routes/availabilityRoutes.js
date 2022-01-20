@@ -46,7 +46,7 @@ const availabilityModel = require("../models/availability");
 //   res.status(200).send(availability);
 // });
 
-// router.patch("/availability/:id", async (req, res) => {
+router.patch("/availability/:id", async (req, res) => {
   let id = req.params.id;
   let updatedAvailability = req.body;
   console.log("Updating availability", id, "with", updatedAvailability);

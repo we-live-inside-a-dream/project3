@@ -31,9 +31,15 @@ const {
 */
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
+  console.log(newEmployeeProfile)
+  try{
   let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
-  if (!profile) res.status(500).send("failed to create");
-  res.status(200).send(employeeProfileId);
+  if (!employeeProfileId) res.status(500).send("failed to create");
+  res.status(200).send(employeeProfileId);}
+  catch (error){
+    console.log(error.message)
+    res.status(400).send(error.message)
+  }
 });
 
 /* Update: Existing profile in database

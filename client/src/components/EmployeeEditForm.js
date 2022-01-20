@@ -39,7 +39,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
-  async function createEmployee({ newEmployee }) {
+  async function createEmployee(newEmployee) {
     await fetch("/api/employeeProfile/create", {
       method: "POST",
       headers: {
@@ -109,7 +109,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
                 <div key={index}>{position}</div>
               ))}
               <div>
-                <StyledInput
+                <StyledInput 
                   value={positionToAdd}
                   onChange={(event) => onInputUpdate(event, setPositionToAdd)}
                 />

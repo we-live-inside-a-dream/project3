@@ -31,7 +31,7 @@ export const StyledFormWrapper = styled.div`
   padding: 0 20px;
 `;
 
-export const StyledForm = styled.form`
+export const StyledForm = styled.div`
   width: 100%;
   max-width: 700px;
   padding: 40px;
@@ -56,7 +56,8 @@ export const StyledTextArea = styled.textarea`
 `;
 export const StyledButton = styled.button`
   display: block;
-  background-color: #f7797d;
+  /* background-color: #f7797d; */
+  background-color: #35a1b9;
   color: #fff;
   font-size: 0.9rem;
   border: 0;

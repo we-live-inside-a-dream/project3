@@ -27,6 +27,14 @@ const events = [
   { name: "Reza" },
   { name: "Brian" },
 ];
+const events2 = [
+  { name: "" },
+  { name: "Coffe" },
+  { name: "Lunch" },
+  { name: "Coffe2" },
+];
+
+
 
 function EditSchedule({ onClose }) {
   const [name, setName] = useState();
@@ -42,12 +50,7 @@ function EditSchedule({ onClose }) {
 
   const [breakToAdd, setBreakToAdd] = useState([]);
 
-  // let breaks = [
-  //   { name: "hello", start: undefined, end: undefined, paid: undefined },
-  //   { name: "cofee", start: undefined, end: undefined, paid: undefined },
-  //   { name: "lunch", start: "09:03", end: "20:09", paid: undefined },
-  // ];
-
+ 
   async function updateShift(updatedUser) {
     console.log("Posting to user", name, "with data", updatedUser);
     await fetch("/api/schedule/schedule", {
@@ -92,10 +95,10 @@ function EditSchedule({ onClose }) {
   }
 
   function onRemoveBreak(index) {
-    console.log("removing superpower at index", index);
+    console.log("removing break at index", index);
     let newBreak = [...breaks];
     newBreak.splice(index, 1);
-    console.log("superpowers are now", newBreak);
+    console.log("breaks are... ", newBreak);
     setBreaks(newBreak);
   }
 
@@ -108,8 +111,6 @@ function EditSchedule({ onClose }) {
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
         </InputLabel>
-        
-
           <Select
           labelId="demo-simple-select-helper-label"
           id="name-imput"
@@ -206,6 +207,48 @@ function EditSchedule({ onClose }) {
             />
         <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>+</StyledButton>
         </div>
+
+{/* <div>
+
+<Select
+          labelId="demo-simple-select-helper-label"
+          id="name-imput"
+          value={name}
+          label="name"
+          onChange={(event) => onInputUpdate(event, setBreakName)}
+          style={{ 
+            height:"50px",
+            width: "200px",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#4488AB",
+          backgroundColor: "white", 
+          border: "2px solid #4488AB",
+          filter: "dropShadow(5px 5px 10px grey)",
+           }}
+        >
+          {name}
+          <MenuItem value="name">
+            <em>None</em>
+          </MenuItem>
+          {events2?.map((event, index) => {
+            return (
+              <MenuItem key={index} value={event.name}>
+                {event.name}
+              </MenuItem>
+            );
+          })}
+          </Select>
+          <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
+</div> */}
+
+
+
+
+
+
+
+
               <CenterStyle>
             <div>
               {breaks?.map((breakys, index) => (

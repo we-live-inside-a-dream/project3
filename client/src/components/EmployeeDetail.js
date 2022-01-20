@@ -32,20 +32,24 @@ const EmployeeDetail = ({employeeId}) => {
           <div>
           <div>First Name</div>
           <div>{employee?.firstName}</div>
-          <div>lastName</div>
+          <div>Last Name</div>
           <div>{employee?.lastName}</div>
-          <div>Home City</div>
+          <div>Email</div>
           <div>{employee?.email}</div>
-          <div>Super Powers</div>
-          <div>Costume</div>
+          <div>Password</div>
           <div>{employee?.password}</div> 
-          <div>Nemesis</div>
-          <div>{employee?.phoneNumber}</div>
-          <div>{employee?.positions}</div>
+          <div>Phone Number</div>
+          <div>{employee?.phoneNumber}</div> 
+          <div>Positions</div>
+          <ul>
+              {
+                employee?.positions.map((position, index) => (
+                  <li key={index}>{position}</li>
+                ))
+              }
+            </ul>
+          <div>Status</div>
           <div>{employee?.status}</div>
-          <div>{employee?.permissions}</div>
-          <div>{employee?.profilePicture}</div>
-          <div>{employee?.resume}</div>
         </div> 
         <EmployeeEditForm existingValues={employee} onSave={updateEmployee}/>
       </div>

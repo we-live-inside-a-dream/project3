@@ -1,9 +1,25 @@
-import StyledTable from "./StyledTable";
+import StyledTable from "../reusable/tables/StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
+import StyledButton from "../reusable/Inputs/StyledButton";
+import { useNavigate } from "react-router-dom";
+import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
+  const [employeeProfileId, setSelectedEmployeeId] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log("Fetching employee data!");
+      let fetchResult = await fetch("/api/employeeProfile/employees");
+      let employeeList = await fetchResult.json();
+      setEmployees(employeeList);
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const fetchAvailabilityList = async () => {
@@ -18,6 +34,7 @@ function EmployeeAvailabilityList() {
     fetchAvailabilityList();
   }, []);
   console.log("AFTER USE EFFECT", availabilityList);
+
   let businessDays = [
     "Sunday",
     "Monday",
@@ -27,7 +44,7 @@ function EmployeeAvailabilityList() {
     "Friday",
     "Saturday",
   ];
-
+  //
   let renderAvailability = function (dayObject) {
     if (dayObject.availabile === false) {
       return "--";
@@ -39,6 +56,16 @@ function EmployeeAvailabilityList() {
       } - ${dayObject.end > 12 ? dayObject.end - 12 : dayObject.end}`;
     } else return "?";
   };
+
+  //selects the employee id to davigate to the pagee to edit that particular employee
+  function selectEmployeeId(id) {
+    navigate("/availability/availability-edit/" + id);
+  }
+  //selects employee from dropdowm menu
+  function selectEmployee(id) {
+    console.log("selectEmployeeAvailability called on id", id);
+    selectEmployeeId(id);
+  }
 
   return (
     <div>
@@ -70,7 +97,7 @@ function EmployeeAvailabilityList() {
           </tr>
         </thead>
         <tbody>
-          {availabilityList?.map((employee, index) => {
+          {availabilityList?.map((person, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -96,15 +123,19 @@ function EmployeeAvailabilityList() {
                         fontWeight: "600",
                       }}
                     >
-                      {employee.firstName}
+                      {person.firstName}
                       <br />
-                      {employee.lastName}
+                      {person.lastName}
+                      <br />
+                      <StyledButton onClick={() => selectEmployee(person._id)}>
+                        EDIT
+                      </StyledButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />
                 </td>
-                <td>{employee.maxHoursPerWeek}</td>
-                {employee?.days?.map((day, index) => {
+                <td>{person.maxHoursPerWeek}</td>
+                {person?.days?.map((day, index) => {
                   return <td key={index}>{renderAvailability(day)}</td>;
                 })}
               </tr>
@@ -112,6 +143,38 @@ function EmployeeAvailabilityList() {
           })}
         </tbody>
       </StyledTable>
+      <InputLabel id="demo-simple-select-helper-label">
+        Employee Name
+      </InputLabel>
+      <Select
+        labelId="demo-simple-select-helper-label"
+        id="name-imput"
+        value={employeeProfileId}
+        label="name"
+        // onChange={(event) => onInputUpdate(event, selectEmployeeId(id))}
+        style={{
+          width: "300px",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#4488AB",
+          backgroundColor: "white",
+          border: "2px solid #4488AB",
+          filter: "dropShadow(5px 5px 10px grey)",
+        }}
+      >
+        {/* {employee} */}
+        <MenuItem value="name">
+          <em>None</em>
+        </MenuItem>
+        {employees?.map((person, index) => {
+          return (
+            <MenuItem key={index} value={person._id}>
+              {person.firstName}
+              {person.lastName}
+            </MenuItem>
+          );
+        })}
+      </Select>
     </div>
   );
 }

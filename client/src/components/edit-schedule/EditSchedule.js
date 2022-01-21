@@ -5,18 +5,14 @@ import InputLabel from "@mui/material/InputLabel";
 import { Menu, Select, MenuItem } from "@mui/material";
 import MenuPopupState from "../UNUSED/MenuPopupState";
 
-import {
-  usePopupState,
-  bindTrigger,
-  bindMenu,
-} from "material-ui-popup-state/hooks";
-import StyledLabel from "../StyledComponents/Inputs/StyledLabel";
-import CenterStyle from "../StyledComponents/Inputs/CenterStyle";
 
-import StyledInput from "../StyledComponents/Inputs/StyledInput";
-import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import StyledLabel from "../reusable/Inputs/StyledLabel";
+import CenterStyle from "../reusable/Inputs/CenterStyle";
+
+import StyledInput from "../reusable/Inputs/StyledInput";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
-import StyledDropDownInput from "../StyledComponents/Inputs/StyledDropDownInput";
+import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 //events will be from employee.name DB
 

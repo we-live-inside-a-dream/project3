@@ -6,6 +6,7 @@ const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
+  listOfEmployees,
 } = require("../models/employeeProfile");
 
 // const mustBeLoggedIn = async (req, res, next) => {
@@ -31,14 +32,14 @@ const {
 */
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
-  console.log(newEmployeeProfile)
-  try{
-  let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
-  if (!employeeProfileId) res.status(500).send("failed to create");
-  res.status(200).send(employeeProfileId);}
-  catch (error){
-    console.log(error.message)
-    res.status(400).send(error.message)
+  console.log(newEmployeeProfile);
+  try {
+    let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
+    if (!employeeProfileId) res.status(500).send("failed to create");
+    res.status(200).send(employeeProfileId);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
   }
 });
 
@@ -50,11 +51,12 @@ router.post("/create", async (req, res) => {
 router.patch("/updateEmployeeProfile", async (req, res) => {
   console.log(req.body);
   let updatedEmployeeProfile = req.body;
+  let id = updatedEmployeeProfile.id;
   console.log("Updating availability", id, "with", updatedEmployeeProfile);
-  let availability = await availabilityModel.update(id, updatedAvailability);
-  updateEmployeeProfile(employeeProfile, (updatedModel) => {
-    res.status(200).send(updatedModel);
-  });
+  // let availability = await availabilityModel.update(id, updatedAvailability);
+  // updateEmployeeProfile(employeeProfile, (updatedModel) => {
+  //   res.status(200).send(updatedModel);
+  // });
 });
 
 /** Get: All employees in database
@@ -63,11 +65,9 @@ router.patch("/updateEmployeeProfile", async (req, res) => {
  */
 
 router.get("/employees", async (req, res) => {
-  let employeeList = await employeeProfileModel.listOfEmployees();
+  let employeeList = await listOfEmployees();
   res.send(employeeList);
 });
-
-
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

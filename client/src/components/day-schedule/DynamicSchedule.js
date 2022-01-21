@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import StyledTableHeader from "./StyledTableHeader";
+import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 
-import StyledTable from "./StyledTable";
+import StyledTable from "../reusable/tables/StyledTable";
 
 function DynamicSchedule() {
   const [schedule, setSchedule] = useState([]);

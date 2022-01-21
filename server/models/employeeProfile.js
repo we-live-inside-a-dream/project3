@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 */
 
 const employeeProfile = new mongoose.Schema({
-    firstName: {
+  firstName: {
     type: String,
     required: true,
   },

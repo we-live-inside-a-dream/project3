@@ -42,19 +42,22 @@ passport.deserializeUser(function(id, done) {
     .catch(done)
 });
 
-router.post("/signIn", async (req, res) => {
-    // console.log(req.user)
-    let employeeProfileInfo = req.body.inputs;
-    let user = await signIn(employeeProfileInfo);
-    res.send(user);
-  });
+// router.post("/signIn", async (req, res) => {
+//     // console.log(req.user)
+//     let employeeProfileInfo = req.body.inputs;
+//     let user = await signIn(employeeProfileInfo);
+//     res.send(user);
+//   });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
+router.post('/logIn', passport.authenticate('local'), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
+  let employeeProfileInfo = req.body.inputs;
+  let user = await signIn(employeeProfileInfo)
   console.log('User login has succeeded!')
   console.log('Req.user is', req.user)
   res.sendStatus(200)
+  res.send(user)
 })
 
 router.get("/logOut", async (req, res) => {

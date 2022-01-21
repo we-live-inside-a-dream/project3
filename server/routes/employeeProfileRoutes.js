@@ -50,11 +50,12 @@ router.post("/create", async (req, res) => {
 router.patch("/updateEmployeeProfile", async (req, res) => {
   console.log(req.body);
   let updatedEmployeeProfile = req.body;
+  let id = updatedEmployeeProfile.id;
   console.log("Updating availability", id, "with", updatedEmployeeProfile);
-  let availability = await availabilityModel.update(id, updatedAvailability);
-  updateEmployeeProfile(employeeProfile, (updatedModel) => {
-    res.status(200).send(updatedModel);
-  });
+  // let availability = await availabilityModel.update(id, updatedAvailability);
+  // updateEmployeeProfile(employeeProfile, (updatedModel) => {
+  //   res.status(200).send(updatedModel);
+  // });
 });
 
 /** Get: All employees in database
@@ -66,8 +67,6 @@ router.get("/employees", async (req, res) => {
   let employeeList = await employeeProfileModel.listOfEmployees();
   res.send(employeeList);
 });
-
-
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

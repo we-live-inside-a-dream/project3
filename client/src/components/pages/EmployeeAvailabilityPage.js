@@ -1,6 +1,6 @@
 import React from "react";
 import StyledPage from "../StyledComponents/StyledPage";
-import EmployeeAvailabilityList from "../StyledComponents/tables/EmployeeAavailabilityList";
+import EmployeeAvailabilityList from "../StyledComponents/tables/EmployeeAvailabilityList";
 
 function EmployeeAvailabilityPage() {
   return (

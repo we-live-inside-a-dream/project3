@@ -6,60 +6,60 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { LeftContainer } from "../NavBar/StyledNavBar";
 
-let employees = [
-  {
-    firstName: "Julie",
-    lastName: "Weir",
-    email: "address@gmail.com",
-    phoneNumber: "xxx-xxx-xxxx",
-    positions: ["cashier", "sales"],
-    status: true,
-    permissions: "manager",
-  },
-  {
-    firstName: "Derek",
-    lastName: "Birtwistle",
-    email: "address@gmail.com",
-    phoneNumber: "xxx-xxx-xxxx",
-    positions: ["cashier", "supervisor"],
-    status: true,
-    permissions: "admin",
-  },
-  {
-    firstName: "Reza",
-    lastName: "Naeim",
-    email: "address@gmail.com",
-    phoneNumber: "xxx-xxx-xxxx",
-    positions: ["cashier", "driver"],
-    status: true,
-    permissions: "user",
-  },
-  {
-    firstName: "Brian",
-    lastName: "Sauco",
-    email: "address@gmail.com",
-    phoneNumber: "xxx-xxx-xxxx",
-    positions: ["cashier"],
-    status: true,
-    permissions: "user",
-  },
-];
+// let employees = [
+//   {
+//     firstName: "Julie",
+//     lastName: "Weir",
+//     email: "address@gmail.com",
+//     phoneNumber: "xxx-xxx-xxxx",
+//     positions: ["cashier", "sales"],
+//     status: true,
+//     permissions: "manager",
+//   },
+//   {
+//     firstName: "Derek",
+//     lastName: "Birtwistle",
+//     email: "address@gmail.com",
+//     phoneNumber: "xxx-xxx-xxxx",
+//     positions: ["cashier", "supervisor"],
+//     status: true,
+//     permissions: "admin",
+//   },
+//   {
+//     firstName: "Reza",
+//     lastName: "Naeim",
+//     email: "address@gmail.com",
+//     phoneNumber: "xxx-xxx-xxxx",
+//     positions: ["cashier", "driver"],
+//     status: true,
+//     permissions: "user",
+//   },
+//   {
+//     firstName: "Brian",
+//     lastName: "Sauco",
+//     email: "address@gmail.com",
+//     phoneNumber: "xxx-xxx-xxxx",
+//     positions: ["cashier"],
+//     status: true,
+//     permissions: "user",
+//   },
+// ];
 
 function EmployeeProfileList() {
-  // const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchEmployeesList = async () => {
-  //     let fetchResult = await fetch(`/api/employees`);
-  //     console.log("fetch result", fetchResult);
-  //     let employeeList = await fetchResult.json();
-  //     console.log("fetching employee list", employeeList);
+  useEffect(() => {
+    const fetchEmployeesList = async () => {
+      let fetchResult = await fetch(`/api/employeeProfile/employees`);
+      console.log("fetch result", fetchResult);
+      let employeeList = await fetchResult.json();
+      console.log("fetching employee list", employeeList);
 
-  //     setEmployees(employeeList);
-  //   };
-  //   fetchEmployeesList();
-  // }, [employees]);
-  // console.log("AFTER USE EFFECT", employees);
+      setEmployees(employeeList);
+    };
+    fetchEmployeesList();
+  }, []);
+  console.log("AFTER USE EFFECT", employees);
 
   return (
     <div>

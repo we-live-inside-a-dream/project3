@@ -1,11 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import StyledInput from "./StyledComponents/Inputs/StyledInput";
-import StyledButton from "./StyledComponents/Inputs/StyledButton";
-import BreakysComponent from "./BreakysComponent";
+
+import { Menu, Select, MenuItem } from "@mui/material";
+import MenuPopupState from "../UNUSED/MenuPopupState";
+
+import {
+  usePopupState,
+  bindTrigger,
+  bindMenu,
+} from "material-ui-popup-state/hooks";
+import StyledLabel from "../StyledComponents/Inputs/StyledLabel";
+import CenterStyle from "../StyledComponents/Inputs/CenterStyle";
+
+import StyledInput from "../StyledComponents/Inputs/StyledInput";
+import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import BreaksComponent from "./BreaksComponent";
+import StyledDropDownInput from "../StyledComponents/Inputs/StyledDropDownInput";
 
 //events will be from employee.name DB
 
@@ -16,6 +27,14 @@ const events = [
   { name: "Reza" },
   { name: "Brian" },
 ];
+const events2 = [
+  { name: "" },
+  { name: "Coffe" },
+  { name: "Lunch" },
+  { name: "Coffe2" },
+];
+
+
 
 function EditSchedule({ onClose }) {
   const [name, setName] = useState();
@@ -31,12 +50,7 @@ function EditSchedule({ onClose }) {
 
   const [breakToAdd, setBreakToAdd] = useState([]);
 
-  // let breaks = [
-  //   { name: "hello", start: undefined, end: undefined, paid: undefined },
-  //   { name: "cofee", start: undefined, end: undefined, paid: undefined },
-  //   { name: "lunch", start: "09:03", end: "20:09", paid: undefined },
-  // ];
-
+ 
   async function updateShift(updatedUser) {
     console.log("Posting to user", name, "with data", updatedUser);
     await fetch("/api/schedule/schedule", {
@@ -61,7 +75,7 @@ function EditSchedule({ onClose }) {
       date,
       breaks,
     };
-
+    onClose()
     console.log("Saving volunteer", newShift);
     await updateShift(newShift);
   }
@@ -81,40 +95,38 @@ function EditSchedule({ onClose }) {
   }
 
   function onRemoveBreak(index) {
-    console.log("removing superpower at index", index);
+    console.log("removing break at index", index);
     let newBreak = [...breaks];
     newBreak.splice(index, 1);
-    console.log("superpowers are now", newBreak);
+    console.log("breaks are... ", newBreak);
     setBreaks(newBreak);
   }
 
-  //   setBreaks(something)
-  //   const something ={
-  //     name:"",
-  //     start:0,
-  //     end:0,
-  //     paid:false
-  //   }
-
-  // something.name = thing
-  // thing.start = 8
-  // thing.end = 16
-  // thing.paid = false
-
+  // const PopupState = () => {
+  //   const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })}
+// let emp = [derek,julie,brian]
   return (
-<>
+    <>
       <div>
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
         </InputLabel>
-        <Select
+          <Select
           labelId="demo-simple-select-helper-label"
           id="name-imput"
           value={name}
           label="name"
           onChange={(event) => onInputUpdate(event, setName)}
-          style={{ width: "300px" }}
+          style={{ width: "300px",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#4488AB",
+          backgroundColor: "white", 
+          border: "2px solid #4488AB",
+          filter: "dropShadow(5px 5px 10px grey)",
+           }}
         >
+          {name}
           <MenuItem value="name">
             <em>None</em>
           </MenuItem>
@@ -125,7 +137,13 @@ function EditSchedule({ onClose }) {
               </MenuItem>
             );
           })}
+          
         </Select>
+
+        {/* <div>
+
+<MenuPopupState/>
+      </div> */}
       </div>
 
       <div>
@@ -134,79 +152,116 @@ function EditSchedule({ onClose }) {
           label="shift day"
           type="date"
           value={date}
+         
           onChange={(event) => onInputUpdate(event, setDate)}
         />
       </div>
 
       <div>
-        <InputLabel id="demo-simple-select-helper-label">Start Time</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">Start Time - End Time</InputLabel>
         <StyledInput
           label="start time"
           type="time"
           value={start}
+         
           onChange={(event) => onInputUpdate(event, setStart)}
         />
-      </div>
-
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">End Time</InputLabel>
+  
+        {/* <InputLabel id="demo-simple-select-helper-label">End Time</InputLabel> */}
         <StyledInput
           label="end time"
           type="time"
           value={end}
+         
           onChange={(event) => onInputUpdate(event, setEnd)}
         />
+
       </div>
       <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
-      <div>
-        {breaks?.map((breakys, index) => <BreakysComponent breakys={breakys} index={index} onRemoveBreak={onRemoveBreak} />)}
-      
 
-      {/*<div>
-        {breaks?.map((breakys, index) => {
-          <div key={index}>
-            name: {breakys.name}
-     
-            <StyledButton
-              onClick={() => {
-                onRemoveBreak(index);
-              }}
-            >
-              X
-            </StyledButton>
-          </div>;
-        })} */}
+
+      <div>
+        <StyledInput
+          label="break start time"
+          type="time"
+          value={breakStart}
+          
+          onChange={(event) => onInputUpdate(event, setBreakStart)}
+          />
+
+        <StyledInput
+          label="break end time"
+          type="time"
+          value={breakEnd}
+          
+          onChange={(event) => onInputUpdate(event, setBreakEnd)}
+        />
+      </div>
         <div>
-          <div>hello</div>
-          <input
+          <StyledInput
             value={breakName}
+           
             onChange={(event) => {
               onInputUpdate(event, setBreakName);
             }}
-          />
-          <StyledButton onClick={onAddBreak}>Add</StyledButton>
+            />
+        <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>+</StyledButton>
         </div>
-      </div>
 
-    <div>
-      <StyledInput
-        label="break start time"
-        type="time"
-        value={breakStart}
-        onChange={(event) => onInputUpdate(event, setBreakStart)}
-        />
+{/* <div>
 
-      <StyledInput
-        label="break end time"
-        type="time"
-        value={breakEnd}
-        onChange={(event) => onInputUpdate(event, setBreakEnd)}
-        />
-      </div>
-      
+<Select
+          labelId="demo-simple-select-helper-label"
+          id="name-imput"
+          value={name}
+          label="name"
+          onChange={(event) => onInputUpdate(event, setBreakName)}
+          style={{ 
+            height:"50px",
+            width: "200px",
+          fontSize: "1em",
+          textAlign: "center",
+          color: "#4488AB",
+          backgroundColor: "white", 
+          border: "2px solid #4488AB",
+          filter: "dropShadow(5px 5px 10px grey)",
+           }}
+        >
+          {name}
+          <MenuItem value="name">
+            <em>None</em>
+          </MenuItem>
+          {events2?.map((event, index) => {
+            return (
+              <MenuItem key={index} value={event.name}>
+                {event.name}
+              </MenuItem>
+            );
+          })}
+          </Select>
+          <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
+</div> */}
 
+
+
+
+
+
+
+
+              <CenterStyle>
+            <div>
+              {breaks?.map((breakys, index) => (
+                <BreaksComponent
+                  breakys={breakys}
+                  index={index}
+                  onRemoveBreak={onRemoveBreak}
+                />
+              ))}
+            </div>
       <StyledButton onClick={postData}>SUBMIT</StyledButton>
-</>
+            </CenterStyle>
+    </>
   );
 } //final brace
 

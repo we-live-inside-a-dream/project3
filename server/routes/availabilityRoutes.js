@@ -46,15 +46,15 @@ const availabilityModel = require("../models/availability");
 //   res.status(200).send(availability);
 // });
 
-// router.patch("/availability/:id", async (req, res) => {
-//   let id = req.params.id;
-//   let updatedAvailability = req.body;
-//   console.log("Updating availability", id, "with", updatedAvailability);
-//   let availability = await availabilityModel.update(id, updatedAvailability);
-//   updateAvailability(availability, (updatedModel) => {
-//     res.status(200).send(updatedModel);
-//   });
-// });
+router.patch("/availability/:id", async (req, res) => {
+  let id = req.params.id;
+  let updatedAvailability = req.body;
+  console.log("Updating availability", id, "with", updatedAvailability);
+  let availability = await availabilityModel.update(id, updatedAvailability);
+  updatedAvailability(availability, (updatedModel) => {
+    res.status(200).send(updatedModel);
+  });
+});
 
 // router.get("/availability/:id", async (req, res) => {
 //   let availabilityList = await availabilityModel.listAvailabilities();

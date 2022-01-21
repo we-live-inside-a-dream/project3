@@ -13,24 +13,16 @@ import {
 
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState([]);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [positions, setPositions] = useState([]);
-  const [status, setStatus] = useState("");
 
   const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {
     if (existingValues) {
-      setFirstName(existingValues.firstName);
-      setLastName(existingValues.lastName);
       setEmail(existingValues.email);
       setPassword(existingValues.password);
-      setPhoneNumber(existingValues.phoneNumber);
-      setPositions(existingValues.positions);
-      setStatus(existingValues.status);
     }
   }, [existingValues]);
 
@@ -39,15 +31,13 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
-  async function createEmployee(newEmployee) {
-    // const newEmployee = {firstName: "", lastName: ""}
+  async function createEmployee({ newEmployee }) {
     await fetch("/api/employeeProfile/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newEmployee),
-      // body: newEmployee
     });
   }
 
@@ -111,16 +101,16 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
                 <div key={index}>{position}</div>
               ))}
               <div>
-                <StyledInput 
+                <StyledInput
                   value={positionToAdd}
                   onChange={(event) => onInputUpdate(event, setPositionToAdd)}
                 />
                 <StyledButton onClick={onAddPosition}>Add</StyledButton>
               </div>
               {/* <StyledInput
-                value={positions}
-                onChange={(event) => onInputUpdate(event, setPositions)}
-              /> */}
+                  value={positions}
+                  onChange={(event) => onInputUpdate(event, setPositions)}
+                /> */}
               <label>Status</label>
               <StyledInput
                 value={status}
@@ -135,5 +125,3 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     </>
   );
 };
-
-export default EmployeeEditForm;

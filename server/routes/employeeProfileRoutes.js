@@ -1,7 +1,7 @@
 const { application } = require("express");
 const express = require("express");
 const router = express.Router();
-
+const { createAvailability } = require("../models/availability");
 const {
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
@@ -35,6 +35,12 @@ router.post("/create", async (req, res) => {
   console.log(newEmployeeProfile);
   try {
     let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
+    // sends initial availability info availability model (imported above)
+    createAvailability(
+      employeeProfileId,
+      newEmployeeProfile.firstName,
+      newEmployeeProfile.lastName
+    );
     if (!employeeProfileId) res.status(500).send("failed to create");
     res.status(200).send(employeeProfileId);
   } catch (error) {
@@ -53,10 +59,6 @@ router.patch("/updateEmployeeProfile", async (req, res) => {
   let updatedEmployeeProfile = req.body;
   let id = updatedEmployeeProfile.id;
   console.log("Updating availability", id, "with", updatedEmployeeProfile);
-  // let availability = await availabilityModel.update(id, updatedAvailability);
-  // updateEmployeeProfile(employeeProfile, (updatedModel) => {
-  //   res.status(200).send(updatedModel);
-  // });
 });
 
 /** Get: All employees in database

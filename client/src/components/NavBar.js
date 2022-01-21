@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   NavbarContainer,
   LeftContainer,
@@ -15,6 +16,15 @@ import LogoImg from "../assets/logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
+  const [setUser] = useState();
+  useEffect(() => {
+    axios.post("/user/loggedInUser").then(function (response) {
+      if (response.data) {
+        setUser(response.data);
+        console.log(response);
+      }
+    });
+  }, []);
   return (
     <NavbarContainer>
       {""}
@@ -36,6 +46,12 @@ function NavBar() {
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
             <NavbarLink to="/dayView">Schedule</NavbarLink>
+            <NavbarLink element={{ setUser }} to="/logIn">
+              Log In
+            </NavbarLink>
+            <NavbarLink element={{ setUser }} to="/logOut">
+              Log Out
+            </NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

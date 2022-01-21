@@ -1,9 +1,12 @@
 import StyledTable from "./StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
+import StyledButton from "../Inputs/StyledButton";
+import { useNavigate } from "react-router-dom";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAvailabilityList = async () => {
@@ -18,6 +21,7 @@ function EmployeeAvailabilityList() {
     fetchAvailabilityList();
   }, []);
   console.log("AFTER USE EFFECT", availabilityList);
+
   let businessDays = [
     "Sunday",
     "Monday",
@@ -39,6 +43,15 @@ function EmployeeAvailabilityList() {
       } - ${dayObject.end > 12 ? dayObject.end - 12 : dayObject.end}`;
     } else return "?";
   };
+
+  function setSelectedEmployeeId(id) {
+    navigate("/availability/availability-edit/" + id);
+  }
+
+  function selectEmployee(id) {
+    console.log("selectEmployeeAvailability called on id", id);
+    setSelectedEmployeeId(id);
+  }
 
   return (
     <div>
@@ -99,6 +112,12 @@ function EmployeeAvailabilityList() {
                       {employee.firstName}
                       <br />
                       {employee.lastName}
+                      <br />
+                      <StyledButton
+                        onClick={() => selectEmployee(employee._id)}
+                      >
+                        EDIT
+                      </StyledButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />

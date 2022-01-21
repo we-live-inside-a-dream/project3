@@ -3,15 +3,15 @@ import CalendarComponent from "./components/UNUSED/CalendarComponent";
 // import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
 import "./App.css";
 // import { useState } from "react";
-import background from "./boldPic.jpg";
-import DaySchedule from "./components/pages/DaySchedule";
-import EmployeesList from "./components/pages/EmployeesList";
+import background from "./assets/boldPic.jpg";
+import DaySchedule from "./pages/common/DaySchedule";
+import EmployeesList from "./pages/manager/EmployeesList";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
-import StyledLink from "./components/StyledComponents/NavBar/StyledNavBar";
-import NavBar from "./components/NavBar";
-import EmployeeEditForm from "./components/EmployeeEditForm";
-import EmployeeAvailabilityPage from "./components/pages/EmployeeAvailabilityPage";
-import EmployeeAvailabilityEditPage from "./components/pages/EmployeeAvailabilityEditPage";
+import StyledLink from "./components/navigation/StyledNavBar";
+import NavBar from "./components/navigation/NavBar";
+import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
+import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
+import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
 
 function App() {
   return (
@@ -19,12 +19,6 @@ function App() {
       className="App"
       style={{
         backgroundImage: "url(" + background + ")",
-        backgroundSize: "cover",
-        backgroundPositionY: "70%",
-        backgroundPositionX: "center",
-        width: "100%",
-        height: "100vh",
-        backgroundRepeat: "no-repeat",
       }}
     >
       <NavBar />

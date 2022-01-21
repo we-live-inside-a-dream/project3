@@ -11,8 +11,8 @@ import {
   NavbarLinkExtended,
   OpenLinksButton,
   Logo,
-} from "./StyledComponents/NavBar/StyledNavBar";
-import LogoImg from "../assets/logo.png";
+} from "./StyledNavBar";
+import LogoImg from "../../assets/logo.png"
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -27,7 +27,6 @@ function NavBar() {
   }, []);
   return (
     <NavbarContainer>
-      {""}
       <NavbarInnerContainer>
         <LeftContainer>
           <Logo src={LogoImg}></Logo>

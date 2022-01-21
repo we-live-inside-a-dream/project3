@@ -1,7 +1,7 @@
-import StyledTable from "./StyledTable";
+import StyledTable from "../reusable/tables/StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
-import StyledButton from "../Inputs/StyledButton";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import { useNavigate } from "react-router-dom";
 import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
 

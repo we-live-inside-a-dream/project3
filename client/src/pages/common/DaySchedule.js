@@ -1,9 +1,9 @@
-import DynamicSchedule from "../StyledComponents/tables/DynamicSchedule";
+import DynamicSchedule from "../../components/day-schedule/DynamicSchedule";
 import { useState } from "react";
-import Modal from "../StyledComponents/Modal";
-import EditSchedule from "../editSchedule/EditSchedule";
-import StyledPage from "../StyledComponents/StyledPage";
-import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import Modal from "../../components/reusable/Modal";
+import EditSchedule from "../../components/edit-schedule/EditSchedule";
+import StyledPage from "../../components/reusable/StyledPage";
+import StyledButton from "../../components/reusable/Inputs/StyledButton";
 
 function DaySchedule() {
   const [isOpen, setIsOpen] = useState(false);

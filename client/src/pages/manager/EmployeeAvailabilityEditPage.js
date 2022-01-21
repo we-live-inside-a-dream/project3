@@ -1,5 +1,5 @@
-import EmployeeAvailabilityForm from "../EmployeeAvailabilityForm";
-import StyledPage from "../StyledComponents/StyledPage";
+import EmployeeAvailabilityForm from "../../components/employee-availabilities/EmployeeAvailabilityForm";
+import StyledPage from "../../components/reusable/StyledPage";
 
 import React from "react";
 

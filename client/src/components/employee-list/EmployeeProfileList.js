@@ -1,10 +1,10 @@
-import StyledTable from "./StyledTable";
-import StyledTableHeader from "./StyledTableHeader";
-import StyledTableRow from "../StyledTableRow";
-import StyledTableData from "./StyledTableData.js";
+import StyledTable from "../reusable/tables/StyledTable";
+import StyledTableHeader from "../reusable/tables/StyledTableHeader";
+import StyledTableRow from "../reusable/StyledTableRow";
+import StyledTableData from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
-import { LeftContainer } from "../NavBar/StyledNavBar";
+import { LeftContainer } from "../navigation/StyledNavBar";
 
 // let employees = [
 //   {

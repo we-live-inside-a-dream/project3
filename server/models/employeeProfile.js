@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 */
 
 const employeeProfile = new mongoose.Schema({
-    firstName: {
+  firstName: {
     type: String,
     required: true,
   },
@@ -33,7 +33,7 @@ const employeeProfile = new mongoose.Schema({
     required: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     unique: true,
     required: true,
   },
@@ -70,9 +70,14 @@ const signIn = async (employeeProfileInfo) => {
 };
 
 const listOfEmployees = async () => {
-  return employeeProfileModel.find({});
+  return employeeProfileModel.find({}).select(["-password"]);
 };
-
+const getActiveEmployeeNames = async () =>{
+  
+  let name = employeeProfileModel.find({status:"active"}).select(["firstName","lastName"])
+  console.log("get names...",name)
+  return (name)
+};
 // get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return employeeProfileModel.findById(employeeProfile_id);
@@ -105,4 +110,5 @@ module.exports = {
   updateEmployeeProfile,
   deleteEmployeeProfile,
   signIn,
+  getActiveEmployeeNames
 };

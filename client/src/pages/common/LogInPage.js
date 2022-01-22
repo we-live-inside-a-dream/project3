@@ -1,11 +1,10 @@
 import React from "react";
-import StyledPage from "../StyledComponents/StyledPage";
+import StyledPage from "../../components/reusable/StyledPage";
 
 function SignInPage() {
     return (
       <div>
         <StyledPage>
-         
         </StyledPage>
       </div>
     );

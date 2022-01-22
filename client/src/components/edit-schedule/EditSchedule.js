@@ -1,22 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
-import { Menu, Select, MenuItem } from "@mui/material";
+import { Menu, Select, MenuItem, NativeSelect } from "@mui/material";
 import MenuPopupState from "../UNUSED/MenuPopupState";
 
-import {
-  usePopupState,
-  bindTrigger,
-  bindMenu,
-} from "material-ui-popup-state/hooks";
-import StyledLabel from "../StyledComponents/Inputs/StyledLabel";
-import CenterStyle from "../StyledComponents/Inputs/CenterStyle";
+import StyledLabel from "../reusable/Inputs/StyledLabel";
+import CenterStyle from "../reusable/Inputs/CenterStyle";
 
-import StyledInput from "../StyledComponents/Inputs/StyledInput";
-import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import StyledInput from "../reusable/Inputs/StyledInput";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
-import StyledDropDownInput from "../StyledComponents/Inputs/StyledDropDownInput";
+import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 //events will be from employee.name DB
 
@@ -27,14 +22,14 @@ const events = [
   { name: "Reza" },
   { name: "Brian" },
 ];
-const events2 = [
-  { name: "" },
-  { name: "Coffe" },
-  { name: "Lunch" },
-  { name: "Coffe2" },
-];
+// const events2 = [
+//   { name: "" },
+//   { name: "Coffe" },
+//   { name: "Lunch" },
+//   { name: "Coffe2" },
+// ];
 
-function EditSchedule({ onClose }) {
+function EditSchedule({ onClose, shiftId, existingValues }) {
   const [name, setName] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -46,11 +41,43 @@ function EditSchedule({ onClose }) {
   const [breakEnd, setBreakEnd] = useState();
   const [breakPaid, setBreakPaid] = useState();
 
+  const [empNames, setEmpNames] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
 
+  useEffect(() => {
+    const fetchNames = async () => {
+      let fetchResult = await fetch("/api/employeeProfile/employees/names");
+      let fetchedNames = await fetchResult.json();
+      console.log("fetchedNames", fetchedNames);
+      setEmpNames(fetchedNames);
+    };
+    fetchNames();
+  }, []);
+
+  useEffect(() => {
+    if (existingValues) {
+      setName(existingValues.name);
+      setStart(existingValues.start);
+      setEnd(existingValues.end);
+      setDate(existingValues.date);
+      setBreaks(existingValues.breaks);
+    }
+  }, [existingValues]);
+
+  async function createShift(createdUser) {
+    console.log("creating user", name, "with data", createdUser);
+    await fetch("/api/schedule/schedule/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(createdUser),
+    });
+  }
+
   async function updateShift(updatedUser) {
-    console.log("Posting to user", name, "with data", updatedUser);
-    await fetch("/api/schedule/schedule", {
+    console.log("Updating user", name, "with data", updatedUser);
+    await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +101,13 @@ function EditSchedule({ onClose }) {
     };
     onClose();
     console.log("Saving volunteer", newShift);
-    await updateShift(newShift);
+    if (existingValues) {
+      console.log(existingValues);
+      console.log("updateShift with...", newShift);
+      await updateShift(newShift);
+    } else {
+      await createShift(newShift);
+    }
   }
 
   function onAddBreak() {
@@ -99,48 +132,40 @@ function EditSchedule({ onClose }) {
     setBreaks(newBreak);
   }
 
-  // const PopupState = () => {
-  //   const popupState = usePopupState({ variant: 'popover', popupId: 'demoMenu' })}
-  // let emp = [derek,julie,brian]
   return (
     <>
       <div>
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
         </InputLabel>
-        <Select
+        <NativeSelect
+          defaultValue={name}
           labelId="demo-simple-select-helper-label"
           id="name-imput"
           value={name}
           label="name"
           onChange={(event) => onInputUpdate(event, setName)}
           style={{
-            width: "300px",
+            width: "275px",
             fontSize: "1em",
             textAlign: "center",
+            margin: "10px",
             color: "#4488AB",
             backgroundColor: "white",
             border: "2px solid #4488AB",
+            boarderRadius: "3px",
             filter: "dropShadow(5px 5px 10px grey)",
           }}
         >
           {name}
-          <MenuItem value="name">
-            <em>None</em>
-          </MenuItem>
-          {events?.map((event, index) => {
+          {empNames?.map((event, index) => {
             return (
-              <MenuItem key={index} value={event.name}>
-                {event.name}
-              </MenuItem>
+              <option key={index} value={event.name}>
+                {event.firstName + " " + event.lastName}
+              </option>
             );
           })}
-        </Select>
-
-        {/* <div>
-
-<MenuPopupState/>
-      </div> */}
+        </NativeSelect>
       </div>
 
       <div>
@@ -164,7 +189,6 @@ function EditSchedule({ onClose }) {
           onChange={(event) => onInputUpdate(event, setStart)}
         />
 
-        {/* <InputLabel id="demo-simple-select-helper-label">End Time</InputLabel> */}
         <StyledInput
           label="end time"
           type="time"
@@ -196,13 +220,13 @@ function EditSchedule({ onClose }) {
             onInputUpdate(event, setBreakName);
           }}
         />
+
         <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
           +
         </StyledButton>
       </div>
-
       {/* <div>
-
+this is for making breaks list
 <Select
           labelId="demo-simple-select-helper-label"
           id="name-imput"
@@ -221,9 +245,7 @@ function EditSchedule({ onClose }) {
            }}
         >
           {name}
-          <MenuItem value="name">
-            <em>None</em>
-          </MenuItem>
+
           {events2?.map((event, index) => {
             return (
               <MenuItem key={index} value={event.name}>

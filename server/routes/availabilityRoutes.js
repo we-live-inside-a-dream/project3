@@ -51,7 +51,7 @@ router.patch("/availability/:id", async (req, res) => {
   let updatedAvailability = req.body;
   console.log("Updating availability", id, "with", updatedAvailability);
   let availability = await availabilityModel.update(id, updatedAvailability);
-  updateAvailability(availability, (updatedModel) => {
+  updatedAvailability(availability, (updatedModel) => {
     res.status(200).send(updatedModel);
   });
 });

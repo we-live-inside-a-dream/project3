@@ -1,4 +1,4 @@
-import StyledButton from "../StyledComponents/Inputs/StyledButton";
+import StyledButton from "../reusable/Inputs/StyledButton";
 
 
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledPage = styled.div`
   background-color: white;
-  width: 90%;
+  width: 80%;
   margin: auto;
   overflow-x: scroll;
 `;

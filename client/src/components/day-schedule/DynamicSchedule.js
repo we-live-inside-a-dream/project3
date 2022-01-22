@@ -1,12 +1,37 @@
 import React, { useEffect, useState } from "react";
+import EditSchedule from "../edit-schedule/EditSchedule";
+import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 
-import StyledTableHeader from "./StyledTableHeader";
+import StyledTable from "../reusable/tables/StyledTable";
+import Modal from "../../components/reusable/Modal";
 
-import StyledTable from "./StyledTable";
+// const selectedSchedule =({})=>(
+
+//     <Modal  open={isOpen} onClose={() => setIsOpen(false)}>
+//       <EditSchedule onClose={() => setIsOpen(false)} />
+//     </Modal>
+//   )
 
 function DynamicSchedule() {
+  const [shift,setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState("2022-01-14");
+  const [isOpen, setIsOpen] = useState();
+  const [shiftId,setShiftId] = useState()
+
+  
+  useEffect(() => {
+    console.log("shiftId is",shiftId);
+    const fetchShift = async () => {
+      let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+      console.log("fetch result", fetchResult);
+      let fetchedShift = await fetchResult.json();
+      console.log("fetchedShift is", fetchedShift);
+      setShift(fetchedShift);
+      setIsOpen(true)
+    };
+    fetchShift();
+  }, [shiftId]);
 
   useEffect(() => {
     console.log("day is ", day);
@@ -20,7 +45,6 @@ function DynamicSchedule() {
     };
     fetchSchedule();
   }, [day]);
-  console.log("AFTER USE EFFECT", day);
 
   let startTime = 8;
   let endTime = 18;
@@ -30,12 +54,20 @@ function DynamicSchedule() {
     businessHours.push(i);
     headerHours.push(i < 13 ? i : i - 12);
   }
-  console.log(businessHours);
+  // console.log(businessHours);
 
   function selectTheDay(day) {
     console.log("THE DAY FROM THE FUNCTION IS", day);
     setDay(day);
   }
+
+function convertTime(prop){
+    let timeString = (prop.slice(0,2)) + ((prop.slice(3)/60).toString().slice(1))
+    // console.log(timeString,"new String")
+    return(timeString)
+}
+   
+ 
 
   return (
     <div className="container">
@@ -63,7 +95,8 @@ function DynamicSchedule() {
         <thead>
           <tr>
             <th>NAME</th>
-            {headerHours?.map((hour) => {
+            {headerHours?.map((hour) => {         
+              
               if (hour === Math.floor(hour)) {
                 return (
                   <StyledTableHeader style={{ width: "50px", padding: "0px" }}>
@@ -91,10 +124,27 @@ function DynamicSchedule() {
             })}
           </tr>
         </thead>
+        {/* <tbody>
+ {schedule?.map((employee, index) => {
+   return(
+     <ScheduleRow 
+   schedule={schedule}
+   buisnessHours={buisnessHours}
+     
+     />
+   )
+ }
+
+        </tbody> */}
+        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+          <EditSchedule shiftId={shiftId} existingValues={shift} onClose={() => setIsOpen(false)} />
+          **edit**
+        </Modal>
         <tbody>
           {schedule?.map((employee, index) => (
-            <tr key={index}>
-              <td key={index}>
+            
+            <tr key={index} onClick={() => setShiftId(employee._id)}>
+              <td key={index} >
                 <div style={{ display: "inline-flex" }}>
                   <div
                     style={{
@@ -121,15 +171,16 @@ function DynamicSchedule() {
                         fontSize: ".7rem",
                       }}
                     >
-                      {employee.start}-{employee.end}
+                      {employee.start.slice(0,2)}-{employee.end.slice(0,2)}
                     </p>
                   </div>
                 </div>
               </td>
-
+              
+          
               {businessHours?.map((hour, index) => {
-                if (hour >= employee.start && hour < employee.end) {
-                  console.log(hour, employee.start);
+
+              if(hour >= convertTime(employee.start) && hour < convertTime(employee.end)) {
                   return (
                     <td key={index}>
                       <div

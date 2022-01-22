@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from 'react-select';
 import {
   StyledEmployeeForm,
   StyledFormWrapper,
@@ -10,6 +11,19 @@ import {
   StyledFieldset,
   StyledError,
 } from "./StyledEmployeeForm";
+
+
+const positionData = [
+  {
+    value: 1,
+    label: "(Manager)"
+  },
+  {
+    value: 2,
+    label: "(supervisor)"
+  }
+]
+
 
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
@@ -51,6 +65,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     });
   }
 
+  
   async function postData() {
     let newEmployeeInfo = {
       firstName,
@@ -70,6 +85,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setPositionToAdd("");
     setPositions(positions);
   }
+
 
   return (
     <>
@@ -102,25 +118,37 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             />
             <label>Phone Number</label>
             <StyledInput
+
               value={phoneNumber}
               onChange={(event) => onInputUpdate(event, setPhoneNumber)}
             />
+            {/* shit show starts from here... */}
             <label>Positions</label>
+            <div>
+            <Select
+            value={positions}
+            options={positionData}
+            onChange={(event) => onInputUpdate(event, setPositionToAdd)}
+            />
             <div>
               {positions.map((position, index) => (
                 <div key={index}>{position}</div>
               ))}
               <div>
+              </div>
+              {/* and ends here... */}
+              
                 <StyledInput 
                   value={positionToAdd}
                   onChange={(event) => onInputUpdate(event, setPositionToAdd)}
                 />
-                <StyledButton onClick={onAddPosition}>Add</StyledButton>
-              </div>
-              {/* <StyledInput
+                <StyledButton onClick={onAddPosition}>Add</StyledButton> 
+              </div> 
+
+              <StyledInput
                 value={positions}
                 onChange={(event) => onInputUpdate(event, setPositions)}
-              /> */}
+              />
               <label>Status</label>
               <StyledInput
                 value={status}

@@ -12,7 +12,7 @@ import {
   OpenLinksButton,
   Logo,
 } from "./StyledNavBar";
-import LogoImg from "../../assets/logo.png"
+import LogoImg from "../../assets/logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -45,6 +45,7 @@ function NavBar() {
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
             <NavbarLink to="/dayView">Schedule</NavbarLink>
+            <NavbarLink to="/availabilities">Availabilities</NavbarLink>
             <NavbarLink element={{ setUser }} to="/logIn">
               Log In
             </NavbarLink>

@@ -56,10 +56,12 @@ router.patch("/availability/:id", async (req, res) => {
   });
 });
 
-// router.get("/availability/:id", async (req, res) => {
-//   let availabilityList = await availabilityModel.listAvailabilities();
-//   res.send(availabilityList);
-// });
+router.get("/availability/:id", async (req, res) => {
+  let id = req.params.id;
+  let profile = await availabilityModel.getAvailabilityById(id);
+  res.status(200).send(profile);
+});
+
 router.get("/availability-all", async (req, res) => {
   let availabilityList =
     await availabilityModel.listOfEmployeesAvailabilities();

@@ -42,12 +42,6 @@ passport.deserializeUser(function(id, done) {
     .catch(done)
 });
 
-// router.post("/signIn", async (req, res) => {
-//     // console.log(req.user)
-//     let employeeProfileInfo = req.body.inputs;
-//     let user = await signIn(employeeProfileInfo);
-//     res.send(user);
-//   });
 
 router.post('/logIn', passport.authenticate('local'), async (req, res) => {
   // If this function gets called, authentication was successful.

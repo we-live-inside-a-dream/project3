@@ -8,7 +8,7 @@ const availability = new mongoose.Schema({
   //   ref: "User",
   // },
   employeeProfileId: {
-    type: Number,
+    type: String,
     required: true,
   },
   firstName: {
@@ -35,16 +35,20 @@ const availability = new mongoose.Schema({
 
 const Availability = mongoose.model("Availability", availability);
 
-// const createAvailability = async (availabilityData) => {
-//   let availability = new Availability(availabilityData);
-//   try {
-//     await availability.save();
-//     return availability;
-//   } catch (error) {
-//     console.error(error);
-//     return false;
-//   }
-// };
+const createAvailability = async (id, firstName, lastName) => {
+  let availability = new Availability({
+    employeeProfileId: id,
+    firstName: firstName,
+    lastName: lastName,
+  });
+  try {
+    await availability.save();
+    return availability;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
 
 // const getAvailabilityByEmployeeProfileId = async (employeeProfileId) => {
 //   return Availability.findOne({ employeeProfileId }).exec();
@@ -76,7 +80,7 @@ const listOfEmployeesAvailabilities = async () => {
 // };
 
 module.exports = {
-  // createAvailability,
+  createAvailability,
   // updateAvailability,
   // getAvailabilityByEmployeeProfileId,
   // availabilityList,

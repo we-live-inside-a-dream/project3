@@ -2,7 +2,6 @@
 // import axios from "axios";
 // import { useNavigate } from "react-router-dom";
 
-
 // export default function LogIn({ setUser }) {
 //   const [inputs, setInputs] = useState({});
 //   const navigate = useNavigate();
@@ -67,7 +66,7 @@
 //                 <div key={index}>{position}</div>
 //               ))}
 //               <div>
-//                 <StyledInput 
+//                 <StyledInput
 //                   value={positionToAdd}
 //                   onChange={(event) => onInputUpdate(event, setPositionToAdd)}
 //                 />

@@ -7,6 +7,7 @@ const {
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
   listOfEmployees,
+  getActiveEmployeeNames
 } = require("../models/employeeProfile");
 
 // const mustBeLoggedIn = async (req, res, next) => {
@@ -68,6 +69,11 @@ router.get("/employees", async (req, res) => {
   let employeeList = await listOfEmployees();
   res.send(employeeList);
 });
+
+router.get("/employees/names", async (req,res)=>{ 
+  let employeeNames = await getActiveEmployeeNames()
+  res.send (employeeNames);
+})
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

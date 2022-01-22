@@ -25,7 +25,6 @@ router.get("/month", async (req, res) => {
 });
 
 router.get("/id", async (req,res)=>{
-
   let id = req.query.id;
   console.log("from API Id",id)
   let singleSchedule = await scheduleModel.findById(id)
@@ -33,12 +32,19 @@ router.get("/id", async (req,res)=>{
   res.json(singleSchedule)
 })
 
-router.post("/schedule", async (req, res) => {
+router.post("/schedule/new", async (req, res) => {
   console.log('req.body',req.body)
   let newSchedule = req.body;
   console.log(newSchedule)
   let createdId = await scheduleModel.createSchedule(newSchedule);
   res.send(createdId);
 });
+
+router.post('/schedule/update',async (req,res)=>{
+  let id = req.query.id
+  let updateSchedule = req.body
+  let newSchedule = await scheduleModel.update(id,updateSchedule)
+  res.send (newSchedule)
+})
 
 module.exports = router;

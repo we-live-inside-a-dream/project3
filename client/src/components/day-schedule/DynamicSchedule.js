@@ -137,7 +137,7 @@ function convertTime(prop){
 
         </tbody> */}
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          <EditSchedule  existingValues={shift} onClose={() => setIsOpen(false)} />
+          <EditSchedule shiftId={shiftId} existingValues={shift} onClose={() => setIsOpen(false)} />
           **edit**
         </Modal>
         <tbody>

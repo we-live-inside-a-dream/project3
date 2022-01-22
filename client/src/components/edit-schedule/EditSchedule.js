@@ -32,7 +32,7 @@ const events = [
 
 
 
-function EditSchedule({ onClose, existingValues }) {
+function EditSchedule({ onClose,shiftId, existingValues }) {
   const [name, setName] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -44,7 +44,19 @@ function EditSchedule({ onClose, existingValues }) {
   const [breakEnd, setBreakEnd] = useState();
   const [breakPaid, setBreakPaid] = useState();
 
+  const [empNames,setEmpNames]= useState([])
   const [breakToAdd, setBreakToAdd] = useState([]);
+
+useEffect(() => {
+  
+  const fetchNames = async () => {
+    let fetchResult = await fetch('/api/employeeProfile/employees/names');
+    let fetchedNames = await fetchResult.json();
+    console.log("fetchedNames", fetchedNames);
+    setEmpNames(fetchedNames)
+  };
+  fetchNames();
+}, []);
 
  useEffect(()=>{
    if(existingValues){
@@ -56,9 +68,20 @@ function EditSchedule({ onClose, existingValues }) {
    }
  },[existingValues])
 
+  async function createShift(createdUser) {
+    console.log("creating user", name, "with data", createdUser);
+    await fetch("/api/schedule/schedule/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(createdUser),
+    });
+  }
+
   async function updateShift(updatedUser) {
-    console.log("Posting to user", name, "with data", updatedUser);
-    await fetch("/api/schedule/schedule", {
+    console.log("Updating user", name, "with data", updatedUser);
+    await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +89,7 @@ function EditSchedule({ onClose, existingValues }) {
       body: JSON.stringify(updatedUser),
     });
   }
+  
 
   function onInputUpdate(event, setter) {
     let newValue = event.target.value;
@@ -82,7 +106,13 @@ function EditSchedule({ onClose, existingValues }) {
     };
     onClose()
     console.log("Saving volunteer", newShift);
-    await updateShift(newShift);
+    if (existingValues){
+      console.log(existingValues)
+      console.log('updateShift with...',newShift)
+      await updateShift(newShift)
+    }else{ 
+      await createShift(newShift);
+    }
   }
 
   function onAddBreak() {
@@ -135,10 +165,10 @@ function EditSchedule({ onClose, existingValues }) {
            }}
         >
           {name}
-          {events?.map((event, index) => {
+          {empNames?.map((event, index) => {
             return (
               <option key={index} value={event.name}>
-                {event.name}
+                {event.firstName +" "+ event.lastName}
               </option>
             );
           })}
@@ -210,7 +240,7 @@ function EditSchedule({ onClose, existingValues }) {
         <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>+</StyledButton>
         </div>
 {/* <div>
-
+this is for making breaks list
 <Select
           labelId="demo-simple-select-helper-label"
           id="name-imput"

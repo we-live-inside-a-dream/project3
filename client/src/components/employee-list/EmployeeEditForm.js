@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Select from 'react-select';
+import Select from "react-select";
 import {
   StyledEmployeeForm,
   StyledFormWrapper,
@@ -12,18 +12,16 @@ import {
   StyledError,
 } from "./StyledEmployeeForm";
 
-
 const positionData = [
   {
-    value: 1,
-    label: "(Manager)"
+    // value: 1,
+    positions: "(Manager)",
   },
   {
-    value: 2,
-    label: "(supervisor)"
-  }
-]
-
+    // value: 2,
+    positions: "(supervisor)",
+  },
+];
 
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
@@ -53,6 +51,10 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
+  const handleChange = obj => {
+    setPositions(obj.position)
+  }
+
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
     await fetch("/api/employeeProfile/create", {
@@ -65,7 +67,6 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     });
   }
 
-  
   async function postData() {
     let newEmployeeInfo = {
       firstName,
@@ -80,12 +81,11 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     await createEmployee(newEmployeeInfo);
   }
 
-  function onAddPosition() {
-    positions.push(positionToAdd);
-    setPositionToAdd("");
-    setPositions(positions);
-  }
-
+  // function onAddPosition() {
+  //   positions.push(positionToAdd);
+  //   setPositionToAdd("");
+  //   setPositions(positions);
+  // }
 
   return (
     <>
@@ -118,45 +118,47 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             />
             <label>Phone Number</label>
             <StyledInput
-
               value={phoneNumber}
               onChange={(event) => onInputUpdate(event, setPhoneNumber)}
             />
             {/* shit show starts from here... */}
             <label>Positions</label>
-            <div>
-            <Select
-            value={positions}
-            options={positionData}
-            onChange={(event) => onInputUpdate(event, setPositionToAdd)}
-            />
-            <div>
-              {positions.map((position, index) => (
-                <div key={index}>{position}</div>
-              ))}
-              <div>
-              </div>
-              {/* and ends here... */}
-              
-                <StyledInput 
-                  value={positionToAdd}
-                  onChange={(event) => onInputUpdate(event, setPositionToAdd)}
-                />
-                <StyledButton onClick={onAddPosition}>Add</StyledButton> 
-              </div> 
-
-              <StyledInput
+              <Select
                 value={positions}
-                onChange={(event) => onInputUpdate(event, setPositions)}
-              />
-              <label>Status</label>
-              <StyledInput
-                value={status}
-                onChange={(event) => onInputUpdate(event, setStatus)}
-              />
+                options={positionData}
+                onChange={handleChange}
+                getOptionLabel={option => option.positions}
+                />
+                 <br/>
+                {/* <b>Selected Value</b>
+                <pre>{JSON.stringify(positions)}</pre>  */}
+              {/* and ends here... */}
+            {/* <div> */}
+              
+              {/* <div>
+                {positions.map((position, index) => (
+                  <div key={index}>{position}</div>
+                ))}
+              </div> */}
 
-              <StyledButton onClick={postData}>Save Details</StyledButton>
-            </div>
+              {/* <StyledInput
+                value={positions}
+                onChange={(event) => onInputUpdate(event, setPositionToAdd)}
+              /> */}
+              {/* <StyledButton onClick={onAddPosition}>Add</StyledButton>
+            </div> */}
+
+            {/* <StyledInput
+              value={positions}
+              onChange={(event) => onInputUpdate(event, setPositions)}
+            /> */}
+            <label>Status</label>
+            <StyledInput
+              value={status}
+              onChange={(event) => onInputUpdate(event, setStatus)}
+            />
+
+            <StyledButton onClick={postData}>Save Details</StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

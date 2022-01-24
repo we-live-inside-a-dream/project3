@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "react-select";
 import {
   StyledEmployeeForm,
   StyledFormWrapper,
@@ -10,6 +11,17 @@ import {
   StyledFieldset,
   StyledError,
 } from "./StyledEmployeeForm";
+
+const positionData = [
+  {
+    // value: 1,
+    positions: "(Manager)",
+  },
+  {
+    // value: 2,
+    positions: "(supervisor)",
+  },
+];
 
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
@@ -39,6 +51,10 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
+  const handleChange = obj => {
+    setPositions(obj.position)
+  }
+
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
     await fetch("/api/employeeProfile/create", {
@@ -65,11 +81,11 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     await createEmployee(newEmployeeInfo);
   }
 
-  function onAddPosition() {
-    positions.push(positionToAdd);
-    setPositionToAdd("");
-    setPositions(positions);
-  }
+  // function onAddPosition() {
+  //   positions.push(positionToAdd);
+  //   setPositionToAdd("");
+  //   setPositions(positions);
+  // }
 
   return (
     <>
@@ -105,30 +121,44 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
               value={phoneNumber}
               onChange={(event) => onInputUpdate(event, setPhoneNumber)}
             />
+            {/* shit show starts from here... */}
             <label>Positions</label>
-            <div>
-              {positions.map((position, index) => (
-                <div key={index}>{position}</div>
-              ))}
-              <div>
-                <StyledInput 
-                  value={positionToAdd}
-                  onChange={(event) => onInputUpdate(event, setPositionToAdd)}
+              <Select
+                value={positions}
+                options={positionData}
+                onChange={handleChange}
+                getOptionLabel={option => option.positions}
                 />
-                <StyledButton onClick={onAddPosition}>Add</StyledButton>
-              </div>
+                 <br/>
+                {/* <b>Selected Value</b>
+                <pre>{JSON.stringify(positions)}</pre>  */}
+              {/* and ends here... */}
+            {/* <div> */}
+              
+              {/* <div>
+                {positions.map((position, index) => (
+                  <div key={index}>{position}</div>
+                ))}
+              </div> */}
+
               {/* <StyledInput
                 value={positions}
-                onChange={(event) => onInputUpdate(event, setPositions)}
+                onChange={(event) => onInputUpdate(event, setPositionToAdd)}
               /> */}
-              <label>Status</label>
-              <StyledInput
-                value={status}
-                onChange={(event) => onInputUpdate(event, setStatus)}
-              />
+              {/* <StyledButton onClick={onAddPosition}>Add</StyledButton>
+            </div> */}
 
-              <StyledButton onClick={postData}>Save Details</StyledButton>
-            </div>
+            {/* <StyledInput
+              value={positions}
+              onChange={(event) => onInputUpdate(event, setPositions)}
+            /> */}
+            <label>Status</label>
+            <StyledInput
+              value={status}
+              onChange={(event) => onInputUpdate(event, setStatus)}
+            />
+
+            <StyledButton onClick={postData}>Save Details</StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

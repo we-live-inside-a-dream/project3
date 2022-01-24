@@ -2,24 +2,14 @@ import StyledTable from "../reusable/tables/StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import { useNavigate } from "react-router-dom";
 import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
-  const [employeeProfileId, setSelectedEmployeeId] = useState("");
-  const [employees, setEmployees] = useState([]);
+  const [selectedAvailabilityId, setSelectedAvailabilityId] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function fetchData() {
-      console.log("Fetching employee data!");
-      let fetchResult = await fetch("/api/employeeProfile/employees");
-      let employeeList = await fetchResult.json();
-      setEmployees(employeeList);
-    }
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchAvailabilityList = async () => {
@@ -46,11 +36,11 @@ function EmployeeAvailabilityList() {
   ];
   //
   let renderAvailability = function (dayObject) {
-    if (dayObject.availabile === false) {
+    if (dayObject.available === false) {
       return "--";
-    } else if (dayObject.availabile === true && dayObject.allDay === true) {
+    } else if (dayObject.available === true && dayObject.allDay === true) {
       return "all day";
-    } else if (dayObject.availabile === true && dayObject.allDay === false) {
+    } else if (dayObject.available === true && dayObject.allDay === false) {
       return `${
         dayObject.start > 12 ? dayObject.start - 12 : dayObject.start
       } - ${dayObject.end > 12 ? dayObject.end - 12 : dayObject.end}`;
@@ -58,13 +48,13 @@ function EmployeeAvailabilityList() {
   };
 
   //selects the employee id to davigate to the pagee to edit that particular employee
-  function selectEmployeeId(id) {
-    navigate("/availability/availability-edit/" + id);
+  function selectAvailabilityId(id) {
+    navigate("/availability-edit/" + id);
   }
   //selects employee from dropdowm menu
-  function selectEmployee(id) {
-    console.log("selectEmployeeAvailability called on id", id);
-    selectEmployeeId(id);
+  function selectAvailability(id) {
+    console.log("selectAvailability called on id", id);
+    selectAvailabilityId(id);
   }
 
   return (
@@ -97,7 +87,7 @@ function EmployeeAvailabilityList() {
           </tr>
         </thead>
         <tbody>
-          {availabilityList?.map((person, index) => {
+          {availabilityList?.map((availability, index) => {
             return (
               <tr key={index}>
                 <td>
@@ -123,19 +113,21 @@ function EmployeeAvailabilityList() {
                         fontWeight: "600",
                       }}
                     >
-                      {person.firstName}
+                      {availability.firstName}
                       <br />
-                      {person.lastName}
+                      {availability.lastName}
                       <br />
-                      <StyledButton onClick={() => selectEmployee(person._id)}>
-                        EDIT
-                      </StyledButton>
+                      <StyledEditButton
+                        onClick={() => selectAvailability(availability._id)}
+                      >
+                        ✎
+                      </StyledEditButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />
                 </td>
-                <td>{person.maxHoursPerWeek}</td>
-                {person?.days?.map((day, index) => {
+                <td>{availability.maxHoursPerWeek}</td>
+                {availability?.days?.map((day, index) => {
                   return <td key={index}>{renderAvailability(day)}</td>;
                 })}
               </tr>
@@ -143,38 +135,6 @@ function EmployeeAvailabilityList() {
           })}
         </tbody>
       </StyledTable>
-      <InputLabel id="demo-simple-select-helper-label">
-        Employee Name
-      </InputLabel>
-      <Select
-        labelId="demo-simple-select-helper-label"
-        id="name-imput"
-        value={employeeProfileId}
-        label="name"
-        // onChange={(event) => onInputUpdate(event, selectEmployeeId(id))}
-        style={{
-          width: "300px",
-          fontSize: "1em",
-          textAlign: "center",
-          color: "#4488AB",
-          backgroundColor: "white",
-          border: "2px solid #4488AB",
-          filter: "dropShadow(5px 5px 10px grey)",
-        }}
-      >
-        {/* {employee} */}
-        <MenuItem value="name">
-          <em>None</em>
-        </MenuItem>
-        {employees?.map((person, index) => {
-          return (
-            <MenuItem key={index} value={person._id}>
-              {person.firstName}
-              {person.lastName}
-            </MenuItem>
-          );
-        })}
-      </Select>
     </div>
   );
 }

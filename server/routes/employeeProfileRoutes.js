@@ -7,7 +7,7 @@ const {
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
   listOfEmployees,
-  getActiveEmployeeNames
+  getActiveEmployeeNames,
 } = require("../models/employeeProfile");
 
 // const mustBeLoggedIn = async (req, res, next) => {
@@ -56,10 +56,12 @@ router.post("/create", async (req, res) => {
  */
 
 router.patch("/updateEmployeeProfile", async (req, res) => {
-  console.log(req.body);
   let updatedEmployeeProfile = req.body;
   let id = updatedEmployeeProfile.id;
-  console.log("Updating availability", id, "with", updatedEmployeeProfile);
+  console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
+  let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
+  res.send(updatedEmployee);
+  console.log("updated employee...", updatedEmployee);
 });
 
 /** Get: All employees in database
@@ -72,10 +74,10 @@ router.get("/employees", async (req, res) => {
   res.send(employeeList);
 });
 
-router.get("/employees/names", async (req,res)=>{ 
-  let employeeNames = await getActiveEmployeeNames()
-  res.send (employeeNames);
-})
+router.get("/employees/names", async (req, res) => {
+  let employeeNames = await getActiveEmployeeNames();
+  res.send(employeeNames);
+});
 
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;

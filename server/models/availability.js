@@ -24,8 +24,8 @@ const availability = new mongoose.Schema({
   },
   days: [
     {
-      day: String,
-      availavle: Boolean,
+      dayName: String,
+      available: Boolean,
       allDay: Boolean,
       start: Number,
       end: Number,
@@ -50,9 +50,9 @@ const createAvailability = async (id, firstName, lastName) => {
   }
 };
 
-// const getAvailabilityByEmployeeProfileId = async (employeeProfileId) => {
-//   return Availability.findOne({ employeeProfileId }).exec();
-// };
+const getAvailabilityById = async (id) => {
+  return Availability.findOne({ _id: id });
+};
 
 //returns entire list of employees and availabilities
 const listOfEmployeesAvailabilities = async () => {
@@ -82,7 +82,7 @@ const listOfEmployeesAvailabilities = async () => {
 module.exports = {
   createAvailability,
   // updateAvailability,
-  // getAvailabilityByEmployeeProfileId,
+  getAvailabilityById,
   // availabilityList,
   // deleteAvailability,
   listOfEmployeesAvailabilities,

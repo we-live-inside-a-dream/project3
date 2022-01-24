@@ -1,10 +1,9 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
 import { Menu, Select, MenuItem, NativeSelect } from "@mui/material";
 import MenuPopupState from "../UNUSED/MenuPopupState";
-
 
 import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
@@ -30,9 +29,7 @@ const events = [
 //   { name: "Coffe2" },
 // ];
 
-
-
-function EditSchedule({ onClose,shiftId, existingValues }) {
+function EditSchedule({ onClose, shiftId, existingValues }) {
   const [name, setName] = useState();
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
@@ -44,29 +41,28 @@ function EditSchedule({ onClose,shiftId, existingValues }) {
   const [breakEnd, setBreakEnd] = useState();
   const [breakPaid, setBreakPaid] = useState();
 
-  const [empNames,setEmpNames]= useState([])
+  const [empNames, setEmpNames] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
 
-useEffect(() => {
-  
-  const fetchNames = async () => {
-    let fetchResult = await fetch('/api/employeeProfile/employees/names');
-    let fetchedNames = await fetchResult.json();
-    console.log("fetchedNames", fetchedNames);
-    setEmpNames(fetchedNames)
-  };
-  fetchNames();
-}, []);
+  useEffect(() => {
+    const fetchNames = async () => {
+      let fetchResult = await fetch("/api/employeeProfile/employees/names");
+      let fetchedNames = await fetchResult.json();
+      console.log("fetchedNames", fetchedNames);
+      setEmpNames(fetchedNames);
+    };
+    fetchNames();
+  }, []);
 
- useEffect(()=>{
-   if(existingValues){
-     setName(existingValues.name)
-     setStart(existingValues.start)
-     setEnd(existingValues.end)
-     setDate(existingValues.date)
-     setBreaks(existingValues.breaks)
-   }
- },[existingValues])
+  useEffect(() => {
+    if (existingValues) {
+      setName(existingValues.name);
+      setStart(existingValues.start);
+      setEnd(existingValues.end);
+      setDate(existingValues.date);
+      setBreaks(existingValues.breaks);
+    }
+  }, [existingValues]);
 
   async function createShift(createdUser) {
     console.log("creating user", name, "with data", createdUser);
@@ -89,7 +85,6 @@ useEffect(() => {
       body: JSON.stringify(updatedUser),
     });
   }
-  
 
   function onInputUpdate(event, setter) {
     let newValue = event.target.value;
@@ -104,13 +99,13 @@ useEffect(() => {
       date,
       breaks,
     };
-    onClose()
+    onClose();
     console.log("Saving volunteer", newShift);
-    if (existingValues){
-      console.log(existingValues)
-      console.log('updateShift with...',newShift)
-      await updateShift(newShift)
-    }else{ 
+    if (existingValues) {
+      console.log(existingValues);
+      console.log("updateShift with...", newShift);
+      await updateShift(newShift);
+    } else {
       await createShift(newShift);
     }
   }
@@ -137,45 +132,40 @@ useEffect(() => {
     setBreaks(newBreak);
   }
 
-
   return (
     <>
       <div>
         <InputLabel id="demo-simple-select-helper-label">
           Employee Name
         </InputLabel>
-          <NativeSelect
+        <NativeSelect
           defaultValue={name}
           labelId="demo-simple-select-helper-label"
           id="name-imput"
           value={name}
           label="name"
           onChange={(event) => onInputUpdate(event, setName)}
-          style={{ 
-            
-          width: "275px",
-          fontSize: "1em",
-          textAlign: "center",
-          margin:"10px",
-          color: "#4488AB",
-          backgroundColor: "white", 
-          border: "2px solid #4488AB",
-          boarderRadius:'3px',
-          filter: "dropShadow(5px 5px 10px grey)",
-           }}
+          style={{
+            width: "275px",
+            fontSize: "1em",
+            textAlign: "center",
+            margin: "10px",
+            color: "#4488AB",
+            backgroundColor: "white",
+            border: "2px solid #4488AB",
+            boarderRadius: "3px",
+            filter: "dropShadow(5px 5px 10px grey)",
+          }}
         >
           {name}
           {empNames?.map((event, index) => {
             return (
               <option key={index} value={event.name}>
-                {event.firstName +" "+ event.lastName}
+                {event.firstName + " " + event.lastName}
               </option>
             );
           })}
-          
         </NativeSelect>
-
-
       </div>
 
       <div>
@@ -184,30 +174,27 @@ useEffect(() => {
           label="shift day"
           type="date"
           value={date}
-         
           onChange={(event) => onInputUpdate(event, setDate)}
         />
       </div>
 
       <div>
-        <InputLabel id="demo-simple-select-helper-label">Start Time - End Time</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">
+          Start Time - End Time
+        </InputLabel>
         <StyledInput
           label="start time"
           type="time"
           value={start}
-         
           onChange={(event) => onInputUpdate(event, setStart)}
         />
-  
-    
+
         <StyledInput
           label="end time"
           type="time"
           value={end}
-         
           onChange={(event) => onInputUpdate(event, setEnd)}
         />
-
       </div>
       <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
 
@@ -216,30 +203,29 @@ useEffect(() => {
           label="break start time"
           type="time"
           value={breakStart}
-          
           onChange={(event) => onInputUpdate(event, setBreakStart)}
-          />
+        />
 
         <StyledInput
           label="break end time"
           type="time"
           value={breakEnd}
-          
           onChange={(event) => onInputUpdate(event, setBreakEnd)}
         />
       </div>
-        <div>
-          <StyledInput
-            value={breakName}
-           
-            onChange={(event) => {
-              onInputUpdate(event, setBreakName);
-            }}
-            />
+      <div>
+        <StyledInput
+          value={breakName}
+          onChange={(event) => {
+            onInputUpdate(event, setBreakName);
+          }}
+        />
 
-        <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>+</StyledButton>
-        </div>
-{/* <div>
+        <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
+          +
+        </StyledButton>
+      </div>
+      {/* <div>
 this is for making breaks list
 <Select
           labelId="demo-simple-select-helper-label"
@@ -271,18 +257,18 @@ this is for making breaks list
           <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
 </div> */}
 
-              <CenterStyle>
-            <div>
-              {breaks?.map((breakys, index) => (
-                <BreaksComponent
-                  breakys={breakys}
-                  index={index}
-                  onRemoveBreak={onRemoveBreak}
-                />
-              ))}
-            </div>
-      <StyledButton onClick={postData}>SUBMIT</StyledButton>
-            </CenterStyle>
+      <CenterStyle>
+        <div>
+          {breaks?.map((breakys, index) => (
+            <BreaksComponent
+              breakys={breakys}
+              index={index}
+              onRemoveBreak={onRemoveBreak}
+            />
+          ))}
+        </div>
+        <StyledButton onClick={postData}>SUBMIT</StyledButton>
+      </CenterStyle>
     </>
   );
 } //final brace

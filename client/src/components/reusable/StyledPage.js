@@ -4,6 +4,6 @@ const StyledPage = styled.div`
   background-color: white;
   width: 80%;
   margin: auto;
-  overflow-x: scroll;
+  overflow-y: auto;
 `;
 export default StyledPage;

@@ -3,7 +3,7 @@ import CalendarComponent from "./components/UNUSED/CalendarComponent";
 // import CalendarNewShiftForm from "./components/CalendarNewShiftForm";
 import "./App.css";
 // import { useState } from "react";
-import background from "./assets/boldPic.jpg";
+// import background from "./assets/boldPic.jpg";
 import DaySchedule from "./pages/common/DaySchedule";
 import EmployeesList from "./pages/manager/EmployeesList";
 import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
@@ -18,7 +18,8 @@ function App() {
     <div
       className="App"
       style={{
-        backgroundImage: "url(" + background + ")",
+        backgroundColor: "white",
+        // backgroundImage: "url(" + background + ")",
       }}
     >
       <NavBar />

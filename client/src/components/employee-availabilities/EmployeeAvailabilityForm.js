@@ -1,49 +1,61 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { StyledInput } from "../employee-list/StyledEmployeeForm";
+import { InputLabel } from "@mui/material";
+import { StyledButton } from "../employee-list/StyledEmployeeForm";
 
 const EmployeeAvailabilityForm = ({ existingValues, onSave }) => {
+  let params = useParams();
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
-  const [days, setDays] = useState(""); // will be a use context for managers settings
+  const [days, setDays] = useState([]); // will be a use context for managers settings
   const [day, setDay] = useState("");
-  const [available, setAvailabile] = useState(false);
+  const [available, setAvailable] = useState(false);
   const [allDay, setAllDay] = useState(false);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(0);
+  const [availability, setAvailability] = useState({
+    days: [],
+    day: "",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  });
 
-  //   useEffect(() => {
-  //     if (existingValues) {
-  //       setEmployeeId(existingValues.employee._id);
-  //       setFirstName(existingValues.firstName);
-  //       setLastName(existingValues.lastName);
-  //       setMaxHoursPerWeek(existingValues.maxHoursPerWeek);
-  //       setDays(existingValues.days); // will be a use context for managers settings
-  //       setDay(existingValues.day);
-  //       setAvailabile(existingValues.setAvailable);
-  //       setAllDay(existingValues.allDay);
-  //       setStart(existingValues.start);
-  //       setEnd(existingValues.end);
-  //     }
-  //   }, [existingValues]);
+  useEffect(() => {
+    const fetchAvailabilityById = async (id) => {
+      console.log(
+        "from useEffect, trying to fetch endpoint for availability by id"
+      );
+      let fetchResult = await fetch(
+        "/api/availability/availability/" + params.id
+      );
+      console.log("fetch result", fetchResult);
+      let theAvailability = await fetchResult.json();
+      console.log("fetching availability for ", theAvailability);
 
-  function onInputUpdate(event, setter) {
-    let newValue = event.target.value;
-    setter(newValue);
-  }
-  //   useEffect(() => {
-  //     const fetchEmployeeById = async () => {
-  //       console.log("from useEffect, trying to fetch endpoint");
-  //       let fetchResult = await fetch(`/api/availability/availability-all`);
-  //       console.log("fetch result", fetchResult);
-  //       let theAvailabilityList = await fetchResult.json();
-  //       console.log("fetching employee availability list", theAvailabilityList);
+      setAvailability(theAvailability);
+    };
+    fetchAvailabilityById();
+  }, [params.id]);
 
-  //       setAvailabilityList(theAvailabilityList);
-  //     };
-  //     fetchAvailabilityList();
-  //   }, []);
-  //   console.log("AFTER USE EFFECT", availabilityList);
+  useEffect(() => {
+    if (availability) {
+      setEmployeeId(availability._id);
+      setFirstName(availability.firstName);
+      setLastName(availability.lastName);
+      setMaxHoursPerWeek(availability.maxHoursPerWeek);
+      setDays(availability.days); // will be a use context for managers settings
+      setDay(availability.day);
+      setAvailable(availability.setAvailable);
+      setAllDay(availability.allDay);
+      setStart(availability.start);
+      setEnd(availability.end);
+    }
+  }, []);
 
   async function postData() {
     let newAvailability = {
@@ -52,94 +64,94 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave }) => {
       lastName,
       maxHoursPerWeek,
       days, // will be a use context for managers settings
-      day,
-      available,
-      allDay,
-      start,
-      end,
     };
     console.log("Saving availability for: ", firstName, lastName);
     await onSave(newAvailability);
   }
 
-  //   function onAddSuperpower() {
-  //     let newSuperpowers = [...superpowers];
-  //     newSuperpowers.push(powerToAdd);
-  //     setPowerToAdd("");
-  //     setSuperpowers(newSuperpowers);
-  //   }
+  let businessDays = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
 
-  //   function onRemoveSuperpower(index) {
-  //     console.log("removing superpower at index", index);
-  //     let newSuperpowers = [...superpowers];
-  //     newSuperpowers.splice(index, 1);
-  //     console.log("superpowers are now", newSuperpowers);
-  //     setSuperpowers(newSuperpowers);
-  //   }
-
+  function onAddDay() {
+    let day = {};
+    let newDay = [...days];
+    newDay.push(day);
+    setDays(newDay);
+    console.log("these are the days", days);
+  }
   return (
     <div>
-      <h2>
-        {" "}
-        {existingValues?.firstName && existingValues?.LastName
-          ? `Recurring Availability for ${existingValues.firstName} ${existingValues.lastName}`
-          : "New Employee Availability"}{" "}
-      </h2>
-      {/* <div>
-        <label className="field-title">Name</label>
-        <input
-          value={superheroName}
-          onChange={(event) => onInputUpdate(event, setSuperheroName)}
-        />
-        <label className="field-title">Alter Ego</label>
-        <input
-          value={alterEgo}
-          onChange={(event) => onInputUpdate(event, setAlterEgo)}
-        />
-        <label className="field-title">Home City</label>
-        <input
-          value={homeCity}
-          onChange={(event) => onInputUpdate(event, setHomeCity)}
-        />
-        <label className="field-title">Super Powers</label>
-        <div className="field-value">
-          {superpowers.map((power, index) => (
-            <div key={index}>
-              {power}
-              <button
-                className="btn-sm btn-danger"
-                onClick={() => {
-                  onRemoveSuperpower(index);
-                }}
-              >
-                X
-              </button>
-            </div>
-          ))}
-          <div>
-            <input
-              value={powerToAdd}
-              onChange={(event) => onInputUpdate(event, setPowerToAdd)}
-            />
-            <button className="btn-sm btn-primary" onClick={onAddSuperpower}>
-              Add
-            </button>
+      <h2>{`Edit Recurring Availability for ${availability.firstName} ${availability.lastName}`}</h2>
+      <InputLabel>
+        Max weekly hours
+        <input type="text" value={availability.maxHoursPerWeek}></input>
+      </InputLabel>
+      {availability?.days?.map((day, index) => {
+        return (
+          <div key={index}>
+            <p>{businessDays[index]}</p>
+
+            <label className="check-label">
+              <input
+                className="check"
+                name="available"
+                type="checkbox"
+                value={day.available}
+                checked={day.available === true}
+                onChange={(e) => setAvailable(e.target.value)}
+              />
+              Available
+            </label>
+            {day.available === true ? (
+              <label className="check-label">
+                <input
+                  className="check"
+                  name="all-day"
+                  type="checkbox"
+                  value={day.allDay}
+                  checked={day.allDay === true}
+                  onChange={(e) => setAllDay(e.target.checked)}
+                />
+                Available all day
+              </label>
+            ) : null}
+            {day.allDay === false ? (
+              <div>
+                <label>Start time</label>
+                <input
+                  name="all-day"
+                  type="number"
+                  value={day.start}
+                  onChange={(e) => setStart(e.target.value)}
+                />
+
+                <label>End time</label>
+                <input
+                  className="check"
+                  name="all-day"
+                  type="number"
+                  value={day.end}
+                  onChange={(e) => setEnd(e.target.value)}
+                />
+              </div>
+            ) : null}
+            <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddDay}>
+              +
+            </StyledButton>
           </div>
-        </div>
-        <label className="field-title">Costume</label>
-        <input
-          value={costume}
-          onChange={(event) => onInputUpdate(event, setCostume)}
-        />
-        <label className="field-title">Nemesis</label>
-        <input
-          value={nemesis}
-          onChange={(event) => onInputUpdate(event, setNemesis)}
-        />
-      </div>
+        );
+      })}
+
       <button className="btn btn-primary" onClick={postData}>
-        Save Superhero
-      </button> */}
+        Save
+      </button>
     </div>
   );
 };

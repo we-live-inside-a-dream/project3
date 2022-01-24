@@ -47,4 +47,10 @@ router.post('/schedule/update',async (req,res)=>{
   res.send (newSchedule)
 })
 
+router.post('/schedule/detele', async (req,res)=>{
+  let id = req.query.id
+  let deleteSchedule = await scheduleModel.deleteSchedule(id)
+  res.send(deleteSchedule)
+})
+
 module.exports = router;

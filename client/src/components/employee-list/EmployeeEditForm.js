@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import {useNavigate} from 'react-router-dom'
 import {
   StyledEmployeeForm,
   StyledFormWrapper,
@@ -10,6 +11,7 @@ import {
   StyledButton,
   StyledFieldset,
   StyledError,
+  
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -23,6 +25,14 @@ const positionData = [
   },
 ];
 
+const statusData = [
+  {
+    status: 'Active',
+  },
+  {
+    status: 'Not Active',
+  },
+];
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -32,7 +42,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
-  const [positionToAdd, setPositionToAdd] = useState("");
+  // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {
     if (existingValues) {
@@ -55,6 +65,12 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setPositions(obj.position)
   }
 
+  const statusHandleChange = obj => {
+    setStatus(obj.status)
+  }
+
+  let navigate = useNavigate()
+
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
     await fetch("/api/employeeProfile/create", {
@@ -65,6 +81,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       body: JSON.stringify(newEmployee),
       // body: newEmployee
     });
+    navigate('/employeeList')
   }
 
   async function postData() {
@@ -80,6 +97,8 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     console.log("Saving new employee information", newEmployeeInfo);
     await createEmployee(newEmployeeInfo);
   }
+
+  
 
   // function onAddPosition() {
   //   positions.push(positionToAdd);
@@ -153,10 +172,30 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
               onChange={(event) => onInputUpdate(event, setPositions)}
             /> */}
             <label>Status</label>
-            <StyledInput
+              {/* <Select
+                value={status}
+                options={statusData}
+                onChange={statusHandleChange}
+                getOptionLabel={option => option.status}
+                />
+                <br/> */}
+                <EditFormDropdown><div>
+                <select onChange={(e) =>{
+                  const selectedStatus=e.target.value;
+                  setStatus(selectedStatus)
+                }}>
+                  <option value='active'>Active</option>
+                  <option value='inactive'>Inactive</option>
+                </select>
+                {status}
+                </div>
+                <br/>
+                </EditFormDropdown>
+
+            {/* <StyledInput
               value={status}
               onChange={(event) => onInputUpdate(event, setStatus)}
-            />
+            /> */}
 
             <StyledButton onClick={postData}>Save Details</StyledButton>
           </div>

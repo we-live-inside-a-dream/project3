@@ -12,7 +12,7 @@ import {
   OpenLinksButton,
   Logo,
 } from "./StyledNavBar";
-import LogoImg from "../../assets/logo.png"
+import LogoImg from "../../assets/logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -45,12 +45,8 @@ function NavBar() {
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
             <NavbarLink to="/dayView">Schedule</NavbarLink>
-            <NavbarLink element={{ setUser }} to="/logIn">
-              Log In
-            </NavbarLink>
-            <NavbarLink element={{ setUser }} to="/logOut">
-              Log Out
-            </NavbarLink>
+            <NavbarLink to="/logIn">Log In</NavbarLink>
+            <NavbarLink to="/logOut">Log Out</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

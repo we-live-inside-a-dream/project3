@@ -4,6 +4,8 @@ import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../../components/reusable/Modal";
+import ShiftComponent from "../edit-schedule/ShiftComponent";
+import StyledButton from "../reusable/Inputs/StyledButton";
 
 // const selectedSchedule =({})=>(
 
@@ -67,7 +69,12 @@ function convertTime(prop){
     return(timeString)
 }
    
- 
+   async function deleteShift(shiftId) {
+
+  await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+      method: 'DELETE',
+  })}
+
 
   return (
     <div className="container">
@@ -124,27 +131,16 @@ function convertTime(prop){
             })}
           </tr>
         </thead>
-        {/* <tbody>
- {schedule?.map((employee, index) => {
-   return(
-     <ScheduleRow 
-   schedule={schedule}
-   buisnessHours={buisnessHours}
-     
-     />
-   )
- }
 
-        </tbody> */}
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule shiftId={shiftId} existingValues={shift} onClose={() => setIsOpen(false)} />
           **edit**
         </Modal>
         <tbody>
-          {schedule?.map((employee, index) => (
-            
-            <tr key={index} onClick={() => setShiftId(employee._id)}>
-              <td key={index} >
+          {schedule?.map((employee, index) => ( 
+          // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} /> 
+            <tr key={index} >
+              <td key={index} onClick={() => setShiftId(employee._id)} >
                 <div style={{ display: "inline-flex" }}>
                   <div
                     style={{
@@ -154,7 +150,7 @@ function convertTime(prop){
                       marginRight: "10px",
                       alignSelf: "center",
                     }}
-                  ></div>
+                    ></div>
                   <div
                     style={{
                       margin: "auto 10px auto 10px",
@@ -162,7 +158,7 @@ function convertTime(prop){
                       fontWeight: "600",
                       display: "block",
                     }}
-                  >
+                    >
                     <p>{employee.name}</p>
                     <p
                       style={{
@@ -170,19 +166,20 @@ function convertTime(prop){
                         color: "#545454",
                         fontSize: ".7rem",
                       }}
-                    >
+                      >
                       {employee.start.slice(0,2)}-{employee.end.slice(0,2)}
                     </p>
                   </div>
-                </div>
+                 
+                </div> 
               </td>
               
           
               {businessHours?.map((hour, index) => {
-
-              if(hour >= convertTime(employee.start) && hour < convertTime(employee.end)) {
+                
+                if(hour >= convertTime(employee.start) && hour < convertTime(employee.end)) {
                   return (
-                    <td key={index}>
+                    <td key={index} onClick={() => setShiftId(employee._id)}>
                       <div
                         style={{
                           backgroundColor: "#5AB9EA",
@@ -191,14 +188,18 @@ function convertTime(prop){
                           border: "1px solid #5AB9EA",
                           margin: "25px 0",
                         }}
-                      ></div>
+                        ></div>
                     </td>
                   );
                 } else {
                   return <td key={index}></td>;
                 }
+                
               })}
+              <td><StyledButton onClick ={()=>deleteShift(shiftId)}>X</StyledButton></td>
             </tr>
+              
+              
           ))}
         </tbody>
       </StyledTable>

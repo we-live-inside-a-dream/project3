@@ -2,26 +2,26 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
-import { Menu, Select, MenuItem, NativeSelect } from "@mui/material";
-import MenuPopupState from "../UNUSED/MenuPopupState";
+import {NativeSelect } from "@mui/material";
+// import MenuPopupState from "../UNUSED/MenuPopupState";
 
-import StyledLabel from "../reusable/Inputs/StyledLabel";
+// import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
 
 import StyledInput from "../reusable/Inputs/StyledInput";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
-import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
+// import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 //events will be from employee.name DB
 
-const events = [
-  { name: "" },
-  { name: "Julie" },
-  { name: "Derek" },
-  { name: "Reza" },
-  { name: "Brian" },
-];
+// const events = [
+//   { name: "" },
+//   { name: "Julie" },
+//   { name: "Derek" },
+//   { name: "Reza" },
+//   { name: "Brian" },
+// ];
 // const events2 = [
 //   { name: "" },
 //   { name: "Coffe" },
@@ -100,7 +100,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       breaks,
     };
     onClose();
-    console.log("Saving volunteer", newShift);
+    console.log("Saving shift", newShift);
     if (existingValues) {
       console.log(existingValues);
       console.log("updateShift with...", newShift);

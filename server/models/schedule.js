@@ -40,6 +40,7 @@ async function update(id, newScheduleData) {
 }
 
 async function deleteSchedule(id) {
+  console.log(id,"id in the model...")
   return Schedule.findByIdAndDelete(id);
 }
 

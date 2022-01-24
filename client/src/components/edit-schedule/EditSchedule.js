@@ -2,26 +2,20 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
-import { Menu, Select, MenuItem, NativeSelect } from "@mui/material";
-import MenuPopupState from "../UNUSED/MenuPopupState";
+import {NativeSelect } from "@mui/material";
+// import MenuPopupState from "../UNUSED/MenuPopupState";
 
-import StyledLabel from "../reusable/Inputs/StyledLabel";
+// import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
 
 import StyledInput from "../reusable/Inputs/StyledInput";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
-import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
+// import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-//events will be from employee.name DB
 
-const events = [
-  { name: "" },
-  { name: "Julie" },
-  { name: "Derek" },
-  { name: "Reza" },
-  { name: "Brian" },
-];
+
+
 // const events2 = [
 //   { name: "" },
 //   { name: "Coffe" },
@@ -48,7 +42,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
-      console.log("fetchedNames", fetchedNames);
+     
       setEmpNames(fetchedNames);
     };
     fetchNames();
@@ -65,7 +59,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }, [existingValues]);
 
   async function createShift(createdUser) {
-    console.log("creating user", name, "with data", createdUser);
+   
     await fetch("/api/schedule/schedule/new", {
       method: "POST",
       headers: {
@@ -76,7 +70,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }
 
   async function updateShift(updatedUser) {
-    console.log("Updating user", name, "with data", updatedUser);
+ 
     await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
@@ -100,12 +94,13 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       breaks,
     };
     onClose();
-    console.log("Saving volunteer", newShift);
+    
     if (existingValues) {
       console.log(existingValues);
       console.log("updateShift with...", newShift);
       await updateShift(newShift);
     } else {
+      console.log("Saving shift", newShift);
       await createShift(newShift);
     }
   }
@@ -117,11 +112,11 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     breaky.start = breakStart;
     breaky.end = breakEnd;
     breaky.paid = breakPaid;
-    console.log("this is breaky", breaky);
+    
     newBreak.push(breaky);
     setBreakToAdd("");
     setBreaks(newBreak);
-    console.log("this is the breaks", breaks);
+    
   }
 
   function onRemoveBreak(index) {

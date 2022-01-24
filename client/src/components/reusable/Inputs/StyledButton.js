@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.fontSize || "1em"};
   padding: ${(props) => props.padding || "0.8rem"};
   margin: ${(props) => props.margin || "1em"};
-  text-align: center;
+  text-align: ${(props) => props.textAlign || "center"};
   color: white;
   background-color: #4488ab;
   border: 2px solid #4488ab;

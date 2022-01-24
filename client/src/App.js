@@ -12,8 +12,22 @@ import NavBar from "./components/navigation/NavBar";
 import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
+import LogIn from "./components/login/LogIn";
+import LogOut from "./components/navigation/LogOut";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import ProfilePage from "./pages/common/ProfilePage";
 
 function App() {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    axios.post("/user/loggedInUser").then(function (response) {
+      if (response.data) {
+        setUser(response.data);
+        console.log(response);
+      }
+    });
+  }, []);
   return (
     <div
       className="App"
@@ -33,6 +47,9 @@ function App() {
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}
         />
+        <Route path="/profile" element={<ProfilePage user={user} />} />
+        <Route path="/logIn" element={<LogIn setUser={setUser} />} />
+        <Route path="/logOut" element={<LogOut setUser={setUser} />} />
       </Routes>
     </div>
   );

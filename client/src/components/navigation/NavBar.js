@@ -47,6 +47,7 @@ function NavBar() {
             <NavbarLink to="/dayView">Schedule</NavbarLink>
             <NavbarLink to="/logIn">Log In</NavbarLink>
             <NavbarLink to="/logOut">Log Out</NavbarLink>
+            <NavbarLink to="/profile">My Profile</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

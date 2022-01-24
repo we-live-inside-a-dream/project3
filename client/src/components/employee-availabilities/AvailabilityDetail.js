@@ -7,8 +7,12 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../reusable/Modal";
 import EditDayAvailability from "./EditDayAvailability";
 import EditMaxHours from "./EditMaxHours";
+import AvailabilityModal from "./AvailabilityModal";
 
 function EmployeeAvailabilityDetail({ availabilityId }) {
+  const [modalDay, setModalDay] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [dayIsOpen, setDayIsOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
   const [availability, setAvailability] = useState([]);
@@ -19,7 +23,7 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
     const fetchAvailabilityById = async () => {
       console.log("from useEffect, trying to fetch  for availability detail");
       let fetchResult = await fetch(
-        `/api/availability/availability/${params.id}`
+        `/api/availability/availability-day/${params.id}`
       );
       console.log("fetch result", fetchResult);
       let theAvailability = await fetchResult.json();
@@ -156,22 +160,23 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
                 <td key={index}>
                   {renderAvailability(day)}
                   <br />
-                  <StyledEditButton onClick={() => setDayIsOpen(!dayIsOpen)}>
+                  <StyledEditButton
+                    onClick={() => {
+                      setModalDay(day);
+                      setModalOpen(true);
+                    }}
+                  >
                     ✎
                   </StyledEditButton>
-                  {/* <Modal open={dayIsOpen} onClose={() => setDayIsOpen(false)}>
-                    <EditDayAvailability
-                      // existingValues={day}
-                      onClose={() => setDayIsOpen(false)}
-                    />
-                    **editDay**
-                  </Modal> */}
                 </td>
               );
             })}
           </tr>
         </tbody>
       </StyledTable>
+      {modalOpen && (
+        <AvailabilityModal day={modalDay} setModalOpen={setModalOpen} />
+      )}
     </div>
   );
 }

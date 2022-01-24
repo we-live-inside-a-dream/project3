@@ -10,12 +10,12 @@ const ModalInner = styled.div`
   background-color: #fff;
   padding: 10px;
   z-index: 1000;
-  border: 10px solid #4488AB;
+  border: 10px solid #4488ab;
   border-radius: 10px;
 `;
 
 const ModalOverlay = styled.div`
-  border: ${(props)=>props.border||"10px"};
+  border: ${(props) => props.border || "10px"};
   position: fixed;
   top: 0;
   left: 0;
@@ -25,7 +25,6 @@ const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-
 function Modal({ open, children, onClose }) {
   if (!open) return null;
 
@@ -33,9 +32,9 @@ function Modal({ open, children, onClose }) {
     <>
       <ModalOverlay onClick={onClose} />
       {
-        <ModalInner >
+        <ModalInner>
           {children}
-          {/* <StyledButton onClick={onClose}>Close Modal</StyledButton> */}
+          {/* <StyledButton onClick={onClose}>X</StyledButton> */}
         </ModalInner>
       }
     </>

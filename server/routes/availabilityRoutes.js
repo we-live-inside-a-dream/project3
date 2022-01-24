@@ -62,6 +62,40 @@ router.get("/availability/:id", async (req, res) => {
   res.status(200).send(profile);
 });
 
+router.get("/availability-day/:id", async (req, res) => {
+  let id = req.params.id;
+  let profile = await availabilityModel.getAvailabilityById(id);
+  res.status(200).send(profile);
+});
+router.post("/availability-update-maxhours/:id", async (req, res) => {
+  let updatedAvailability = req.body;
+  let id = req.params.id;
+
+  let profile = await availabilityModel.updateAvailabilityById(
+    id,
+    updatedAvailability
+  );
+  console.log(id, "is the id");
+  console.log("from availability API the updated availability is", profile);
+  res.json(profile);
+});
+router.post("/availability-update-day/", async (req, res) => {
+  let id = req.query.id;
+  let updatedAvailability = req.body;
+  console.log(
+    "FROM API ROUTER THE ID AND UPDATED AVAILABILITY",
+    id,
+    updatedAvailability
+  );
+  let dayObject = await availabilityModel.updateAvailabilityById(
+    id,
+    updatedAvailability
+  );
+  console.log(id, "is the id");
+  console.log("from availability API the updated availability is", dayObject);
+  res.json(dayObject);
+});
+
 router.get("/availability-all", async (req, res) => {
   let availabilityList =
     await availabilityModel.listOfEmployeesAvailabilities();

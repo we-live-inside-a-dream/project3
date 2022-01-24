@@ -27,7 +27,7 @@ export const StyledFormWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   padding: 0 20px;
 `;
 
@@ -84,6 +84,32 @@ export const StyledFieldset = styled.fieldset`
     margin-right: 10px;
   }
 `;
+
+// export const DropdownContainer = styled.div`
+//   @media screen and (min-width: 961px) {
+//     position: relative;
+//   }
+// `;
+
+// export const EditFormDropdown = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 80px;
+//   background-color: #de2eff;
+//   border: none;
+//   border-radius: 5px;
+//   padding: 15px;
+//   font-size: 1.1rem;
+//   gap: 0.5rem;
+//   cursor: pointer;
+
+//   &:hover {
+//     background-color: #8703a0;
+//     border: 1px solid #c2c2c2;
+//     transition: background 0.3s ease;
+//   }
+// `;
 
 export const StyledError = styled.div`
   color: red;

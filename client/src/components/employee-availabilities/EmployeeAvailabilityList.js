@@ -49,10 +49,10 @@ function EmployeeAvailabilityList() {
 
   //selects the employee id to davigate to the pagee to edit that particular employee
   function selectAvailabilityId(id) {
-    navigate("/availability-edit/" + id);
+    navigate("/availability-detail/" + id);
   }
   //selects employee from dropdowm menu
-  function selectAvailability(id) {
+  function selectAvailabilityById(id) {
     console.log("selectAvailability called on id", id);
     selectAvailabilityId(id);
   }
@@ -118,7 +118,7 @@ function EmployeeAvailabilityList() {
                       {availability.lastName}
                       <br />
                       <StyledEditButton
-                        onClick={() => selectAvailability(availability._id)}
+                        onClick={() => selectAvailabilityById(availability._id)}
                       >
                         ✎
                       </StyledEditButton>

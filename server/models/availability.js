@@ -33,6 +33,58 @@ const availability = new mongoose.Schema({
   ],
 });
 
+const dayArray = [
+  {
+    dayName: "sunday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "monday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "tuesday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "wednesday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "thursday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "friday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+  {
+    dayName: "saturday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
+];
+
 const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (id, firstName, lastName) => {
@@ -40,6 +92,8 @@ const createAvailability = async (id, firstName, lastName) => {
     employeeProfileId: id,
     firstName: firstName,
     lastName: lastName,
+    maxHoursPerWeek: 0,
+    days: dayArray,
   });
   try {
     await availability.save();

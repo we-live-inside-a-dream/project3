@@ -1,53 +1,52 @@
 import React, { useEffect, useState } from "react";
 import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
-
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../../components/reusable/Modal";
-import ShiftComponent from "../edit-schedule/ShiftComponent";
+// import ShiftComponent from "../edit-schedule/ShiftComponent";
 import StyledButton from "../reusable/Inputs/StyledButton";
-
-// const selectedSchedule =({})=>(
-
-//     <Modal  open={isOpen} onClose={() => setIsOpen(false)}>
-//       <EditSchedule onClose={() => setIsOpen(false)} />
-//     </Modal>
-//   )
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 function DynamicSchedule() {
-  const [shift,setShift] = useState();
+  const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState("2022-01-14");
   const [isOpen, setIsOpen] = useState();
-  const [shiftId,setShiftId] = useState()
+  const [shiftId, setShiftId] = useState();
+  const [deleteShift, setDeleteShift] = useState(false);
 
-  
   useEffect(() => {
-    console.log("shiftId is",shiftId);
+    console.log("shiftId is", shiftId);
     const fetchShift = async () => {
       let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
-      console.log("fetch result", fetchResult);
       let fetchedShift = await fetchResult.json();
-      console.log("fetchedShift is", fetchedShift);
       setShift(fetchedShift);
-      setIsOpen(true)
     };
-    fetchShift();
+    const deleteShiftById = async () => {
+      await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+        method: "DELETE",
+      });}
+    //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
+    if (deleteShift) {
+      console.log("trying to delete shift!!");
+      deleteShiftById()
+      setDeleteShift(false);
+      
+    } else {
+      fetchShift();
+    }
   }, [shiftId]);
 
   useEffect(() => {
-    console.log("day is ", day);
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
-      console.log("fetch result", fetchResult);
       let fetchedDay = await fetchResult.json();
-      console.log("fetchedDay is", fetchedDay);
-
       setSchedule(fetchedDay);
     };
     fetchSchedule();
   }, [day]);
 
+  //business hours should come from a db fetch
   let startTime = 8;
   let endTime = 18;
   let businessHours = [];
@@ -56,25 +55,18 @@ function DynamicSchedule() {
     businessHours.push(i);
     headerHours.push(i < 13 ? i : i - 12);
   }
-  // console.log(businessHours);
 
   function selectTheDay(day) {
     console.log("THE DAY FROM THE FUNCTION IS", day);
     setDay(day);
   }
 
-function convertTime(prop){
-    let timeString = (prop.slice(0,2)) + ((prop.slice(3)/60).toString().slice(1))
-    // console.log(timeString,"new String")
-    return(timeString)
-}
-   
-   async function deleteShift(shiftId) {
-
-  await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
-      method: 'DELETE',
-  })}
-
+  function convertTime(prop) {
+    let timeString =
+      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+    // converts 8:30 into 8.5 etc...
+    return timeString;
+  }
 
   return (
     <div className="container">
@@ -102,8 +94,7 @@ function convertTime(prop){
         <thead>
           <tr>
             <th>NAME</th>
-            {headerHours?.map((hour) => {         
-              
+            {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
                 return (
                   <StyledTableHeader style={{ width: "50px", padding: "0px" }}>
@@ -133,15 +124,26 @@ function convertTime(prop){
         </thead>
 
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          <EditSchedule shiftId={shiftId} existingValues={shift} onClose={() => setIsOpen(false)} />
+          <EditSchedule
+            shiftId={shiftId}
+            existingValues={shift}
+            onClose={
+              (() => setIsOpen(false), () => setShift(""), () => setShiftId(""))
+            }
+          />
           **edit**
         </Modal>
+
         <tbody>
-          {schedule?.map((employee, index) => ( 
-          // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} /> 
-            <tr key={index} >
-              <td key={index} onClick={() => setShiftId(employee._id)} >
+          {schedule?.map((employee, index) => (
+            // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
+            <tr key={index} onClick={() => setShiftId(employee._id)}>
+              <td key={index}>
                 <div style={{ display: "inline-flex" }}>
+                  
+
+                   
+                 
                   <div
                     style={{
                       backgroundColor: "grey",
@@ -150,7 +152,16 @@ function convertTime(prop){
                       marginRight: "10px",
                       alignSelf: "center",
                     }}
-                    ></div>
+                    >     <StyledButton
+                    fontSize={"0.5em"}
+                    padding={"0px"}
+                    margin={"0em"}
+                    textAlign={"left"}
+                    onClick={() => setDeleteShift(true)}
+                  >
+                    X
+                  </StyledButton></div>
+                    
                   <div
                     style={{
                       margin: "auto 10px auto 10px",
@@ -158,28 +169,44 @@ function convertTime(prop){
                       fontWeight: "600",
                       display: "block",
                     }}
-                    >
-                    <p>{employee.name}</p>
+                  >
+                      <p>{employee.name}</p>
+                    
                     <p
                       style={{
                         textShadow: "none",
                         color: "#545454",
                         fontSize: ".7rem",
                       }}
-                      >
-                      {employee.start.slice(0,2)}-{employee.end.slice(0,2)}
+                    >
+                      {employee.start.slice(0, 2)}-{employee.end.slice(0, 2)}
                     </p>
+                    <div>
+                      <StyledEditButton
+                        fontSize={"1em"}
+                        padding={"1px"}
+                        margin={"1px"}
+                        onClick={() => setIsOpen(true)}
+                      >
+                        ✎
+                      </StyledEditButton>
+                    </div>
                   </div>
-                 
-                </div> 
+                </div>
               </td>
-              
-          
+              {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
+                DO you want to delete this shift?
+                <StyledButton onClick={deleteShiftById()}>YES</StyledButton>
+                <StyledButton onClick ={setDeleteShift(false)}>NO</StyledButton>
+              </Modal> */}
+
               {businessHours?.map((hour, index) => {
-                
-                if(hour >= convertTime(employee.start) && hour < convertTime(employee.end)) {
+                if (
+                  hour >= convertTime(employee.start) &&
+                  hour < convertTime(employee.end)
+                ) {
                   return (
-                    <td key={index} onClick={() => setShiftId(employee._id)}>
+                    <td key={index}>
                       <div
                         style={{
                           backgroundColor: "#5AB9EA",
@@ -188,18 +215,16 @@ function convertTime(prop){
                           border: "1px solid #5AB9EA",
                           margin: "25px 0",
                         }}
-                        ></div>
+                      ></div>
                     </td>
                   );
                 } else {
                   return <td key={index}></td>;
                 }
-                
               })}
-              <td><StyledButton onClick ={()=>deleteShift(shiftId)}>X</StyledButton></td>
+
+              <td></td>
             </tr>
-              
-              
           ))}
         </tbody>
       </StyledTable>

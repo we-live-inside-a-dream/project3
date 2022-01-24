@@ -113,7 +113,21 @@ const listOfEmployeesAvailabilities = async () => {
   console.log("from Availability model");
   return Availability.find({});
 };
+async function updateAvailabilityById(id, updatedAvailability) {
+  let newAvailability = await Availability.findByIdAndUpdate(
+    id,
+    updatedAvailability,
+    {
+      returnDocument: "after",
+    }
+  );
 
+  console.log(
+    "from availability model, updated availability is",
+    newAvailability
+  );
+  return newAvailability;
+}
 // const updateAvailability = (newAvailability, callback) => {
 //   Availability.findByIdAndUpdate(
 //     newAvailability._id,
@@ -135,7 +149,7 @@ const listOfEmployeesAvailabilities = async () => {
 
 module.exports = {
   createAvailability,
-  // updateAvailability,
+  updateAvailabilityById,
   getAvailabilityById,
   // availabilityList,
   // deleteAvailability,

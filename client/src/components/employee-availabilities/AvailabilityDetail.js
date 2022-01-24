@@ -42,7 +42,7 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
   ];
   //
   let renderAvailability = function (dayObject) {
-    console.log("rendering availability for ", dayObject);
+    // console.log("rendering availability for ", dayObject);
     if (dayObject.available === false) {
       return "--";
     } else if (dayObject.available === true && dayObject.allDay === true) {
@@ -148,7 +148,7 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
                   existingValues={availability}
                   onClose={() => setMaxHoursIsOpen(false)}
                 />
-                **edit max hours**
+                ** max hours**
               </Modal>
             </td>
             {availability?.days?.map((day, index) => {
@@ -159,13 +159,13 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
                   <StyledEditButton onClick={() => setDayIsOpen(!dayIsOpen)}>
                     ✎
                   </StyledEditButton>
-                  <Modal open={dayIsOpen} onClose={() => setDayIsOpen(false)}>
+                  {/* <Modal open={dayIsOpen} onClose={() => setDayIsOpen(false)}>
                     <EditDayAvailability
-                      existingValues={day._id}
+                      // existingValues={day}
                       onClose={() => setDayIsOpen(false)}
                     />
                     **editDay**
-                  </Modal>
+                  </Modal> */}
                 </td>
               );
             })}

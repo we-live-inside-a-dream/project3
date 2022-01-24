@@ -1,4 +1,7 @@
+import { InputLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledInput from "../reusable/Inputs/StyledInput";
 
 function EditMaxHours({ existingValues }) {
   const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
@@ -27,7 +30,7 @@ function EditMaxHours({ existingValues }) {
       maxHoursPerWeek
     );
     await fetch(
-      `/api/availability/availability-edit-maxhours?id=${availabilityId}`,
+      "/api/availability/availability-update-maxhours/" + existingValues._id,
       {
         method: "POST",
         headers: {
@@ -45,12 +48,22 @@ function EditMaxHours({ existingValues }) {
       employeeProfileId,
       days,
     };
-    
-    
-    }
+    console.log("posting updated maxHours for", firstName);
+    await updateMaxHours(updatedAvailability);
   }
 
-  return <div></div>;
+  return (
+    <div>
+      <h2>Update Max Hours Per Week</h2>
+      <InputLabel>Max Hours</InputLabel>
+      <StyledInput
+        type="number"
+        value={maxHoursPerWeek}
+        onChange={(e) => setMaxHoursPerWeek(parseInt(e.target.value))}
+      />
+      <StyledButton onClick={postData}>SAVE</StyledButton>
+    </div>
+  );
 }
 
 export default EditMaxHours;

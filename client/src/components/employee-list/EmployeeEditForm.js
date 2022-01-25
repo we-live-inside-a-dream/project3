@@ -6,12 +6,7 @@ import {
   StyledFormWrapper,
   StyledForm,
   StyledInput,
-  sharedStyles,
-  StyledTextArea,
-  StyledButton,
-  StyledFieldset,
-  StyledError,
-  Dropdown,
+  StyledButton
 } from "./StyledEmployeeForm";
 
 const positionData = [

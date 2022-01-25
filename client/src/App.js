@@ -13,21 +13,20 @@ import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEd
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
 import WeekSchedulePage from "./pages/common/WeekSchedulePage";
 import EmployeeDetail from "./components/employee-list/EmployeeDetail";
-import LogIn from "./components/login/LogIn"
-import LogOut from "./components/navigation/LogOut"
+import LogIn from "./components/login/LogIn";
+import LogOut from "./components/navigation/LogOut";
 import ProfilePage from "./pages/common/ProfilePage";
 
 function App() {
-  const [user,setUser] = useState()
-  useEffect(()=>{
-    axios.post('/user/loggedInUser')
-    .then(function (response) {
-      if(response.data){
-        setUser(response.data)
-        console.log(response)
+  const [user, setUser] = useState();
+  useEffect(() => {
+    axios.post("/user/loggedInUser").then(function (response) {
+      if (response.data) {
+        setUser(response.data);
+        console.log(response);
       }
-    })
-  }, [])
+    });
+  }, []);
   return (
     <div
       className="App"
@@ -50,9 +49,9 @@ function App() {
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}
         />
-        <Route path="/LogIn" element={<LogIn setUser={setUser}/>} />
-        <Route path="/logOut" element={<LogOut setUser={setUser}/>} />
-        <Route path="/setting" element={<ProfilePage user={user} />} />
+        <Route path="/LogIn" element={<LogIn setUser={setUser} />} />
+        <Route path="/logOut" element={<LogOut setUser={setUser} />} />
+        <Route path="/profile" element={<ProfilePage user={user} />} />
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}

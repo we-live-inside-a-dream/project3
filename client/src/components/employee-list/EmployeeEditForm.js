@@ -27,7 +27,6 @@ const EmployeeEditForm = ({ existingValues, onSave,}) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
-  const [focused, setFocused] = useState(false)
   // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {

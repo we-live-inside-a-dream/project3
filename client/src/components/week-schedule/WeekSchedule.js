@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
+
 import StyledTable from "../reusable/tables/StyledTable";
-import Modal from "../../components/reusable/Modal";
-// import ShiftComponent from "../edit-schedule/ShiftComponent";
-import StyledButton from "../reusable/Inputs/StyledButton";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import Modal from "../reusable/Modal";
 
 function DynamicSchedule() {
   const [shift, setShift] = useState();
@@ -13,40 +11,33 @@ function DynamicSchedule() {
   const [day, setDay] = useState("2022-01-14");
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState();
-  const [deleteShift, setDeleteShift] = useState(false);
 
   useEffect(() => {
     console.log("shiftId is", shiftId);
     const fetchShift = async () => {
       let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+      console.log("fetch result", fetchResult);
       let fetchedShift = await fetchResult.json();
+      console.log("fetchedShift is", fetchedShift);
       setShift(fetchedShift);
+      setIsOpen(true);
     };
-    const deleteShiftById = async () => {
-      await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
-        method: "DELETE",
-      });}
-    //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
-    if (deleteShift) {
-      console.log("trying to delete shift!!");
-      deleteShiftById()
-      setDeleteShift(false);
-      
-    } else {
-      fetchShift();
-    }
+    fetchShift();
   }, [shiftId]);
 
   useEffect(() => {
+    console.log("day is ", day);
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
+      console.log("fetch result", fetchResult);
       let fetchedDay = await fetchResult.json();
+      console.log("fetchedDay is", fetchedDay);
+
       setSchedule(fetchedDay);
     };
     fetchSchedule();
   }, [day]);
 
-  //business hours should come from a db fetch
   let startTime = 8;
   let endTime = 18;
   let businessHours = [];
@@ -55,6 +46,7 @@ function DynamicSchedule() {
     businessHours.push(i);
     headerHours.push(i < 13 ? i : i - 12);
   }
+  // console.log(businessHours);
 
   function selectTheDay(day) {
     console.log("THE DAY FROM THE FUNCTION IS", day);
@@ -64,7 +56,7 @@ function DynamicSchedule() {
   function convertTime(prop) {
     let timeString =
       prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
-    // converts 8:30 into 8.5 etc...
+    // console.log(timeString,"new String")
     return timeString;
   }
 
@@ -122,28 +114,31 @@ function DynamicSchedule() {
             })}
           </tr>
         </thead>
+        {/* <tbody>
+ {schedule?.map((employee, index) => {
+   return(
+     <ScheduleRow 
+   schedule={schedule}
+   buisnessHours={buisnessHours}
+     
+     />
+   )
+ }
 
+        </tbody> */}
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           <EditSchedule
             shiftId={shiftId}
             existingValues={shift}
-            onClose={
-              (() => setIsOpen(false), () => setShift(""), () => setShiftId(""))
-            }
+            onClose={() => setIsOpen(false)}
           />
           **edit**
         </Modal>
-
         <tbody>
           {schedule?.map((employee, index) => (
-            // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={index} onClick={() => setShiftId(employee._id)}>
               <td key={index}>
                 <div style={{ display: "inline-flex" }}>
-                  
-
-                   
-                 
                   <div
                     style={{
                       backgroundColor: "grey",
@@ -152,16 +147,7 @@ function DynamicSchedule() {
                       marginRight: "10px",
                       alignSelf: "center",
                     }}
-                    >     <StyledButton
-                    fontSize={"0.5em"}
-                    padding={"0px"}
-                    margin={"0em"}
-                    textAlign={"left"}
-                    onClick={() => setDeleteShift(true)}
-                  >
-                    X
-                  </StyledButton></div>
-                    
+                  ></div>
                   <div
                     style={{
                       margin: "auto 10px auto 10px",
@@ -170,8 +156,7 @@ function DynamicSchedule() {
                       display: "block",
                     }}
                   >
-                      <p>{employee.name}</p>
-                    
+                    <p>{employee.name}</p>
                     <p
                       style={{
                         textShadow: "none",
@@ -181,24 +166,9 @@ function DynamicSchedule() {
                     >
                       {employee.start.slice(0, 2)}-{employee.end.slice(0, 2)}
                     </p>
-                    <div>
-                      <StyledEditButton
-                        fontSize={"1em"}
-                        padding={"1px"}
-                        margin={"1px"}
-                        onClick={() => setIsOpen(true)}
-                      >
-                        ✎
-                      </StyledEditButton>
-                    </div>
                   </div>
                 </div>
               </td>
-              {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
-                DO you want to delete this shift?
-                <StyledButton onClick={deleteShiftById()}>YES</StyledButton>
-                <StyledButton onClick ={setDeleteShift(false)}>NO</StyledButton>
-              </Modal> */}
 
               {businessHours?.map((hour, index) => {
                 if (
@@ -222,8 +192,6 @@ function DynamicSchedule() {
                   return <td key={index}></td>;
                 }
               })}
-
-              <td></td>
             </tr>
           ))}
         </tbody>

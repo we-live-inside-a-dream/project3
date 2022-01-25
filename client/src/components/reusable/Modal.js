@@ -1,5 +1,5 @@
 import React from "react";
-import StyledButton from "./Inputs/StyledButton";
+// import StyledButton from "./Inputs/StyledButton";
 import styled from "styled-components";
 
 const ModalInner = styled.div`

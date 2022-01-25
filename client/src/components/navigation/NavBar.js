@@ -44,7 +44,8 @@ function NavBar() {
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
-            <NavbarLink to="/dayView">Schedule</NavbarLink>
+            <NavbarLink to="/dayView">Schedule day</NavbarLink>
+            <NavbarLink to="/weekView">Schedule week</NavbarLink>
             <NavbarLink to="/availabilities">Availabilities</NavbarLink>
             <NavbarLink element={{ setUser }} to="/logIn">
               Log In

@@ -3,7 +3,7 @@ import CalendarComponent from "./components/UNUSED/CalendarComponent";
 import "./App.css";
 // import { useState } from "react";
 // import background from "./assets/boldPic.jpg";
-import DaySchedule from "./pages/common/DaySchedule";
+import DaySchedulePage from "./pages/common/DaySchedulePage";
 import EmployeesList from "./pages/manager/EmployeesList";
 import { Routes, Route } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
+import WeekSchedulePage from "./pages/common/WeekSchedulePage";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
         <Route path="/createEmployee" element={<EmployeeEditForm />} />
         <Route path="/" element={<CalendarComponent />} />
         <Route path="/employeeList" element={<EmployeesList />} />
-        <Route path="/dayView" element={<DaySchedule />} />
+        <Route path="/dayView" element={<DaySchedulePage />} />
+        <Route path="/weekView" element={<WeekSchedulePage />} />
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         <Route
           path="/availability-edit/:id"

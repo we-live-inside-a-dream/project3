@@ -34,6 +34,7 @@ export const StyledFormWrapper = styled.div`
 export const StyledForm = styled.div`
   width: 100%;
   height: 45vh;
+  min-width: 400px;
   max-width: 20vw;
   padding: 40px;
   background-color: #fff;

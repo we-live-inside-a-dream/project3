@@ -85,6 +85,26 @@ export const StyledFieldset = styled.fieldset`
   }
 `;
 
+export const Dropdown = styled.select`
+  width: 100%;
+  height: 35px;
+  background: white;
+  color: gray;
+  padding-left: 0px;
+  font-size: 14px;
+  border: groove;
+  margin-left: 0px;
+
+  option {
+    color: black;
+    background: white;
+    display: flex;
+    white-space: pre;
+    min-height: 20px;
+    padding: 0px 2px 1px;
+  }
+`;
+
 // export const DropdownContainer = styled.div`
 //   @media screen and (min-width: 961px) {
 //     position: relative;

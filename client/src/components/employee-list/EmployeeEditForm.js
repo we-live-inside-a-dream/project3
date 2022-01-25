@@ -105,7 +105,6 @@ const EmployeeEditForm = ({ existingValues, onSave,}) => {
               value={firstName}
               onChange={(event) => onInputUpdate(event, setFirstName)}
             />
-            <StyledError>ERROR</StyledError>
             <label>Last Name</label>
             <StyledInput
               value={lastName}

@@ -6,7 +6,8 @@ import {
   StyledFormWrapper,
   StyledForm,
   StyledInput,
-  StyledButton
+  StyledButton,
+  StyledError
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -15,9 +16,9 @@ const positionData = [
 ];
 
 const statusData = [{ value: "active", label: "Active" },
-{ value: "inactive", label: "Inactive" }];
+{ value: "inactive", label: "Inactive"}];
 
-const EmployeeEditForm = ({ existingValues, onSave }) => {
+const EmployeeEditForm = ({ existingValues, onSave,}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
+  const [focused, setFocused] = useState(false)
   // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {
@@ -103,6 +105,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
               value={firstName}
               onChange={(event) => onInputUpdate(event, setFirstName)}
             />
+            <StyledError>ERROR</StyledError>
             <label>Last Name</label>
             <StyledInput
               value={lastName}

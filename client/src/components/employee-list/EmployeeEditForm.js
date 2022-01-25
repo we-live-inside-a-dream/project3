@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 
 import { Select } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
 
+=======
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
+>>>>>>> 084fe11a87d412af4f087526c84e481028abe0f0
 import {
   StyledEmployeeForm,
   StyledFormWrapper,
@@ -14,19 +19,18 @@ import {
   StyledButton,
   StyledFieldset,
   StyledError,
+<<<<<<< HEAD
+=======
+  Dropdown,
+>>>>>>> 084fe11a87d412af4f087526c84e481028abe0f0
 } from "./StyledEmployeeForm";
 
 const positionData = [
-  {
-    // value: 1,
-    positions: "(Manager)",
-  },
-  {
-    // value: 2,
-    positions: "(supervisor)",
-  },
+  { value: "manager", label: "Manager" },
+  { value: "supervisor", label: "Supervisor" },
 ];
 
+<<<<<<< HEAD
 const statusData = [
   {
     status: "Active",
@@ -35,6 +39,11 @@ const statusData = [
     status: "Not Active",
   },
 ];
+=======
+const statusData = [{ value: "active", label: "Active" },
+{ value: "inactive", label: "Inactive" }];
+
+>>>>>>> 084fe11a87d412af4f087526c84e481028abe0f0
 const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -63,12 +72,14 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
-  const handleChange = (obj) => {
-    setPositions(obj.position);
+  const handlePositionChange = (newPosition) => {
+    setPositions(newPosition);
+    console.log("Positions", newPosition);
   };
 
-  const statusHandleChange = (obj) => {
-    setStatus(obj.status);
+  const handleStatusChange = (newStatus) => {
+    setStatus(newStatus);
+    console.log("status", newStatus);
   };
 
   let navigate = useNavigate();
@@ -93,8 +104,8 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       email,
       password,
       phoneNumber,
-      positions,
-      status,
+      positions:[positions.value],
+      status: status.value,
     };
     console.log("Saving new employee information", newEmployeeInfo);
     await createEmployee(newEmployeeInfo);
@@ -143,6 +154,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             {/* shit show starts from here... */}
             <label>Positions</label>
             <Select
+<<<<<<< HEAD
               value={positions}
               options={positionData}
               onChange={handleChange}
@@ -168,10 +180,17 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             </div> */}
 
             {/* <StyledInput
+=======
+>>>>>>> 084fe11a87d412af4f087526c84e481028abe0f0
               value={positions}
-              onChange={(event) => onInputUpdate(event, setPositions)}
-            /> */}
+              options={positionData}
+              onChange={handlePositionChange}
+              
+            />
+            <br />
+           
             <label>Status</label>
+<<<<<<< HEAD
             {/* <Select
                 value={status}
                 options={statusData}
@@ -196,10 +215,15 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             {/* </EditFormDropdown> */}
 
             {/* <StyledInput
+=======
+            <Select
+>>>>>>> 084fe11a87d412af4f087526c84e481028abe0f0
               value={status}
-              onChange={(event) => onInputUpdate(event, setStatus)}
-            /> */}
-
+              options={statusData}
+              onChange={handleStatusChange}
+              
+            />
+            <br />
             <StyledButton onClick={postData}>Save Details</StyledButton>
           </div>
         </StyledForm>

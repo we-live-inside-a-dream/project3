@@ -1,20 +1,24 @@
 import {useEffect, useState} from "react"
 import EmployeeEditForm from "./EmployeeEditForm"
+import { useParams } from "react-router-dom"
 
 
 const EmployeeDetail = ({employeeId}) => {
   
+  let params = useParams() 
+
     const [employee, setEmployee] = useState()
 
     
     useEffect(() => {
       const fetchEmployee = async () => {
-        let fetchResult = await fetch('/api/employeeProfile/'+employeeId)
+        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/61e8cffeef15df538e32627d')
         let fetchedEmployee = await fetchResult.json()
+        console.log("Fetched Employee", fetchedEmployee)
         setEmployee(fetchedEmployee)
       }
       fetchEmployee()
-    }, [employeeId])
+    }, [params.id])
     
     async function updateEmployee(updatedEmployee) {
       console.log("Posting to employee id", employeeId, "with data", updatedEmployee)

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
-import {NativeSelect } from "@mui/material";
+import { NativeSelect } from "@mui/material";
 // import MenuPopupState from "../UNUSED/MenuPopupState";
 
 // import StyledLabel from "../reusable/Inputs/StyledLabel";
@@ -13,9 +13,6 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-
-
-
 // const events2 = [
 //   { name: "" },
 //   { name: "Coffe" },
@@ -24,17 +21,17 @@ import BreaksComponent from "./BreaksComponent";
 // ];
 
 function EditSchedule({ onClose, shiftId, existingValues }) {
-  const [name, setName] = useState();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
   const [date, setDate] = useState();
-
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
   const [breakStart, setBreakStart] = useState();
   const [breakEnd, setBreakEnd] = useState();
   const [breakPaid, setBreakPaid] = useState();
-
+  const [employeeId, setEmployeeId] = useState();
   const [empNames, setEmpNames] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
 
@@ -42,7 +39,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
-     
+
       setEmpNames(fetchedNames);
     };
     fetchNames();
@@ -50,7 +47,9 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   useEffect(() => {
     if (existingValues) {
-      setName(existingValues.name);
+      setFirstName(existingValues.firstName);
+      setEmployeeId(existingValues.employeeId);
+      setLastName(existingValues.lastName);
       setStart(existingValues.start);
       setEnd(existingValues.end);
       setDate(existingValues.date);
@@ -59,7 +58,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }, [existingValues]);
 
   async function createShift(createdUser) {
-   
     await fetch("/api/schedule/schedule/new", {
       method: "POST",
       headers: {
@@ -70,7 +68,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }
 
   async function updateShift(updatedUser) {
- 
     await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
@@ -87,14 +84,16 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   async function postData() {
     let newShift = {
-      name,
+      employeeId,
+      firstName,
+      lastName,
       start,
       end,
       date,
       breaks,
     };
     onClose();
-    
+
     if (existingValues) {
       console.log(existingValues);
       console.log("updateShift with...", newShift);
@@ -112,11 +111,10 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     breaky.start = breakStart;
     breaky.end = breakEnd;
     breaky.paid = breakPaid;
-    
+
     newBreak.push(breaky);
     setBreakToAdd("");
     setBreaks(newBreak);
-    
   }
 
   function onRemoveBreak(index) {
@@ -134,12 +132,12 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
           Employee Name
         </InputLabel>
         <NativeSelect
-          defaultValue={name}
+          defaultValue={employeeId}
           labelId="demo-simple-select-helper-label"
           id="name-imput"
-          value={name}
+          value={employeeId}
           label="name"
-          onChange={(event) => onInputUpdate(event, setName)}
+          onChange={(event) => onInputUpdate(event, setEmployeeId)}
           style={{
             width: "275px",
             fontSize: "1em",
@@ -152,10 +150,11 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             filter: "dropShadow(5px 5px 10px grey)",
           }}
         >
-          {name}
+          {/* {name} */}
+          <option>none</option>
           {empNames?.map((event, index) => {
             return (
-              <option key={index} value={event.name}>
+              <option key={index} value={event._id}>
                 {event.firstName + " " + event.lastName}
               </option>
             );

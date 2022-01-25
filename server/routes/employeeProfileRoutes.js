@@ -87,9 +87,9 @@ router.get("/getByEmail/:email", async (req, res) => {
 
 router.get("/getByProfileId/:profileId", async (req, res) => {
   let profileId = req.params.profileId;
-  console.log("from API" profileId)
+  console.log("from API", profileId);
   let profile = await getEmployeeProfileByProfileId(profileId);
-  console.log("from API, profile", profile)
+  console.log("from API, profile", profile);
   res.status(200).send(profile);
 });
 

@@ -9,10 +9,9 @@ const EmployeeDetail = ({employeeId}) => {
 
     const [employee, setEmployee] = useState()
 
-    
     useEffect(() => {
       const fetchEmployee = async () => {
-        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/61e8cffeef15df538e32627d')
+        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/:profileId')
         let fetchedEmployee = await fetchResult.json()
         console.log("Fetched Employee", fetchedEmployee)
         setEmployee(fetchedEmployee)

@@ -6,12 +6,8 @@ import {
   StyledFormWrapper,
   StyledForm,
   StyledInput,
-  sharedStyles,
-  StyledTextArea,
   StyledButton,
-  StyledFieldset,
   StyledError,
-  Dropdown,
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -33,6 +29,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
+  const [focused, setFocused] = useState(false);
   // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {

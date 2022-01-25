@@ -61,7 +61,7 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
   return employeeProfile.id;
 };
 
-const signIn = async (employeeProfileInfo) => {
+const logIn = async (employeeProfileInfo) => {
   let employeeProfile = await employeeProfileModel.find({
     email: employeeProfileInfo.email,
     password: employeeProfileInfo.password,
@@ -110,6 +110,6 @@ module.exports = {
   findEmployeeByProfileEmail,
   updateEmployeeProfile,
   deleteEmployeeProfile,
-  signIn,
+  logIn,
   getActiveEmployeeNames,
 };

@@ -13,10 +13,10 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-    function (username, password, done) {
-      console.log("Passport is trying to verify a profile", username);
+    function (email, password, done) {
+      console.log("Passport is trying to verify a profile", email);
       employeeProfile
-        .findEmployeeByProfileEmail(username)
+        .findEmployeeByProfileEmail(email)
         .then((user) => {
           if (!user || user.password !== password) {
             done(null, false, {
@@ -50,17 +50,17 @@ passport.deserializeUser(function (id, done) {
 });
 
 // router.post("/signIn", async (req, res) => {
-//     // console.log(req.user)
-//     let employeeProfileInfo = req.body.inputs;
-//     let user = await signIn(employeeProfileInfo);
-//     res.send(user);
-//   });
+//   console.log(req.user);
+//   let employeeProfileInfo = req.body.inputs;
+//   let user = await signIn(employeeProfileInfo);
+//   res.send(user);
+// });
 
 router.post("/logIn", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
   let employeeProfileInfo = req.body.inputs;
-  let user = await signIn(employeeProfileInfo);
+  let user = await logIn(employeeProfileInfo);
   console.log("User login has succeeded!");
   console.log("Req.user is", req.user);
   res.sendStatus(200);

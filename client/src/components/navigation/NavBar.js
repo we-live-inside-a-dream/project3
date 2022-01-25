@@ -48,12 +48,8 @@ function NavBar() {
             <NavbarLink to="/dayView">Schedule day</NavbarLink>
             <NavbarLink to="/weekView">Schedule week</NavbarLink>
             <NavbarLink to="/availabilities">Availabilities</NavbarLink>
-            <NavbarLink element={{ setUser }} to="/logIn">
-              Log In
-            </NavbarLink>
-            <NavbarLink element={{ setUser }} to="/logOut">
-              Log Out
-            </NavbarLink>
+            <NavbarLink to="/logIn">Log In</NavbarLink>
+            <NavbarLink to="/logOut">Log Out</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

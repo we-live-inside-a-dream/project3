@@ -92,7 +92,7 @@ function EmployeeProfileList() {
                       {employee.firstName}
                       <br />
                       {employee.lastName}
-                      <StyledEditButton onClick={() => selectProfile(employee._id)}>Edit</StyledEditButton>
+                      <StyledEditButton onClick={() => selectProfile(employee._id)}>✎</StyledEditButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />

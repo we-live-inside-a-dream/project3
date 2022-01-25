@@ -13,6 +13,7 @@ import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
 import WeekSchedulePage from "./pages/common/WeekSchedulePage";
+import WeekSchedulePractise from "./components/week-schedule/WeekSchedulePractise";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}
         />
+        <Route path="/theweek" element={<WeekSchedulePractise />} />
       </Routes>
     </div>
   );

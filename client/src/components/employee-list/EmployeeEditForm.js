@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import {Select} from "@mui/material"
+import { Select } from "@mui/material";
 
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 import {
   StyledEmployeeForm,
@@ -14,7 +14,6 @@ import {
   StyledButton,
   StyledFieldset,
   StyledError,
-  
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -30,10 +29,10 @@ const positionData = [
 
 const statusData = [
   {
-    status: 'Active',
+    status: "Active",
   },
   {
-    status: 'Not Active',
+    status: "Not Active",
   },
 ];
 const EmployeeEditForm = ({ existingValues, onSave }) => {
@@ -64,15 +63,15 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     setter(newValue);
   }
 
-  const handleChange = obj => {
-    setPositions(obj.position)
-  }
+  const handleChange = (obj) => {
+    setPositions(obj.position);
+  };
 
-  const statusHandleChange = obj => {
-    setStatus(obj.status)
-  }
+  const statusHandleChange = (obj) => {
+    setStatus(obj.status);
+  };
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
@@ -84,7 +83,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       body: JSON.stringify(newEmployee),
       // body: newEmployee
     });
-    navigate('/employeeList')
+    navigate("/employeeList");
   }
 
   async function postData() {
@@ -100,8 +99,6 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     console.log("Saving new employee information", newEmployeeInfo);
     await createEmployee(newEmployeeInfo);
   }
-
-  
 
   // function onAddPosition() {
   //   positions.push(positionToAdd);
@@ -145,29 +142,29 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
             />
             {/* shit show starts from here... */}
             <label>Positions</label>
-              <Select
-                value={positions}
-                options={positionData}
-                onChange={handleChange}
-                getOptionLabel={option => option.positions}
-                />
-                 <br/>
-                {/* <b>Selected Value</b>
+            <Select
+              value={positions}
+              options={positionData}
+              onChange={handleChange}
+              getOptionLabel={(option) => option.positions}
+            />
+            <br />
+            {/* <b>Selected Value</b>
                 <pre>{JSON.stringify(positions)}</pre>  */}
-              {/* and ends here... */}
+            {/* and ends here... */}
             {/* <div> */}
-              
-              {/* <div>
+
+            {/* <div>
                 {positions.map((position, index) => (
                   <div key={index}>{position}</div>
                 ))}
               </div> */}
 
-              {/* <StyledInput
+            {/* <StyledInput
                 value={positions}
                 onChange={(event) => onInputUpdate(event, setPositionToAdd)}
               /> */}
-              {/* <StyledButton onClick={onAddPosition}>Add</StyledButton>
+            {/* <StyledButton onClick={onAddPosition}>Add</StyledButton>
             </div> */}
 
             {/* <StyledInput
@@ -175,25 +172,28 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
               onChange={(event) => onInputUpdate(event, setPositions)}
             /> */}
             <label>Status</label>
-              {/* <Select
+            {/* <Select
                 value={status}
                 options={statusData}
                 onChange={statusHandleChange}
                 getOptionLabel={option => option.status}
                 />
                 <br/> */}
-                <EditFormDropdown><div>
-                <select onChange={(e) =>{
-                  const selectedStatus=e.target.value;
-                  setStatus(selectedStatus)
-                }}>
-                  <option value='active'>Active</option>
-                  <option value='inactive'>Inactive</option>
-                </select>
-                {status}
-                </div>
-                <br/>
-                </EditFormDropdown>
+            {/* <EditFormDropdown> */}
+            <div>
+              <select
+                onChange={(e) => {
+                  const selectedStatus = e.target.value;
+                  setStatus(selectedStatus);
+                }}
+              >
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              {status}
+            </div>
+            <br />
+            {/* </EditFormDropdown> */}
 
             {/* <StyledInput
               value={status}

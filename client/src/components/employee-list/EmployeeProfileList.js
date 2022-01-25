@@ -4,9 +4,13 @@ import StyledTableRow from "../reusable/StyledTableRow";
 import StyledTableData from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton"
 
 function EmployeeProfileList() {
   const [employees, setEmployees] = useState([]);
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployeesList = async () => {
@@ -19,6 +23,16 @@ function EmployeeProfileList() {
     fetchEmployeesList();
   }, []);
   console.log("AFTER USE EFFECT", employees);
+
+  // selects the employee id to davigate to the page to edit that particular employee
+  function selectProfileId(id) {
+    navigate("/employeeDetail/" + id);
+  }
+  //    selects employee from dropdow menu
+  function selectProfile(id) {
+    console.log("selectAvailability called on id", id);
+    selectProfileId(id);
+  }
 
   return (
     <div>
@@ -51,7 +65,7 @@ function EmployeeProfileList() {
         <tbody>
           {employees?.map((employee, index) => {
             return (
-              <StyledTableRow>
+              <StyledTableRow key={index}>
                 <StyledTableData>
                   <div
                     style={{
@@ -78,6 +92,7 @@ function EmployeeProfileList() {
                       {employee.firstName}
                       <br />
                       {employee.lastName}
+                      <StyledEditButton onClick={() => selectProfile(employee._id)}>Edit</StyledEditButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />

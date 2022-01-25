@@ -43,6 +43,7 @@ function NavBar() {
             ></img> */}
             <NavbarLink to="/">Home</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
+            <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
             <NavbarLink to="/dayView">Schedule day</NavbarLink>
             <NavbarLink to="/weekView">Schedule week</NavbarLink>

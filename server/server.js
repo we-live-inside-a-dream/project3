@@ -1,10 +1,5 @@
 const dotenv = require("dotenv");
 const express = require("express");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocal = require("passport-local").Strategy;
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 
@@ -17,27 +12,10 @@ const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const authRouter = require("./routes/authRoutes");
 
 const app = express();
-
-app.use(
-  session({
-    secret: "icarus",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-
-app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(bodyParser.json());
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
-);
 
-app.use(cookieParser("icarus"));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false, limit: "10mb" }));
 
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);

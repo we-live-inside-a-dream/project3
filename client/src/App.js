@@ -18,7 +18,6 @@ import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
 import LogOut from "./components/navigation/LogOut";
 import ProfilePage from "./pages/common/ProfilePage";
-import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 
 function App() {
   const [user, setUser] = useState();
@@ -41,7 +40,7 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route path="/createEmployee" element={<CreateEmployeePage />} />
+        <Route path="/createEmployee" element={<EmployeeEditForm />} />
         <Route path="/" element={<CalendarComponent />} />
         <Route path="/employeeList" element={<EmployeesList />} />
         <Route path="/dayView" element={<DaySchedulePage />} />

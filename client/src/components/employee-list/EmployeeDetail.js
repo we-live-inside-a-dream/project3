@@ -8,12 +8,10 @@ const EmployeeDetail = ({employeeId}) => {
   let params = useParams() 
 
     const [employee, setEmployee] = useState()
-    
+
     useEffect(() => {
-      let profileId = params.id
-      console.log("params", params.id)
       const fetchEmployee = async () => {
-        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/'+profileId)
+        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/:profileId')
         let fetchedEmployee = await fetchResult.json()
         console.log("Fetched Employee", fetchedEmployee)
         setEmployee(fetchedEmployee)

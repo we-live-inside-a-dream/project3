@@ -14,9 +14,25 @@ router.get("/day", async (req, res) => {
 });
 
 router.get("/week", async (req, res) => {
-  let start = req.query.start;
-  let end = req.query.end;
-  let scheduleList = await scheduleModel.listScheduleByWeek(start, end);
+  // let start = req.query.start;
+  // let end = req.query.end;
+  let scheduleList = [];
+  let schedule0 = await scheduleModel.listScheduleByDay(req.query.day0);
+  let schedule1 = await scheduleModel.listScheduleByDay(req.query.day1);
+  let schedule2 = await scheduleModel.listScheduleByDay(req.query.day2);
+  let schedule3 = await scheduleModel.listScheduleByDay(req.query.day3);
+  let schedule4 = await scheduleModel.listScheduleByDay(req.query.day4);
+  let schedule5 = await scheduleModel.listScheduleByDay(req.query.day5);
+  let schedule6 = await scheduleModel.listScheduleByDay(req.query.day6);
+  scheduleList = [
+    schedule0,
+    schedule1,
+    schedule2,
+    schedule3,
+    schedule4,
+    schedule5,
+    schedule6,
+  ];
   res.send(scheduleList);
 });
 

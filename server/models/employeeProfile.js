@@ -1,7 +1,6 @@
 //Employee profile schema
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
+// const mongoose = require("mongoose");
+const mongoose = require("./mongooseDb");
 /*
 -employeeProfile_ID
 -Profile Pic
@@ -12,7 +11,7 @@ const Schema = mongoose.Schema;
 -Resume/File -> brief summary
 */
 
-const employeeProfile = new mongoose.Schema({
+const EmployeeProfile = mongoose.model("employeeProfile",{
   firstName: {
     type: String,
     required: true,
@@ -47,24 +46,20 @@ const employeeProfile = new mongoose.Schema({
   },
 });
 
-const hashPassword = (password) => {
-  return password;
-};
-
-const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
+// const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
-const createEmployeeProfile = async (employeeProfileInfo) => {
-  let hashedPassword = hashPassword(employeeProfileInfo.password);
-  let employeeProfile = new employeeProfileModel(employeeProfileInfo);
-  await employeeProfile.save();
+const createEmployeeProfile = async (EmployeeProfileInfo) => {
+  let employeeProfile = new employeeProfileModel(EmployeeProfileInfo);
+  let createdProfile = await employeeProfile.save();
+  console.log("saving employee profile", createdProfile)
   return employeeProfile.id;
 };
 
-const logIn = async (employeeProfileInfo) => {
-  let employeeProfile = await employeeProfileModel.find({
-    email: employeeProfileInfo.email,
-    password: employeeProfileInfo.password,
+const logIn = async (EmployeeProfileInfo) => {
+  let employeeProfile = await EmployeeProfile.find({
+    email: EmployeeProfileInfo.email,
+    password: EmployeeProfileInfo.password,
   });
   return employeeProfile;
 };

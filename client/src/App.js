@@ -2,9 +2,11 @@ import "./App.css";
 import CalendarComponent from "./components/UNUSED/CalendarComponent";
 import DaySchedulePage from "./pages/common/DaySchedulePage";
 import EmployeesList from "./pages/manager/EmployeesList";
-
+import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import background from "./assets/boldPic.jpg";
+import DaySchedulePage from "./pages/common/DaySchedulePage";
+import EmployeesList from "./pages/manager/EmployeesList";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";

@@ -123,25 +123,25 @@ router.post("/login", (req, res) => {
 //   res.send(user);
 // });
 
-router.get("/loggedInUser", auth, (req, res) => {
-  const employeeId = req.employeeId
+router.get("/authUser", auth, (req, res) => {
+  const employeeId = req.employeeId;
   EmployeeProfile.findById(employeeId, (err, customer) => {
-    if(err){
-      return  res.status(401).json({
+    if (err) {
+      return res.status(401).json({
         status: false,
         message: "Authentication failed",
-        data: undefined
-      })
+        data: undefined,
+      });
     }
-    if(customer){
+    if (customer) {
       res.status(200).json({
         data: employeeProfile,
         message: "Authenticated successfully!",
         status: true,
-      })
+      });
     }
-  })
-})
+  });
+});
 
 router.get("/logout", auth, (req, res) => {
   Token.findOneAndDelete(

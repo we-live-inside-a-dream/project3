@@ -2,7 +2,7 @@ const { application } = require("express");
 const express = require("express");
 const router = express.Router();
 const { createAvailability } = require("../models/availability");
-const {
+const { employeeProfile,
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,

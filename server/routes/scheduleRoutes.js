@@ -14,25 +14,26 @@ router.get("/day", async (req, res) => {
 });
 
 router.get("/week", async (req, res) => {
-  // let start = req.query.start;
-  // let end = req.query.end;
-  let scheduleList = [];
-  let schedule0 = await scheduleModel.listScheduleByDay(req.query.day0);
-  let schedule1 = await scheduleModel.listScheduleByDay(req.query.day1);
-  let schedule2 = await scheduleModel.listScheduleByDay(req.query.day2);
-  let schedule3 = await scheduleModel.listScheduleByDay(req.query.day3);
-  let schedule4 = await scheduleModel.listScheduleByDay(req.query.day4);
-  let schedule5 = await scheduleModel.listScheduleByDay(req.query.day5);
-  let schedule6 = await scheduleModel.listScheduleByDay(req.query.day6);
-  scheduleList = [
-    schedule0,
-    schedule1,
-    schedule2,
-    schedule3,
-    schedule4,
-    schedule5,
-    schedule6,
-  ];
+  let day0 = req.query.day0;
+  let day1 = req.query.day1;
+  let day2 = req.query.day2;
+  let day3 = req.query.day3;
+  let day4 = req.query.day4;
+  let day5 = req.query.day5;
+  let day6 = req.query.day6;
+
+  // let dayList = [day0, day1, day2, day3, day4, day5, day6];
+  // console.log("FROM ROUTER API THIS IS THE DAYLIST:", dayList);
+  let scheduleList = await scheduleModel.listByWeekDays(
+    day0,
+    day1,
+    day2,
+    day3,
+    day4,
+    day5,
+    day6
+  );
+  console.log("FROM ROUTER API THIS IS THE DAYLIST:", scheduleList);
   res.send(scheduleList);
 });
 

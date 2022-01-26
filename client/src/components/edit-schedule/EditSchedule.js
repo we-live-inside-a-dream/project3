@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
+import * as fns from 'date-fns'
 
 import { NativeSelect } from "@mui/material";
 // import MenuPopupState from "../UNUSED/MenuPopupState";
@@ -25,15 +26,16 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState();
   const [end, setEnd] = useState();
-  const [date, setDate] = useState();
+  const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
   const [breakStart, setBreakStart] = useState();
   const [breakEnd, setBreakEnd] = useState();
   const [breakPaid, setBreakPaid] = useState();
-  const [employeeId, setEmployeeId] = useState();
+  const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
+  const [empAvailibility,setEmpAvailibility] = useState()
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -44,6 +46,35 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     };
     fetchNames();
   }, []);
+
+function isEmployeeAvailible(){
+
+  // need to ensure employee isnt working over 40 hours this week
+  // need to see if employee has vacation or time off booked
+  // need to compare day of the week to weekly availibility 
+        // first figure out what day of the week it is...
+  // console.log('employee weekly availibility',empAvailibility.days.dayName)
+}
+
+useEffect(()=>{
+  console.log("employeeId",employeeId)
+  const empAvail = async ()=>{
+    
+    let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
+    let employeeAvailibility = await fetchAvailibility.json()
+    setEmpAvailibility(employeeAvailibility)
+    
+  }
+  empAvail()
+},[employeeId])
+
+useEffect(()=>{
+  let dayOfWeek = fns.getDay(new Date(date));
+
+  console.log("date is...",date)
+  console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+  isEmployeeAvailible()
+  },[date])
 
   useEffect(() => {
     if (existingValues) {

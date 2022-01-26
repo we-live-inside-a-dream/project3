@@ -102,6 +102,14 @@ router.get("/availability-all", async (req, res) => {
   res.send(availabilityList);
 });
 
+router.get(`/availibility/profile`, async (req,res)=>{
+let id = req.query.id;
+ let employeeAvailibility = await availabilityModel.getAvailabilityByEmployeeProfileId(id)
+ console.log("employee Availibility...",employeeAvailibility)
+ res.send (employeeAvailibility)
+
+})
+
 router.post("/availability-add", async (req, res) => {
   let newAvailability = req.body;
   let availability = await createAvailability(newAvailability);

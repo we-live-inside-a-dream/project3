@@ -107,6 +107,9 @@ const createAvailability = async (id, firstName, lastName) => {
 const getAvailabilityById = async (id) => {
   return Availability.findOne({ _id: id });
 };
+const getAvailabilityByEmployeeProfileId = async (id) => {
+  return Availability.findOne({ employeeProfileId:id });
+};
 
 //returns entire list of employees and availabilities
 const listOfEmployeesAvailabilities = async () => {
@@ -154,4 +157,5 @@ module.exports = {
   // availabilityList,
   // deleteAvailability,
   listOfEmployeesAvailabilities,
+  getAvailabilityByEmployeeProfileId,
 };

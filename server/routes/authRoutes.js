@@ -1,9 +1,10 @@
 const express = require("express");
+const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const EmployeeProfile = require("../models/employeeProfile");
-const router = express.Router();
-const Token = require("../models/token")
+const { EmployeeProfile } = require("../models/employeeProfile");
+const { Token } = require("../models/token");
+const { auth } = require("../middlewares/auth");
 
 passport.use(
   new LocalStrategy(
@@ -12,8 +13,7 @@ passport.use(
       passwordField: "password",
     },
     function verify(email, password, done) {
-      EmployeeProfile
-        .findEmployeeByProfileEmail(email)
+      EmployeeProfile.findEmployeeByProfileEmail(email)
         .then((email) => {
           if (!email) {
             return done(null, false);
@@ -30,7 +30,6 @@ passport.use(
     }
   )
 );
-
 
 passport.serializeUser(function (email, done) {
   console.log("passport wants to store this user in a cookie", email);
@@ -51,57 +50,67 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.post("/login", (req, res) => {
-  EmployeeProfile.findOne({ email: req.body.email }).exec().then((employeeProfile) => {
-    if(!employeeProfile){
-      return res.status(401).json({
-        message: "User not found",
-        data: undefined
-      })
-    }
-    bcrypt.compare(req.body.pasword, employeeProfile.password, async (err, result) => {
-      if(err){
+  EmployeeProfile.findOne({ email: req.body.email })
+    .exec()
+    .then((employeeProfile) => {
+      if (!employeeProfile) {
         return res.status(401).json({
-          status: false,
-          message: "Server error, authentication failed",
-          data: undefined
-        })
+          message: "User not found",
+          data: undefined,
+        });
       }
-      if(result){
-        const token = jwt.sign(
-          {
-            email: employeeProfile.email,
-            employeeId: employeeProfile._id
-          },
-          process.env.JWT_KEY, 
-        {
-          expireIn: "2h"
-        }
-        );
-        await Token.findOneAndpdate({_employeeId: employeeProfile._id, type: "login"}, {token: token}, {new: true, upsert: true})
-        return res.status(200).json({
-          status: true,
-          message: "Logged in successfully.",
-          data: {
-            token,
-            employeeProfile
+      bcrypt.compare(
+        req.body.pasword,
+        employeeProfile.password,
+        async (err, result) => {
+          if (err) {
+            return res.status(401).json({
+              status: false,
+              message: "Server error, authentication failed",
+              data: undefined,
+            });
           }
-        })
-      }
-      return res.status(401).json({
-        status: true, 
-        message: "Incorrect password, please try again.",
-        data: undefined
-      })
+          if (result) {
+            const token = jwt.sign(
+              {
+                email: employeeProfile.email,
+                employeeId: employeeProfile._id,
+              },
+              process.env.JWT_KEY,
+              {
+                expireIn: "2h",
+              }
+            );
+            await Token.findOneAndpdate(
+              { _employeeId: employeeProfile._id, type: "login" },
+              { token: token },
+              { new: true, upsert: true }
+            );
+            return res.status(200).json({
+              status: true,
+              message: "Logged in successfully.",
+              data: {
+                token,
+                employeeProfile,
+              },
+            });
+          }
+          return res.status(401).json({
+            status: true,
+            message: "Incorrect password, please try again.",
+            data: undefined,
+          });
+        }
+      );
     })
-  })
-  .catch((err) => {
-    res.status(500).json({
-      status: false,
-      message: "Server error, authentication failed.",
-      data: undefined
-    })
-  })
-})
+    .catch((err) => {
+      res.status(500).json({
+        status: false,
+        message: "Server error, authentication failed.",
+        data: undefined,
+      });
+    });
+});
 
 // router.post("/login", (req, res) => {
 //   // If this function gets called, authentication was successful.
@@ -114,21 +123,41 @@ router.post("/login", (req, res) => {
 //   res.send(user);
 // });
 
-router.get("/loggedInUser", function (req, res) {
-  res.send(req.user);
-});
-
-router.get("/logout", async (req, res,) => {
-  Token.findOneAndDelete({_employeeId: req.employeeId, type: "login"}, (err, doc) => {
-    if(err) return res.status(401).json({
-      status: false,
-      message: "Server error, please try again.",
-    })
-    return res.status(200).json({
-      status: true,
-      message: "Logged out succesfully.",
-    })
+router.get("/loggedInUser", auth, (req, res) => {
+  const employeeId = req.employeeId
+  EmployeeProfile.findById(employeeId, (err, customer) => {
+    if(err){
+      return  res.status(401).json({
+        status: false,
+        message: "Authentication failed",
+        data: undefined
+      })
+    }
+    if(customer){
+      res.status(200).json({
+        data: employeeProfile,
+        message: "Authenticated successfully!",
+        status: true,
+      })
+    }
   })
+})
+
+router.get("/logout", auth, (req, res) => {
+  Token.findOneAndDelete(
+    { _employeeId: req.employeeId, type: "login" },
+    (err, doc) => {
+      if (err)
+        return res.status(401).json({
+          status: false,
+          message: "Server error, please try again.",
+        });
+      return res.status(200).json({
+        status: true,
+        message: "Logged out succesfully.",
+      });
+    }
+  );
 });
 
 // const strategy = new LocalStrategy()

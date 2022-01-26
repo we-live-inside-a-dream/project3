@@ -21,7 +21,7 @@ function DaySchedule() {
       let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
       let fetchedShift = await fetchResult.json();
       setShift(fetchedShift);
-      console.log("AFTER USE EFFECT SHIFT ID", shiftId);
+      // console.log("AFTER USE EFFECT SHIFT ID", shiftId);
     };
     const deleteShiftById = async () => {
       await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {

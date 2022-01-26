@@ -32,23 +32,23 @@ passport.use(
 );
 
 
-// passport.serializeUser(function (email, done) {
-//   console.log("passport wants to store this user in a cookie", email);
-//   done(null, email.id);
-// });
+passport.serializeUser(function (email, done) {
+  console.log("passport wants to store this user in a cookie", email);
+  done(null, email.id);
+});
 
-// passport.deserializeUser(function (id, done) {
-//   console.log("passport is trying to recover the user from the cookie", id);
-//   User.findById(id)
-//     .then((email) => {
-//       if (!email) {
-//         done(new Error("User not found or deleted"));
-//         return;
-//       }
-//       done(null, email);
-//     })
-//     .catch(done);
-// });
+passport.deserializeUser(function (id, done) {
+  console.log("passport is trying to recover the user from the cookie", id);
+  User.findById(id)
+    .then((email) => {
+      if (!email) {
+        done(new Error("User not found or deleted"));
+        return;
+      }
+      done(null, email);
+    })
+    .catch(done);
+});
 
 router.post("/login", (req, res) => {
   EmployeeProfile.findOne({ email: req.body.email }).exec().then((employeeProfile) => {

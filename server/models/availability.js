@@ -3,9 +3,9 @@ const mongoose = require("./mongooseDb");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
-  // employeeProfileId: {
+  // profileId: {
   //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
+  //   ref: "employeeProfile",
   // },
   employeeProfileId: {
     type: String,

@@ -1,5 +1,6 @@
 import StyledPage from "../../components/reusable/StyledPage";
 import WeekSchedule from "../../components/week-schedule/WeekSchedule";
+
 import React from "react";
 
 function WeekSchedulePage() {

@@ -2,7 +2,9 @@ const { Timestamp } = require("mongodb");
 const mongoose = require("./mongooseDb");
 
 const Schedule = mongoose.model("schedule", {
-  name: String,
+  employeeId: String,
+  firstName: String,
+  lastName: String,
   date: String,
   start: String,
   end: String,
@@ -25,6 +27,13 @@ async function listScheduleByDay(day) {
 async function listScheduleByWeek(start, end) {
   return Schedule.find({ date: { $gte: ISODate(start), $lte: ISODate(end) } });
 }
+
+async function listByWeekDays(week) {
+  return Schedule.find({
+    day: [week[0], week[1], week[2], week[3], week[4], week[5], week[6]],
+  });
+}
+
 async function listScheduleByMonth(month) {
   return Schedule.find({ date: month });
 }
@@ -38,9 +47,38 @@ async function update(id, newScheduleData) {
     returnDocument: "after",
   });
 }
+async function updateWithName(id, newFirstName, newLastName) {
+  return Schedule.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        firstName: newFirstName,
+        lastName: newLastName,
+      },
+      returnDocument: "after",
+    }
+  );
+}
+
+// Item.update(
+//   { _id: id },
+//   {
+//     $set: {
+//       name: req.body.name,
+
+//       amount: req.body.amount,
+
+//       done: req.body.done,
+
+//       description: req.body.description,
+
+//       unit: req.body.unit,
+//     },
+//   }
+// );
 
 async function deleteSchedule(id) {
-  console.log(id,"id in the model...")
+  console.log(id, "id in the model...");
   return Schedule.findByIdAndDelete(id);
 }
 
@@ -52,4 +90,5 @@ module.exports = {
   findById,
   update,
   deleteSchedule,
+  listByWeekDays,
 };

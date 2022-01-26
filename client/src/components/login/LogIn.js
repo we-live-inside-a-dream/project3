@@ -22,7 +22,7 @@ export default function LogIn({ setUser }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/user/logIn", {
+      .post("/logIn", {
         email: inputs.email,
         password: inputs.password,
       })
@@ -32,7 +32,35 @@ export default function LogIn({ setUser }) {
         console.log(response);
       });
   };
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [loginError, setLoginError] = useState("");
 
+  // const navigate = useNavigate()
+
+  // function tryLogin() {
+  //   async function postLogin() {
+  //     const loginInfo = {
+  //       username: email,
+  //       password: password,
+  //     };
+  //     let loginResult = await fetch("/auth/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(loginInfo),
+  //     });
+  //     if (loginResult.ok) {
+  //       // alert('Hello: '+username)
+  //       setLoginError("");
+  //       navigate("/");
+  //     } else {
+  //       setLoginError("Login failed!");
+  //     }
+  //   }
+  //   postLogin();
+  // }
   return (
     <>
       <StyledLogIn />
@@ -66,7 +94,7 @@ export default function LogIn({ setUser }) {
               value={inputs.password || ""}
               onChange={handleChange}
             />
-            <StyledButton onSubmit={handleSubmit}>Log In</StyledButton>
+            <StyledButton onClick={handleSubmit}>Log In</StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

@@ -42,7 +42,7 @@ function App() {
       <NavBar />
 
       <Routes>
-        <Route path="/createEmployee" element={<EmployeeEditForm />} />
+        {/* <Route path="/createEmployee" element={<EmployeeEditForm />} /> */}
         <Route path="/" element={<CalendarComponent />} />
         <Route path="/employeeList" element={<EmployeesList />} />
         <Route path="/createEmployee" element={<CreateEmployeePage />} />

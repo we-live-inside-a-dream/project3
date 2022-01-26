@@ -1,7 +1,6 @@
 //Employee profile schema
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
+// const mongoose = require("mongoose");
+const mongoose = require("./mongooseDb");
 /*
 -employeeProfile_ID
 -Profile Pic
@@ -12,7 +11,7 @@ const Schema = mongoose.Schema;
 -Resume/File -> brief summary
 */
 
-const employeeProfile = new mongoose.Schema({
+const EmployeeProfile = mongoose.model("employeeProfile", {
   firstName: {
     type: String,
     required: true,
@@ -47,22 +46,18 @@ const employeeProfile = new mongoose.Schema({
   },
 });
 
-const hashPassword = (password) => {
-  return password;
-};
-
-const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
+// const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
-  let hashedPassword = hashPassword(employeeProfileInfo.password);
-  let employeeProfile = new employeeProfileModel(employeeProfileInfo);
-  await employeeProfile.save();
+  let employeeProfile = new EmployeeProfile(employeeProfileInfo);
+  let createdProfile = await employeeProfile.save();
+  console.log("saving employee profile", createdProfile);
   return employeeProfile.id;
 };
 
 const logIn = async (employeeProfileInfo) => {
-  let employeeProfile = await employeeProfileModel.find({
+  let employeeProfile = await EmployeeProfile.find({
     email: employeeProfileInfo.email,
     password: employeeProfileInfo.password,
   });
@@ -70,28 +65,30 @@ const logIn = async (employeeProfileInfo) => {
 };
 
 const listOfEmployees = async () => {
-  return employeeProfileModel.find({}).select(["-password"]);
+  return EmployeeProfile.find({}).select(["-password"]);
 };
 const getActiveEmployeeNames = async () => {
-  let name = employeeProfileModel
-    .find({ status: "active" })
-    .select(["firstName", "lastName", "_id"]);
+  let name = EmployeeProfile.find({ status: "active" }).select([
+    "firstName",
+    "lastName",
+    "_id",
+  ]);
   console.log("get names...", name);
   return name;
 };
 // get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
-  return employeeProfileModel.findById(employeeProfile_id);
+  return EmployeeProfile.findById(employeeProfile_id);
 };
 
 const findEmployeeByProfileEmail = async (email) => {
-  let employeeProfile = await employeeProfileModel.findOne({ email });
+  let employeeProfile = await EmployeeProfile.findOne({ email });
   return employeeProfile;
 };
 
 // update Employee Profile
 const updateEmployeeProfile = async (id, newEmployeeProfile) => {
-  let updatedProfile = await employeeProfileModel.findByIdAndUpdate(
+  let updatedProfile = await EmployeeProfile.findByIdAndUpdate(
     id,
     newEmployeeProfile
   );
@@ -99,9 +96,6 @@ const updateEmployeeProfile = async (id, newEmployeeProfile) => {
 };
 
 // delete Employee Profile
-const deleteEmployeeProfile = async (employeeProfile_id) => {
-  return true;
-};
 
 module.exports = {
   createEmployeeProfile,
@@ -109,7 +103,6 @@ module.exports = {
   getEmployeeProfileByProfileId,
   findEmployeeByProfileEmail,
   updateEmployeeProfile,
-  deleteEmployeeProfile,
   logIn,
   getActiveEmployeeNames,
 };

@@ -27,6 +27,13 @@ async function listScheduleByDay(day) {
 async function listScheduleByWeek(start, end) {
   return Schedule.find({ date: { $gte: ISODate(start), $lte: ISODate(end) } });
 }
+
+async function listByWeekDays(week) {
+  return Schedule.find({
+    day: [week[0], week[1], week[2], week[3], week[4], week[5], week[6]],
+  });
+}
+
 async function listScheduleByMonth(month) {
   return Schedule.find({ date: month });
 }
@@ -83,4 +90,5 @@ module.exports = {
   findById,
   update,
   deleteSchedule,
+  listByWeekDays,
 };

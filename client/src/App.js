@@ -1,10 +1,12 @@
 import "./App.css";
 import CalendarComponent from "./components/UNUSED/CalendarComponent";
-import { useEffect, useState } from "react";
-// import background from "./assets/boldPic.jpg";
 import DaySchedulePage from "./pages/common/DaySchedulePage";
 import EmployeesList from "./pages/manager/EmployeesList";
 import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+// import background from "./assets/boldPic.jpg";
+
+
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
@@ -12,6 +14,7 @@ import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
 import WeekSchedulePage from "./pages/common/WeekSchedulePage";
+// import background from "./assets/boldPic.jpg";
 import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
 import LogOut from "./components/navigation/LogOut";
@@ -50,8 +53,8 @@ function App() {
           element={<EmployeeAvailabilityEditPage />}
         />
         <Route path="/LogIn" element={<LogIn setUser={setUser} />} />
-        <Route path="/logOut" element={<LogOut setUser={setUser} />} />
-        <Route path="/profile" element={<ProfilePage user={user} />} />
+        {/* <Route path="/logOut" element={<LogOut setUser={setUser} />} /> */}
+        {/* <Route path="/profile" element={<ProfilePage user={user} />} /> */}
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}

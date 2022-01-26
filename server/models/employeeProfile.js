@@ -70,7 +70,7 @@ const listOfEmployees = async () => {
 const getActiveEmployeeNames = async () => {
   let name = employeeProfileModel
     .find({ status: "active" })
-    .select(["firstName", "lastName"]);
+    .select(["firstName", "lastName", "_id"]);
   console.log("get names...", name);
   return name;
 };

@@ -7,7 +7,7 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
-  StyledError
+  StyledError,
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -15,10 +15,12 @@ const positionData = [
   { value: "supervisor", label: "Supervisor" },
 ];
 
-const statusData = [{ value: "active", label: "Active" },
-{ value: "inactive", label: "Inactive"}];
+const statusData = [
+  { value: "active", label: "Active" },
+  { value: "inactive", label: "Inactive" },
+];
 
-const EmployeeEditForm = ({ existingValues, onSave,}) => {
+const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +29,7 @@ const EmployeeEditForm = ({ existingValues, onSave,}) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
-  const [focused, setFocused] = useState(false)
+  const [focused, setFocused] = useState(false);
   // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const EmployeeEditForm = ({ existingValues, onSave,}) => {
       email,
       password,
       phoneNumber,
-      positions:[positions.value],
+      positions: [positions.value],
       status: status.value,
     };
     console.log("Saving new employee information", newEmployeeInfo);
@@ -132,16 +134,14 @@ const EmployeeEditForm = ({ existingValues, onSave,}) => {
               value={positions}
               options={positionData}
               onChange={handlePositionChange}
-              
             />
             <br />
-           
+
             <label>Status</label>
             <Select
               value={status}
               options={statusData}
               onChange={handleStatusChange}
-              
             />
             <br />
             <StyledButton onClick={postData}>Save Details</StyledButton>

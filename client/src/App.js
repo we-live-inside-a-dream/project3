@@ -54,7 +54,7 @@ function App() {
         />
         <Route path="/LogIn" element={<LogIn setUser={setUser} />} />
         <Route path="/logOut" element={<LogOut setUser={setUser} />} />
-        {/* <Route path="/profile" element={<ProfilePage user={user} />} /> */}
+        <Route path="/profile" element={<ProfilePage user={user} />} />
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}

@@ -17,7 +17,7 @@ import WeekSchedulePage from "./pages/common/WeekSchedulePage";
 // import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
 import LogOut from "./components/navigation/LogOut";
-import ProfilePage from "./pages/common/ProfilePage";
+// import ProfilePage from "./pages/common/ProfilePage";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 
@@ -56,7 +56,7 @@ function App() {
         />
         <Route path="/LogIn" element={<LogIn setUser={setUser} />} />
         <Route path="/logOut" element={<LogOut setUser={setUser} />} />
-        <Route path="/profile" element={<ProfilePage user={user} />} />
+        {/* <Route path="/profile" element={<ProfilePage user={user} />} /> */}
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}

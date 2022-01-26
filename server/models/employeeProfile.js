@@ -11,7 +11,7 @@ const mongoose = require("./mongooseDb");
 -Resume/File -> brief summary
 */
 
-const EmployeeProfile = mongoose.model("employeeProfile",{
+const EmployeeProfile = mongoose.model("employeeProfile", {
   firstName: {
     type: String,
     required: true,
@@ -49,44 +49,46 @@ const EmployeeProfile = mongoose.model("employeeProfile",{
 // const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
 
 //create new Employee Profile
-const createEmployeeProfile = async (EmployeeProfileInfo) => {
-  let employeeProfile = new employeeProfileModel(EmployeeProfileInfo);
+const createEmployeeProfile = async (employeeProfileInfo) => {
+  let employeeProfile = new EmployeeProfile(employeeProfileInfo);
   let createdProfile = await employeeProfile.save();
-  console.log("saving employee profile", createdProfile)
+  console.log("saving employee profile", createdProfile);
   return employeeProfile.id;
 };
 
-const logIn = async (EmployeeProfileInfo) => {
+const logIn = async (employeeProfileInfo) => {
   let employeeProfile = await EmployeeProfile.find({
-    email: EmployeeProfileInfo.email,
-    password: EmployeeProfileInfo.password,
+    email: employeeProfileInfo.email,
+    password: employeeProfileInfo.password,
   });
   return employeeProfile;
 };
 
 const listOfEmployees = async () => {
-  return employeeProfileModel.find({}).select(["-password"]);
+  return EmployeeProfile.find({}).select(["-password"]);
 };
 const getActiveEmployeeNames = async () => {
-  let name = employeeProfileModel
-    .find({ status: "active" })
-    .select(["firstName", "lastName", "_id"]);
+  let name = EmployeeProfile.find({ status: "active" }).select([
+    "firstName",
+    "lastName",
+    "_id",
+  ]);
   console.log("get names...", name);
   return name;
 };
 // get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
-  return employeeProfileModel.findById(employeeProfile_id);
+  return EmployeeProfile.findById(employeeProfile_id);
 };
 
 const findEmployeeByProfileEmail = async (email) => {
-  let employeeProfile = await employeeProfileModel.findOne({ email });
+  let employeeProfile = await EmployeeProfile.findOne({ email });
   return employeeProfile;
 };
 
 // update Employee Profile
 const updateEmployeeProfile = async (id, newEmployeeProfile) => {
-  let updatedProfile = await employeeProfileModel.findByIdAndUpdate(
+  let updatedProfile = await EmployeeProfile.findByIdAndUpdate(
     id,
     newEmployeeProfile
   );
@@ -94,9 +96,6 @@ const updateEmployeeProfile = async (id, newEmployeeProfile) => {
 };
 
 // delete Employee Profile
-const deleteEmployeeProfile = async (employeeProfile_id) => {
-  return true;
-};
 
 module.exports = {
   createEmployeeProfile,
@@ -104,7 +103,6 @@ module.exports = {
   getEmployeeProfileByProfileId,
   findEmployeeByProfileEmail,
   updateEmployeeProfile,
-  deleteEmployeeProfile,
   logIn,
   getActiveEmployeeNames,
 };

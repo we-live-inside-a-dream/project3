@@ -31,73 +31,74 @@ const { employeeProfile,
  return:-status 200 and created profile if successful
         -status 500 if it fails.
 */
-router.post("/create", async (req, res) => {
-  let newEmployeeProfile = req.body;
-  employeeProfile
-    .find({ email: req.body.email })
-    .exec()
-    .then((employeeProfile) => {
-      if (employeeProfile.length >= 1) {
-        return res.status(401).json({
-          status: false,
-          message: "Email exists",
-          data: undefined,
-        });
-      } else {
-        bcrypt.hash(req.body.password, 2, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
-              status: false,
-              message: "Error, cannot encrypt password",
-              data: undefined,
-            });
-          } else {
-            const employeeProfile = new employeeProfile({
-              ...req.body,
-              password: hash,
-            });
-            employeeProfile.save((err, doc) => {
-              if (err)
-                return res.json({
-                  status: false,
-                  message: err,
-                  data: undefined,
-                });
-              return res.status(200).json({
-                status: false,
-                message: "Employee Profile created successfully!",
-                data: doc,
-              });
-            });
-            console.log(newEmployeeProfile);
-            try {
-              let employeeProfileId = createEmployeeProfile(newEmployeeProfile);
-              // sends initial availability info availability model (imported above)
-              createAvailability(
-                employeeProfileId,
-                newEmployeeProfile.firstName,
-                newEmployeeProfile.lastName
-              );
-              if (!employeeProfileId) res.status(500).send("failed to create");
-              res.status(200).send(employeeProfileId);
-            } catch (error) {
-              console.log(error.message);
-              res.status(400).send(error.message);
-            }
-          }
-        });
-      }
-    });
-});
+// router.post("/create", async (req, res) => {
+//   let newEmployeeProfile = req.body;
+//   employeeProfile
+//     .find({ email: req.body.email })
+//     .exec()
+//     .then((employeeProfile) => {
+//       if (employeeProfile.length >= 1) {
+//         return res.status(401).json({
+//           status: false,
+//           message: "Email exists",
+//           data: undefined,
+//         });
+//       } else {
+//         bcrypt.hash(req.body.password, 2, (err, hash) => {
+//           if (err) {
+//             return res.status(500).json({
+//               status: false,
+//               message: "Error, cannot encrypt password",
+//               data: undefined,
+//             });
+//           } else {
+//             const employeeProfile = new employeeProfile({
+//               ...req.body,
+//               password: hash,
+//             });
+//             employeeProfile.save((err, doc) => {
+//               if (err)
+//                 return res.json({
+//                   status: false,
+//                   message: err,
+//                   data: undefined,
+//                 });
+//               return res.status(200).json({
+//                 status: false,
+//                 message: "Employee Profile created successfully!",
+//                 data: doc,
+//               });
+//             });
+//             console.log(newEmployeeProfile);
+//             try {
+//               let employeeProfileId = createEmployeeProfile(newEmployeeProfile);
+//               // sends initial availability info availability model (imported above)
+//               createAvailability(
+//                 employeeProfileId,
+//                 newEmployeeProfile.firstName,
+//                 newEmployeeProfile.lastName
+//               );
+//               if (!employeeProfileId) res.status(500).send("failed to create");
+//               res.status(200).send(employeeProfileId);
+//             } catch (error) {
+//               console.log(error.message);
+//               res.status(400).send(error.message);
+//             }
+//           }
+//         });
+//       }
+//     });
+// });
 
 /* Update: Existing profile in database
    Params: New Profile 
    Return: Updated Profile Model
  */
 
-router.patch("/updateEmployeeProfile", async (req, res) => {
+router.post("/update", async (req, res) => {
   let updatedEmployeeProfile = req.body;
-  let id = updatedEmployeeProfile.id;
+  let id = req.query.id;
+  console.log(req.body)
   console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
   res.send(updatedEmployee);

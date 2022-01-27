@@ -50,7 +50,7 @@ function App() {
         <Route path="/weekView" element={<WeekSchedulePage />} />
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} />
-        <Route path="/employeeDetail/:id/edit" element={<EmployeeEditPage />} />
+        <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
         <Route
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}

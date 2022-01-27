@@ -29,7 +29,6 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
 
-  const [focused, setFocused] = useState(false);
   // const [positionToAdd, setPositionToAdd] = useState("");
 
   useEffect(() => {
@@ -85,7 +84,11 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       status: status.value,
     };
     console.log("Saving new employee information", newEmployeeInfo);
-    await createEmployee(newEmployeeInfo);
+    if (existingValues) {
+      await onSave(newEmployeeInfo);
+    } else {
+      await createEmployee(newEmployeeInfo);
+    }
   }
 
   // function onAddPosition() {

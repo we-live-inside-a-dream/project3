@@ -11,6 +11,7 @@ const EmployeeEditPage = () => {
     let navigate = useNavigate()
 
     const [employee, setEmployee] = useState()
+    
 
     useEffect(() => {
       const fetchEmployee = async () => {
@@ -24,16 +25,26 @@ const EmployeeEditPage = () => {
 
     // fetch('/api/employeeProfile/' +employeeId
 
+    // router.post("/updateEmployeeProfile/edit/:id", async (req, res) => {
+    //   let updatedEmployeeProfile = req.body;
+    //   let id = req.params.id;
+    //   console.log(req.body)
+    //   console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
+    //   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
+    //   res.send(updatedEmployee);
+    //   console.log("updated employee...", updatedEmployee);
+    // });
+
     async function updateEmployee(updatedEmployee) {
         console.log("Posting to employee id", employeeId, "with data", updatedEmployee)
-        await fetch('/api/updateEmployeeProfile/' +employeeId, {
+        await fetch(`/api/employeeProfile/update?id=${employeeId}`, {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify(updatedEmployee)
       })
-        navigate('/employeeList')
+        // navigate('/employeeList')
       }
   return (
     <div>

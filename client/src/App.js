@@ -20,6 +20,7 @@ import LogOut from "./components/navigation/LogOut";
 // import ProfilePage from "./pages/common/ProfilePage";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
+import EmployeeEditPage from "./pages/EmployeeEditPage";
 
 function App() {
   const [user, setUser] = useState();
@@ -50,6 +51,7 @@ function App() {
         <Route path="/weekView" element={<WeekSchedulePage />} />
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} />
+        <Route path="/employeeDetail/:id/edit" element={<EmployeeEditPage />} />
         <Route
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}

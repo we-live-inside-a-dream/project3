@@ -6,12 +6,13 @@ import { useParams } from "react-router-dom"
 const EmployeeDetail = ({employeeId}) => {
   
   let params = useParams() 
+  let profileId = params.id
 
     const [employee, setEmployee] = useState()
 
     useEffect(() => {
       const fetchEmployee = async () => {
-        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/:profileId')
+        let fetchResult = await fetch('/api/employeeProfile/getByProfileId/' +profileId)
         let fetchedEmployee = await fetchResult.json()
         console.log("Fetched Employee", fetchedEmployee)
         setEmployee(fetchedEmployee)
@@ -19,16 +20,16 @@ const EmployeeDetail = ({employeeId}) => {
       fetchEmployee()
     }, [params.id])
     
-    async function updateEmployee(updatedEmployee) {
-      console.log("Posting to employee id", employeeId, "with data", updatedEmployee)
-      await fetch('/api/employeeProfile/' +employeeId, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updatedEmployee)
-    })
-    }
+    // async function updateEmployee(updatedEmployee) {
+    //   console.log("Posting to employee id", employeeId, "with data", updatedEmployee)
+    //   await fetch('/api/employeeProfile/' +employeeId, {
+    //     method: "POST",
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(updatedEmployee)
+    // })
+    // }
     return(
       <div>
           <h2>Employee information</h2>
@@ -54,7 +55,7 @@ const EmployeeDetail = ({employeeId}) => {
           <div>Status</div>
           <div>{employee?.status}</div>
         </div> 
-        <EmployeeEditForm existingValues={employee} onSave={updateEmployee}/>
+        {/* <EmployeeEditForm existingValues={employee} onSave={updateEmployee}/> */}
       </div>
     )
   }

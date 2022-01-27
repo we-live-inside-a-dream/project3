@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import EditSchedule from "../edit-schedule/EditSchedule";
-import StyledTableHeader from "../reusable/tables/StyledTableHeader";
+import EditSchedule from "../../components/edit-schedule/EditSchedule";
+import StyledTableHeader from "../../components/reusable/tables/StyledTableHeader";
 import moment from "moment";
-import StyledTable from "../reusable/tables/StyledTable";
-import Modal from "../reusable/Modal";
-import StyledButton from "../reusable/Inputs/StyledButton";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import StyledTable from "../../components/reusable/tables/StyledTable";
+import Modal from "../../components/reusable/Modal";
+import StyledButton from "../../components/reusable/Inputs/StyledButton";
+import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
+import WeekScheduleModal from "../../components/week-schedule/WeekScheduleModal";
 
 function WeekSchedule() {
   moment().format();
@@ -16,6 +17,10 @@ function WeekSchedule() {
   const [endDay, setEndDay] = useState(
     moment().endOf("week").format("yyyy-MM-DD").toString()
   );
+  const [modalEmployee, setModalEmployee] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalShift, setModalShift] = useState("");
+  const [modalDate, setModalDate] = useState("");
   const [day0, setDay0] = useState("");
   const [day1, setDay1] = useState("");
   const [day2, setDay2] = useState("");
@@ -27,9 +32,6 @@ function WeekSchedule() {
   const [dataWeek, setDataWeek] = useState([]);
 
   const [theWholeWeek, setTheWholeWeek] = useState([]);
-  // const [isOpen, setIsOpen] = useState();
-  // const [shiftId, setShiftId] = useState();
-
   useEffect(() => {
     findDateRange(startDay, endDay);
     const getAllTheEmployees = async function () {
@@ -38,7 +40,7 @@ function WeekSchedule() {
       setActiveEmployeeList(nameIdList);
     };
     getAllTheEmployees();
-  }, [startDay]);
+  }, [startDay, endDay]);
   //this function finds an array of dates depending on the start and end date chosen by the inputs.  these dates are then formatted
   //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
   const findDateRange = function (startDay, endDay) {
@@ -53,7 +55,7 @@ function WeekSchedule() {
     }
     setTitleWeek(datesArray);
     setDataWeek(dateNumberArray);
-    fetchAllTheDays(dataWeek);
+
     setDay0(dataWeek[0]);
     setDay1(dataWeek[1]);
     setDay2(dataWeek[2]);
@@ -61,6 +63,7 @@ function WeekSchedule() {
     setDay4(dataWeek[4]);
     setDay5(dataWeek[5]);
     setDay6(dataWeek[6]);
+    fetchAllTheDays(dataWeek);
   };
 
   const fetchAllTheDays = async function (dataWeek) {
@@ -168,11 +171,6 @@ function WeekSchedule() {
                   </div>
                 </div>
               </td>
-              {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
-                DO you want to delete this shift?
-                <StyledButton onClick={deleteShiftById()}>YES</StyledButton>
-                <StyledButton onClick ={setDeleteShift(false)}>NO</StyledButton>
-              </Modal> */}
 
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
@@ -180,13 +178,45 @@ function WeekSchedule() {
                     shift.employeeId === employee._id && shift.date === date
                   );
                 });
-                if (!shift) return <td>--</td>;
-                return <td key={shift._id}>{`${shift.start}-${shift.end}`}</td>;
+                if (!shift)
+                  return (
+                    <td
+                      onClick={() => {
+                        setModalOpen(true);
+                        setModalShift(shift);
+                        setModalEmployee(employee);
+                        setModalDate(date);
+                        console.log("FROM ONCLICK", employee, date, shift);
+                      }}
+                    >
+                      --
+                    </td>
+                  );
+                return (
+                  <td
+                    key={shift._id}
+                    onClick={() => {
+                      setModalOpen(true);
+                      setModalShift(shift);
+                      setModalEmployee(employee);
+                      setModalDate(date);
+                      console.log("FROM ONCLICK", employee, date, shift);
+                    }}
+                  >{`${shift.start}-${shift.end}`}</td>
+                );
               })}
             </tr>
           ))}
         </tbody>
       </StyledTable>
+      {modalOpen && (
+        <WeekScheduleModal
+          shift={modalShift}
+          employee={modalEmployee}
+          setModalOpen={setModalOpen}
+          date={modalDate}
+        />
+      )}
     </div>
   );
 }

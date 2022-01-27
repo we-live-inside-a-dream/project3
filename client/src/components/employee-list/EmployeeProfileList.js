@@ -24,11 +24,11 @@ function EmployeeProfileList() {
   }, []);
   console.log("AFTER USE EFFECT", employees);
 
-  // selects the employee id to davigate to the page to edit that particular employee
+  // selects the employee id to navigate to the page to edit that particular employee
   function selectProfileId(id) {
-    navigate("/employeeDetail/" + id);
+    navigate("/employeeDetail/edit/" + id);
   }
-  //    selects employee from dropdow menu
+  //    selects employee from dropdown menu
   function selectProfile(id) {
     console.log("selectAvailability called on id", id);
     selectProfileId(id);

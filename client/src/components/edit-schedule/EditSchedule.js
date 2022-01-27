@@ -57,24 +57,28 @@ function isEmployeeAvailible(){
 }
 
 useEffect(()=>{
-  console.log("employeeId",employeeId)
-  const empAvail = async ()=>{
-    
-    let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
-    let employeeAvailibility = await fetchAvailibility.json()
-    setEmpAvailibility(employeeAvailibility)
-    
+  if(employeeId){
+
+    console.log("employeeId",employeeId)
+    const empAvail = async ()=>{
+      
+      let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
+      let employeeAvailibility = await fetchAvailibility.json()
+      setEmpAvailibility(employeeAvailibility)
+      
+    }
+    empAvail()
   }
-  empAvail()
+
 },[employeeId])
 
-useEffect(()=>{
-  let dayOfWeek = fns.getDay(new Date(date));
+// useEffect(()=>{
+//   let dayOfWeek = fns.getDay(new Date(date));
 
-  console.log("date is...",date)
-  console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-  isEmployeeAvailible()
-  },[date])
+//   console.log("date is...",date)
+//   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+//   isEmployeeAvailible()
+//   },[date])
 
   useEffect(() => {
     if (existingValues) {
@@ -164,7 +168,7 @@ useEffect(()=>{
         </InputLabel>
         <NativeSelect
           defaultValue={employeeId}
-          labelId="demo-simple-select-helper-label"
+       
           id="name-imput"
           value={employeeId}
           label="name"
@@ -182,10 +186,10 @@ useEffect(()=>{
           }}
         >
           {/* {name} */}
-          <option>none</option>
-          {empNames?.map((event, index) => {
+          <option></option>
+          {empNames?.map((event) => {
             return (
-              <option key={index} value={event._id}>
+              <option key={event._id} value={event._id}>
                 {event.firstName + " " + event.lastName}
               </option>
             );
@@ -286,6 +290,7 @@ this is for making breaks list
         <div>
           {breaks?.map((breakys, index) => (
             <BreaksComponent
+              myKey={breakys._id}
               breakys={breakys}
               index={index}
               onRemoveBreak={onRemoveBreak}

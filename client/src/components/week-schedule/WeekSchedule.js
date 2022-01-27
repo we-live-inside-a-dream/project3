@@ -4,10 +4,18 @@ import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import moment from "moment";
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../reusable/Modal";
+import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 function WeekSchedule() {
   moment().format();
-
+  const [activeEmployeeList, setActiveEmployeeList] = useState([]);
+  const [startDay, setStartDay] = useState(
+    moment().startOf("week").format("yyyy-MM-DD").toString()
+  );
+  const [endDay, setEndDay] = useState(
+    moment().endOf("week").format("yyyy-MM-DD").toString()
+  );
   const [day0, setDay0] = useState("");
   const [day1, setDay1] = useState("");
   const [day2, setDay2] = useState("");
@@ -17,20 +25,20 @@ function WeekSchedule() {
   const [day6, setDay6] = useState("");
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
-  const [startDay, setStartDay] = useState();
-  const [endDay, setEndDay] = useState();
+
   const [theWholeWeek, setTheWholeWeek] = useState([]);
   // const [isOpen, setIsOpen] = useState();
   // const [shiftId, setShiftId] = useState();
 
-  // useEffect(() => {
-  //   const fetchSchedule = async () => {
-  //     let fetchResult = await fetch(`/api/employeeProfile/employees}`);
-  //     let fetchedDay = await fetchResult.json();
-  //     setSchedule(fetchedDay);
-  //   };
-  //   fetchSchedule();
-  // }, [day]);
+  useEffect(() => {
+    findDateRange(startDay, endDay);
+    const getAllTheEmployees = async function () {
+      let employeeLst = await fetch("/api/employeeProfile/employees/names");
+      let nameIdList = await employeeLst.json();
+      setActiveEmployeeList(nameIdList);
+    };
+    getAllTheEmployees();
+  }, [startDay, endDay]);
   //this function finds an array of dates depending on the start and end date chosen by the inputs.  these dates are then formatted
   //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
   const findDateRange = function (startDay, endDay) {
@@ -45,8 +53,14 @@ function WeekSchedule() {
     }
     setTitleWeek(datesArray);
     setDataWeek(dateNumberArray);
-    console.log(titleWeek);
-    console.log(dataWeek);
+    fetchAllTheDays(dataWeek);
+    setDay0(dataWeek[0]);
+    setDay1(dataWeek[1]);
+    setDay2(dataWeek[2]);
+    setDay3(dataWeek[3]);
+    setDay4(dataWeek[4]);
+    setDay5(dataWeek[5]);
+    setDay5(dataWeek[6]);
   };
 
   const fetchAllTheDays = async function (dataWeek) {
@@ -59,28 +73,6 @@ function WeekSchedule() {
     }
     fetchWeek(dataWeek);
   };
-
-  // let startTime = 8;
-  // let endTime = 18;
-  // let businessHours = [];
-  // let headerHours = [];
-  // for (let i = startTime; i < endTime; i += 0.25) {
-  //   businessHours.push(i);
-  //   headerHours.push(i < 13 ? i : i - 12);
-  // }
-  // console.log(businessHours);
-
-  // function selectTheDay(day) {
-  //   console.log("THE DAY FROM THE FUNCTION IS", day);
-  //   setDay(day);
-  // }
-
-  // function convertTime(prop) {
-  //   let timeString =
-  //     prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
-  //   // console.log(timeString,"new String")
-  //   return timeString;
-  // }
 
   return (
     <div className="container">
@@ -126,11 +118,12 @@ function WeekSchedule() {
             })}
           </tr>
         </thead>
-        {/* <tbody>
-          {schedule?.map((employee, index) => (
+        <tbody>
+          {activeEmployeeList?.map((employee, index) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
-            <tr key={index} onClick={() => setShiftId(employee._id)}>
-              <td key={index}>
+            <tr key={index}>
+              {/* <tr key={index} onClick={() => setShiftId(employee._id)}> */}
+              <td>
                 <div style={{ display: "inline-flex" }}>
                   <div
                     style={{
@@ -147,7 +140,7 @@ function WeekSchedule() {
                       padding={"0px"}
                       margin={"0em"}
                       textAlign={"left"}
-                      onClick={() => setDeleteShift(true)}
+                      // onClick={() => setDeleteShift(true)}
                     >
                       X
                     </StyledButton>
@@ -161,7 +154,10 @@ function WeekSchedule() {
                       display: "block",
                     }}
                   >
-                    <p>{employee.name}</p>
+                    <p>
+                      {employee.firstName}
+                      {employee.lastName}
+                    </p>
 
                     <p
                       style={{
@@ -169,15 +165,13 @@ function WeekSchedule() {
                         color: "#545454",
                         fontSize: ".7rem",
                       }}
-                    >
-                      {employee.start.slice(0, 2)}-{employee.end.slice(0, 2)}
-                    </p>
+                    ></p>
                     <div>
                       <StyledEditButton
                         fontSize={"1em"}
                         padding={"1px"}
                         margin={"1px"}
-                        onClick={() => setIsOpen(true)}
+                        // onClick={() => setIsOpen(true)}
                       >
                         ✎
                       </StyledEditButton>
@@ -190,34 +184,16 @@ function WeekSchedule() {
                 <StyledButton onClick={deleteShiftById()}>YES</StyledButton>
                 <StyledButton onClick ={setDeleteShift(false)}>NO</StyledButton>
               </Modal> */}
-
-        {/* {businessHours?.map((hour, index) => {
-                if (
-                  hour >= convertTime(employee.start) &&
-                  hour < convertTime(employee.end)
-                ) {
-                  return (
-                    <td key={index}>
-                      <div
-                        style={{
-                          backgroundColor: "#5AB9EA",
-                          height: "45px",
-                          padding: "0px",
-                          border: "1px solid #5AB9EA",
-                          margin: "25px 0",
-                        }}
-                      ></div>
-                    </td>
-                  );
-                } else {
-                  return <td key={index}></td>;
-                }
+              {theWholeWeek?.filter((shif) => shif.employeeId === employee.Id)}
+              {theWholeWeek?.map((date, index) => {
+                return dataWeek.map((day) => {
+                  return <td>something</td>;
+                });
               })}
-
               <td></td>
             </tr>
           ))}
-        </tbody>  */}
+        </tbody>
       </StyledTable>
     </div>
   );

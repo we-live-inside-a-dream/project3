@@ -28,12 +28,14 @@ async function listScheduleByWeek(start, end) {
   return Schedule.find({ date: { $gte: ISODate(start), $lte: ISODate(end) } });
 }
 
-async function listByWeekDays(week) {
-  return Schedule.find({
-    day: [week[0], week[1], week[2], week[3], week[4], week[5], week[6]],
+async function listByWeekDays(day0, day1, day2, day3, day4, day5, day6) {
+  // console.log("FROM MODEL, THIS IS THE WEEK", week);
+  let weekList = Schedule.find({
+    date: { $in: [day0, day1, day2, day3, day4, day5, day6] },
   });
+  // console.log("from scheduleModel: ", weekList);
+  return weekList;
 }
-
 async function listScheduleByMonth(month) {
   return Schedule.find({ date: month });
 }

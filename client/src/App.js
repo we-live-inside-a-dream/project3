@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import background from "./assets/boldPic.jpg";
 
-
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";

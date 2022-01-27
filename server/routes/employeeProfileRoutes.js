@@ -2,7 +2,8 @@ const { application } = require("express");
 const express = require("express");
 const router = express.Router();
 const { createAvailability } = require("../models/availability");
-const { employeeProfile,
+const {
+  employeeProfile,
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
@@ -95,9 +96,9 @@ router.post("/create", async (req, res) => {
    Return: Updated Profile Model
  */
 
-router.patch("/updateEmployeeProfile", async (req, res) => {
+router.patch("/update/:id", async (req, res) => {
   let updatedEmployeeProfile = req.body;
-  let id = updatedEmployeeProfile.id;
+  let id = req.params.id;
   console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
   res.send(updatedEmployee);

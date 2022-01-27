@@ -28,21 +28,21 @@ const EmployeeDetail = ({ employeeId }) => {
     fetchEmployee();
   }, [profileId]);
 
-  async function updateEmployee(updatedEmployee) {
-    console.log(
-      "Posting to employee id",
-      employeeId,
-      "with data",
-      updatedEmployee
-    );
-    await fetch(`/api/employeeProfile/update?id=${employeeId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedEmployee),
-    });
-  }
+  // async function updateEmployee(updatedEmployee) {
+  //   console.log(
+  //     "Posting to employee id",
+  //     employeeId,
+  //     "with data",
+  //     updatedEmployee
+  //   );
+  //   await fetch(`/api/employeeProfile/update?id=${employeeId}`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(updatedEmployee),
+  //   });
+  // }
   return (
     <>
       <StyledEmployeeForm />

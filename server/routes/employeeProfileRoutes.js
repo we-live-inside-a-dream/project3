@@ -96,7 +96,7 @@ const {
    Return: Updated Profile Model
  */
 
-router.post("/update", async (req, res) => {
+router.post("/update/", async (req, res) => {
   let updatedEmployeeProfile = req.body;
   let id = req.query.id;
   console.log(req.body);

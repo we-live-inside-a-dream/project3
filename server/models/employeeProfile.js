@@ -33,7 +33,6 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
   },
   phoneNumber: {
     type: String,
-    unique: true,
     required: true,
   },
   positions: {

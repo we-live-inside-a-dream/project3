@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate} from 'react-router-dom'
 import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import StyledTable from "../reusable/tables/StyledTable";
@@ -7,6 +8,7 @@ import Modal from "../reusable/Modal";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
+
 function DaySchedule() {
   const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
@@ -14,36 +16,40 @@ function DaySchedule() {
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
   const [deleteShift, setDeleteShift] = useState(false);
+  
 
   useEffect(() => {
-    console.log("shiftId is", shiftId);
-    const fetchShift = async () => {
-      let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
-      let fetchedShift = await fetchResult.json();
-      setShift(fetchedShift);
-      // console.log("AFTER USE EFFECT SHIFT ID", shiftId);
-    };
-    const deleteShiftById = async () => {
-      await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
-        method: "DELETE",
-      });
-    };
-    //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
-    if (deleteShift) {
-      console.log("trying to delete shift!!");
-      deleteShiftById();
-      setDeleteShift(false);
-    } else {
-      fetchShift();
+    if(shiftId){
+
+      console.log("shiftId is", shiftId);
+      const fetchShift = async () => {
+        let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+        let fetchedShift = await fetchResult.json();
+        setShift(fetchedShift);
+        // console.log("AFTER USE EFFECT SHIFT ID", shiftId);
+      };
+      const deleteShiftById = async () => {
+        await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+          method: "DELETE",
+        });
+      };
+      //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
+      if (deleteShift) {
+        console.log("trying to delete shift!!");
+        deleteShiftById();
+        setDeleteShift(false);
+      } else {
+        fetchShift();
+      }
+      console.log("AFTER USE EFFECT SHIFT ID", shiftId);
     }
-    console.log("AFTER USE EFFECT SHIFT ID", shiftId);
   }, [shiftId]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
       let fetchedDay = await fetchResult.json();
-      console.log("FETCHED DAY", fetchedDay);
+      // console.log("FETCHED DAY", fetchedDay);
       setSchedule(fetchedDay);
     };
     fetchSchedule();
@@ -126,19 +132,10 @@ function DaySchedule() {
           </tr>
         </thead>
 
-        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          <EditSchedule
-            shiftId={shiftId}
-            existingValues={shift}
-            onClose={
-              (() => setIsOpen(false), () => setShift(""), () => setShiftId(""))
-            }
-          />
-          **edit**
-        </Modal>
+ 
 
         <tbody>
-          {schedule?.map((employee, index) => (
+          {schedule?.map((employee) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={employee._id} onClick={() => setShiftId(employee._id)}>
               <td>
@@ -233,6 +230,15 @@ function DaySchedule() {
           ))}
         </tbody>
       </StyledTable>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+          <EditSchedule
+            shiftId={shiftId}
+            existingValues={shift}
+            onClose={(() => setIsOpen(false))
+            }
+          />
+          **edit**
+        </Modal>
     </div>
   );
 }

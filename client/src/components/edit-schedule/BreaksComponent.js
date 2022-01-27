@@ -10,13 +10,14 @@ const BreaksComponent = (props) => {
     const myIndex = props.index;
     const myBreakys = props.breakys;
     const onRemoveBreak=props.onRemoveBreak
+    const myKey = props.myKey
   
 
    
   
     return (
     
-            <div key={myIndex}>
+            <div key={myKey}>
               <div>{myBreakys.name}:{myBreakys.start}-{myBreakys.end}
                 <StyledButton
                   padding ={"0px"}

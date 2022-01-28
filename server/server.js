@@ -22,10 +22,10 @@ app.use("/api/availability", availabilityRouter);
 app.use("/authRoutes", authRouter);
 
 app.use("/api/schedule", scheduleRouter);
-app.use("/", express.static("../client/build"));
+app.use("/", express.static("../client/public"));
 
 app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  res.sendFile(path.join(__dirname, "../client/public", "index.html"));
 });
 
 app.listen(port, () => {

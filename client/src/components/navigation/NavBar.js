@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+
 import {
   NavbarContainer,
   LeftContainer,
@@ -16,15 +16,7 @@ import LogoImg from "../../assets/logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
-  const [setUser] = useState();
-  useEffect(() => {
-    axios.post("/user/loggedInUser").then(function (response) {
-      if (response.data) {
-        setUser(response.data);
-        console.log(response);
-      }
-    });
-  }, []);
+
   return (
     <NavbarContainer>
       <NavbarInnerContainer>

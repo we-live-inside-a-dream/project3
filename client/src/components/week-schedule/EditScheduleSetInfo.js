@@ -7,13 +7,6 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "../edit-schedule/BreaksComponent";
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-// const events2 = [
-//   { name: "" },
-//   { name: "Coffe" },
-//   { name: "Lunch" },
-//   { name: "Coffe2" },
-// ];
-
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -153,16 +146,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   return (
     <>
       <InputLabel>{`${firstName} ${lastName}: ${date}`}</InputLabel>
-
-      {/* <div>
-        <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
-        <StyledInput
-          label="shift day"
-          type="date"
-          value={date}
-          onChange={(event) => onInputUpdate(event, setDate)}
-        />
-      </div> */}
 
       <div>
         <InputLabel id="demo-simple-select-helper-label">

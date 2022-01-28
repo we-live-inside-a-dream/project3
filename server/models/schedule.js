@@ -1,5 +1,6 @@
 const { Timestamp } = require("mongodb");
 const mongoose = require("./mongooseDb");
+const moment = require("moment");
 
 const Schedule = mongoose.model("schedule", {
   employeeId: String,
@@ -28,10 +29,15 @@ async function listScheduleByWeek(start, end) {
   return Schedule.find({ date: { $gte: ISODate(start), $lte: ISODate(end) } });
 }
 
-async function listByWeekDays(day0, day1, day2, day3, day4, day5, day6) {
+async function listByWeekDays(start) {
   // console.log("FROM MODEL, THIS IS THE WEEK", week);
+  let end = moment(start)
+    .add(6, "days")
+    .startOf("day")
+    .format("dddd, Do")
+    .toString();
   let weekList = Schedule.find({
-    date: { $in: [day0, day1, day2, day3, day4, day5, day6] },
+    date: { $gte: start, $lte: end },
   });
   // console.log("from scheduleModel: ", weekList);
   return weekList;

@@ -10,72 +10,53 @@ import WeekScheduleModal from "../../components/week-schedule/WeekScheduleModal"
 
 function WeekSchedule() {
   moment().format();
-  const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
   );
-  const [endDay, setEndDay] = useState(
-    moment().endOf("week").format("yyyy-MM-DD").toString()
-  );
+  const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [modalEmployee, setModalEmployee] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [modalShift, setModalShift] = useState("");
   const [modalDate, setModalDate] = useState("");
-  const [day0, setDay0] = useState("");
-  const [day1, setDay1] = useState("");
-  const [day2, setDay2] = useState("");
-  const [day3, setDay3] = useState("");
-  const [day4, setDay4] = useState("");
-  const [day5, setDay5] = useState("");
-  const [day6, setDay6] = useState("");
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
-
   const [theWholeWeek, setTheWholeWeek] = useState([]);
+
+  //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
-    findDateRange(startDay, endDay);
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");
       let nameIdList = await employeeLst.json();
       setActiveEmployeeList(nameIdList);
     };
+    //this function finds an array of dates depending on the start and end date chosen by the inputs.  these dates are then formatted
+
+    const fetchAllTheDays = async function () {
+      async function fetchWeek() {
+        let theQueryWeek = await fetch(`/api/schedule/week?day0=${startDay}`);
+        let fetchResult = await theQueryWeek.json();
+        setTheWholeWeek(fetchResult);
+      }
+      fetchWeek();
+    };
+    //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
+    const findDateRange = function () {
+      let datesArray = [];
+      let dateNumberArray = [];
+      let firstDate = moment(startDay).startOf("day");
+      firstDate.subtract(1, "days");
+      let lastDate = moment(startDay).add(6, "days").startOf("day");
+      while (firstDate.add(1, "days").diff(lastDate) <= 0) {
+        datesArray.push(firstDate.clone().format("dddd, Do").toString());
+        dateNumberArray.push(firstDate.clone().format("yyyy-MM-DD").toString());
+      }
+      setTitleWeek(datesArray);
+      setDataWeek(dateNumberArray);
+      fetchAllTheDays();
+    };
     getAllTheEmployees();
-  }, [startDay, endDay]);
-  //this function finds an array of dates depending on the start and end date chosen by the inputs.  these dates are then formatted
-  //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
-  const findDateRange = function (startDay, endDay) {
-    let datesArray = [];
-    let dateNumberArray = [];
-    let firstDate = moment(startDay).startOf("day");
-    firstDate.subtract(1, "days");
-    let lastDate = moment(startDay).add(6, "days").startOf("day");
-    while (firstDate.add(1, "days").diff(lastDate) <= 0) {
-      datesArray.push(firstDate.clone().format("dddd, Do").toString());
-      dateNumberArray.push(firstDate.clone().format("yyyy-MM-DD").toString());
-    }
-    setTitleWeek(datesArray);
-    setDataWeek(dateNumberArray);
-
-    setDay0(dataWeek[0]);
-    setDay1(dataWeek[1]);
-    setDay2(dataWeek[2]);
-    setDay3(dataWeek[3]);
-    setDay4(dataWeek[4]);
-    setDay5(dataWeek[5]);
-    setDay6(dataWeek[6]);
-    fetchAllTheDays(dataWeek);
-  };
-
-  const fetchAllTheDays = async function (dataWeek) {
-    async function fetchWeek(dataWeek) {
-      let theQueryWeek = await fetch(
-        `/api/schedule/week?day0=${dataWeek[0]}&day1=${dataWeek[1]}&day2=${dataWeek[2]}&day3=${dataWeek[3]}&day4=${dataWeek[4]}&day5=${dataWeek[5]}&day6=${dataWeek[6]}`
-      );
-      let fetchResult = await theQueryWeek.json();
-      setTheWholeWeek(fetchResult);
-    }
-    fetchWeek(dataWeek);
-  };
+    findDateRange();
+  }, [startDay]);
 
   return (
     <div className="container">
@@ -98,7 +79,6 @@ function WeekSchedule() {
           value={startDay}
           onChange={(e) => {
             setStartDay(e.target.value);
-            findDateRange(startDay, endDay);
           }}
         />
       </h1>
@@ -159,14 +139,14 @@ function WeekSchedule() {
                       }}
                     ></p>
                     <div>
-                      <StyledEditButton
+                      {/* <StyledEditButton
                         fontSize={"1em"}
                         padding={"1px"}
                         margin={"1px"}
                         // onClick={() => setIsOpen(true)}
                       >
                         ✎
-                      </StyledEditButton>
+                      </StyledEditButton> */}
                     </div>
                   </div>
                 </div>

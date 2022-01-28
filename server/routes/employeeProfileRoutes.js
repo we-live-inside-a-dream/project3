@@ -2,7 +2,8 @@ const { application } = require("express");
 const express = require("express");
 const router = express.Router();
 const { createAvailability } = require("../models/availability");
-const { employeeProfile,
+const {
+  employeeProfile,
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
@@ -31,8 +32,8 @@ const { employeeProfile,
  return:-status 200 and created profile if successful
         -status 500 if it fails.
 */
-// router.post("/create", async (req, res) => {
-//   let newEmployeeProfile = req.body;
+router.post("/create", async (req, res) => {
+  let newEmployeeProfile = req.body;
 //   employeeProfile
 //     .find({ email: req.body.email })
 //     .exec()
@@ -69,36 +70,36 @@ const { employeeProfile,
 //                 data: doc,
 //               });
 //             });
-//             console.log(newEmployeeProfile);
-//             try {
+            console.log(newEmployeeProfile);
+            try {
 //               let employeeProfileId = createEmployeeProfile(newEmployeeProfile);
 //               // sends initial availability info availability model (imported above)
-//               createAvailability(
-//                 employeeProfileId,
-//                 newEmployeeProfile.firstName,
-//                 newEmployeeProfile.lastName
-//               );
-//               if (!employeeProfileId) res.status(500).send("failed to create");
-//               res.status(200).send(employeeProfileId);
-//             } catch (error) {
-//               console.log(error.message);
-//               res.status(400).send(error.message);
-//             }
+              createAvailability(
+                employeeProfileId,
+                newEmployeeProfile.firstName,
+                newEmployeeProfile.lastName
+              );
+              if (!employeeProfileId) res.status(500).send("failed to create");
+              res.status(200).send(employeeProfileId);
+            } catch (error) {
+              console.log(error.message);
+              res.status(400).send(error.message);
+            }
 //           }
 //         });
 //       }
 //     });
-// });
+});
 
 /* Update: Existing profile in database
    Params: New Profile 
    Return: Updated Profile Model
  */
 
-router.post("/update", async (req, res) => {
+router.post("/update/", async (req, res) => {
   let updatedEmployeeProfile = req.body;
   let id = req.query.id;
-  console.log(req.body)
+  console.log(req.body);
   console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
   res.send(updatedEmployee);

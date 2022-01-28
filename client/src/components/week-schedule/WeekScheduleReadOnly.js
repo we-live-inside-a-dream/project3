@@ -99,26 +99,26 @@ function WeekSchedule() {
             <tr key={employee._id}>
               {/* <tr key={index} onClick={() => setShiftId(employee._id)}> */}
               <td>
-                <div
-                  style={{
-                    display: "grid",
-                    width: "12rem",
-                    gridTemplateColumns: "5% 25% 70%",
-                  }}
-                >
-                  <div style={{ gridRow: "1" }}></div>
-                  <div>
-                    <div
-                      style={{
-                        gridRow: "1",
-                        backgroundColor: "grey",
-                        height: "2.5rem",
-                        width: "2.5rem",
-                        margin: "auto",
-                        alignSelf: "center",
-                        borderRadius: "50%",
-                      }}
-                    ></div>
+                <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{
+                      backgroundColor: "grey",
+                      height: "3rem",
+                      width: "2rem",
+                      marginRight: "10px",
+                      alignSelf: "center",
+                    }}
+                  >
+                    {" "}
+                    <StyledButton
+                      fontSize={"0.5em"}
+                      padding={"0px"}
+                      margin={"0em"}
+                      textAlign={"left"}
+                      // onClick={() => setDeleteShift(true)}
+                    >
+                      X
+                    </StyledButton>
                   </div>
 
                   <div
@@ -127,16 +127,15 @@ function WeekSchedule() {
                       color: "#4488AB",
                       fontWeight: "600",
                       display: "block",
-                      textShadow: "none",
-                      textAlign: "left",
                     }}
                   >
-                    <p>{`${employee.firstName} ${employee.lastName.slice(
-                      0,
-                      1
-                    )}`}</p>
+                    <p>
+                      {employee.firstName}
+                      {employee.lastName}
+                    </p>
                     <p
                       style={{
+                        textShadow: "none",
                         color: "#545454",
                         fontSize: ".7rem",
                       }}
@@ -185,7 +184,7 @@ function WeekSchedule() {
                       setModalDate(date);
                       console.log("FROM ONCLICK", employee, date, shift);
                     }}
-                  >{`${shift.start}-${shift.end} `}</td>
+                  >{`${shift.start}-${shift.end}`}</td>
                 );
               })}
             </tr>

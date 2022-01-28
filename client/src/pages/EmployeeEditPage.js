@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeEditForm from "../components/employee-list/EmployeeEditForm";
+import StyledPage from "../components/reusable/StyledPage";
 
 
 
@@ -23,17 +24,6 @@ const EmployeeEditPage = () => {
       fetchEmployee()
     }, [employeeId])
 
-    // fetch('/api/employeeProfile/' +employeeId
-
-    // router.post("/updateEmployeeProfile/edit/:id", async (req, res) => {
-    //   let updatedEmployeeProfile = req.body;
-    //   let id = req.params.id;
-    //   console.log(req.body)
-    //   console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
-    //   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
-    //   res.send(updatedEmployee);
-    //   console.log("updated employee...", updatedEmployee);
-    // });
 
     async function updateEmployee(updatedEmployee) {
         console.log("Posting to employee id", employeeId, "with data", updatedEmployee)
@@ -47,9 +37,9 @@ const EmployeeEditPage = () => {
         navigate('/employeeList')
       }
   return (
-    <div>
+    <StyledPage>
       <EmployeeEditForm existingValues={employee} onSave={updateEmployee}/>
-    </div>
+    </StyledPage>
   )
 }
 

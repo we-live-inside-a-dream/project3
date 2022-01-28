@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import {
-  StyledEmployeeForm,
+  // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
   StyledButton,
-  StyledError,
 } from "./StyledEmployeeForm";
 
 const positionData = [
@@ -99,7 +98,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
 
   return (
     <>
-      <StyledEmployeeForm />
+      {/* <StyledEmployeeForm /> */}
       <StyledFormWrapper>
         <StyledForm>
           <h2>Employee Description</h2>

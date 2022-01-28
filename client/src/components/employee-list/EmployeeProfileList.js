@@ -5,7 +5,7 @@ import StyledTableData from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton"
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 function EmployeeProfileList() {
   const [employees, setEmployees] = useState([]);
@@ -92,7 +92,11 @@ function EmployeeProfileList() {
                       {employee.firstName}
                       <br />
                       {employee.lastName}
-                      <StyledEditButton onClick={() => selectProfile(employee._id)}>✎</StyledEditButton>
+                      <StyledEditButton
+                        onClick={() => selectProfile(employee._id)}
+                      >
+                        ✎
+                      </StyledEditButton>
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />

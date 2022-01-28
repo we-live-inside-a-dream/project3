@@ -1,19 +1,19 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
 
-export const StyledEmployeeForm = createGlobalStyle`
-  html {
-    height: 100%
-  }
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
-    height: 100%;
-    margin: 0;
-    color: #555;
-  }
-`;
+// export const StyledEmployeeForm = createGlobalStyle`
+//   html {
+//     height: 100%
+//   }
+//   body {
+//     font-family: Arial, Helvetica, sans-serif;
+//     background: linear-gradient(to bottom, #f05053, #e1eec3);
+//     height: 100%;
+//     margin: 0;
+//     color: #555;
+//   }
+// `;
 
-export const sharedStyles = css`
+const sharedStyles = css`
   background-color: #eee;
   height: 40px;
   border-radius: 5px;
@@ -26,13 +26,16 @@ export const sharedStyles = css`
 export const StyledFormWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 90vh;
+  /* align-items: center; */
+  max-height: 80vh;
+  overflow: hidden;
+  overflow-y: auto;
   padding: 0 20px;
 `;
 
 export const StyledForm = styled.div`
   width: 100%;
+  height: 100%;
   max-width: 700px;
   padding: 40px;
   background-color: #fff;
@@ -54,6 +57,7 @@ export const StyledTextArea = styled.textarea`
   resize: none;
   ${sharedStyles}
 `;
+
 export const StyledButton = styled.button`
   display: block;
   /* background-color: #f7797d; */

@@ -1,25 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import * as fns from "date-fns";
-
-import { NativeSelect } from "@mui/material";
-// import MenuPopupState from "../UNUSED/MenuPopupState";
-
-// import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
-
 import StyledInput from "../reusable/Inputs/StyledInput";
 import StyledButton from "../reusable/Inputs/StyledButton";
-import BreaksComponent from "./BreaksComponent";
+import BreaksComponent from "../edit-schedule/BreaksComponent";
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
-
-// const events2 = [
-//   { name: "" },
-//   { name: "Coffe" },
-//   { name: "Lunch" },
-//   { name: "Coffe2" },
-// ];
 
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
@@ -47,47 +33,35 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  
-  useEffect(()=>{
-    if(employeeId){
-      
-      console.log("employeeId",employeeId)
-      const empAvail = async ()=>{ 
-        let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
-        let employeeAvailibility = await fetchAvailibility.json()
-        setEmpAvailibility(employeeAvailibility) 
-      }
-      empAvail()
-    }
-    // console.log(empAvailibility)
-  },[employeeId])
-  
-  useEffect(()=>{
+  function isEmployeeAvailible() {
+    // need to ensure employee isnt working over 40 hours this week
+    // need to see if employee has vacation or time off booked
+    // need to compare day of the week to weekly availibility
+    // first figure out what day of the week it is...
+    // console.log('employee weekly availibility',empAvailibility.days.dayName)
+  }
 
-    function isEmployeeAvailible(){
-      let availibleToday = empAvailibility.days[dayOfWeek]//dayOfweek is the index for days array monday=0, sunday=6
-    if(!availibleToday.available){
-      console.log("employee not availible");
-    }else if(!availibleToday.allDay){
-      console.log(`employee is availible between ${availibleToday.start} and ${availibleToday.end}`);
-    }else{
-      console.log("employee is free to suffer all day!!");
-    }
-      // need to ensure employee isnt working over 40 hours this week
-      // need to see if employee has vacation or time off booked
-      // need to compare day of the week to weekly availibility 
-      //       first figure out what day of the week it is...
-      console.log('employee weekly availibility',availibleToday)
-    }
+  // useEffect(() => {
+  //   if (employeeId) {
+  //     console.log("employeeId", employeeId);
+  //     const empAvail = async () => {
+  //       let fetchAvailibility = await fetch(
+  //         `/api/availability/availibility/profile?id=${employeeId}`
+  //       );
+  //       let employeeAvailibility = await fetchAvailibility.json();
+  //       setEmpAvailibility(employeeAvailibility);
+  //     };
+  //     empAvail();
+  //   }
+  // }, [employeeId]);
 
-    let dayOfWeek = fns.getDay(new Date(date));
-  
-  if(empAvailibility){ console.log(empAvailibility)
-    console.log("date is...",date)
-    console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-    isEmployeeAvailible()
-  };
-  },[date])
+  // useEffect(()=>{
+  //   let dayOfWeek = fns.getDay(new Date(date));
+
+  //   console.log("date is...",date)
+  //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+  //   isEmployeeAvailible()
+  //   },[date])
 
   useEffect(() => {
     if (existingValues) {
@@ -138,7 +112,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     };
     onClose();
 
-    if (existingValues) {
+    if (existingValues.startDate) {
       console.log(existingValues);
       console.log("updateShift with...", newShift);
       await updateShift(newShift);
@@ -171,49 +145,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   return (
     <>
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">
-          Employee Name
-        </InputLabel>
-        <NativeSelect
-          defaultValue={employeeId}
-          id="name-imput"
-          value={employeeId}
-          label="name"
-          onChange={(event) => onInputUpdate(event, setEmployeeId)}
-          style={{
-            width: "275px",
-            fontSize: "1em",
-            textAlign: "center",
-            margin: "10px",
-            color: "#4488AB",
-            backgroundColor: "white",
-            border: "2px solid #4488AB",
-            boarderRadius: "3px",
-            filter: "dropShadow(5px 5px 10px grey)",
-          }}
-        >
-          {/* {name} */}
-          <option></option>
-          {empNames?.map((event) => {
-            return (
-              <option key={event._id} value={event._id}>
-                {event.firstName + " " + event.lastName}
-              </option>
-            );
-          })}
-        </NativeSelect>
-      </div>
-
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
-        <StyledInput
-          label="shift day"
-          type="date"
-          value={date}
-          onChange={(event) => onInputUpdate(event, setDate)}
-        />
-      </div>
+      <InputLabel>{`${firstName} ${lastName}: ${date}`}</InputLabel>
 
       <div>
         <InputLabel id="demo-simple-select-helper-label">

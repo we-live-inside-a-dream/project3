@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
-  StyledEmployeeForm,
+  // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
@@ -26,21 +26,26 @@ const EmployeeDetail = ({ employeeId }) => {
       setEmployee(fetchedEmployee);
     };
     fetchEmployee();
-  }, [params.id]);
+  }, [profileId]);
 
   // async function updateEmployee(updatedEmployee) {
-  //   console.log("Posting to employee id", employeeId, "with data", updatedEmployee)
-  //   await fetch('/api/employeeProfile/' +employeeId, {
+  //   console.log(
+  //     "Posting to employee id",
+  //     employeeId,
+  //     "with data",
+  //     updatedEmployee
+  //   );
+  //   await fetch(`/api/employeeProfile/update?id=${employeeId}`, {
   //     method: "POST",
   //     headers: {
-  //         'Content-Type': 'application/json'
+  //       "Content-Type": "application/json",
   //     },
-  //     body: JSON.stringify(updatedEmployee)
-  // })
+  //     body: JSON.stringify(updatedEmployee),
+  //   });
   // }
   return (
     <>
-      <StyledEmployeeForm />
+      {/* <StyledEmployeeForm /> */}
       <StyledFormWrapper>
         <StyledForm>
           <div>

@@ -44,7 +44,7 @@ const EmployeeEditPage = () => {
           },
           body: JSON.stringify(updatedEmployee)
       })
-        // navigate('/employeeList')
+        navigate('/employeeList')
       }
   return (
     <div>

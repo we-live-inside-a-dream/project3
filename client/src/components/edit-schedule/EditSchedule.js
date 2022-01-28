@@ -47,38 +47,47 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-function isEmployeeAvailible(){
-
-  // need to ensure employee isnt working over 40 hours this week
-  // need to see if employee has vacation or time off booked
-  // need to compare day of the week to weekly availibility 
-        // first figure out what day of the week it is...
-  // console.log('employee weekly availibility',empAvailibility.days.dayName)
-}
-
-useEffect(()=>{
-  if(employeeId){
-
-    console.log("employeeId",employeeId)
-    const empAvail = async ()=>{
+  
+  useEffect(()=>{
+    if(employeeId){
       
-      let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
-      let employeeAvailibility = await fetchAvailibility.json()
-      setEmpAvailibility(employeeAvailibility)
-      
+      console.log("employeeId",employeeId)
+      const empAvail = async ()=>{ 
+        let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
+        let employeeAvailibility = await fetchAvailibility.json()
+        setEmpAvailibility(employeeAvailibility) 
+      }
+      empAvail()
     }
-    empAvail()
-  }
+    // console.log(empAvailibility)
+  },[employeeId])
+  
+  useEffect(()=>{
 
-},[employeeId])
+    function isEmployeeAvailible(){
+      let availibleToday = empAvailibility.days[dayOfWeek]//dayOfweek is the index for days array monday=0, sunday=6
+    if(!availibleToday.available){
+      console.log("employee not availible");
+    }else if(!availibleToday.allDay){
+      console.log(`employee is availible between ${availibleToday.start} and ${availibleToday.end}`);
+    }else{
+      console.log("employee is free to suffer all day!!");
+    }
+      // need to ensure employee isnt working over 40 hours this week
+      // need to see if employee has vacation or time off booked
+      // need to compare day of the week to weekly availibility 
+      //       first figure out what day of the week it is...
+      console.log('employee weekly availibility',availibleToday)
+    }
 
-// useEffect(()=>{
-//   let dayOfWeek = fns.getDay(new Date(date));
-
-//   console.log("date is...",date)
-//   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-//   isEmployeeAvailible()
-//   },[date])
+    let dayOfWeek = fns.getDay(new Date(date));
+  
+  if(empAvailibility){ console.log(empAvailibility)
+    console.log("date is...",date)
+    console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+    isEmployeeAvailible()
+  };
+  },[date])
 
   useEffect(() => {
     if (existingValues) {

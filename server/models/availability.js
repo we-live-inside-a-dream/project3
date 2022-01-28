@@ -35,13 +35,6 @@ const availability = new mongoose.Schema({
 
 const dayArray = [
   {
-    dayName: "sunday",
-    available: false,
-    allDay: false,
-    start: 0,
-    end: 0,
-  },
-  {
     dayName: "monday",
     available: false,
     allDay: false,
@@ -83,6 +76,13 @@ const dayArray = [
     start: 0,
     end: 0,
   },
+  {
+    dayName: "sunday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  }
 ];
 
 const Availability = mongoose.model("Availability", availability);
@@ -105,10 +105,10 @@ const createAvailability = async (id, firstName, lastName) => {
 };
 
 const getAvailabilityById = async (id) => {
-  return Availability.findOne({ _id: id });
+  return Availability.findOne({_id:id});
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
-  return Availability.findOne({ employeeProfileId:id });
+  return Availability.findOne({employeeProfileId:id});
 };
 
 //returns entire list of employees and availabilities
@@ -116,19 +116,17 @@ const listOfEmployeesAvailabilities = async () => {
   console.log("from Availability model");
   return Availability.find({});
 };
-async function updateAvailabilityById(id, updatedAvailability) {
+async function updateAvailabilityById(id,updatedAvailability) {
   let newAvailability = await Availability.findByIdAndUpdate(
     id,
     updatedAvailability,
-    {
-      returnDocument: "after",
-    }
+    {returnDocument: "after",}
   );
 
   console.log(
     "from availability model, updated availability is",
     newAvailability
-  );
+);
   return newAvailability;
 }
 // const updateAvailability = (newAvailability, callback) => {

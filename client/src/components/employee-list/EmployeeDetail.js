@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
-  StyledEmployeeForm,
+  // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
@@ -45,7 +45,7 @@ const EmployeeDetail = ({ employeeId }) => {
   // }
   return (
     <>
-      <StyledEmployeeForm />
+      {/* <StyledEmployeeForm /> */}
       <StyledFormWrapper>
         <StyledForm>
           <div>

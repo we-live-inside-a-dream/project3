@@ -1,15 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 import EmployeeDetail from "../../components/employee-list/EmployeeDetail";
+import StyledPage from "../../components/reusable/StyledPage";
 
 
 const EmployeeDetailPage = () => {
   let params = useParams();
   return (
-    <div>
+    <StyledPage>
       Loading Employee id: {params.id}
       <EmployeeDetail employeeId={params.id} />
       <Link to='edit' >Edit Employee</Link>
-    </div>
+    </StyledPage>
   );
 };
 

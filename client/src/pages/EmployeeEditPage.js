@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeEditForm from "../components/employee-list/EmployeeEditForm";
+import StyledPage from "../components/reusable/StyledPage";
 
 
 
@@ -36,9 +37,9 @@ const EmployeeEditPage = () => {
         navigate('/employeeList')
       }
   return (
-    <div>
+    <StyledPage>
       <EmployeeEditForm existingValues={employee} onSave={updateEmployee}/>
-    </div>
+    </StyledPage>
   )
 }
 

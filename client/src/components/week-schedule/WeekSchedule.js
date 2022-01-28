@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import EditSchedule from "../../components/edit-schedule/EditSchedule";
-import StyledTableHeader from "../../components/reusable/tables/StyledTableHeader";
+import EditSchedule from "../edit-schedule/EditSchedule";
+import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import moment from "moment";
-import StyledTable from "../../components/reusable/tables/StyledTable";
-import Modal from "../../components/reusable/Modal";
-import StyledButton from "../../components/reusable/Inputs/StyledButton";
-import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
-import WeekScheduleModal from "../../components/week-schedule/WeekScheduleModal";
+import StyledTable from "../reusable/tables/StyledTable";
+import Modal from "../reusable/Modal";
+import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import WeekScheduleModal from "./WeekScheduleModal";
+import StyledInput from "../reusable/Inputs/StyledInput";
 
 function WeekSchedule() {
   moment().format();
@@ -39,6 +40,7 @@ function WeekSchedule() {
       }
       fetchWeek();
     };
+
     //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
     const findDateRange = function () {
       let datesArray = [];
@@ -72,7 +74,7 @@ function WeekSchedule() {
         }}
       >
         Staff Schedule for the week
-        <input
+        <StyledInput
           type="date"
           id="single-day"
           name="day"
@@ -97,26 +99,26 @@ function WeekSchedule() {
             <tr key={employee._id}>
               {/* <tr key={index} onClick={() => setShiftId(employee._id)}> */}
               <td>
-                <div style={{ display: "inline-flex" }}>
-                  <div
-                    style={{
-                      backgroundColor: "grey",
-                      height: "3rem",
-                      width: "2rem",
-                      marginRight: "10px",
-                      alignSelf: "center",
-                    }}
-                  >
-                    {" "}
-                    <StyledButton
-                      fontSize={"0.5em"}
-                      padding={"0px"}
-                      margin={"0em"}
-                      textAlign={"left"}
-                      // onClick={() => setDeleteShift(true)}
-                    >
-                      X
-                    </StyledButton>
+                <div
+                  style={{
+                    display: "grid",
+                    width: "12rem",
+                    gridTemplateColumns: "5% 25% 70%",
+                  }}
+                >
+                  <div style={{ gridRow: "1" }}></div>
+                  <div>
+                    <div
+                      style={{
+                        gridRow: "1",
+                        backgroundColor: "grey",
+                        height: "2.5rem",
+                        width: "2.5rem",
+                        margin: "auto",
+                        alignSelf: "center",
+                        borderRadius: "50%",
+                      }}
+                    ></div>
                   </div>
 
                   <div
@@ -125,15 +127,16 @@ function WeekSchedule() {
                       color: "#4488AB",
                       fontWeight: "600",
                       display: "block",
+                      textShadow: "none",
+                      textAlign: "left",
                     }}
                   >
-                    <p>
-                      {employee.firstName}
-                      {employee.lastName}
-                    </p>
+                    <p>{`${employee.firstName} ${employee.lastName.slice(
+                      0,
+                      1
+                    )}`}</p>
                     <p
                       style={{
-                        textShadow: "none",
                         color: "#545454",
                         fontSize: ".7rem",
                       }}
@@ -182,7 +185,7 @@ function WeekSchedule() {
                       setModalDate(date);
                       console.log("FROM ONCLICK", employee, date, shift);
                     }}
-                  >{`${shift.start}-${shift.end}`}</td>
+                  >{`${shift.start}-${shift.end} `}</td>
                 );
               })}
             </tr>

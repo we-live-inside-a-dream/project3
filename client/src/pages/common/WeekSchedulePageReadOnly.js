@@ -1,6 +1,6 @@
 import { useState } from "react";
 import StyledPage from "../../components/reusable/StyledPage";
-import WeekSchedule from "./WeekSchedule";
+import WeekSchedule from "../../components/week-schedule/WeekSchedule";
 import Modal from "../../components/reusable/Modal";
 import EditSchedule from "../../components/edit-schedule/EditSchedule";
 

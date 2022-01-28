@@ -5,14 +5,14 @@ import EmployeesList from "./pages/manager/EmployeesList";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import background from "./assets/boldPic.jpg";
-
+import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
-import WeekSchedulePage from "./pages/common/WeekSchedulePage";
+import WeekSchedulePage from "./pages/manager/WeekSchedulePage";
 // import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
 import LogOut from "./components/navigation/LogOut";
@@ -43,7 +43,8 @@ function App() {
 
       <Routes>
         {/* <Route path="/createEmployee" element={<EmployeeEditForm />} /> */}
-        <Route path="/" element={<CalendarComponent />} />
+        {/* <Route path="/" element={<CalendarComponent />} /> */}
+        <Route path="/" element={<CalendarScratch />} />
         <Route path="/employeeList" element={<EmployeesList />} />
         <Route path="/createEmployee" element={<CreateEmployeePage />} />
         <Route path="/dayView" element={<DaySchedulePage />} />

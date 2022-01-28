@@ -38,9 +38,9 @@ router.get("/day", async (req, res) => {
 // });
 router.get("/week", async (req, res) => {
   let start = req.query.day0;
-  console.log("FROM ROUTER API THIS IS THE start", start);
+  // console.log("FROM ROUTER API THIS IS THE start", start);
   let scheduleList = await scheduleModel.listByWeekDays(start);
-  console.log("FROM ROUTER API THIS IS THE DAYLIST:", scheduleList);
+  // console.log("FROM ROUTER API THIS IS THE DAYLIST:", scheduleList);
   res.send(scheduleList);
 });
 
@@ -59,9 +59,9 @@ router.get("/id", async (req, res) => {
 });
 
 router.post("/schedule/new", async (req, res) => {
-  console.log("req.body", req.body);
+  // console.log("req.body", req.body);
   let newSchedule = req.body;
-  console.log(newSchedule);
+  // console.log(newSchedule);
   let id = newSchedule.employeeId;
   let foundName = await employeeProfileModel.getEmployeeProfileByProfileId(id);
   let newFirstName = foundName.firstName;

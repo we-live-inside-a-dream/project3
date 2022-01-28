@@ -1,5 +1,5 @@
 const mongoose = require("./mongooseDb");
-
+const moment = require("moment");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
@@ -128,6 +128,20 @@ async function updateAvailabilityById(id,updatedAvailability) {
     newAvailability
 );
   return newAvailability;
+}
+
+async function weeklyAvailibility(start) {
+  // console.log("FROM MODEL, THIS IS THE WEEK", week);
+  let end = moment(start)
+    .add(6, "days")
+    .startOf("day")
+    .format("dddd, Do")
+    .toString();
+  let weekList = Availability.find({
+    date: { $gte: start, $lte: end },
+  });
+  // console.log("from scheduleModel: ", weekList);
+  return weekList;
 }
 // const updateAvailability = (newAvailability, callback) => {
 //   Availability.findByIdAndUpdate(

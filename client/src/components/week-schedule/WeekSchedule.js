@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import moment from "moment";
+import * as fns from "date-fns";
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../reusable/Modal";
 import StyledButton from "../reusable/Inputs/StyledButton";
@@ -22,6 +23,9 @@ function WeekSchedule() {
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
   const [theWholeWeek, setTheWholeWeek] = useState([]);
+  // const [employeeId, setEmployeeId] = useState()
+  const [ empAvailibility,setEmpAvailibility] = useState([])
+  const [date,setDate] = useState()
 
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
@@ -41,6 +45,27 @@ function WeekSchedule() {
       fetchWeek();
     };
 
+ 
+    const empAvail = async () => {     
+      let fetchResult = await fetch(`/api/availability/availability-all`); 
+      let theAvailabilityList = await fetchResult.json();
+      console.log("fetching employee availability list", theAvailabilityList);
+
+      setEmpAvailibility(theAvailabilityList);
+
+      empAvailibility.forEach(element => console.log(element.days[0]));
+    }
+
+
+    // const empAvail = async ()=>{ 
+    //         let fetchAvailibility = await fetch(`/api/availability/availability-all}`)
+    //         let employeeAvailibility = await fetchAvailibility.json()
+    //         console.log("employeeAvailibility...",employeeAvailibility)
+    //         setEmpAvailibility(employeeAvailibility)
+    // }
+  
+
+
     //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
     const findDateRange = function () {
       let datesArray = [];
@@ -56,9 +81,80 @@ function WeekSchedule() {
       setDataWeek(dateNumberArray);
       fetchAllTheDays();
     };
+    empAvail()
     getAllTheEmployees();
     findDateRange();
   }, [startDay]);
+
+  // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
+
+  function isEmployeeAvailible(id,date){
+    let dayOfWeek = fns.getDay(new Date(date)); 
+   
+// let currentEmployee = empAvailibility.find(employeeprofile.Id === id)
+
+let currentEmployee = empAvailibility.find((post)=>{
+  if(post.employeeProfileId===id)
+    return true
+})
+console.log( currentEmployee)
+
+
+
+let today = currentEmployee.days[0]
+    
+// let currentEmployee = (employeeprofile.Id === id)
+// let currentAvailibility = empAvailibility.find(currentEmployee)
+console.log("current employee...",today)
+   
+// let currentDay = empAvailibility.find((currentDay) => {
+//   return (                   
+//     currentDay.employeeId)
+
+  //dayOfweek is the index for days array monday=0, sunday=6
+  // let availibleToday = currentAvailibility.days[dayOfWeek]
+  // if(!availibleToday.available){
+  //   console.log("employee not availible");
+  // }else if(!availibleToday.allDay){
+  //   console.log(`employee is availible between ${availibleToday.start} and ${availibleToday.end}`);
+  // }else{
+  //   console.log("employee is free to suffer all day!!");
+  // }
+}
+
+  // useEffect(()=>{
+  //   if(employeeId){
+      
+  //     console.log("employeeId",employeeId)
+  //     const empAvail = async ()=>{ 
+  //       let fetchAvailibility = await fetch(`/api/availability/availibility-all}`)
+  //       let employeeAvailibility = await fetchAvailibility.json()
+  //       setEmpAvailibility(employeeAvailibility) 
+  //     }
+  //     empAvail()
+  //   }
+  //   // console.log(empAvailibility)
+  // },[employeeId])
+  
+  // useEffect(()=>{
+  //     // need to ensure employee isnt working over 40 hours this week
+  //     // need to see if employee has vacation or time off booked
+  //     // need to compare day of the week to weekly availibility 
+  //     //       first figure out what day of the week it is...
+  //     console.log('employee weekly availibility',availibleToday)
+  //   }
+  //   let dayOfWeek = fns.getDay(new Date(date));  
+  // if(empAvailibility){ console.log(empAvailibility)
+  //   console.log("date is...",date)
+  //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+  //   isEmployeeAvailible()
+  // };
+  // },[date])
+
+
+
+
+  
 
   return (
     <div className="container">
@@ -157,7 +253,8 @@ function WeekSchedule() {
 
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
-                  return (
+                  isEmployeeAvailible(employee._id,date)
+                  return (                   
                     shift.employeeId === employee._id && shift.date === date
                   );
                 });

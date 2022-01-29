@@ -21,26 +21,7 @@ import LogOut from "./components/navigation/LogOut";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/EmployeeEditPage";
-import { createGlobalStyle } from "styled-components";
-
-const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100%
-  }
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
-    height: 100%;
-    margin: 0;
-    color: #555;
-  }
-  :root {
-  --primary-color:  red;
-
-
-
-  }
-`;
+import GlobalStyle from "./GlobalStyle";
 
 function App() {
   const [user, setUser] = useState();
@@ -54,11 +35,8 @@ function App() {
   }, []);
   return (
     <div
+      style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
       className="App"
-      style={{
-        backgroundColor: "white",
-        // backgroundImage: "url(" + background + ")",
-      }}
     >
       <GlobalStyle />
       <NavBar />

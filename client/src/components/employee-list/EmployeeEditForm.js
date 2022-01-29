@@ -98,55 +98,63 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
 
   return (
     <>
-      {/* <StyledEmployeeForm /> */}
+      {/* <StyledEmployeeForm />  */}
       <StyledFormWrapper>
         <StyledForm>
           <h2>Employee Description</h2>
-
+          <div></div>
           <div>
             <label>First Name</label>
             <StyledInput
               value={firstName}
               onChange={(event) => onInputUpdate(event, setFirstName)}
             />
+          </div>
+          <div>
             <label>Last Name</label>
             <StyledInput
               value={lastName}
               onChange={(event) => onInputUpdate(event, setLastName)}
             />
-            <label>Email</label>
-            <StyledInput
-              value={email}
-              onChange={(event) => onInputUpdate(event, setEmail)}
-            />
-            <label>password</label>
-            <StyledInput
-              value={password}
-              type="password"
-              onChange={(event) => onInputUpdate(event, setPassword)}
-            />
-            <label>Phone Number</label>
-            <StyledInput
-              value={phoneNumber}
-              onChange={(event) => onInputUpdate(event, setPhoneNumber)}
-            />
-            {/* shit show starts from here... */}
-            <label>Positions</label>
-            <Select
-              value={positions}
-              options={positionData}
-              onChange={handlePositionChange}
-            />
-            <br />
-
-            <label>Status</label>
-            <Select
-              value={status}
-              options={statusData}
-              onChange={handleStatusChange}
-            />
-            <br />
-            <StyledButton onClick={postData}>Save Details</StyledButton>
+          </div>
+          <div>
+          <label>Email</label>
+          <StyledInput
+            value={email}
+            onChange={(event) => onInputUpdate(event, setEmail)}
+          />
+          </div>
+          <div>
+          <label>password</label>
+          <StyledInput
+            value={password}
+            type="password"
+            onChange={(event) => onInputUpdate(event, setPassword)}
+          />
+          </div>
+          <div>
+          <label>Phone Number</label>
+          <StyledInput
+            value={phoneNumber}
+            onChange={(event) => onInputUpdate(event, setPhoneNumber)}
+          />
+          </div>
+          <div>
+          <label style={{marginBottom:"10px", display: "block"}}>Positions</label>
+          <Select
+            value={positions}
+            options={positionData}
+            onChange={handlePositionChange}
+          />
+          </div>
+          <StyledButton onClick={postData}>Save Details</StyledButton>
+          <div>
+          <label style={{marginBottom:"10px", display: "block"}}>Status</label>
+          <Select
+            value={status}
+            options={statusData}
+            onChange={handleStatusChange}
+          />
           </div>
         </StyledForm>
       </StyledFormWrapper>

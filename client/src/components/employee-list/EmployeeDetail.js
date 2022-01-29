@@ -8,7 +8,7 @@ import {
   StyledInput,
   StyledButton,
   StyledError,
-} from "./StyledEmployeeForm";
+} from "../reusable/Inputs/StyledEmployeeForm.js";
 
 const EmployeeDetail = ({ employeeId }) => {
   let params = useParams();

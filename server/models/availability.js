@@ -82,20 +82,22 @@ const dayArray = [
     allDay: false,
     start: 0,
     end: 0,
-  }
+  },
 ];
 
 const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (id, firstName, lastName) => {
-  let availability = new Availability({
-    employeeProfileId: id,
-    firstName: firstName,
-    lastName: lastName,
-    maxHoursPerWeek: 0,
-    days: dayArray,
-  });
+  console.log("this is the id", id);
   try {
+    let availability = await Availability.create({
+      employeeProfileId: id,
+      firstName: firstName,
+      lastName: lastName,
+      maxHoursPerWeek: 0,
+      days: dayArray,
+    });
+
     await availability.save();
     return availability;
   } catch (error) {
@@ -103,12 +105,16 @@ const createAvailability = async (id, firstName, lastName) => {
     return false;
   }
 };
-
+// const getAvailabilityByEmployeeId= (id) => {
+//   let EmployeeAvailability = await Availability.findOne({empl})
+// }
 const getAvailabilityById = async (id) => {
-  return Availability.findOne({_id:id});
+  let employeeA = await Availability.findById({ _id: id });
+  console.log("EMPLOYEE MODEL", employeeA);
+  return employeeA;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
-  return Availability.findOne({employeeProfileId:id});
+  return Availability.findOne({ employeeProfileId: id });
 };
 
 //returns entire list of employees and availabilities
@@ -116,17 +122,17 @@ const listOfEmployeesAvailabilities = async () => {
   console.log("from Availability model");
   return Availability.find({});
 };
-async function updateAvailabilityById(id,updatedAvailability) {
+async function updateAvailabilityById(id, updatedAvailability) {
   let newAvailability = await Availability.findByIdAndUpdate(
     id,
     updatedAvailability,
-    {returnDocument: "after",}
+    { returnDocument: "after" }
   );
 
   console.log(
     "from availability model, updated availability is",
     newAvailability
-);
+  );
   return newAvailability;
 }
 

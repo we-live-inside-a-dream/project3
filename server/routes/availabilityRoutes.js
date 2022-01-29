@@ -45,7 +45,10 @@ const availabilityModel = require("../models/availability");
 //   if (!profile) res.status(500).send("failed to create");
 //   res.status(200).send(availability);
 // });
-
+router.use("*", (req, res, next) => {
+  console.log("AVAILABILITY ROUTER", req.originalUrl);
+  next();
+});
 router.patch("/availability/:id", async (req, res) => {
   let id = req.params.id;
   let updatedAvailability = req.body;
@@ -56,16 +59,17 @@ router.patch("/availability/:id", async (req, res) => {
   });
 });
 
-router.get("/availability/:id", async (req, res) => {
+router.get("/by-employee/:id", async (req, res) => {
   let id = req.params.id;
-  let profile = await availabilityModel.getAvailabilityById(id);
-  res.status(200).send(profile);
+  let profile = await availabilityModel.getAvailabilityByEmployeeProfileId(id);
+  console.log("THE PROFILE", profile);
+  res.json(profile);
 });
 
 router.get("/availability-day/:id", async (req, res) => {
   let id = req.params.id;
   let profile = await availabilityModel.getAvailabilityById(id);
-  res.status(200).send(profile);
+  res.json(profile);
 });
 router.post("/availability-update-maxhours/:id", async (req, res) => {
   let updatedAvailability = req.body;
@@ -97,19 +101,20 @@ router.post("/availability-update-day/", async (req, res) => {
 });
 
 router.get("/availability-all", async (req, res) => {
+  console.log("THIS IS FROM 101");
   let availabilityList =
     await availabilityModel.listOfEmployeesAvailabilities();
-    console.log('Avail list...', availabilityList)
-  res.send(availabilityList);
+  console.log("Avail list...", availabilityList);
+  res.json(availabilityList);
 });
 
-router.get(`/availibility/profile`, async (req,res)=>{
-let id = req.query.id;
- let employeeAvailibility = await availabilityModel.getAvailabilityByEmployeeProfileId(id)
- console.log("employee Availibility...",employeeAvailibility)
- res.send (employeeAvailibility)
-
-})
+router.get(`/availibility/profile`, async (req, res) => {
+  let id = req.query.id;
+  let employeeAvailibility =
+    await availabilityModel.getAvailabilityByEmployeeProfileId(id);
+  console.log("employee Availibility...", employeeAvailibility);
+  res.send(employeeAvailibility);
+});
 
 router.post("/availability-add", async (req, res) => {
   let newAvailability = req.body;

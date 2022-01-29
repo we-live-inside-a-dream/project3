@@ -20,7 +20,7 @@ import LogOut from "./components/navigation/LogOut";
 // import ProfilePage from "./pages/common/ProfilePage";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
-import EmployeeEditPage from "./pages/EmployeeEditPage";
+import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 
 function App() {

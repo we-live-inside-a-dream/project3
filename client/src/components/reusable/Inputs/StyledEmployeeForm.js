@@ -1,5 +1,5 @@
 import { Select } from "@mui/material";
-import styled, { createGlobalStyle, css } from "styled-components";
+import styled, { css } from "styled-components";
 
 const sharedStyles = css`
   background-color: #eee;
@@ -81,6 +81,24 @@ export const StyledFieldset = styled.fieldset`
   input {
     margin-right: 10px;
   }
+`;
+export const StyledTimeDate = styled.input`
+  border: 1px solid #ddd;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100px;
+  min-height: 20px;
+  resize: none;
+`;
+export const StyledCheck = styled.input`
+  border: 1px solid #ddd;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px;
+  min-width: 5px;
+  min-height: 5px;
+  resize: none;
 `;
 
 // export const Dropdown = styled.select`

@@ -2,7 +2,7 @@ import DaySchedule from "../../components/day-schedule/DaySchedule";
 import { useState } from "react";
 import Modal from "../../components/reusable/Modal";
 import EditSchedule from "../../components/edit-schedule/EditSchedule";
-import StyledPage from "../../components/reusable/StyledPage";
+import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledButton from "../../components/reusable/Inputs/StyledButton";
 
 function DaySchedulePage() {
@@ -10,7 +10,9 @@ function DaySchedulePage() {
   return (
     <StyledPage style={{ margin: "auto 50px" }}>
       <DaySchedule style={{ margin: " auto" }} />
-      <StyledButton onClick={() => setIsOpen(true)}> **Add Schedule**</StyledButton>
+      <StyledButton onClick={() => setIsOpen(true)}>
+        **Add Schedule**
+      </StyledButton>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={() => setIsOpen(false)} />
       </Modal>{" "}

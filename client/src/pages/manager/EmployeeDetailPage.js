@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import EmployeeDetail from "../../components/employee-list/EmployeeDetail";
-import StyledPage from "../../components/reusable/StyledPage";
-
+import StyledPage from "../../components/reusable/styled-page/StyledPage";
 
 const EmployeeDetailPage = () => {
   let params = useParams();
@@ -9,7 +8,7 @@ const EmployeeDetailPage = () => {
     <StyledPage>
       Loading Employee id: {params.id}
       <EmployeeDetail employeeId={params.id} />
-      <Link to='edit' >Edit Employee</Link>
+      <Link to="edit">Edit Employee</Link>
     </StyledPage>
   );
 };

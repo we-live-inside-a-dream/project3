@@ -20,6 +20,7 @@ import LogOut from "./components/navigation/LogOut";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/EmployeeEditPage";
+import GlobalStyle from './GlobalStyle'
 
 function App() {
   const [user, setUser] = useState();
@@ -32,13 +33,10 @@ function App() {
     });
   }, []);
   return (
-    <div
-      className="App"
-      style={{
-        backgroundColor: "white",
-        // backgroundImage: "url(" + background + ")",
-      }}
-    >
+    <div style={{display:"grid", gridTemplateRows:"8vh 1fr"}}
+      className="App">
+
+      <GlobalStyle />
       <NavBar />
 
       <Routes>

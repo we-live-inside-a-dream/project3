@@ -26,7 +26,8 @@ function WeekSchedule() {
   // const [employeeId, setEmployeeId] = useState()
   const [empAvailibility, setEmpAvailibility] = useState([]);
   const [date, setDate] = useState();
-
+  // const [availabilityColor, setAvailabilityColor] = useState();
+  let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
     const getAllTheEmployees = async function () {
@@ -94,10 +95,12 @@ function WeekSchedule() {
     const availableToday = currentEmployee?.days[0];
     if (!availableToday?.available) {
       console.log("employee not available");
+      return "#FC4445";
     } else if (!availableToday?.allDay) {
       console.log(
         `employee is available between ${availableToday?.start} and ${availableToday?.end}`
       );
+      return "yellow";
     } else {
       console.log("employee is free to suffer all day!!");
     }
@@ -219,7 +222,7 @@ function WeekSchedule() {
                     shift.employeeId === employee._id && shift.date === date
                   );
                 });
-                isEmployeeavailable(employee._id, date);
+
                 if (!shift)
                   return (
                     <td
@@ -231,7 +234,16 @@ function WeekSchedule() {
                         console.log("FROM ONCLICK", employee, date, shift);
                       }}
                     >
-                      --
+                      <div
+                        style={{
+                          backgroundColor: isEmployeeavailable(
+                            employee._id,
+                            date
+                          ),
+                        }}
+                      >
+                        --
+                      </div>
                     </td>
                   );
                 return (
@@ -244,7 +256,10 @@ function WeekSchedule() {
                       setModalDate(date);
                       console.log("FROM ONCLICK", employee, date, shift);
                     }}
-                  >{`${shift.start}-${shift.end} `}</td>
+                    backgroundColor={availabilityColor}
+                  >
+                    {`${shift.start}-${shift.end} `}
+                  </td>
                 );
               })}
             </tr>

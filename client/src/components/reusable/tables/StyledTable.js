@@ -36,14 +36,15 @@ const StyledTable = styled.table`
     /* border-right: 0.5px solid grey;
   border-left: 0.5px solid grey; */
     /* border: 0.25px solid lightgrey; */
+    background-color: ${(props) => props.backgroundColor || "none"};
     border-top: 1px solid #f2f2f2;
     padding: 0;
     margin: 0;
     color: #545454;
   }
-  td:nth-child(even) {
+  /* td:nth-child(even) {
     background-color: #fafafa;
-  }
+  } */
 
   tr {
     margin: 3px;

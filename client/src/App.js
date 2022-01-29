@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
+
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
@@ -20,6 +21,26 @@ import LogOut from "./components/navigation/LogOut";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/EmployeeEditPage";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    height: 100%
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #f05053, #e1eec3);
+    height: 100%;
+    margin: 0;
+    color: #555;
+  }
+  :root {
+  --primary-color:  red;
+
+
+
+  }
+`;
 
 function App() {
   const [user, setUser] = useState();
@@ -39,6 +60,7 @@ function App() {
         // backgroundImage: "url(" + background + ")",
       }}
     >
+      <GlobalStyle />
       <NavBar />
 
       <Routes>

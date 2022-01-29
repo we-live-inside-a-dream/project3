@@ -10,14 +10,14 @@ import React from "react";
 function WeekSchedulePage() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
+    <>
       <StyledPage>
         <WeekSchedule />
       </StyledPage>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditScheduleSetInfo onClose={() => setIsOpen(false)} />
       </Modal>{" "}
-    </div>
+    </>
   );
 }
 

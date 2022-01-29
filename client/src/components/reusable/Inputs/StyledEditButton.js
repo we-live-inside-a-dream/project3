@@ -12,6 +12,7 @@ const StyledEditButton = styled.button`
   background-color: white;
   border-radius: 3px;
   border: none;
+  color: var(--primary-color);
   cursor: pointer;
 `;
 

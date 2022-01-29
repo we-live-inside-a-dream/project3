@@ -202,16 +202,6 @@ function WeekSchedule() {
                         fontSize: ".7rem",
                       }}
                     ></p>
-                    <div>
-                      {/* <StyledEditButton
-                        fontSize={"1em"}
-                        padding={"1px"}
-                        margin={"1px"}
-                        // onClick={() => setIsOpen(true)}
-                      >
-                        ✎
-                      </StyledEditButton> */}
-                    </div>
                   </div>
                 </div>
               </td>
@@ -226,6 +216,11 @@ function WeekSchedule() {
                 if (!shift)
                   return (
                     <td
+                      style={{
+                        position: "relative",
+                        border: "lightGrey",
+                        borderRight: "lightGrey",
+                      }}
                       onClick={() => {
                         setModalOpen(true);
                         setModalShift(shift);
@@ -234,20 +229,31 @@ function WeekSchedule() {
                         console.log("FROM ONCLICK", employee, date, shift);
                       }}
                     >
+                      --
                       <div
                         style={{
+                          position: "absolute",
+                          borderRadius: "50%",
+                          height: "15px",
+                          width: "15px",
+                          alignSelf: "center",
+                          transform: "translate(800%, -200%)",
                           backgroundColor: isEmployeeavailable(
                             employee._id,
                             date
                           ),
                         }}
-                      >
-                        --
-                      </div>
+                      />
                     </td>
                   );
                 return (
                   <td
+                    style={{
+                      position: "relative",
+                      borderTop: "lightGrey",
+                      borderLeft: "lightGrey",
+                      borderRight: "lightGrey",
+                    }}
                     key={shift._id}
                     onClick={() => {
                       setModalOpen(true);

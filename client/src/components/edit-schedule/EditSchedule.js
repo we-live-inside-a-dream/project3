@@ -177,17 +177,17 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
           value={employeeId}
           label="name"
           onChange={(event) => onInputUpdate(event, setEmployeeId)}
-          style={{
-            width: "275px",
-            fontSize: "1em",
-            textAlign: "center",
-            margin: "10px",
-            color: "#4488AB",
-            backgroundColor: "white",
-            border: "2px solid #4488AB",
-            boarderRadius: "3px",
-            filter: "dropShadow(5px 5px 10px grey)",
-          }}
+          // style={{
+          //   width: "275px",
+          //   fontSize: "1em",
+          //   textAlign: "center",
+          //   margin: "10px",
+          //   color: "#4488AB",
+          //   backgroundColor: "white",
+          //   border: "2px solid #4488AB",
+          //   boarderRadius: "3px",
+          //   filter: "dropShadow(5px 5px 10px grey)",
+          // }}
         >
           {/* {name} */}
           <option></option>

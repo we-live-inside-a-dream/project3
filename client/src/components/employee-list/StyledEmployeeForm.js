@@ -1,17 +1,23 @@
-import styled, { createGlobalStyle, css } from 'styled-components';
+import styled, { createGlobalStyle, css } from "styled-components";
 
-// export const StyledEmployeeForm = createGlobalStyle`
-//   html {
-//     height: 100%
-//   }
-//   body {
-//     font-family: Arial, Helvetica, sans-serif;
-//     background: linear-gradient(to bottom, #f05053, #e1eec3);
-//     height: 100%;
-//     margin: 0;
-//     color: #555;
-//   }
-// `;
+export const StyledEmployeeForm = createGlobalStyle`
+  html {
+    height: 100%
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to bottom, #f05053, #e1eec3);
+    height: 100%;
+    margin: 0;
+    color: #555;
+  }
+  :root {
+  --primary-color:  red;
+
+
+
+  }
+`;
 
 const sharedStyles = css`
   background-color: #eee;
@@ -114,4 +120,3 @@ export const StyledError = styled.div`
   font-weight: 800;
   margin: 0 0 40px 0;
 `;
-

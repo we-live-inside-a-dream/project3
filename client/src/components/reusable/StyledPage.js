@@ -6,5 +6,6 @@ const StyledPage = styled.div`
   width: 80%;
   margin: auto;
   overflow-y: auto;
+  filter: drop-shadow(3px 3px 10px lightgrey);
 `;
 export default StyledPage;

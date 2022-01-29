@@ -33,7 +33,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  function isEmployeeAvailible() {
+  function isEmployeeavailable() {
     // need to ensure employee isnt working over 40 hours this week
     // need to see if employee has vacation or time off booked
     // need to compare day of the week to weekly availibility
@@ -60,7 +60,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   //   console.log("date is...",date)
   //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-  //   isEmployeeAvailible()
+  //   isEmployeeavailable()
   //   },[date])
 
   useEffect(() => {

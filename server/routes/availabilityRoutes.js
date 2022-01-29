@@ -99,6 +99,7 @@ router.post("/availability-update-day/", async (req, res) => {
 router.get("/availability-all", async (req, res) => {
   let availabilityList =
     await availabilityModel.listOfEmployeesAvailabilities();
+    console.log('Avail list...', availabilityList)
   res.send(availabilityList);
 });
 

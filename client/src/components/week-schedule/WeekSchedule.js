@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import moment from "moment";
+import * as fns from "date-fns";
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../reusable/Modal";
 import StyledButton from "../reusable/Inputs/StyledButton";
@@ -22,7 +23,11 @@ function WeekSchedule() {
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
   const [theWholeWeek, setTheWholeWeek] = useState([]);
-
+  // const [employeeId, setEmployeeId] = useState()
+  const [empAvailibility, setEmpAvailibility] = useState([]);
+  const [date, setDate] = useState();
+  // const [availabilityColor, setAvailabilityColor] = useState();
+  let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
     const getAllTheEmployees = async function () {
@@ -41,6 +46,23 @@ function WeekSchedule() {
       fetchWeek();
     };
 
+    const empAvail = async () => {
+      let fetchResult = await fetch(`/api/availability/availability-all`);
+      let theAvailabilityList = await fetchResult.json();
+      console.log("fetching employee availability list", theAvailabilityList);
+
+      setEmpAvailibility(theAvailabilityList);
+
+      // empAvailibility.forEach((element) => console.log(element.days[0]));
+    };
+
+    // const empAvail = async ()=>{
+    //         let fetchAvailibility = await fetch(`/api/availability/availability-all}`)
+    //         let employeeAvailibility = await fetchAvailibility.json()
+    //         console.log("employeeAvailibility...",employeeAvailibility)
+    //         setEmpAvailibility(employeeAvailibility)
+    // }
+
     //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
     const findDateRange = function () {
       let datesArray = [];
@@ -56,9 +78,48 @@ function WeekSchedule() {
       setDataWeek(dateNumberArray);
       fetchAllTheDays();
     };
+    empAvail();
     getAllTheEmployees();
     findDateRange();
   }, [startDay]);
+
+  // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
+  function isEmployeeavailable(id, date) {
+    let dayOfWeek = fns.getDay(new Date(date));
+    console.log("this is the day", dayOfWeek);
+    // let currentEmployee = empAvailibility.find(employeeprofile.Id === id)
+    let currentEmployee = empAvailibility.find(
+      (employee) => employee.employeeProfileId === id
+    );
+    // dayOfweek is the index for days array monday=0, sunday=6
+    const availableToday = currentEmployee?.days[0];
+    if (!availableToday?.available) {
+      console.log("employee not available");
+      return "#FC4445";
+    } else if (!availableToday?.allDay) {
+      console.log(
+        `employee is available between ${availableToday?.start} and ${availableToday?.end}`
+      );
+      return "yellow";
+    } else {
+      console.log("employee is free to suffer all day!!");
+    }
+  }
+
+  // useEffect(()=>{
+  //     // need to ensure employee isnt working over 40 hours this week
+  //     // need to see if employee has vacation or time off booked
+  //     // need to compare day of the week to weekly availibility
+  //     //       first figure out what day of the week it is...
+  //     console.log('employee weekly availibility',availableToday)
+  //   }
+  //   let dayOfWeek = fns.getDay(new Date(date));
+  // if(empAvailibility){ console.log(empAvailibility)
+  //   console.log("date is...",date)
+  //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
+  //   isEmployeeavailable()
+  // };
+  // },[date])
 
   return (
     <div className="container">
@@ -161,6 +222,7 @@ function WeekSchedule() {
                     shift.employeeId === employee._id && shift.date === date
                   );
                 });
+
                 if (!shift)
                   return (
                     <td
@@ -172,7 +234,16 @@ function WeekSchedule() {
                         console.log("FROM ONCLICK", employee, date, shift);
                       }}
                     >
-                      --
+                      <div
+                        style={{
+                          backgroundColor: isEmployeeavailable(
+                            employee._id,
+                            date
+                          ),
+                        }}
+                      >
+                        --
+                      </div>
                     </td>
                   );
                 return (
@@ -185,7 +256,10 @@ function WeekSchedule() {
                       setModalDate(date);
                       console.log("FROM ONCLICK", employee, date, shift);
                     }}
-                  >{`${shift.start}-${shift.end} `}</td>
+                    backgroundColor={availabilityColor}
+                  >
+                    {`${shift.start}-${shift.end} `}
+                  </td>
                 );
               })}
             </tr>

@@ -9,6 +9,7 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../reusable/Inputs/StyledInput";
+import NamePicTableData from "./NamePicTableData";
 
 function WeekSchedule() {
   moment().format();
@@ -71,7 +72,7 @@ function WeekSchedule() {
       firstDate.subtract(1, "days");
       let lastDate = moment(startDay).add(6, "days").startOf("day");
       while (firstDate.add(1, "days").diff(lastDate) <= 0) {
-        datesArray.push(firstDate.clone().format("dddd, Do").toString());
+        datesArray.push(firstDate.clone().format("ddd, Do").toString());
         dateNumberArray.push(firstDate.clone().format("yyyy-MM-DD").toString());
       }
       setTitleWeek(datesArray);
@@ -158,8 +159,9 @@ function WeekSchedule() {
           {activeEmployeeList?.map((employee) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={employee._id}>
-              {/* <tr key={index} onClick={() => setShiftId(employee._id)}> */}
-              <td>
+              {/* <tr key={index} onClick={() => setShiftId(employee._id)}>  */}
+              <NamePicTableData existingValues={employee} />
+              {/* <td>
                 <div
                   style={{
                     display: "grid",
@@ -204,7 +206,7 @@ function WeekSchedule() {
                     ></p>
                   </div>
                 </div>
-              </td>
+              </td> */}
 
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {

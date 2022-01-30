@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const CreateEmployeePage = () => {
   const [createdEmployeeId, setCreatedEmployeeId] = useState("");
-  const [currentTab, setCurrentTab] = useState(2);
+  const [currentTab, setCurrentTab] = useState(1);
   // let navigate = useNavigate();
   // async function createEmployee(newEmployee) {
   //     // const newEmployee = {firstName: "", lastName: ""}
@@ -31,7 +31,7 @@ const CreateEmployeePage = () => {
       {currentTab === 2 && (
         <EmployeeAvailabilityForm
           setCurrentTab={setCurrentTab}
-          id={"61f5828ee97ff627e3cd983f"}
+          id={createdEmployeeId}
         />
       )}
     </StyledPage>

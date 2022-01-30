@@ -8,6 +8,7 @@ import Modal from "../reusable/Modal";
 import EditDayAvailability from "./EditDayAvailability";
 import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
+import NamePicTableData from "../week-schedule/NamePicTableData";
 
 function EmployeeAvailabilityDetail({ availabilityId }) {
   const [modalDay, setModalDay] = useState("");
@@ -86,56 +87,25 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
       </h1>
 
       <StyledTable
-        style={{ paddingTop: "0px", marginTop: "0px", paddingBottom: "20px" }}
+        style={{ paddingTop: "10px", marginTop: "20px", paddingBottom: "20px" }}
       >
         <thead>
           <tr>
             <th>NAME</th>
-            <th>Max Weekly Hours</th>
+            <th style={{ padding: "10px 30px" }}>Max Hrs/Week</th>
             {businessDays.map((day, index) => {
-              return <th key={index}>{day}</th>;
+              return (
+                <th key={index} style={{ padding: "10px 30px" }}>
+                  {day}
+                </th>
+              );
             })}
           </tr>
         </thead>
         <tbody>
-          {/* {availabilityList?.map((availability, index) => { */}
           <tr>
-            <td>
-              <div
-                style={{
-                  display: "inline-flex",
-                  padding: "0px 20px",
-                  alignItems: "left",
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "grey",
-                    height: "3rem",
-                    width: "2rem",
-                    marginRight: "10px",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    margin: "auto 10px auto 10px",
-                    color: "#4488AB",
-                    fontWeight: "600",
-                  }}
-                >
-                  {availability.firstName}
-                  <br />
-                  {availability.lastName}
-                  <br />
-                  {/* <StyledEditButton
-                    onClick={() => selectAvailabilityById(availability._id)}
-                  >
-                    ✎
-                  </StyledEditButton> */}
-                </div>
-              </div>
-              <div style={{ height: "5px" }} />
-            </td>
+            <NamePicTableData existingValues={availability} />
+
             <td>
               {availability.maxHoursPerWeek}
               <br />

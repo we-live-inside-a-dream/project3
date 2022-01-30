@@ -7,7 +7,7 @@ const StyledTable = styled.table`
   font-weight: 300;
   border: 1px solid grey;
   filter: drop-shadow(5px 5px 10px grey);
-  text-shadow: 1px 1px 2px grey;
+  /* text-shadow: 1px 1px 2px grey; */
   border-collapse: collapse;
   border-radius: 0px;
   border-collapse: collapse;
@@ -22,11 +22,13 @@ const StyledTable = styled.table`
     min-width: 15px;
     text-align: center;
     font-weight: 600;
-    color: #545454;
-    background-color: #dbdbfc;
+    /* color: #545454; */
+    color: whitesmoke;
+    /* background-color: #dbdbfc; */
+    background-color: #e37222;
     border: none;
     border-radius: 0px;
-    padding: 10px 40px;
+    padding: 10px 53px;
     border-collapse: collapse;
     border-spacing: 0;
     box-shadow: 0 4px 2px -2px gray;
@@ -42,9 +44,9 @@ const StyledTable = styled.table`
     margin: 0;
     color: #545454;
   }
-  /* td:nth-child(even) {
-    background-color: #fafafa;
-  } */
+  td:nth-child(even) {
+    background-color: #eee;
+  }
 
   tr {
     margin: 3px;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const NavbarContainer = styled.nav`
   height: ${(props) => (props.NavbarExtendNavbar ? "100vh" : "100%")};
-  background-color: #35a1b9;
+  background-color: whiteSmoke;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -34,9 +34,9 @@ export const RightContainer = styled.div`
 
 export const Logo = styled.img`
   display: flex;
-  
-  margin: auto;
-  max-width: 80px;
+
+  margin: 1px auto;
+  max-width: 50px;
   height: auto;
   background-color: #35a1b9;
 `;
@@ -52,8 +52,9 @@ export const NavbarLinkContainer = styled.div`
 `;
 
 export const NavbarLink = styled(Link)`
-  color: white;
-  font-size: x-large;
+  color: #35a1b9;
+  font-size: large;
+  font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
   margin: 10px;
@@ -64,13 +65,12 @@ export const NavbarLink = styled(Link)`
 `;
 
 export const NavbarLinkExtended = styled(Link)`
-  color: white;
-  font-size: x-large;
+  color: #35a1b9;
+  font-size: large;
+  font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
 `;
-
-
 
 export const OpenLinksButton = styled.button`
   width: 70px;

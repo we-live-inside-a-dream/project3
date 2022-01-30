@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import AvailabilityDay from "./AvailabilityDay";
 import {
   StyledInput,
+  StyledFormWrapper,
+  StyledForm,
+  StyledButton,
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 // import { InputLabel } from "@mui/material";
@@ -28,10 +31,6 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
     firstName: "",
     lastName: "",
     employeeProfileId: "",
-    // available: false,
-    // allDay: false,
-    // start: 0,
-    // end: 0,
   });
 
   useEffect(() => {
@@ -92,34 +91,38 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
   }
   return (
     <div>
-      <h2>{`Edit Recurring Availability for ${availability.firstName} ${availability.lastName}`}</h2>
-      <label>
-        Max weekly hours
-        <StyledInput
-          type="number"
-          value={availability.maxHoursPerWeek}
-          onChange={(e) =>
-            setAvailability({
-              ...availability,
-              maxHoursPerWeek: e.target.value,
-            })
-          }
-        />
-      </label>
-      {availability?.days?.map((day, index) => {
-        return (
-          <AvailabilityDay
-            index={index}
-            day={day}
-            setAvailability={setAvailability}
-            availability={availability}
-          />
-        );
-      })}
+      <StyledFormWrapper>
+        <StyledForm>
+          <h2>{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
+          <label style={{ textTransform: "upperCase" }}>
+            Max weekly hours
+            <StyledInput
+              type="number"
+              value={availability.maxHoursPerWeek}
+              onChange={(e) =>
+                setAvailability({
+                  ...availability,
+                  maxHoursPerWeek: e.target.value,
+                })
+              }
+            />
+          </label>
+          {availability?.days?.map((day, index) => {
+            return (
+              <AvailabilityDay
+                index={index}
+                day={day}
+                setAvailability={setAvailability}
+                availability={availability}
+              />
+            );
+          })}
 
-      <button className="btn btn-primary" onClick={postData}>
-        Save
-      </button>
+          <StyledButton className="btn btn-primary" onClick={postData}>
+            SAVE AVAILABILITY DETAILS
+          </StyledButton>
+        </StyledForm>
+      </StyledFormWrapper>
     </div>
   );
 };

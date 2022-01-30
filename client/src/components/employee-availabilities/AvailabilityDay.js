@@ -23,8 +23,7 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
 
   return (
     <div>
-      <p>{day.dayName}</p>
-
+      <p style={{ textTransform: "upperCase" }}>{day.dayName}</p>
       <label className="check-label">
         <StyledCheck
           className="check"
@@ -40,7 +39,8 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
           }}
         />
         Available
-      </label>
+      </label>{" "}
+      <br />
       {available === true && (
         <label className="check-label">
           <StyledCheck
@@ -58,6 +58,7 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
             }}
           />
           Available all day
+          <br />
         </label>
       )}
       {allDay === false && available === true ? (
@@ -68,8 +69,7 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
             type="time"
             value={start}
             onChange={(e) => setStart(e.target.value)}
-          />
-
+          />{" "}
           <label>End time</label>
           <StyledTimeDate
             name="all-day"

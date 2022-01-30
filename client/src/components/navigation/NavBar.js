@@ -21,7 +21,9 @@ function NavBar() {
     <NavbarContainer>
       <NavbarInnerContainer>
         <LeftContainer>
-          <Logo src={LogoImg}></Logo>
+          <NavbarLink to="/">
+            <Logo src={LogoImg}></Logo>
+          </NavbarLink>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
             {/* <img
               src={Logo}
@@ -33,7 +35,7 @@ function NavBar() {
                 margin: "auto",
               }}
             ></img> */}
-            <NavbarLink to="/">Home</NavbarLink>
+
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink>
             <NavbarLink to="/createEmployee">Employee Form</NavbarLink>

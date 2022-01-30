@@ -10,8 +10,9 @@ import StyledTable from "../../reusable/tables/StyledTable";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
+import StyledButtonGroup from "../StyledScheduleButtonGroup";
 
-function WeekSchedule() {
+function WeekSchedule({ setCurrentTab }) {
   moment().format();
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
@@ -124,28 +125,36 @@ function WeekSchedule() {
 
   return (
     <div className="container">
-      <h2
-        style={{
-          fontWeight: "400",
-          fontFamily: "Arial, Helvetica, sans-serif",
-          textAlign: "right",
-          color: "#07889b",
-          marginTop: "20px",
-          marginBottom: "0px",
-          paddingBottom: "0px",
-        }}
-      >
-        Week Starting:
-        <StyledInput
-          type="date"
-          id="single-day"
-          name="day"
-          value={startDay}
-          onChange={(e) => {
-            setStartDay(e.target.value);
-          }}
-        />
-      </h2>
+      <div style={{ display: "grid", gridTemplateColumns: "30% 70%" }}>
+        <div style={{ gridTempalteRow: "1", marginBottom: "0%" }}>
+          <StyledButtonGroup setCurrentTab={setCurrentTab} />
+        </div>
+        <div style={{ gridTemplateRow: "1" }}>
+          <h2
+            style={{
+              width: "auto",
+              fontWeight: "400",
+              fontFamily: "Arial, Helvetica, sans-serif",
+              textAlign: "right",
+              color: "#07889b",
+              marginTop: "20px",
+              marginBottom: "0px",
+              paddingBottom: "0px",
+            }}
+          >
+            Week Starting:
+            <StyledInput
+              type="date"
+              id="single-day"
+              name="day"
+              value={startDay}
+              onChange={(e) => {
+                setStartDay(e.target.value);
+              }}
+            />
+          </h2>
+        </div>
+      </div>
       <StyledTable>
         <thead>
           <tr>

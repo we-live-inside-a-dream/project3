@@ -11,8 +11,11 @@ import {
   NavbarLinkExtended,
   OpenLinksButton,
   Logo,
+  LogoNavbarLink,
+  StyledNavButton,
+  StyledAvatarButton,
 } from "./StyledNavBar";
-import LogoImg from "../../assets/logo.png";
+import LogoImg from "./logo.png";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -20,30 +23,18 @@ function NavBar() {
   return (
     <NavbarContainer>
       <NavbarInnerContainer>
+        <LogoNavbarLink to="/">
+          <Logo src={LogoImg} />
+        </LogoNavbarLink>
         <LeftContainer>
-          <NavbarLink to="/">
-            <Logo src={LogoImg}></Logo>
-          </NavbarLink>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
-            {/* <img
-              src={Logo}
-              alt="calendar logo"
-              style={{
-                height: "65px",
-                width: "65px",
-                backgroundColor: "black",
-                margin: "auto",
-              }}
-            ></img> */}
             <NavbarLink to="/schedules">Schedules</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
             {/* <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink> */}
             <NavbarLink to="/createEmployee">EmpForm</NavbarLink>
-            {/* <NavbarLink to="/dayView">Schedule day</NavbarLink>
-            <NavbarLink to="/weekView">Schedule week</NavbarLink> */}
             <NavbarLink to="/availabilities">Availabilities</NavbarLink>
-            <NavbarLink to="/logIn">Login</NavbarLink>
-            <NavbarLink to="/logOut">Logout</NavbarLink>
+            {/* <NavbarLink to="/logIn">Login</NavbarLink>
+            <NavbarLink to="/logOut">Logout</NavbarLink> */}
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);
@@ -54,7 +45,10 @@ function NavBar() {
           </NavbarLinkContainer>
         </LeftContainer>
 
-        <RightContainer> {/* <Logo src={LogoImage}></Logo> */}</RightContainer>
+        <RightContainer>
+          <StyledNavButton>LOG IN</StyledNavButton>
+          <StyledAvatarButton />
+        </RightContainer>
       </NavbarInnerContainer>
       {extendNavbar && (
         <NavbarExtendedContainer>

@@ -7,11 +7,11 @@ import EditScheduleSetInfo from "../../components/schedules/week-schedule/EditSc
 
 import React from "react";
 
-function WeekSchedulePage() {
+function WeekSchedulePage({ setCurrentTab }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <WeekSchedule />
+      <WeekSchedule setCurrentTab={setCurrentTab} />
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditScheduleSetInfo onClose={() => setIsOpen(false)} />
       </Modal>

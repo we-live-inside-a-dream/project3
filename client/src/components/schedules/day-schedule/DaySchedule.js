@@ -4,12 +4,11 @@ import EditSchedule from "../../edit-schedule/EditSchedule";
 import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
-// import ShiftComponent from "../edit-schedule/ShiftComponent";
-// import StyledButton from "../../reusable/Inputs/StyledButton";
-// import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import NamePicTableData from "../../reusable/NamePicTableData";
+import StyledButtonGroup from "../StyledScheduleButtonGroup";
+import StyledInput from "../../reusable/Inputs/StyledInput";
 
-function DaySchedule() {
+function DaySchedule({ setCurrentTab }) {
   const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState("2022-01-14");
@@ -74,30 +73,31 @@ function DaySchedule() {
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
-
   return (
     <div className="container">
-      <h1
-        style={{
-          fontWeight: "400",
-          fontFamily: "Arial, Helvetica, sans-serif",
-          textAlign: "center",
-          // color: "#07889b",
-          marginTop: "0px",
-          marginBottom: "10px",
-          paddingBottom: "0px",
-          paddingTop: "25px",
-        }}
-      >
-        Staff Schedule for {day}
-        <input
-          type="date"
-          id="single-day"
-          name="day"
-          value={day}
-          onChange={(e) => setDay(e.target.value)}
-        />
-      </h1>
+      <div>
+        <StyledButtonGroup setCurrentTab={setCurrentTab} />
+        <h2
+          style={{
+            fontWeight: "400",
+            fontFamily: "Arial, Helvetica, sans-serif",
+            textAlign: "right",
+            color: "#07889b",
+            marginTop: "20px",
+            marginBottom: "0px",
+            paddingBottom: "0px",
+          }}
+        >
+          Day
+          <StyledInput
+            type="date"
+            id="single-day"
+            name="day"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+          />
+        </h2>
+      </div>
       <StyledTable>
         <thead>
           <tr>
@@ -105,7 +105,9 @@ function DaySchedule() {
             {headerHours?.map((hour) => {
               if (hour === Math.floor(hour)) {
                 return (
-                  <StyledTableHeader style={{ width: "50px", padding: "0px" }}>
+                  <StyledTableHeader
+                    style={{ minWidth: "25px", padding: "0px" }}
+                  >
                     {hour}
                   </StyledTableHeader>
                 );
@@ -113,7 +115,7 @@ function DaySchedule() {
                 return (
                   <StyledTableHeader
                     style={{
-                      width: "50px",
+                      minWidth: "25px",
                       padding: "0px",
                     }}
                   ></StyledTableHeader>
@@ -122,7 +124,7 @@ function DaySchedule() {
                 return (
                   <StyledTableHeader
                     style={{
-                      width: "50px",
+                      minWidth: "25px",
                       padding: "0px",
                     }}
                   ></StyledTableHeader>

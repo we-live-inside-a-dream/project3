@@ -12,7 +12,7 @@ export const NavbarContainer = styled.nav`
 export const LeftContainer = styled.div`
   flex: 70%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-left: 1%;
 `;
 
@@ -36,7 +36,7 @@ export const Logo = styled.img`
   display: flex;
   padding: 0px 0px;
   margin: 0px auto;
-  max-width: 50px;
+  max-width: 65px;
   height: auto;
   background-color: #35a1b9;
 `;
@@ -49,6 +49,10 @@ export const NavbarExtendedContainer = styled.div`
 
 export const NavbarLinkContainer = styled.div`
   display: flex;
+  align-content: center;
+`;
+export const LogoNavbarLink = styled(Link)`
+  width: 80px;
 `;
 
 export const NavbarLink = styled(Link)`
@@ -57,8 +61,8 @@ export const NavbarLink = styled(Link)`
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
-  padding: 0px 5px;
-  margin: 0px 5px;
+  padding: 10px 5px;
+  margin: 5px 5px;
 
   @media (max-width: 700px) {
     display: none;
@@ -95,6 +99,25 @@ export const NavbarInnerContainer = styled.div`
         display: none;
     } */
   width: 100%;
-  height: 80px;
+  height: 60px;
   display: flex;
+`;
+export const StyledNavButton = styled.button`
+  height: 35px;
+  width: 70px;
+  background-color: #e37222;
+  border: 3px solid #e37222;
+  color: white;
+  border-radius: 5px;
+  margin: 10px 10px 0px 10px;
+`;
+export const StyledAvatarButton = styled.div`
+  background-color: grey;
+  height: 2.8rem;
+  width: 2.8rem;
+  margin: 3px 10px;
+
+  border-radius: 50%;
+
+  border: 3px solid #e37222;
 `;

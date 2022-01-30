@@ -5,19 +5,17 @@ import EditSchedule from "../../components/edit-schedule/EditSchedule";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledButton from "../../components/reusable/Inputs/StyledButton";
 
-function DaySchedulePage() {
+function DaySchedulePage({ setCurrentTab }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      {/* <StyledPage c> */}
-      <DaySchedule style={{ margin: " auto" }} />
+      <DaySchedule style={{ margin: " auto" }} setCurrentTab={setCurrentTab} />
       <StyledButton onClick={() => setIsOpen(true)}>
         **Add Schedule**
       </StyledButton>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={() => setIsOpen(false)} />
       </Modal>{" "}
-      {/* </StyledPage> */}
     </>
   );
 }

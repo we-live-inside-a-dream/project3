@@ -41,9 +41,10 @@ function EmployeeProfileList() {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          // textShadow: "1px 1px 2px grey",
+          color: "#07889b",
           marginTop: "0px",
+          marginBottom: "10px",
           paddingBottom: "0px",
           paddingTop: "25px",
         }}

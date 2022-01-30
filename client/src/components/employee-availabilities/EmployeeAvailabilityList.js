@@ -1,11 +1,11 @@
 import StyledTable from "../reusable/tables/StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
-import StyledButton from "../reusable/Inputs/StyledButton";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+// import StyledButton from "../reusable/Inputs/StyledButton";
+// import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import { useNavigate } from "react-router-dom";
-import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
-import NamePicTableData from "../week-schedule/NamePicTableData";
+// import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
+import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
@@ -65,9 +65,10 @@ function EmployeeAvailabilityList() {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          // textShadow: "1px 1px 2px grey",
+          color: "#07889b",
           marginTop: "0px",
+          marginBottom: "10px",
           paddingBottom: "0px",
           paddingTop: "25px",
         }}
@@ -96,6 +97,8 @@ function EmployeeAvailabilityList() {
             return (
               <tr key={index}>
                 <NamePicTableData
+                  firstName={availability.firstName}
+                  lastName={availability.lastName}
                   existingValues={availability}
                   edit="edit"
                   onClick={() => selectAvailabilityById(availability._id)}

@@ -6,7 +6,7 @@ export const NavbarContainer = styled.nav`
   background-color: whiteSmoke;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const LeftContainer = styled.div`
@@ -34,8 +34,8 @@ export const RightContainer = styled.div`
 
 export const Logo = styled.img`
   display: flex;
-
-  margin: 1px auto;
+  padding: 0px 0px;
+  margin: 0px auto;
   max-width: 50px;
   height: auto;
   background-color: #35a1b9;
@@ -57,7 +57,8 @@ export const NavbarLink = styled(Link)`
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
-  margin: 10px;
+  padding: 0px 5px;
+  margin: 0px 5px;
 
   @media (max-width: 700px) {
     display: none;

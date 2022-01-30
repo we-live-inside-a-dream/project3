@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StyledInput = styled.input`
   font-size: 1rem;
   padding: 10px;
-  margin: 10px;
+  margin: 0px 23px;
   color: #4488ab;
   background-color: white;
   border: ${(props) => props.border || "2px solid #4488AB"};

@@ -9,12 +9,12 @@ const StyledButton = styled.button`
   margin: ${(props) => props.margin || "1em"};
   text-align: ${(props) => props.textAlign || "center"};
   color: white;
-  background-color: #4488ab;
-  border: 2px solid #4488ab;
+  background-color: #078898;
+  border: 2px solid #078898;
   border-radius: 3px;
   cursor: pointer;
   transition-duration: 0.4s;
-  filter: drop-shadow(5px 5px 10px grey);
+
   .button:hover {
     background-color: white;
     color: #4488ab;

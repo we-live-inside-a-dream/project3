@@ -109,9 +109,9 @@ const createAvailability = async (id, firstName, lastName) => {
 //   let EmployeeAvailability = await Availability.findOne({empl})
 // }
 const getAvailabilityById = async (id) => {
-  let employeeA = await Availability.findById({ _id: id });
-  console.log("EMPLOYEE MODEL", employeeA);
-  return employeeA;
+  let employeeAvail = await Availability.findOne({ _id: id });
+  console.log("EMPLOYEE MODEL", employeeAvail);
+  return employeeAvail;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
   return Availability.findOne({ employeeProfileId: id });
@@ -119,7 +119,7 @@ const getAvailabilityByEmployeeProfileId = async (id) => {
 
 //returns entire list of employees and availabilities
 const listOfEmployeesAvailabilities = async () => {
-  console.log("from Availability model");
+  // console.log("from Availability model");
   return Availability.find({});
 };
 async function updateAvailabilityById(id, updatedAvailability) {

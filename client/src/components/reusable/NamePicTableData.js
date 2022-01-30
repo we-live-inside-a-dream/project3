@@ -1,7 +1,13 @@
 import React from "react";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
-function NamePicTableData({ existingValues, edit, onClick }) {
+function NamePicTableData({
+  //   existingValues,
+  edit,
+  onClick,
+  firstName,
+  lastName,
+}) {
   return (
     <td>
       <div
@@ -22,6 +28,7 @@ function NamePicTableData({ existingValues, edit, onClick }) {
               margin: "auto",
               alignSelf: "center",
               borderRadius: "50%",
+              border: "3px solid #e37222",
             }}
           ></div>
         </div>
@@ -37,10 +44,7 @@ function NamePicTableData({ existingValues, edit, onClick }) {
           }}
         >
           <p>
-            {`${existingValues.firstName} ${existingValues.lastName.slice(
-              0,
-              1
-            )}`}
+            {`${firstName} ${lastName.slice(0, 1)}`}
 
             {edit && <StyledEditButton onClick={onClick}>✎</StyledEditButton>}
           </p>

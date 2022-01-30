@@ -8,7 +8,7 @@ import Modal from "../reusable/Modal";
 import EditDayAvailability from "./EditDayAvailability";
 import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
-import NamePicTableData from "../week-schedule/NamePicTableData";
+import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeAvailabilityDetail({ availabilityId }) {
   const [modalDay, setModalDay] = useState("");
@@ -76,9 +76,10 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          // textShadow: "1px 1px 2px grey",
+          color: "#07889b",
           marginTop: "0px",
+          marginBottom: "10px",
           paddingBottom: "0px",
           paddingTop: "25px",
         }}
@@ -104,8 +105,10 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
         </thead>
         <tbody>
           <tr>
-            <NamePicTableData existingValues={availability} />
-
+            <NamePicTableData
+              firstName={availability.firstName}
+              lastName={availability.lastName}
+            />
             <td>
               {availability.maxHoursPerWeek}
               <br />

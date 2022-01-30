@@ -35,15 +35,15 @@ function NavBar() {
                 margin: "auto",
               }}
             ></img> */}
-
+            <NavbarLink to="/schedules">Schedules</NavbarLink>
             <NavbarLink to="/employeeList">Employees</NavbarLink>
-            <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink>
-            <NavbarLink to="/createEmployee">Employee Form</NavbarLink>
-            <NavbarLink to="/dayView">Schedule day</NavbarLink>
-            <NavbarLink to="/weekView">Schedule week</NavbarLink>
+            {/* <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink> */}
+            <NavbarLink to="/createEmployee">EmpForm</NavbarLink>
+            {/* <NavbarLink to="/dayView">Schedule day</NavbarLink>
+            <NavbarLink to="/weekView">Schedule week</NavbarLink> */}
             <NavbarLink to="/availabilities">Availabilities</NavbarLink>
-            <NavbarLink to="/logIn">Log In</NavbarLink>
-            <NavbarLink to="/logOut">Log Out</NavbarLink>
+            <NavbarLink to="/logIn">Login</NavbarLink>
+            <NavbarLink to="/logOut">Logout</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

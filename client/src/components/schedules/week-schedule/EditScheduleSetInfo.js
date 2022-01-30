@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import CenterStyle from "../reusable/Inputs/CenterStyle";
-import StyledInput from "../reusable/Inputs/StyledInput";
-import StyledButton from "../reusable/Inputs/StyledButton";
-import BreaksComponent from "../edit-schedule/BreaksComponent";
+import CenterStyle from "../../reusable/Inputs/CenterStyle";
+import StyledInput from "../../reusable/Inputs/StyledInput";
+import StyledButton from "../../reusable/Inputs/StyledButton";
+import BreaksComponent from "../../edit-schedule/BreaksComponent";
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 function EditSchedule({ onClose, shiftId, existingValues }) {

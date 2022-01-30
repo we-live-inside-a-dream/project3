@@ -5,9 +5,9 @@ import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 // import ShiftComponent from "../edit-schedule/ShiftComponent";
-import StyledButton from "../../reusable/Inputs/StyledButton";
-import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
-import NamePicTableData from "../../week-schedule/NamePicTableData";
+// import StyledButton from "../../reusable/Inputs/StyledButton";
+// import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
+import NamePicTableData from "../../reusable/NamePicTableData";
 
 function DaySchedule() {
   const [shift, setShift] = useState();
@@ -82,7 +82,7 @@ function DaySchedule() {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          color: "#07889b",
+          // color: "#07889b",
           marginTop: "0px",
           marginBottom: "10px",
           paddingBottom: "0px",

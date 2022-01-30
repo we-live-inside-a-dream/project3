@@ -7,12 +7,11 @@ const StyledTable = styled.table`
   font-weight: 300;
   border: 1px solid grey;
   filter: drop-shadow(5px 5px 10px grey);
-  /* text-shadow: 1px 1px 2px grey; */
   border-collapse: collapse;
   border-radius: 0px;
   border-collapse: collapse;
   border-spacing: 0;
-  margin: 2rem auto;
+  margin: 0rem auto;
   width: 60%;
 
   th {

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import EditSchedule from "../edit-schedule/EditSchedule";
-import StyledTableHeader from "../reusable/tables/StyledTableHeader";
+// import EditSchedule from "../edit-schedule/EditSchedule";
+import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import moment from "moment";
 import * as fns from "date-fns";
-import StyledTable from "../reusable/tables/StyledTable";
-import Modal from "../reusable/Modal";
-import StyledButton from "../reusable/Inputs/StyledButton";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import StyledTable from "../../reusable/tables/StyledTable";
+// import Modal from "../../reusable/Modal";
+// import StyledButton from "../../reusable/Inputs/StyledButton";
+// import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import WeekScheduleModal from "./WeekScheduleModal";
-import StyledInput from "../reusable/Inputs/StyledInput";
-import NamePicTableData from "./NamePicTableData";
+import StyledInput from "../../reusable/Inputs/StyledInput";
+import NamePicTableData from "../../reusable/NamePicTableData";
 
 function WeekSchedule() {
   moment().format();
@@ -124,18 +124,18 @@ function WeekSchedule() {
 
   return (
     <div className="container">
-      <h1
+      <h2
         style={{
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
-          textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          textAlign: "right",
+          color: "#07889b",
           marginTop: "20px",
           marginBottom: "0px",
+          paddingBottom: "0px",
         }}
       >
-        Staff Schedule for the week
+        Week Starting:
         <StyledInput
           type="date"
           id="single-day"
@@ -145,7 +145,7 @@ function WeekSchedule() {
             setStartDay(e.target.value);
           }}
         />
-      </h1>
+      </h2>
       <StyledTable>
         <thead>
           <tr>
@@ -160,53 +160,10 @@ function WeekSchedule() {
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={employee._id}>
               {/* <tr key={index} onClick={() => setShiftId(employee._id)}>  */}
-              <NamePicTableData existingValues={employee} />
-              {/* <td>
-                <div
-                  style={{
-                    display: "grid",
-                    width: "12rem",
-                    gridTemplateColumns: "5% 25% 70%",
-                  }}
-                >
-                  <div style={{ gridRow: "1" }}></div>
-                  <div>
-                    <div
-                      style={{
-                        gridRow: "1",
-                        backgroundColor: "grey",
-                        height: "2.5rem",
-                        width: "2.5rem",
-                        margin: "auto",
-                        alignSelf: "center",
-                        borderRadius: "50%",
-                      }}
-                    ></div>
-                  </div>
-
-                  <div
-                    style={{
-                      margin: "auto 10px auto 10px",
-                      color: "#4488AB",
-                      fontWeight: "600",
-                      display: "block",
-                      textShadow: "none",
-                      textAlign: "left",
-                    }}
-                  >
-                    <p>{`${employee.firstName} ${employee.lastName.slice(
-                      0,
-                      1
-                    )}`}</p>
-                    <p
-                      style={{
-                        color: "#545454",
-                        fontSize: ".7rem",
-                      }}
-                    ></p>
-                  </div>
-                </div>
-              </td> */}
+              <NamePicTableData
+                firstName={employee.firstName}
+                lastName={employee.lastName}
+              />
 
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
@@ -236,10 +193,10 @@ function WeekSchedule() {
                         style={{
                           position: "absolute",
                           borderRadius: "50%",
-                          height: "15px",
-                          width: "15px",
+                          height: "10px",
+                          width: "10px",
                           alignSelf: "center",
-                          transform: "translate(800%, -200%)",
+                          transform: "translate(1200%, -350%)",
                           backgroundColor: isEmployeeavailable(
                             employee._id,
                             date

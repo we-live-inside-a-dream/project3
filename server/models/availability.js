@@ -1,5 +1,5 @@
 const mongoose = require("./mongooseDb");
-
+const moment = require("moment");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
@@ -34,13 +34,6 @@ const availability = new mongoose.Schema({
 });
 
 const dayArray = [
-  {
-    dayName: "sunday",
-    available: false,
-    allDay: false,
-    start: 0,
-    end: 0,
-  },
   {
     dayName: "monday",
     available: false,
@@ -83,19 +76,28 @@ const dayArray = [
     start: 0,
     end: 0,
   },
+  {
+    dayName: "sunday",
+    available: false,
+    allDay: false,
+    start: 0,
+    end: 0,
+  },
 ];
 
 const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (id, firstName, lastName) => {
-  let availability = new Availability({
-    employeeProfileId: id,
-    firstName: firstName,
-    lastName: lastName,
-    maxHoursPerWeek: 0,
-    days: dayArray,
-  });
+  console.log("this is the id", id);
   try {
+    let availability = await Availability.create({
+      employeeProfileId: id,
+      firstName: firstName,
+      lastName: lastName,
+      maxHoursPerWeek: 0,
+      days: dayArray,
+    });
+
     await availability.save();
     return availability;
   } catch (error) {
@@ -103,26 +105,28 @@ const createAvailability = async (id, firstName, lastName) => {
     return false;
   }
 };
-
+// const getAvailabilityByEmployeeId= (id) => {
+//   let EmployeeAvailability = await Availability.findOne({empl})
+// }
 const getAvailabilityById = async (id) => {
-  return Availability.findOne({ _id: id });
+  let employeeAvail = await Availability.findOne({ _id: id });
+  console.log("EMPLOYEE MODEL", employeeAvail);
+  return employeeAvail;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
-  return Availability.findOne({ employeeProfileId:id });
+  return Availability.findOne({ employeeProfileId: id });
 };
 
 //returns entire list of employees and availabilities
 const listOfEmployeesAvailabilities = async () => {
-  console.log("from Availability model");
+  // console.log("from Availability model");
   return Availability.find({});
 };
 async function updateAvailabilityById(id, updatedAvailability) {
   let newAvailability = await Availability.findByIdAndUpdate(
     id,
     updatedAvailability,
-    {
-      returnDocument: "after",
-    }
+    { returnDocument: "after" }
   );
 
   console.log(
@@ -130,6 +134,20 @@ async function updateAvailabilityById(id, updatedAvailability) {
     newAvailability
   );
   return newAvailability;
+}
+
+async function weeklyAvailibility(start) {
+  // console.log("FROM MODEL, THIS IS THE WEEK", week);
+  let end = moment(start)
+    .add(6, "days")
+    .startOf("day")
+    .format("dddd, Do")
+    .toString();
+  let weekList = Availability.find({
+    date: { $gte: start, $lte: end },
+  });
+  // console.log("from scheduleModel: ", weekList);
+  return weekList;
 }
 // const updateAvailability = (newAvailability, callback) => {
 //   Availability.findByIdAndUpdate(

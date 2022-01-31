@@ -8,14 +8,14 @@ const ModalInner = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 10px;
+  padding: 0px;
   z-index: 1000;
-  border: 10px solid #4488ab;
+  /* border: 10px solid #4488ab; */
   border-radius: 10px;
 `;
 
 const ModalOverlay = styled.div`
-  border: ${(props) => props.border || "10px"};
+  /* border: ${(props) => props.border || "10px"}; */
   position: fixed;
   top: 0;
   left: 0;

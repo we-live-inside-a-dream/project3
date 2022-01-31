@@ -1,7 +1,10 @@
 import { InputLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
-import StyledInput from "../reusable/Inputs/StyledInput";
+import {
+  StyledCheck,
+  StyledTimeDate,
+} from "../reusable/Inputs/StyledEmployeeForm";
 
 function EditMaxHours({ existingValues }) {
   const [dayName, setDayName] = useState("");
@@ -52,26 +55,26 @@ function EditMaxHours({ existingValues }) {
     <div>
       <h2>Update Availability for {dayName}</h2>
       <InputLabel>Available</InputLabel>
-      <StyledInput
+      <StyledCheck
         type="checkbox"
         checked={available}
         onChange={(e) => setAvailable(e.target.checked)}
       />
       <InputLabel>All day</InputLabel>
-      <StyledInput
+      <StyledCheck
         type="checkbox"
         checked={allDay}
         onChange={(e) => setAllDay(e.target.checked)}
       />
       <InputLabel>Available starting at: </InputLabel>
-      <StyledInput
-        type="number"
+      <StyledTimeDate
+        type="time"
         value={start}
         onChange={(e) => setStart(e.target.value)}
       />
       <InputLabel>Available until:</InputLabel>
-      <StyledInput
-        type="number"
+      <StyledTimeDate
+        type="time"
         value={end}
         onChange={(e) => setEnd(e.target.value)}
       />

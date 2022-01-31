@@ -5,7 +5,7 @@ import StyledTableData from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeProfileList() {
   const [employees, setEmployees] = useState([]);
@@ -13,14 +13,18 @@ function EmployeeProfileList() {
   let navigate = useNavigate();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchEmployeesList = async () => {
       let fetchResult = await fetch(`/api/employeeProfile/employees`);
       console.log("fetch result", fetchResult);
       let employeeList = await fetchResult.json();
       console.log("fetching employee list", employeeList);
-      setEmployees(employeeList);
+      if (isMounted) {
+        setEmployees(employeeList);
+      }
     };
     fetchEmployeesList();
+    return () => (isMounted = false);
   }, []);
   console.log("AFTER USE EFFECT", employees);
 
@@ -41,9 +45,10 @@ function EmployeeProfileList() {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          // textShadow: "1px 1px 2px grey",
+          color: "#07889b",
           marginTop: "0px",
+          marginBottom: "10px",
           paddingBottom: "0px",
           paddingTop: "25px",
         }}
@@ -66,41 +71,12 @@ function EmployeeProfileList() {
           {employees?.map((employee, index) => {
             return (
               <StyledTableRow key={index}>
-                <StyledTableData>
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      padding: "0px 20px",
-                      alignItems: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: "grey",
-                        height: "3rem",
-                        width: "2rem",
-                        marginRight: "10px",
-                      }}
-                    ></div>
-                    <div
-                      style={{
-                        margin: "auto 10px auto 10px",
-                        color: "#4488AB",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {employee.firstName}
-                      <br />
-                      {employee.lastName}
-                      <StyledEditButton
-                        onClick={() => selectProfile(employee._id)}
-                      >
-                        ✎
-                      </StyledEditButton>
-                    </div>
-                  </div>
-                  <div style={{ height: "5px" }} />
-                </StyledTableData>
+                <NamePicTableData
+                  onClick={() => selectProfile(employee._id)}
+                  firstName={employee.firstName}
+                  lastName={employee.lastName}
+                  edit="edit"
+                />
                 <StyledTableData>{employee.email}</StyledTableData>
                 <StyledTableData>{employee.phoneNumber}</StyledTableData>
                 <StyledTableData>
@@ -110,9 +86,7 @@ function EmployeeProfileList() {
                     })}
                   </ul>
                 </StyledTableData>
-                <StyledTableData>
-                  {employee.status === true ? "active" : "inactive"}
-                </StyledTableData>
+                <StyledTableData>{employee.status}</StyledTableData>
                 <StyledTableData>{employee.permissions}</StyledTableData>
               </StyledTableRow>
             );

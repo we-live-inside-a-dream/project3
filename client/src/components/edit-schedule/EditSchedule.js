@@ -1,17 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-import * as fns from "date-fns";
+// import * as fns from "date-fns";
 
 import { NativeSelect } from "@mui/material";
 // import MenuPopupState from "../UNUSED/MenuPopupState";
 
 // import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
-
-import StyledInput from "../reusable/Inputs/StyledInput";
-import StyledButton from "../reusable/Inputs/StyledButton";
+// import StyledInput from "../reusable/Inputs/StyledInput";
+// import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
+import {
+  // StyledEmployeeForm,
+  StyledFormWrapper,
+  StyledForm,
+  StyledInput,
+  StyledButton,
+} from "../reusable/Inputs/StyledEmployeeForm.js";
+
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 // const events2 = [
@@ -47,35 +54,43 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  function isEmployeeAvailible() {
-    // need to ensure employee isnt working over 40 hours this week
-    // need to see if employee has vacation or time off booked
-    // need to compare day of the week to weekly availibility
-    // first figure out what day of the week it is...
-    // console.log('employee weekly availibility',empAvailibility.days.dayName)
-  }
+  // useEffect(()=>{
+  //   if(employeeId){
 
-  useEffect(() => {
-    if (employeeId) {
-      console.log("employeeId", employeeId);
-      const empAvail = async () => {
-        let fetchAvailibility = await fetch(
-          `/api/availability/availibility/profile?id=${employeeId}`
-        );
-        let employeeAvailibility = await fetchAvailibility.json();
-        setEmpAvailibility(employeeAvailibility);
-      };
-      empAvail();
-    }
-  }, [employeeId]);
+  //     console.log("employeeId",employeeId)
+  //     const empAvail = async ()=>{
+  //       let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
+  //       let employeeAvailibility = await fetchAvailibility.json()
+  //       setEmpAvailibility(employeeAvailibility)
+  //     }
+  //     empAvail()
+  //   }
+  //   // console.log(empAvailibility)
+  // },[employeeId])
 
   // useEffect(()=>{
+  //   function isEmployeeavailable(){
+  //     let availableToday = empAvailibility.days[dayOfWeek]//dayOfweek is the index for days array monday=0, sunday=6
+  //   if(!availableToday.available){
+  //     console.log("employee not available");
+  //   }else if(!availableToday.allDay){
+  //     console.log(`employee is available between ${availableToday.start} and ${availableToday.end}`);
+  //   }else{
+  //     console.log("employee is free to suffer all day!!");
+  //   }
+  //     // need to ensure employee isnt working over 40 hours this week
+  //     // need to see if employee has vacation or time off booked
+  //     // need to compare day of the week to weekly availibility
+  //     //       first figure out what day of the week it is...
+  //     console.log('employee weekly availibility',availableToday)
+  //   }
   //   let dayOfWeek = fns.getDay(new Date(date));
-
+  // if(empAvailibility){ console.log(empAvailibility)
   //   console.log("date is...",date)
   //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-  //   isEmployeeAvailible()
-  //   },[date])
+  //   isEmployeeavailable()
+  // };
+  // },[date])
 
   useEffect(() => {
     if (existingValues) {
@@ -159,98 +174,100 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   return (
     <>
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">
-          Employee Name
-        </InputLabel>
-        <NativeSelect
-          defaultValue={employeeId}
-          id="name-imput"
-          value={employeeId}
-          label="name"
-          onChange={(event) => onInputUpdate(event, setEmployeeId)}
-          style={{
-            width: "275px",
-            fontSize: "1em",
-            textAlign: "center",
-            margin: "10px",
-            color: "#4488AB",
-            backgroundColor: "white",
-            border: "2px solid #4488AB",
-            boarderRadius: "3px",
-            filter: "dropShadow(5px 5px 10px grey)",
-          }}
-        >
-          {/* {name} */}
-          <option></option>
-          {empNames?.map((event) => {
-            return (
-              <option key={event._id} value={event._id}>
-                {event.firstName + " " + event.lastName}
-              </option>
-            );
-          })}
-        </NativeSelect>
-      </div>
+      <StyledFormWrapper>
+        <StyledForm>
+          <div>
+            <InputLabel id="demo-simple-select-helper-label">
+              Employee Name
+            </InputLabel>
+            <NativeSelect
+              defaultValue={employeeId}
+              id="name-imput"
+              value={employeeId}
+              label="name"
+              onChange={(event) => onInputUpdate(event, setEmployeeId)}
+              // style={{
+              //   width: "275px",
+              //   fontSize: "1em",
+              //   textAlign: "center",
+              //   margin: "10px",
+              //   color: "#4488AB",
+              //   backgroundColor: "white",
+              //   border: "2px solid #4488AB",
+              //   boarderRadius: "3px",
+              //   filter: "dropShadow(5px 5px 10px grey)",
+              // }}
+            >
+              {/* {name} */}
+              <option></option>
+              {empNames?.map((event) => {
+                return (
+                  <option key={event._id} value={event._id}>
+                    {event.firstName + " " + event.lastName}
+                  </option>
+                );
+              })}
+            </NativeSelect>
+          </div>
 
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
-        <StyledInput
-          label="shift day"
-          type="date"
-          value={date}
-          onChange={(event) => onInputUpdate(event, setDate)}
-        />
-      </div>
+          <div>
+            <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
+            <StyledInput
+              label="shift day"
+              type="date"
+              value={date}
+              onChange={(event) => onInputUpdate(event, setDate)}
+            />
+          </div>
 
-      <div>
-        <InputLabel id="demo-simple-select-helper-label">
-          Start Time - End Time
-        </InputLabel>
-        <StyledInput
-          label="start time"
-          type="time"
-          value={start}
-          onChange={(event) => onInputUpdate(event, setStart)}
-        />
+          <div>
+            <InputLabel id="demo-simple-select-helper-label">
+              Start Time - End Time
+            </InputLabel>
+            <StyledInput
+              label="start time"
+              type="time"
+              value={start}
+              onChange={(event) => onInputUpdate(event, setStart)}
+            />
 
-        <StyledInput
-          label="end time"
-          type="time"
-          value={end}
-          onChange={(event) => onInputUpdate(event, setEnd)}
-        />
-      </div>
-      <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
+            <StyledInput
+              label="end time"
+              type="time"
+              value={end}
+              onChange={(event) => onInputUpdate(event, setEnd)}
+            />
+          </div>
+          <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
 
-      <div>
-        <StyledInput
-          label="break start time"
-          type="time"
-          value={breakStart}
-          onChange={(event) => onInputUpdate(event, setBreakStart)}
-        />
+          <div>
+            <StyledInput
+              label="break start time"
+              type="time"
+              value={breakStart}
+              onChange={(event) => onInputUpdate(event, setBreakStart)}
+            />
 
-        <StyledInput
-          label="break end time"
-          type="time"
-          value={breakEnd}
-          onChange={(event) => onInputUpdate(event, setBreakEnd)}
-        />
-      </div>
-      <div>
-        <StyledInput
-          value={breakName}
-          onChange={(event) => {
-            onInputUpdate(event, setBreakName);
-          }}
-        />
+            <StyledInput
+              label="break end time"
+              type="time"
+              value={breakEnd}
+              onChange={(event) => onInputUpdate(event, setBreakEnd)}
+            />
+          </div>
+          <div>
+            <StyledInput
+              value={breakName}
+              onChange={(event) => {
+                onInputUpdate(event, setBreakName);
+              }}
+            />
 
-        <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
-          +
-        </StyledButton>
-      </div>
-      {/* <div>
+            <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
+              +
+            </StyledButton>
+          </div>
+          {/* <div>
 this is for making breaks list
 <Select
           labelId="demo-simple-select-helper-label"
@@ -282,19 +299,21 @@ this is for making breaks list
           <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
 </div> */}
 
-      <CenterStyle>
-        <div>
-          {breaks?.map((breakys, index) => (
-            <BreaksComponent
-              myKey={breakys._id}
-              breakys={breakys}
-              index={index}
-              onRemoveBreak={onRemoveBreak}
-            />
-          ))}
-        </div>
-        <StyledButton onClick={postData}>SUBMIT</StyledButton>
-      </CenterStyle>
+          <CenterStyle>
+            <div>
+              {breaks?.map((breakys, index) => (
+                <BreaksComponent
+                  myKey={breakys._id}
+                  breakys={breakys}
+                  index={index}
+                  onRemoveBreak={onRemoveBreak}
+                />
+              ))}
+            </div>
+            <StyledButton onClick={postData}>SUBMIT</StyledButton>
+          </CenterStyle>
+        </StyledForm>
+      </StyledFormWrapper>
     </>
   );
 } //final brace

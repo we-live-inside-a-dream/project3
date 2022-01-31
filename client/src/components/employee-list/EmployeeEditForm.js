@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import {
-  StyledEmployeeForm,
+  // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
   StyledButton,
-  StyledError,
-} from "./StyledEmployeeForm";
+} from "../reusable/Inputs/StyledEmployeeForm.js";
 
 const positionData = [
   { value: "manager", label: "Manager" },
@@ -20,7 +19,7 @@ const statusData = [
   { value: "inactive", label: "Inactive" },
 ];
 
-const EmployeeEditForm = ({ existingValues, onSave }) => {
+const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +29,25 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
   const [status, setStatus] = useState("");
 
   // const [positionToAdd, setPositionToAdd] = useState("");
+  let navigate = useNavigate();
+  // const params = useParams();
+  // const theId = params.theId;
+
+  // useEffect(() => {
+  //   async function fetchExistingValues() {
+  //     let fetchResult = await fetch(
+  //       `/api/employeeProfile/getByProfileId/${theId}`
+  //     );
+  //     console.log(
+  //       "fetch result for finding employee contact info",
+  //       fetchResult
+  //     );
+  //     let employeeInfo = await fetchResult.json();
+  //     console.log("fetching employee list", employeeInfo);
+  //     setExistingValues(employeeInfo);
+  //   }
+  //   fetchExistingValues();
+  // }, [theId]);
 
   useEffect(() => {
     if (existingValues) {
@@ -58,11 +76,9 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
     console.log("status", newStatus);
   };
 
-  let navigate = useNavigate();
-
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
-    await fetch("/api/employeeProfile/create", {
+    let response = await fetch("/api/employeeProfile/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +86,11 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       body: JSON.stringify(newEmployee),
       // body: newEmployee
     });
-    navigate("/employeeList");
+    let id = await response.text();
+    // navigate("/createEmployee/" + newEmployee._id);
+    setId(id);
+    console.log("the id for the created employee is:", response);
+    setCurrentTab(2);
   }
 
   async function postData() {
@@ -88,6 +108,7 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
       await onSave(newEmployeeInfo);
     } else {
       await createEmployee(newEmployeeInfo);
+      navigate("/employeeList");
     }
   }
 
@@ -99,55 +120,67 @@ const EmployeeEditForm = ({ existingValues, onSave }) => {
 
   return (
     <>
-      <StyledEmployeeForm />
+      {/* <StyledEmployeeForm />  */}
       <StyledFormWrapper>
         <StyledForm>
           <h2>Employee Description</h2>
-
+          <div></div>
           <div>
             <label>First Name</label>
             <StyledInput
               value={firstName}
               onChange={(event) => onInputUpdate(event, setFirstName)}
             />
+          </div>
+          <div>
             <label>Last Name</label>
             <StyledInput
               value={lastName}
               onChange={(event) => onInputUpdate(event, setLastName)}
             />
+          </div>
+          <div>
             <label>Email</label>
             <StyledInput
               value={email}
               onChange={(event) => onInputUpdate(event, setEmail)}
             />
+          </div>
+          <div>
             <label>password</label>
             <StyledInput
               value={password}
               type="password"
               onChange={(event) => onInputUpdate(event, setPassword)}
             />
+          </div>
+          <div>
             <label>Phone Number</label>
             <StyledInput
               value={phoneNumber}
               onChange={(event) => onInputUpdate(event, setPhoneNumber)}
             />
-            {/* shit show starts from here... */}
-            <label>Positions</label>
+          </div>
+          <div>
+            <label style={{ marginBottom: "10px", display: "block" }}>
+              Positions
+            </label>
             <Select
               value={positions}
               options={positionData}
               onChange={handlePositionChange}
             />
-            <br />
-
-            <label>Status</label>
+          </div>
+          <StyledButton onClick={postData}>Save Details</StyledButton>
+          <div>
+            <label style={{ marginBottom: "10px", display: "block" }}>
+              Status
+            </label>
             <Select
               value={status}
               options={statusData}
               onChange={handleStatusChange}
             />
-            <br />
-            <StyledButton onClick={postData}>Save Details</StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

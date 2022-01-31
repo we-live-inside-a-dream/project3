@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 // border: ${(props)=>props.border||"10px"}
@@ -11,7 +10,8 @@ const StyledEditButton = styled.button`
   color: black;
   background-color: white;
   border-radius: 3px;
-  border: none;
+  border: white;
+  color: var(--primary-color);
   cursor: pointer;
 `;
 

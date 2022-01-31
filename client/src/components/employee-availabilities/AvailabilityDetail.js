@@ -3,21 +3,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
-import { useNavigate } from "react-router-dom";
 import Modal from "../reusable/Modal";
-import EditDayAvailability from "./EditDayAvailability";
 import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
+import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeAvailabilityDetail({ availabilityId }) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const [dayIsOpen, setDayIsOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
   const [availability, setAvailability] = useState([]);
-  const [selectedAvailabilityId, setSelectedAvailabilityId] = useState("");
-  const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
     const fetchAvailabilityById = async () => {
@@ -58,16 +53,6 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
     } else return "?";
   };
 
-  // selects the employee id to davigate to the pagee to edit that particular employee
-  function selectAvailabilityId(id) {
-    navigate("/availability-edit/" + id);
-  }
-  //    selects employee from dropdowm menu
-  function selectAvailability(id) {
-    console.log("selectAvailability called on id", id);
-    selectAvailabilityId(id);
-  }
-
   return (
     <div>
       <h1
@@ -75,9 +60,10 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
           fontWeight: "400",
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
-          textShadow: "1px 1px 2px grey",
-          color: "#4488AB",
+          // textShadow: "1px 1px 2px grey",
+          color: "#07889b",
           marginTop: "0px",
+          marginBottom: "10px",
           paddingBottom: "0px",
           paddingTop: "25px",
         }}
@@ -86,56 +72,27 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
       </h1>
 
       <StyledTable
-        style={{ paddingTop: "0px", marginTop: "0px", paddingBottom: "20px" }}
+        style={{ paddingTop: "10px", marginTop: "20px", paddingBottom: "20px" }}
       >
         <thead>
           <tr>
             <th>NAME</th>
-            <th>Max Weekly Hours</th>
+            <th style={{ padding: "10px 30px" }}>Max Hrs/Week</th>
             {businessDays.map((day, index) => {
-              return <th key={index}>{day}</th>;
+              return (
+                <th key={index} style={{ padding: "10px 30px" }}>
+                  {day}
+                </th>
+              );
             })}
           </tr>
         </thead>
         <tbody>
-          {/* {availabilityList?.map((availability, index) => { */}
           <tr>
-            <td>
-              <div
-                style={{
-                  display: "inline-flex",
-                  padding: "0px 20px",
-                  alignItems: "left",
-                }}
-              >
-                <div
-                  style={{
-                    backgroundColor: "grey",
-                    height: "3rem",
-                    width: "2rem",
-                    marginRight: "10px",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    margin: "auto 10px auto 10px",
-                    color: "#4488AB",
-                    fontWeight: "600",
-                  }}
-                >
-                  {availability.firstName}
-                  <br />
-                  {availability.lastName}
-                  <br />
-                  {/* <StyledEditButton
-                    onClick={() => selectAvailabilityById(availability._id)}
-                  >
-                    ✎
-                  </StyledEditButton> */}
-                </div>
-              </div>
-              <div style={{ height: "5px" }} />
-            </td>
+            <NamePicTableData
+              firstName={availability.firstName}
+              lastName={availability.lastName}
+            />
             <td>
               {availability.maxHoursPerWeek}
               <br />

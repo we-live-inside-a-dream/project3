@@ -2,18 +2,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const NavbarContainer = styled.nav`
-  width: 100%;
-  height: ${(props) => (props.NavbarExtendNavbar ? "100vh" : "80px")};
-  background-color: #35a1b9;
+  height: ${(props) => (props.NavbarExtendNavbar ? "100vh" : "100%")};
+  background-color: whiteSmoke;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const LeftContainer = styled.div`
   flex: 70%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-left: 1%;
 `;
 
@@ -35,11 +34,14 @@ export const RightContainer = styled.div`
 
 export const Logo = styled.img`
   display: flex;
-  
-  margin: auto;
-  max-width: 80px;
+  padding: 0px 0px;
+  margin: 0px auto;
+  max-width: 65px;
   height: auto;
   background-color: #35a1b9;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavbarExtendedContainer = styled.div`
@@ -50,14 +52,23 @@ export const NavbarExtendedContainer = styled.div`
 
 export const NavbarLinkContainer = styled.div`
   display: flex;
+  align-content: center;
+`;
+export const LogoNavbarLink = styled(Link)`
+  width: 80px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavbarLink = styled(Link)`
-  color: white;
-  font-size: x-large;
+  color: #35a1b9;
+  font-size: large;
+  font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
-  margin: 10px;
+  padding: 10px 5px;
+  margin: 5px 5px;
 
   @media (max-width: 700px) {
     display: none;
@@ -65,13 +76,12 @@ export const NavbarLink = styled(Link)`
 `;
 
 export const NavbarLinkExtended = styled(Link)`
-  color: white;
-  font-size: x-large;
+  color: #35a1b9;
+  font-size: large;
+  font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none;
 `;
-
-
 
 export const OpenLinksButton = styled.button`
   width: 70px;
@@ -95,6 +105,37 @@ export const NavbarInnerContainer = styled.div`
         display: none;
     } */
   width: 100%;
-  height: 80px;
+  height: 60px;
   display: flex;
+`;
+export const StyledNavButton = styled.button`
+  height: 35px;
+  width: 70px;
+  background-color: #e37222;
+  border: 3px solid #e37222;
+  color: white;
+  border-radius: 5px;
+  margin: 10px 10px 0px 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #66b9bf;
+    border: 2px solid #eeaa78;
+  }
+  &:active {
+    /* background-color: #3e8e41; */
+    box-shadow: 0 1px #666;
+    transform: translate(5% 5%);
+  }
+`;
+export const StyledAvatarButton = styled.div`
+  background-color: grey;
+  height: 2.8rem;
+  width: 2.8rem;
+  margin: 3px 10px;
+  border-radius: 50%;
+  border: 3px solid #e37222;
+  &:hover {
+    cursor: pointer;
+    border: 3px solid #eeaa78;
+  }
 `;

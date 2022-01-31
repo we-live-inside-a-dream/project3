@@ -7,6 +7,7 @@ import Modal from "../reusable/Modal";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import WeekScheduleModal from "./WeekScheduleModal";
+import StyledInput from "../reusable/Inputs/StyledInput";
 
 function WeekSchedule() {
   moment().format();
@@ -39,6 +40,7 @@ function WeekSchedule() {
       }
       fetchWeek();
     };
+
     //it then sets the titleWeek string: "Day, number", then sets dataWeek to "yyyy,MM,dd" to match database
     const findDateRange = function () {
       let datesArray = [];
@@ -72,7 +74,7 @@ function WeekSchedule() {
         }}
       >
         Staff Schedule for the week
-        <input
+        <StyledInput
           type="date"
           id="single-day"
           name="day"

@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import Modal from "../reusable/Modal";
+import Modal from "../../reusable/Modal";
 import EditScheduleSelectInfo from "./EditScheduleSetInfo";
 
 function WeekScheduleModal({ date, setModalOpen, shift, employee }) {

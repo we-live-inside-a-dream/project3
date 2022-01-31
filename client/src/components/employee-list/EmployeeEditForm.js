@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
@@ -19,7 +19,7 @@ const statusData = [
   { value: "inactive", label: "Inactive" },
 ];
 
-const EmployeeEditForm = ({ existingValues, onSave, setId, setCurrentTab }) => {
+const EmployeeEditForm = ({ onSave, setId, setCurrentTab }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,8 +27,27 @@ const EmployeeEditForm = ({ existingValues, onSave, setId, setCurrentTab }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
-
+  const [existingValues, setExistingValues] = useState();
   // const [positionToAdd, setPositionToAdd] = useState("");
+  let navigate = useNavigate();
+  const params = useParams();
+  const theId = params.theId;
+
+  useEffect(() => {
+    async function fetchExistingValues() {
+      let fetchResult = await fetch(
+        `/api/employeeProfile/getByProfileId/${theId}`
+      );
+      console.log(
+        "fetch result for finding employee contact info",
+        fetchResult
+      );
+      let employeeInfo = await fetchResult.json();
+      console.log("fetching employee list", employeeInfo);
+      setExistingValues(employeeInfo);
+    }
+    fetchExistingValues();
+  }, [theId]);
 
   useEffect(() => {
     if (existingValues) {
@@ -57,8 +76,6 @@ const EmployeeEditForm = ({ existingValues, onSave, setId, setCurrentTab }) => {
     console.log("status", newStatus);
   };
 
-  let navigate = useNavigate();
-
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
     let response = await fetch("/api/employeeProfile/create", {
@@ -72,6 +89,7 @@ const EmployeeEditForm = ({ existingValues, onSave, setId, setCurrentTab }) => {
     let id = await response.text();
     // navigate("/createEmployee/" + newEmployee._id);
     setId(id);
+    console.log("the id for the created employee is:", response);
     setCurrentTab(2);
   }
 
@@ -90,6 +108,7 @@ const EmployeeEditForm = ({ existingValues, onSave, setId, setCurrentTab }) => {
       await onSave(newEmployeeInfo);
     } else {
       await createEmployee(newEmployeeInfo);
+      navigate("/employeeList");
     }
   }
 

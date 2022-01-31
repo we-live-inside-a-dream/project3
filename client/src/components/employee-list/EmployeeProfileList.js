@@ -6,6 +6,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeProfileList() {
   const [employees, setEmployees] = useState([]);
@@ -67,7 +68,13 @@ function EmployeeProfileList() {
           {employees?.map((employee, index) => {
             return (
               <StyledTableRow key={index}>
-                <StyledTableData>
+                <NamePicTableData
+                  onClick={() => selectProfile(employee._id)}
+                  firstName={employee.firstName}
+                  lastName={employee.lastName}
+                  edit="edit"
+                />
+                {/* <StyledTableData>
                   <div
                     style={{
                       display: "inline-flex",
@@ -97,11 +104,11 @@ function EmployeeProfileList() {
                         onClick={() => selectProfile(employee._id)}
                       >
                         ✎
-                      </StyledEditButton>
+                      </StyledEditButton> 
                     </div>
                   </div>
                   <div style={{ height: "5px" }} />
-                </StyledTableData>
+                </StyledTableData>*/}
                 <StyledTableData>{employee.email}</StyledTableData>
                 <StyledTableData>{employee.phoneNumber}</StyledTableData>
                 <StyledTableData>
@@ -111,9 +118,7 @@ function EmployeeProfileList() {
                     })}
                   </ul>
                 </StyledTableData>
-                <StyledTableData>
-                  {employee.status === true ? "active" : "inactive"}
-                </StyledTableData>
+                <StyledTableData>{employee.status}</StyledTableData>
                 <StyledTableData>{employee.permissions}</StyledTableData>
               </StyledTableRow>
             );

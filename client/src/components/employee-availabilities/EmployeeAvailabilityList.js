@@ -1,15 +1,11 @@
 import StyledTable from "../reusable/tables/StyledTable";
 import React from "react";
 import { useState, useEffect } from "react";
-// import StyledButton from "../reusable/Inputs/StyledButton";
-// import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import { useNavigate } from "react-router-dom";
-// import { Menu, Select, MenuItem, InputLabel } from "@mui/material";
 import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
-  const [selectedAvailabilityId, setSelectedAvailabilityId] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {

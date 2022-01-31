@@ -3,9 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
-import { useNavigate } from "react-router-dom";
 import Modal from "../reusable/Modal";
-import EditDayAvailability from "./EditDayAvailability";
 import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
 import NamePicTableData from "../reusable/NamePicTableData";
@@ -13,12 +11,8 @@ import NamePicTableData from "../reusable/NamePicTableData";
 function EmployeeAvailabilityDetail({ availabilityId }) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const [dayIsOpen, setDayIsOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
   const [availability, setAvailability] = useState([]);
-  const [selectedAvailabilityId, setSelectedAvailabilityId] = useState("");
-  const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
     const fetchAvailabilityById = async () => {
@@ -58,16 +52,6 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
       } - ${dayObject.end > 12 ? dayObject.end - 12 : dayObject.end}`;
     } else return "?";
   };
-
-  // selects the employee id to davigate to the pagee to edit that particular employee
-  function selectAvailabilityId(id) {
-    navigate("/availability-edit/" + id);
-  }
-  //    selects employee from dropdowm menu
-  function selectAvailability(id) {
-    console.log("selectAvailability called on id", id);
-    selectAvailabilityId(id);
-  }
 
   return (
     <div>

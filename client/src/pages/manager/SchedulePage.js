@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import DaySchedulePage from "../common/DaySchedulePage";
 import WeekSchedulePage from "./WeekSchedulePage";

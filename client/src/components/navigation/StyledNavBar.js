@@ -118,8 +118,13 @@ export const StyledNavButton = styled.button`
   margin: 10px 10px 0px 10px;
   &:hover {
     cursor: pointer;
-    background-color: #e37222;
-    border: 3px solid #eeaa78;
+    background-color: #66b9bf;
+    border: 2px solid #eeaa78;
+  }
+  &:active {
+    /* background-color: #3e8e41; */
+    box-shadow: 0 1px #666;
+    transform: translate(5% 5%);
   }
 `;
 export const StyledAvatarButton = styled.div`

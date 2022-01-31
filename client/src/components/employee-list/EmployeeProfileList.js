@@ -5,7 +5,6 @@ import StyledTableData from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import NamePicTableData from "../reusable/NamePicTableData";
 
 function EmployeeProfileList() {

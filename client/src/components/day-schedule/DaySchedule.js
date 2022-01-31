@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import EditSchedule from "../../edit-schedule/EditSchedule";
 import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 // import ShiftComponent from "../edit-schedule/ShiftComponent";
-import StyledButton from "../../reusable/Inputs/StyledButton";
-import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import NamePicTableData from "../../week-schedule/NamePicTableData";
 
 function DaySchedule() {
@@ -41,7 +38,7 @@ function DaySchedule() {
       }
       console.log("AFTER USE EFFECT SHIFT ID", shiftId);
     }
-  }, [shiftId]);
+  }, [shiftId, deleteShift]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -63,10 +60,6 @@ function DaySchedule() {
     headerHours.push(i < 13 ? i : i - 12);
   }
 
-  function selectTheDay(day) {
-    console.log("THE DAY FROM THE FUNCTION IS", day);
-    setDay(day);
-  }
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
@@ -192,24 +185,3 @@ function DaySchedule() {
   );
 }
 export default DaySchedule;
-
-{
-  /* <StyledButton
-                      fontSize={"0.5em"}
-                      padding={"0px"}
-                      margin={"0em"}
-                      textAlign={"left"}
-                      onClick={() => setDeleteShift(true)}
-                      // onClick={() => deleteEmployeeShift(employee._id)}
-                    >
-                      X
-                    </StyledButton> */
-  // <StyledEditButton
-  //     fontSize={"1em"}
-  //     padding={"1px"}
-  //     margin={"1px"}
-  //     onClick={() => setIsOpen(true)}
-  //   >
-  //     ✎
-  //   </StyledEditButton>
-}

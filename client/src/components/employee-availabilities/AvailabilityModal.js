@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Modal from "../reusable/Modal";
 import EditDayAvailability from "./EditDayAvailability";
 

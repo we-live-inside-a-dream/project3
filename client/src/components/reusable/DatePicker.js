@@ -1,4 +1,3 @@
-import React, { useRef, useEffect } from "react";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 

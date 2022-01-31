@@ -4,7 +4,6 @@ import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 
 const EmployeeEditPage = () => {
-  const [existingValues, setExistingValues] = useState({});
   let params = useParams();
   let employeeId = params.id;
   let navigate = useNavigate();

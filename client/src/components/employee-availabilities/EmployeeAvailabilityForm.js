@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import AvailabilityDay from "./AvailabilityDay";
 import {
   StyledInput,
@@ -8,15 +7,8 @@ import {
   StyledButton,
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
-// import { InputLabel } from "@mui/material";
-// import {
-//   StyledButton,
-//   StyledCheck,
-//   StyledLabel,
-// } from "../employee-list/StyledEmployeeForm";
 
 const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
-  let params = useParams();
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -72,23 +64,6 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
     await onSave(newAvailability);
   }
 
-  let businessDays = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-
-  function onAddDay() {
-    let day = {};
-    let newDay = [...days];
-    newDay.push(day);
-    setDays(newDay);
-    console.log("these are the days", days);
-  }
   return (
     <div>
       <StyledFormWrapper>

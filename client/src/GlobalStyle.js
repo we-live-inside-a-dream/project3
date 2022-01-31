@@ -6,14 +6,28 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
+    background-color: whitesmoke;
     height: 100%;
     margin: 0;
     color: #555;
   }
-  *{
-      margin: 0;
+    ::-webkit-scrollbar {
+    width: 8px;
+    height: 50px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: white;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #98c6ca;
+  border-radius: 20px;
+  background-color: #98c6ca;
+  } 
+ *{
       padding: 0;
   }
+ 
 `;
-export default GlobalStyle
+
+export default GlobalStyle;

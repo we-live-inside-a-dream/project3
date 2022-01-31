@@ -15,5 +15,5 @@
   background-color: whitesmoke;
 }
 body {
-  overflow-y: scroll;
+  overflow-y: auto;
 }

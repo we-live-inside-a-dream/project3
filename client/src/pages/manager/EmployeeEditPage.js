@@ -45,7 +45,6 @@ const EmployeeEditPage = () => {
   return (
     <StyledPage>
       <EmployeeEditForm existingValues={employee} onSave={updateEmployee} />
-      <EmployeeEditForm />
     </StyledPage>
   );
 };

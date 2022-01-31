@@ -39,6 +39,9 @@ export const Logo = styled.img`
   max-width: 65px;
   height: auto;
   background-color: #35a1b9;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavbarExtendedContainer = styled.div`
@@ -53,6 +56,9 @@ export const NavbarLinkContainer = styled.div`
 `;
 export const LogoNavbarLink = styled(Link)`
   width: 80px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const NavbarLink = styled(Link)`
@@ -110,14 +116,21 @@ export const StyledNavButton = styled.button`
   color: white;
   border-radius: 5px;
   margin: 10px 10px 0px 10px;
+  &:hover {
+    cursor: pointer;
+    background-color: #e37222;
+    border: 3px solid #eeaa78;
+  }
 `;
 export const StyledAvatarButton = styled.div`
   background-color: grey;
   height: 2.8rem;
   width: 2.8rem;
   margin: 3px 10px;
-
   border-radius: 50%;
-
   border: 3px solid #e37222;
+  &:hover {
+    cursor: pointer;
+    border: 3px solid #eeaa78;
+  }
 `;

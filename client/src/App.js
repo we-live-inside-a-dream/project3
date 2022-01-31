@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
+
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
@@ -36,13 +37,10 @@ function App() {
     >
       <GlobalStyle />
       <NavBar />
-
       <Routes>
         <Route path="/schedules" element={<SchedulePage />} />
-
         <Route path="/" element={<CalendarScratch />} />
         <Route path="/employeeList" element={<EmployeesList />} />
-
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
         <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
@@ -56,7 +54,7 @@ function App() {
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}
-        />
+        ></Route>
       </Routes>
     </div>
   );

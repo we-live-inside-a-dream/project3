@@ -49,16 +49,16 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
-  let employeeProfile = new EmployeeProfile(employeeProfileInfo);
-  let createdProfile = await employeeProfile.save();
+  let newEmployeeProfile = new EmployeeProfile(employeeProfileInfo);
+  let createdProfile = await newEmployeeProfile.save();
   console.log("saving employee profile", createdProfile);
-  return employeeProfile.id;
+  return createdProfile.id;
 };
 
-const logIn = async (employeeProfileInfo) => {
+const logIn = async (EmployeeProfile) => {
   let employeeProfile = await EmployeeProfile.find({
-    email: employeeProfileInfo.email,
-    password: employeeProfileInfo.password,
+    email: EmployeeProfile.email,
+    password: EmployeeProfile.password,
   });
   return employeeProfile;
 };

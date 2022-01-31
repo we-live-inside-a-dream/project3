@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { createAvailability } = require("../models/availability");
 const {
-  employeeProfile,
   createEmployeeProfile,
   getEmployeeProfileByProfileId,
   updateEmployeeProfile,
@@ -11,21 +10,6 @@ const {
   getActiveEmployeeNames,
 } = require("../models/employeeProfile");
 
-// const mustBeLoggedIn = async (req, res, next) => {
-//   if (req.user) {
-//     next();
-//     return;
-//   }
-//   res.sendStatus(401);
-// };
-
-// const mustBeManager = async (req, res, next) => {
-//     if (req.user && req.user.isManager) {
-//         next()
-//         return
-//     }
-//     res.sendStatus(401)
-// }
 
 /* Creates a new employee profile.
  Params: same as employeeProfile Schema
@@ -34,61 +18,16 @@ const {
 */
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
-  //   employeeProfile
-  //     .find({ email: req.body.email })
-  //     .exec()
-  //     .then((employeeProfile) => {
-  //       if (employeeProfile.length >= 1) {
-  //         return res.status(401).json({
-  //           status: false,
-  //           message: "Email exists",
-  //           data: undefined,
-  //         });
-  //       } else {
-  //         bcrypt.hash(req.body.password, 2, (err, hash) => {
-  //           if (err) {
-  //             return res.status(500).json({
-  //               status: false,
-  //               message: "Error, cannot encrypt password",
-  //               data: undefined,
-  //             });
-  //           } else {
-  //             const employeeProfile = new employeeProfile({
-  //               ...req.body,
-  //               password: hash,
-  //             });
-  //             employeeProfile.save((err, doc) => {
-  //               if (err)
-  //                 return res.json({
-  //                   status: false,
-  //                   message: err,
-  //                   data: undefined,
-  //                 });
-  //               return res.status(200).json({
-  //                 status: false,
-  //                 message: "Employee Profile created successfully!",
-  //                 data: doc,
-  //               });
-  //             });
   console.log(newEmployeeProfile);
   try {
     let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
-    //             // sends initial availability info availability model (imported above)
-    createAvailability(
-      employeeProfileId,
-      newEmployeeProfile.firstName,
-      newEmployeeProfile.lastName
-    );
-    if (!employeeProfileId) res.status(500).send("failed to create");
+    //sends initial availability info availability model (imported above)
+    if (!employeeProfileId) res.status(500).send("Failed to create.");
     res.status(200).send(employeeProfileId);
   } catch (error) {
     console.log(error.message);
     res.status(400).send(error.message);
   }
-  //           }
-  //         });
-  //       }
-  //     });
 });
 
 /* Update: Existing profile in database

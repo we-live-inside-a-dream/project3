@@ -10,34 +10,29 @@ import {
 } from "./StyledLogIn";
 
 export default function LogIn({ setUser }) {
+  const [inputs, setInputs] = useState([{}]);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
 
-  function tryLogin() {
-    async function postLogin() {
-      const loginInfo = {
-        username: email,
-        password: password,
-      };
-      let loginResult = await fetch("/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginInfo),
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+      .post("/login", {
+        email: inputs.email,
+        password: inputs.password,
+      })
+      .then(function (response) {
+        if (response.data) setUser(response.data);
+        console.log(setUser);
+        navigate("/profile");
       });
-      if (loginResult.ok) {
-        // alert('Hello: '+username)
-        setLoginError("");
-        navigate("/");
-      } else {
-        setLoginError("Login failed!");
-      }
-    }
-    postLogin();
-  }
+  };
+
   return (
     <>
       <StyledLogIn />
@@ -55,8 +50,8 @@ export default function LogIn({ setUser }) {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email || ""}
-              onChange={(e) => setEmail(e.target.value)}
+              value={inputs.email || ""}
+              onChange={handleChange}
             />
             <label>Password</label>
             <StyledInput
@@ -68,13 +63,12 @@ export default function LogIn({ setUser }) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password || ""}
-              onChange={(e) => setPassword(e.target.value)}
+              value={inputs.password || ""}
+              onChange={handleChange}
             />
-            <StyledButton onClick={tryLogin}>Log In</StyledButton>
-            {loginError !== "" && (
-              <div className="alert alert-danger">{loginError}</div>
-            )}
+            <StyledButton type="submit" onClick={handleSubmit}>
+              Log In
+            </StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

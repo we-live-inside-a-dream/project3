@@ -1,5 +1,6 @@
 //Employee profile schema
 // const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const mongoose = require("./mongooseDb");
 /*
 -employeeProfile_ID
@@ -49,16 +50,20 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
-  let newEmployeeProfile = new EmployeeProfile(employeeProfileInfo);
+  let hashedpassword = bcrypt.hashSync(employeeProfileInfo.password, 8);
+  let newEmployeeProfile = new EmployeeProfile({
+    ...employeeProfileInfo,
+    password: hashedpassword,
+  });
   let createdProfile = await newEmployeeProfile.save();
   console.log("saving employee profile", createdProfile);
   return createdProfile.id;
 };
 
-const logIn = async (EmployeeProfile) => {
+const logIn = async (user) => {
   let employeeProfile = await EmployeeProfile.find({
-    email: EmployeeProfile.email,
-    password: EmployeeProfile.password,
+    email: user.email,
+    password: user.password,
   });
   return employeeProfile;
 };

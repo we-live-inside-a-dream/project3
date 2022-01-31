@@ -1,12 +1,15 @@
-// import React from "react";
-// import StyledPage from "../../components/reusable/StyledPage";
+import React from "react";
+import LogIn from "../../components/login/LogIn";
+import StyledPage from "../../components/reusable/StyledPage";
 
-// function LogInPage() {
-//   return (
-//     <div>
-//       <StyledPage></StyledPage>
-//     </div>
-//   );
-// }
+function ProfilePage() {
+    return (
+    <div>
+      <StyledPage>
+          <LogIn />
+      </StyledPage>
+    </div>
+  );
+}
 
-// export default LogInPage;
+export default ProfilePage;

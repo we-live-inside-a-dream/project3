@@ -21,15 +21,14 @@ import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
 
 function App() {
-  const [user, setUser] = useState();
-  useEffect(() => {
-    axios.post("/user/loggedInUser").then(function (response) {
-      if (response.data) {
-        setUser(response.data);
-        console.log(response);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.post("/user/loggedInUser").then(function (response) {
+  //     if (response.data) {
+  //       setUser(response.data);
+  //       console.log(response);
+  //     }
+  //   });
+  // }, []);
   return (
     <div
       style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
@@ -48,8 +47,8 @@ function App() {
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}
         />
-        {/* <Route path="/LogIn" element={<LogIn setUser={setUser} />} />
-        <Route path="/logOut" element={<LogOut setUser={setUser} />} /> */}
+        <Route path="/logIn" element={<LogIn/>} />
+        <Route path="/logOut" element={<LogOut/>} />
         {/* <Route path="/profile" element={<ProfilePage user={user} />} /> */}
         <Route
           path="/availability-detail/:id"

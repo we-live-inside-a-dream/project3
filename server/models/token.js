@@ -8,7 +8,7 @@ const tokenSchema = Schema({
   },
   _employeeId: {
     type: Schema.Types.ObjectId,
-    ref: "eployeeProfile",
+    ref: "employeeProfile",
   },
   tokenType: {
     type: String,
@@ -17,4 +17,4 @@ const tokenSchema = Schema({
 });
 
 const Token = mongoose.model("tokens", tokenSchema);
-module.exports = { Token }
+module.exports = { Token };

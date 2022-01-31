@@ -1,12 +1,12 @@
 import React from "react";
 import LogIn from "../../components/login/LogIn";
-import StyledPage from "../../components/reusable/StyledPage";
+import StyledPage from "../../components/reusable/styled-page/StyledPage";
 
 function ProfilePage() {
-    return (
+  return (
     <div>
       <StyledPage>
-          <LogIn />
+        <LogIn />
       </StyledPage>
     </div>
   );

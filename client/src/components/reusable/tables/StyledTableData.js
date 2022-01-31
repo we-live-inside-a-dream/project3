@@ -7,7 +7,7 @@ const StyledTableData = styled.td`
   font-weight: 200;
   color: black;
   background-color: white;
-  border: none;
+  border: 1px solid lightGrey;
   border-radius: 0px;
   padding: 10px 40px;
   border-collapse: collapse;

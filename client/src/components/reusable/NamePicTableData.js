@@ -39,7 +39,6 @@ function NamePicTableData({
             color: "#4488AB",
             fontWeight: "600",
             display: "block",
-            textShadow: "none",
             textAlign: "left",
           }}
         >

@@ -6,6 +6,7 @@ import Modal from "../../reusable/Modal";
 import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledButtonGroup from "../StyledScheduleButtonGroup";
 import StyledInput from "../../reusable/Inputs/StyledInput";
+import { bottomNavigationActionClasses } from "@mui/material";
 
 function DaySchedule({ setCurrentTab }) {
   const [shift, setShift] = useState();
@@ -70,21 +71,29 @@ function DaySchedule({ setCurrentTab }) {
   }
   return (
     <div className="container">
-      <div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "30% 70%",
+          height: "auto",
+        }}
+      >
         <StyledButtonGroup setCurrentTab={setCurrentTab} />
+
         <h2
           style={{
             fontWeight: "400",
             fontFamily: "Arial, Helvetica, sans-serif",
             textAlign: "right",
             color: "#07889b",
-            marginTop: "20px",
+            marginTop: "0px",
             marginBottom: "0px",
             paddingBottom: "0px",
           }}
         >
-          Day
+          For day:
           <StyledInput
+            style={{ marginBottom: "0px" }}
             type="date"
             id="single-day"
             name="day"

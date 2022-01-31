@@ -132,7 +132,7 @@ router.get("/getByProfileId/:profileId", async (req, res) => {
   console.log("from API", profileId);
   let profile = await getEmployeeProfileByProfileId(profileId);
   console.log("from API, profile", profile);
-  res.status(200).send(profile);
+  res.json(profile);
 });
 
 router.put("/updateProfilePicture", async (req, res) => {

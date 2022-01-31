@@ -2,7 +2,6 @@ import EmployeeAvailabilityForm from "../../components/employee-availabilities/E
 import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import { useState } from "react";
-// import EmployeeAvailabilityForm from "../../components/employee-availabilities/EmployeeAvailabilityForm";
 
 const CreateEmployeePage = () => {
   const [createdEmployeeId, setCreatedEmployeeId] = useState("");

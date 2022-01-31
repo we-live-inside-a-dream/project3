@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import EmployeeAvailabilityList from "../../components/employee-availabilities/EmployeeAvailabilityList";
 import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
-import EmployeeAvailabilityForm from "../../components/employee-availabilities/EmployeeAvailabilityForm";
 
 const EmployeeEditPage = () => {
+  const [existingValues, setExistingValues] = useState({});
   let params = useParams();
   let employeeId = params.id;
   let navigate = useNavigate();
-
   const [employee, setEmployee] = useState();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchEmployee = async () => {
       let fetchResult = await fetch(
         "/api/employeeProfile/getByProfileId/" + employeeId
       );
       let fetchedEmployee = await fetchResult.json();
       console.log("Fetched Employee", fetchedEmployee);
-      setEmployee(fetchedEmployee);
+      if (isMounted) setEmployee(fetchedEmployee);
     };
     fetchEmployee();
+    return () => {
+      isMounted = false;
+    };
   }, [employeeId]);
 
   async function updateEmployee(updatedEmployee) {
@@ -43,7 +45,7 @@ const EmployeeEditPage = () => {
   return (
     <StyledPage>
       <EmployeeEditForm existingValues={employee} onSave={updateEmployee} />
-      <EmployeeAvailabilityForm employeeId={employeeId} />
+      <EmployeeEditForm />
     </StyledPage>
   );
 };

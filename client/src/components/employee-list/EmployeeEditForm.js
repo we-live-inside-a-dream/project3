@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
@@ -19,7 +19,7 @@ const statusData = [
   { value: "inactive", label: "Inactive" },
 ];
 
-const EmployeeEditForm = ({ onSave, setId, setCurrentTab }) => {
+const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,27 +27,27 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
-  const [existingValues, setExistingValues] = useState();
+
   // const [positionToAdd, setPositionToAdd] = useState("");
   let navigate = useNavigate();
-  const params = useParams();
-  const theId = params.theId;
+  // const params = useParams();
+  // const theId = params.theId;
 
-  useEffect(() => {
-    async function fetchExistingValues() {
-      let fetchResult = await fetch(
-        `/api/employeeProfile/getByProfileId/${theId}`
-      );
-      console.log(
-        "fetch result for finding employee contact info",
-        fetchResult
-      );
-      let employeeInfo = await fetchResult.json();
-      console.log("fetching employee list", employeeInfo);
-      setExistingValues(employeeInfo);
-    }
-    fetchExistingValues();
-  }, [theId]);
+  // useEffect(() => {
+  //   async function fetchExistingValues() {
+  //     let fetchResult = await fetch(
+  //       `/api/employeeProfile/getByProfileId/${theId}`
+  //     );
+  //     console.log(
+  //       "fetch result for finding employee contact info",
+  //       fetchResult
+  //     );
+  //     let employeeInfo = await fetchResult.json();
+  //     console.log("fetching employee list", employeeInfo);
+  //     setExistingValues(employeeInfo);
+  //   }
+  //   fetchExistingValues();
+  // }, [theId]);
 
   useEffect(() => {
     if (existingValues) {

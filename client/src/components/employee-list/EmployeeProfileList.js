@@ -14,14 +14,18 @@ function EmployeeProfileList() {
   let navigate = useNavigate();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchEmployeesList = async () => {
       let fetchResult = await fetch(`/api/employeeProfile/employees`);
       console.log("fetch result", fetchResult);
       let employeeList = await fetchResult.json();
       console.log("fetching employee list", employeeList);
-      setEmployees(employeeList);
+      if (isMounted) {
+        setEmployees(employeeList);
+      }
     };
     fetchEmployeesList();
+    return () => (isMounted = false);
   }, []);
   console.log("AFTER USE EFFECT", employees);
 
@@ -74,41 +78,6 @@ function EmployeeProfileList() {
                   lastName={employee.lastName}
                   edit="edit"
                 />
-                {/* <StyledTableData>
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      padding: "0px 20px",
-                      alignItems: "left",
-                    }}
-                  >
-                    <div
-                      style={{
-                        backgroundColor: "grey",
-                        height: "3rem",
-                        width: "2rem",
-                        marginRight: "10px",
-                      }}
-                    ></div>
-                    <div
-                      style={{
-                        margin: "auto 10px auto 10px",
-                        color: "#4488AB",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {employee.firstName}
-                      <br />
-                      {employee.lastName}
-                      <StyledEditButton
-                        onClick={() => selectProfile(employee._id)}
-                      >
-                        ✎
-                      </StyledEditButton> 
-                    </div>
-                  </div>
-                  <div style={{ height: "5px" }} />
-                </StyledTableData>*/}
                 <StyledTableData>{employee.email}</StyledTableData>
                 <StyledTableData>{employee.phoneNumber}</StyledTableData>
                 <StyledTableData>

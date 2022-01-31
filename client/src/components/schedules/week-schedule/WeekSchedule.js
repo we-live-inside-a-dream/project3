@@ -12,7 +12,7 @@ import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledButtonGroup from "../StyledScheduleButtonGroup";
 
-function WeekSchedule({ setCurrentTab }) {
+function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
@@ -88,7 +88,7 @@ function WeekSchedule({ setCurrentTab }) {
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
   function isEmployeeavailable(id, date) {
     let dayOfWeek = fns.getDay(new Date(date));
-    console.log("this is the day", dayOfWeek);
+    // console.log("this is the day", dayOfWeek);
     // let currentEmployee = empAvailibility.find(employeeprofile.Id === id)
     let currentEmployee = empAvailibility.find(
       (employee) => employee.employeeProfileId === id
@@ -96,15 +96,15 @@ function WeekSchedule({ setCurrentTab }) {
     // dayOfweek is the index for days array monday=0, sunday=6
     const availableToday = currentEmployee?.days[0];
     if (!availableToday?.available) {
-      console.log("employee not available");
+      // console.log("employee not available");
       return "#FC4445";
     } else if (!availableToday?.allDay) {
-      console.log(
-        `employee is available between ${availableToday?.start} and ${availableToday?.end}`
-      );
+      // console.log(
+      //   `employee is available between ${availableToday?.start} and ${availableToday?.end}`
+      // );
       return "yellow";
     } else {
-      console.log("employee is free to suffer all day!!");
+      // console.log("employee is free to suffer all day!!");
     }
   }
 
@@ -127,7 +127,10 @@ function WeekSchedule({ setCurrentTab }) {
     <div className="container">
       <div style={{ display: "grid", gridTemplateColumns: "30% 70%" }}>
         <div style={{ gridTempalteRow: "1", marginBottom: "0%" }}>
-          <StyledButtonGroup setCurrentTab={setCurrentTab} />
+          <StyledButtonGroup
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+          />
         </div>
         <div style={{ gridTemplateRow: "1" }}>
           <h2

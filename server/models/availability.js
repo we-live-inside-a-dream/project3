@@ -57,7 +57,7 @@ const dayArray = [
   },
   {
     dayName: "thursday",
-    available: true
+    available: true,
     allDay: true,
     start: 0,
     end: 0,

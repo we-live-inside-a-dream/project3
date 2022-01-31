@@ -8,7 +8,7 @@ import StyledButtonGroup from "../StyledScheduleButtonGroup";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import { bottomNavigationActionClasses } from "@mui/material";
 
-function DaySchedule({ setCurrentTab }) {
+function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState("2022-01-14");
@@ -78,7 +78,10 @@ function DaySchedule({ setCurrentTab }) {
           height: "auto",
         }}
       >
-        <StyledButtonGroup setCurrentTab={setCurrentTab} />
+        <StyledButtonGroup
+          setCurrentTab={setCurrentTab}
+          currentTab={currentTab}
+        />
 
         <h2
           style={{

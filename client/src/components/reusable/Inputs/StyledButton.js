@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   &:hover {
     cursor: pointer;
     background-color: #e37222;
-    border: 3px solid #eeaa78;
+    border: 2px solid #eeaa78;
   }
   &:active {
     /* background-color: #3e8e41; */

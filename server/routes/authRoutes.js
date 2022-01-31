@@ -8,8 +8,6 @@ const {
   findEmployeeByProfileEmail,
   getEmployeeProfileByProfileId,
 } = require("../models/employeeProfile");
-const { Token } = require("../models/token");
-const { auth } = require("../middlewares/auth");
 
 router.post("/login", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
@@ -63,7 +61,7 @@ passport.deserializeUser(function (id, done) {
     .catch(done);
 });
 
-router.get("/authUser", auth, (req, res) => {
+router.get("/loggedInUser", (req, res) => {
   const employeeId = req.employeeId;
   getEmployeeProfileByProfileId(employeeId, (err, user) => {
     if (err) {
@@ -83,21 +81,9 @@ router.get("/authUser", auth, (req, res) => {
   });
 });
 
-router.get("/logout", auth, (req, res) => {
-  Token.findOneAndDelete(
-    { _employeeId: req.employeeId, type: "login" },
-    (err, doc) => {
-      if (err)
-        return res.status(401).json({
-          status: false,
-          message: "Server error, please try again.",
-        });
-      return res.status(200).json({
-        status: true,
-        message: "Logged out succesfully.",
-      });
-    }
-  );
+router.get("/logout", async (req, res) => {
+  req.logout();
+  res.sendStatus(200);
 });
 
 // const strategy = new LocalStrategy()

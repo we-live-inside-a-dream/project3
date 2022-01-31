@@ -1,17 +1,16 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
+const LogOut = ({ setUser }) => {
+  const navigate = useNavigate();
 
-const LogOut = ({setUser}) => {
-    const navigate = useNavigate() 
+  useEffect(() => {
+    fetch("/api/auth/logout").then(() => {
+      setUser(null);
+      navigate("/");
+    });
+  }, []);
+  return null;
+};
 
-    useEffect(() => {
-        fetch('/user/logOut').then(() => {
-            setUser(null)
-            navigate('/')
-        }) 
-    }, [])
-    return null
-}
-
-export default LogOut
+export default LogOut;

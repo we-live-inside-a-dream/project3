@@ -29,7 +29,7 @@ export default function LogIn({ setUser }) {
       .then(function (response) {
         if (response.data) setUser(response.data);
         console.log(setUser);
-        navigate("/profile");
+        navigate("/api/employeeProfile/profile");
       });
   };
 

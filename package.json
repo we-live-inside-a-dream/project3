@@ -7,7 +7,9 @@
     "node": "14.18.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "npm run test-server && npm run test-client",
+    "test-server": "cd server && npm test && cd ..",
+    "test-client": "cd client && CI=true npm test && cd ..",
     "install": "npm run install-client && npm run install-server",
     "install-client": "cd client && npm install && cd ..",
     "install-server": "cd server && npm install && cd ..",
@@ -26,8 +28,5 @@
     "url": "https://github.com/we-live-inside-a-dream/project3/issues"
   },
   "homepage": "https://github.com/we-live-inside-a-dream/project3#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "jest": "^27.4.7"
-  }
+  "dependencies": {}
 }

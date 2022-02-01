@@ -12,6 +12,7 @@ import {
 const positionData = [
   { value: "manager", label: "Manager" },
   { value: "supervisor", label: "Supervisor" },
+  { value: "employee", label: "Employee" },
 ];
 
 const statusData = [

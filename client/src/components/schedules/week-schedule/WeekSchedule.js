@@ -94,7 +94,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       (employee) => employee.employeeProfileId === id
     );
     // dayOfweek is the index for days array monday=0, sunday=6
-    const availableToday = currentEmployee?.days[0];
+    const availableToday = currentEmployee?.days[dayOfWeek];
     if (!availableToday?.available) {
       // console.log("employee not available");
       return "#FC4445";

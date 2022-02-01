@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
-app.use("/authRoutes", authRouter);
+app.use("/api/auth", authRouter);
 
 app.use("/api/schedule", scheduleRouter);
 app.use("/", express.static("../client/build"));

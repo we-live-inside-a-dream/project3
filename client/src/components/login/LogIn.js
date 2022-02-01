@@ -10,26 +10,26 @@ import {
 } from "./StyledLogIn";
 
 export default function LogIn({ setUser }) {
-  const [inputs, setInputs] = useState([{}]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
-    const name = event.target.name;
+  const handleChange = (event, setter) => {
     const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+    setter(value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("/login", {
-        email: inputs.email,
-        password: inputs.password,
+      .post("/api/auth/login", {
+        email,
+        password,
       })
       .then(function (response) {
         if (response.data) setUser(response.data);
         console.log(setUser);
-        navigate("/profile");
+        navigate("/api/employeeProfile/profile");
       });
   };
 
@@ -50,8 +50,10 @@ export default function LogIn({ setUser }) {
               name="email"
               autoComplete="email"
               autoFocus
-              value={inputs.email || ""}
-              onChange={handleChange}
+              value={email}
+              onChange={(event) => {
+                handleChange(event, setEmail);
+              }}
             />
             <label>Password</label>
             <StyledInput
@@ -63,8 +65,10 @@ export default function LogIn({ setUser }) {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={inputs.password || ""}
-              onChange={handleChange}
+              value={password}
+              onChange={(event) => {
+                handleChange(event, setPassword);
+              }}
             />
             <StyledButton type="submit" onClick={handleSubmit}>
               Log In

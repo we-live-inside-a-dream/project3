@@ -12,8 +12,8 @@ import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEd
 import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
 // import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
-import LogOut from "./components/navigation/LogOut";
-// import ProfilePage from "./pages/common/ProfilePage";
+import LogOut from "./components/login/LogOut";
+import ProfilePage from "./pages/common/ProfilePage";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 // import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
@@ -44,13 +44,14 @@ function App() {
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
         <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
+        <Route path="/createEmployee" element={<CreateEmployeePage />} />
         <Route
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}
         />
-        {/* <Route path="/logIn" element={<LogIn />} />
-        <Route path="/logOut" element={<LogOut />} /> */}
-        {/* <Route path="/profile" element={<ProfilePage user={user} />} /> */}
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/logout" element={<LogOut />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/availability-detail/:id"
           element={<AvailabilityDetailPage />}

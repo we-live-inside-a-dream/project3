@@ -5,7 +5,7 @@ import moment from "moment";
 
 function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
-  const [userName, setUserName] = useState("Julie");
+  const [userName, setUserName] = useState("Brian");
   const [hourGreeting, setHourGreeting] = useState("");
 
   useEffect(() => {

@@ -10,7 +10,6 @@ const {
   getActiveEmployeeNames,
 } = require("../models/employeeProfile");
 
-
 /* Creates a new employee profile.
  Params: same as employeeProfile Schema
  return:-status 200 and created profile if successful
@@ -21,6 +20,12 @@ router.post("/create", async (req, res) => {
   console.log(newEmployeeProfile);
   try {
     let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
+    // PLEASE LEAVE LINES 23-28 HERE!!! It's needed to create availabilities!!!
+    createAvailability(
+      employeeProfileId,
+      newEmployeeProfile.firstName,
+      newEmployeeProfile.lastName
+    );
     //sends initial availability info availability model (imported above)
     if (!employeeProfileId) res.status(500).send("Failed to create.");
     res.status(200).send(employeeProfileId);

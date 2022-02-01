@@ -31,7 +31,7 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
   // const [positionToAdd, setPositionToAdd] = useState("");
   let navigate = useNavigate();
   // const params = useParams();
-  // const theId = params.theId;
+  //const theId = params.theId;
 
   // useEffect(() => {
   //   async function fetchExistingValues() {
@@ -88,9 +88,10 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
     });
     let id = await response.text();
     // navigate("/createEmployee/" + newEmployee._id);
+    console.log("just before the id is set to ", id);
     setId(id);
     console.log("the id for the created employee is:", response);
-    setCurrentTab(2);
+    // setCurrentTab(2);
   }
 
   async function postData() {
@@ -108,7 +109,9 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
       await onSave(newEmployeeInfo);
     } else {
       await createEmployee(newEmployeeInfo);
-      navigate("/employeeList");
+      console.log("just before tab is set to 2");
+      setCurrentTab(2);
+      // navigate("/employeeList");
     }
   }
 

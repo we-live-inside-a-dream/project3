@@ -53,7 +53,7 @@ function App() {
         <Route path="/logout" element={<LogOut />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route
-          path="/availability-detail/:id"
+          path="/avail-detail/:id"
           element={<AvailabilityDetailPage />}
         ></Route>
       </Routes>

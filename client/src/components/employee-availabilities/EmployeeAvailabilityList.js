@@ -50,7 +50,7 @@ function EmployeeAvailabilityList() {
 
   //selects the employee id to davigate to the pagee to edit that particular employee
   function selectAvailabilityId(id) {
-    navigate("/availability-detail/" + id);
+    navigate("/avail-detail/" + id);
   }
   //selects employee from dropdowm menu
   function selectAvailabilityById(id) {

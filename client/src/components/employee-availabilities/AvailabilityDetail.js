@@ -8,35 +8,37 @@ import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
 import NamePicTableData from "../reusable/NamePicTableData";
 
-function EmployeeAvailabilityDetail({ availabilityId }) {
+function EmployeeAvailabilityDetail({}) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
-  const [availability, setAvailability] = useState();
-  // const [id, setId] = useState(availabilityId);
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [maxHoursPerWeek, setMaxHoursPerWeek] = useState("");
-  // const [availabilityDays, setAvailabilityDays] = useState([]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
+  const [availability, setAvailability] = useState({
+    days: [],
+    day: "",
+    maxHoursPerWeek: 0,
+    firstName: "",
+    lastName: "",
+    employeeProfileId: "",
+  });
+  let params = useParams();
+  let id = params.id;
 
   useEffect(() => {
     const fetchAvailabilityById = async () => {
-      let fetchResult = await fetch(
-        `/api/availability/availability-day/${availabilityId}`
-      );
+      let fetchResult = await fetch("/api/availability/availability-day/" + id);
       let theAvailability = await fetchResult.json();
-      // console.log("fetching employee availability", theAvailability);
+      console.log("fetching employee availability", theAvailability);
       setAvailability(theAvailability);
+      setFirstName(theAvailability.firstName);
+      setlastName(theAvailability.lastName);
+      setMaxHoursPerWeek(theAvailability.maxHoursPerWeek);
     };
     fetchAvailabilityById();
-  }, [availabilityId]);
+  }, [id]);
   console.log(availability?.firstName, availability?.lastName);
-  // if (availability) {
-  //   setFirstName(availability.firstName);
-  //   setLastName(availability.lastName);
-  //   setMaxHoursPerWeek(availability.maxHoursPerWeek);
-  //   setAvailabilityDays(availability.days);
-  // }
 
   let businessDays = [
     "Sunday",
@@ -47,6 +49,7 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
     "Friday",
     "Saturday",
   ];
+
   //
   let renderAvailability = function (dayObject) {
     // console.log("rendering availability for ", dayObject);
@@ -98,11 +101,12 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
         <tbody>
           <tr>
             <NamePicTableData
-              firstName={availability?.firstName}
-              lastName={availability?.lastName}
+              firstName={firstName}
+              lastName={lastName}
+              edit="edit"
             />
             <td>
-              {availability?.maxHoursPerWeek}
+              {maxHoursPerWeek}
               <br />
               <StyledEditButton
                 onClick={() => setMaxHoursIsOpen(!maxHoursIsOpen)}

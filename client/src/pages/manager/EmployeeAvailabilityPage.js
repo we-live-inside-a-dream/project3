@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import EmployeeAvailabilityList from "../../components/employee-availabilities/EmployeeAvailabilityList";
+import AvailabilityDetail from "../../components/employee-availabilities/AvailabilityDetail";
+import StyledButton from "../../components/reusable/Inputs/StyledButton";
 
 function EmployeeAvailabilityPage() {
   return (
-    <div>
-      <StyledPage>
-        <EmployeeAvailabilityList />
-      </StyledPage>
-    </div>
+    <StyledPage>
+      <EmployeeAvailabilityList />
+    </StyledPage>
   );
 }
 

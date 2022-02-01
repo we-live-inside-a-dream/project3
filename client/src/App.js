@@ -20,6 +20,7 @@ import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
 import HomeDashBoardPage from "./components/HomeDashBoardPage";
+import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
 
 function App() {
   // useEffect(() => {
@@ -54,7 +55,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route
           path="/avail-detail/:id"
-          element={<AvailabilityDetailPage />}
+          element={<EmployeeAvailabilityDetail />}
         ></Route>
       </Routes>
     </div>

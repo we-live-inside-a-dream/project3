@@ -26,6 +26,7 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
   });
 
   useEffect(() => {
+    let isMounted = true;
     const fetchAvailabilityById = async () => {
       console.log(
         "from useEffect, trying to fetch endpoint for availability by id"
@@ -37,19 +38,25 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
 
       setAvailability(theAvailability);
     };
-    fetchAvailabilityById();
+    if (isMounted) {
+      fetchAvailabilityById();
+    }
   }, [id]);
   console.log("%%%%%%%%%THIS IS THE AVAILABILITY", availability);
 
   useEffect(() => {
-    if (availability) {
-      setEmployeeId(availability._id);
-      setFirstName(availability.firstName);
-      setLastName(availability.lastName);
-      setMaxHoursPerWeek(availability.maxHoursPerWeek);
-      setDays(availability.days); // will be a use context for managers settings
-      setDay(availability.day);
+    let isMounted = true;
+    if (isMounted) {
+      if (availability) {
+        setEmployeeId(availability._id);
+        setFirstName(availability.firstName);
+        setLastName(availability.lastName);
+        setMaxHoursPerWeek(availability.maxHoursPerWeek);
+        setDays(availability.days); // will be a use context for managers settings
+        setDay(availability.day);
+      }
     }
+    return () => (isMounted = false);
   }, [availability]);
 
   async function postData() {

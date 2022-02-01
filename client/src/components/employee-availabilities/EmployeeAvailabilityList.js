@@ -9,6 +9,7 @@ function EmployeeAvailabilityList() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchAvailabilityList = async () => {
       console.log("from useEffect, trying to fetch endpoint");
       let fetchResult = await fetch(`/api/availability/availability-all`);
@@ -18,7 +19,10 @@ function EmployeeAvailabilityList() {
 
       setAvailabilityList(theAvailabilityList);
     };
-    fetchAvailabilityList();
+    if (isMounted) {
+      fetchAvailabilityList();
+    }
+    return () => (isMounted = false);
   }, []);
   console.log("AFTER USE EFFECT", availabilityList);
 

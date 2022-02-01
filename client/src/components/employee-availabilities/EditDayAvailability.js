@@ -15,6 +15,7 @@ function EditMaxHours({ existingValues }) {
   const [end, setEnd] = useState(0);
 
   useEffect(() => {
+    let isMounted = true;
     if (existingValues) {
       setDayId(existingValues._id);
       setDayName(existingValues.dayName);
@@ -23,7 +24,10 @@ function EditMaxHours({ existingValues }) {
       setStart(existingValues.start);
       setEnd(existingValues.end);
     }
-    console.log("THIS IS THE DAY ID", dayId);
+    if (isMounted) {
+      console.log("THIS IS THE DAY ID", dayId);
+    }
+    return () => (isMounted = false);
   }, [existingValues, dayId]);
 
   async function updateMaxHours(updatedDay) {

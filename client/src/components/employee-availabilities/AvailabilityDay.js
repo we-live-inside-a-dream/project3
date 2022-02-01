@@ -12,13 +12,17 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
   const [allDay, setAllDay] = useState(day.allDay);
 
   useEffect(() => {
+    let isMounted = true;
     const newAvailability = { ...availability };
     newAvailability.days = newAvailability.days.map((day, position) => {
       if (position === index) {
         return { available, start, end, allDay, dayName: day.dayName };
       } else return day;
     });
-    setAvailability(newAvailability);
+    if (isMounted) {
+      setAvailability(newAvailability);
+    }
+    return () => (isMounted = false);
   }, [available, start, end, allDay]);
 
   return (

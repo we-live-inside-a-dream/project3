@@ -7,8 +7,15 @@ import {
   StyledButton,
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import { Navigate } from "react-router-dom";
 
-const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
+const EmployeeAvailabilityForm = ({
+  existingValues,
+  setCurrentTab,
+  onSave,
+  theId,
+}) => {
+  console.log(theId, "is the id inside the availability form!!!!!!!!!!!!");
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,21 +32,22 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
     employeeProfileId: "",
   });
 
+  console.log("ONCE INSIDE THE AVAIL FORM THE ID IS", theId);
   useEffect(() => {
     const fetchAvailabilityById = async () => {
       console.log(
         "from useEffect, trying to fetch endpoint for availability by id"
       );
-      let fetchResult = await fetch("/api/availability/by-employee/" + id);
+      let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
       console.log("fetch result", fetchResult);
       let theAvailability = await fetchResult.json();
       console.log("fetching availability for ", theAvailability);
 
       setAvailability(theAvailability);
     };
+
     fetchAvailabilityById();
-  }, [id]);
-  console.log("%%%%%%%%%THIS IS THE AVAILABILITY", availability);
+  }, [theId]);
 
   useEffect(() => {
     if (availability) {
@@ -53,7 +61,7 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
   }, [availability]);
 
   async function postData() {
-    let newAvailability = {
+    let updatedAvailability = {
       employeeId,
       firstName,
       lastName,
@@ -61,7 +69,19 @@ const EmployeeAvailabilityForm = ({ existingValues, onSave, id }) => {
       days, // will be a use context for managers settings
     };
     console.log("Saving availability for: ", firstName, lastName);
-    await onSave(newAvailability);
+    await updateAvailability(updatedAvailability);
+  }
+
+  async function updateAvailability(updatedAvailability) {
+    console.log(" 'creating' availability for", firstName, lastName);
+    await fetch("/api/availability/availability/" + availability._id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAvailability),
+    });
+    // Navigate("/employeeList");
   }
 
   return (

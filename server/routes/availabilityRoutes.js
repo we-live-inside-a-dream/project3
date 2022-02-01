@@ -49,14 +49,18 @@ router.use("*", (req, res, next) => {
   console.log("AVAILABILITY ROUTER", req.originalUrl);
   next();
 });
-router.patch("/availability/:id", async (req, res) => {
+router.post("/availability/:id", async (req, res) => {
   let id = req.params.id;
   let updatedAvailability = req.body;
   console.log("Updating availability", id, "with", updatedAvailability);
-  let availability = await availabilityModel.update(id, updatedAvailability);
-  updatedAvailability(availability, (updatedModel) => {
-    res.status(200).send(updatedModel);
-  });
+  let availability = await availabilityModel.updateAvailabilityById(
+    id,
+    updatedAvailability
+  );
+  // updatedAvailability(availability, (updatedModel) => {
+  //   res.status(200).send(updatedModel);
+  // });
+  res.json(availability);
 });
 
 router.get("/by-employee/:id", async (req, res) => {

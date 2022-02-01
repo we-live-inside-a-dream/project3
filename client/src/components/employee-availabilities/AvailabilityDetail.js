@@ -12,23 +12,31 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
-  const [availability, setAvailability] = useState([]);
-  const params = useParams();
+  const [availability, setAvailability] = useState();
+  // const [id, setId] = useState(availabilityId);
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [maxHoursPerWeek, setMaxHoursPerWeek] = useState("");
+  // const [availabilityDays, setAvailabilityDays] = useState([]);
+
   useEffect(() => {
     const fetchAvailabilityById = async () => {
-      console.log("from useEffect, trying to fetch  for availability detail");
       let fetchResult = await fetch(
-        `/api/availability/availability-day/${params.id}`
+        `/api/availability/availability-day/${availabilityId}`
       );
-      console.log("fetch result", fetchResult);
       let theAvailability = await fetchResult.json();
-      console.log("fetching employee availability list", theAvailability);
-
+      // console.log("fetching employee availability", theAvailability);
       setAvailability(theAvailability);
     };
     fetchAvailabilityById();
-  }, [params.id]);
-  console.log("AFTER USE EFFECT", availability);
+  }, [availabilityId]);
+  console.log(availability?.firstName, availability?.lastName);
+  // if (availability) {
+  //   setFirstName(availability.firstName);
+  //   setLastName(availability.lastName);
+  //   setMaxHoursPerWeek(availability.maxHoursPerWeek);
+  //   setAvailabilityDays(availability.days);
+  // }
 
   let businessDays = [
     "Sunday",
@@ -90,11 +98,11 @@ function EmployeeAvailabilityDetail({ availabilityId }) {
         <tbody>
           <tr>
             <NamePicTableData
-              firstName={availability.firstName}
-              lastName={availability.lastName}
+              firstName={availability?.firstName}
+              lastName={availability?.lastName}
             />
             <td>
-              {availability.maxHoursPerWeek}
+              {availability?.maxHoursPerWeek}
               <br />
               <StyledEditButton
                 onClick={() => setMaxHoursIsOpen(!maxHoursIsOpen)}

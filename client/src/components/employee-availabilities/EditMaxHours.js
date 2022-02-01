@@ -12,14 +12,18 @@ function EditMaxHours({ existingValues }) {
   const [employeeProfileId, setEmployeeProfileId] = useState("");
 
   useEffect(() => {
-    if (existingValues) {
-      setAvailabilityId(existingValues._id);
-      setMaxHoursPerWeek(existingValues.maxHoursPerWeek);
-      setEmployeeProfileId(existingValues.employeeProfileId);
-      setFirstName(existingValues.firstName);
-      setLastName(existingValues.lastName);
-      setDays(existingValues.days);
+    let isMounted = true;
+    if (isMounted) {
+      if (existingValues) {
+        setAvailabilityId(existingValues._id);
+        setMaxHoursPerWeek(existingValues.maxHoursPerWeek);
+        setEmployeeProfileId(existingValues.employeeProfileId);
+        setFirstName(existingValues.firstName);
+        setLastName(existingValues.lastName);
+        setDays(existingValues.days);
+      }
     }
+    return () => (isMounted = false);
   }, [existingValues]);
 
   async function updateMaxHours(updatedAvailability) {

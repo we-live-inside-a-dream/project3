@@ -108,13 +108,16 @@ const createAvailability = async (id, firstName, lastName) => {
 // const getAvailabilityByEmployeeId= (id) => {
 //   let EmployeeAvailability = await Availability.findOne({empl})
 // }
+
 const getAvailabilityById = async (id) => {
   let employeeAvail = await Availability.findOne({ _id: id });
   console.log("EMPLOYEE MODEL", employeeAvail);
   return employeeAvail;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
-  return Availability.findOne({ employeeProfileId: id });
+  let employeeAvail = await Availability.findOne({ employeeProfileId: id });
+  console.log("from model, employeeAvail", employeeAvail);
+  return employeeAvail;
 };
 
 //returns entire list of employees and availabilities
@@ -149,19 +152,8 @@ async function weeklyAvailibility(start) {
   // console.log("from scheduleModel: ", weekList);
   return weekList;
 }
-// const updateAvailability = (newAvailability, callback) => {
-//   Availability.findByIdAndUpdate(
-//     newAvailability._id,
-//     newAvailability,
-//     { new: true },
-//     (err, model) => {
-//       if (err) {
-//         console.error(err.message);
-//         return false;
-//       }
-//       callback(model);
-//     }
-//   );
+// const updateAvailability = (id, newAvailability) => {
+//   Availability.findByIdAndUpdate(id, newAvailability, { new: true });
 // };
 
 // const deleteAvailability = async (employeeProfile_id) => {
@@ -172,6 +164,7 @@ module.exports = {
   createAvailability,
   updateAvailabilityById,
   getAvailabilityById,
+
   // availabilityList,
   // deleteAvailability,
   listOfEmployeesAvailabilities,

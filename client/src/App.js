@@ -20,6 +20,7 @@ import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
 import EmployeeTimeOff from './components/employee-time-off/EmployeeTimeOff'
+import HomeDashBoardPage from "./components/HomeDashBoardPage";
 
 function App() {
   // useEffect(() => {
@@ -39,7 +40,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/schedules" element={<SchedulePage />} />
-        <Route path="/" element={<CalendarScratch />} />
+        <Route path="/" element={<HomeDashBoardPage />} />
         <Route path="/employeeList" element={<EmployeesList />} />
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
         {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
@@ -54,7 +55,7 @@ function App() {
         <Route path="/logout" element={<LogOut />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route
-          path="/availability-detail/:id"
+          path="/avail-detail/:id"
           element={<AvailabilityDetailPage />}
         ></Route>
       </Routes>

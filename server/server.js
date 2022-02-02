@@ -10,6 +10,7 @@ const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
 const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const authRouter = require("./routes/authRoutes");
+const timeOffRouter = require('./routes/timeOffRoutes') 
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
+app.use("/api/timeOff", timeOffRouter);
 app.use("/api/auth", authRouter);
 
 app.use("/api/schedule", scheduleRouter);

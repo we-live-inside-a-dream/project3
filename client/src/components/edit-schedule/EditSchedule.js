@@ -18,6 +18,7 @@ import {
   StyledInput,
   StyledButton,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
@@ -31,8 +32,8 @@ import {
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [start, setStart] = useState();
-  const [end, setEnd] = useState();
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
@@ -124,9 +125,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     });
   }
 
-  function onInputUpdate(event, setter) {
-    let newValue = event.target.value;
-    setter(newValue);
+  function onInputUpdate(value, setter) {
+    setter(value);
   }
 
   async function postData() {
@@ -134,8 +134,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       employeeId,
       firstName,
       lastName,
-      start,
-      end,
+      start:new Date(start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      end:new Date(end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       date,
       breaks,
     };
@@ -185,7 +185,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
               id="name-imput"
               value={employeeId}
               label="name"
-              onChange={(event) => onInputUpdate(event, setEmployeeId)}
+              onChange={(event) => onInputUpdate(event.target.value, setEmployeeId)}
               // style={{
               //   width: "275px",
               //   fontSize: "1em",
@@ -216,26 +216,30 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
               label="shift day"
               type="date"
               value={date}
-              onChange={(event) => onInputUpdate(event, setDate)}
+              onChange={(event) => onInputUpdate(event.target.value, setDate)}
             />
           </div>
 
           <div>
             <InputLabel id="demo-simple-select-helper-label">
-              Start Time - End Time
+              Shift Time
             </InputLabel>
-            <StyledInput
+            <BasicTimePicker
               label="start time"
               type="time"
               value={start}
-              onChange={(event) => onInputUpdate(event, setStart)}
+              
+              onChange={(value) =>{ onInputUpdate(value, setStart)}}
             />
 
-            <StyledInput
+            <BasicTimePicker
               label="end time"
               type="time"
+              onAccept
               value={end}
-              onChange={(event) => onInputUpdate(event, setEnd)}
+              onChange={(value) => onInputUpdate(value, setEnd)}
+           
+              
             />
           </div>
           <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
@@ -245,21 +249,21 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
               label="break start time"
               type="time"
               value={breakStart}
-              onChange={(event) => onInputUpdate(event, setBreakStart)}
+              onChange={(event) => onInputUpdate(event.target.value, setBreakStart)}
             />
 
             <StyledInput
               label="break end time"
               type="time"
               value={breakEnd}
-              onChange={(event) => onInputUpdate(event, setBreakEnd)}
+              onChange={(event) => onInputUpdate(event.target.value, setBreakEnd)}
             />
           </div>
           <div>
             <StyledInput
               value={breakName}
               onChange={(event) => {
-                onInputUpdate(event, setBreakName);
+                onInputUpdate(event.target.value, setBreakName);
               }}
             />
 

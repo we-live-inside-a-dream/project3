@@ -21,6 +21,7 @@ import {
   OneColumn,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import ScheduleAvailability from "./ScheduleAvailability";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
@@ -152,17 +153,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             onChange={(event) =>
               onInputUpdate(event.target.value, setEmployeeId)
             }
-            // style={{
-            //   width: "275px",
-            //   fontSize: "1em",
-            //   textAlign: "center",
-            //   margin: "10px",
-            //   color: "#4488AB",
-            //   backgroundColor: "white",
-            //   border: "2px solid #4488AB",
-            //   boarderRadius: "3px",
-            //   filter: "dropShadow(5px 5px 10px grey)",
-            // }}
+
           >
             {/* {name} */}
             <option></option>
@@ -182,8 +173,12 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             label="shift day"
             type="date"
             value={date}
-            onChange={(event) => onInputUpdate(event.target.value, setDate)}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setDate)
+            console.log("this is the date in EditSchedule",date)
+            }}
           />
+          <ScheduleAvailability date={date} id={employeeId}/>
         </div>
 
         <div>
@@ -195,7 +190,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             onChange={(value) => {
               onInputUpdate(value, setStart);
               (console.log(value))
-            }}
+            }}      
           />
 
           <BasicTimePicker

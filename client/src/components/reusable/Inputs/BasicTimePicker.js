@@ -6,14 +6,16 @@ import styled from "styled-components";
 
 
 
-const StyledPicker = styled.div`
+const StyledBasicTimePicker = styled.div`
+
 padding:5px;
+
 `
 // dateAdapter={AdapterDateFns({lib:"date-fns"},{formats:"fullTime24h"})}>
 export default function BasicTimePicker({ onChange, value, label }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <StyledPicker>
+        <StyledBasicTimePicker>
       <TimePicker
         label={label}
         value={value}
@@ -21,7 +23,7 @@ export default function BasicTimePicker({ onChange, value, label }) {
         onChange={onChange}
         renderInput={(params) => <TextField {...params} />}
         />
-        </StyledPicker>
+        </StyledBasicTimePicker>
     </LocalizationProvider>
   );
 }

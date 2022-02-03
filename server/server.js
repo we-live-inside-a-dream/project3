@@ -22,7 +22,7 @@ app.use("/api/availability", availabilityRouter);
 app.use("/api/auth", authRouter);
 
 app.use("/api/schedule", scheduleRouter);
-app.use("/", express.static("../client/build"));
+// app.use("/", express.static("../client/build"));
 
 app.use("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));

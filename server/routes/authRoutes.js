@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const {
-  EmployeeProfile,
   logIn,
   findEmployeeByProfileEmail,
   getEmployeeProfileByProfileId,
@@ -26,7 +25,7 @@ passport.use(
       passwordField: "password",
     },
     function verify(email, password, done) {
-      console.log("Verify");
+      console.log("Verified.");
       findEmployeeByProfileEmail(email)
         .then((employeeProfile) => {
           if (!employeeProfile.email || employeeProfile.password !== password) {
@@ -61,24 +60,8 @@ passport.deserializeUser(function (id, done) {
     .catch(done);
 });
 
-router.get("/loggedInUser", (req, res) => {
-  const employeeId = req.employeeId;
-  getEmployeeProfileByProfileId(employeeId, (err, user) => {
-    if (err) {
-      return res.status(401).json({
-        status: false,
-        message: "Authentication failed",
-        data: undefined,
-      });
-    }
-    if (user) {
-      res.status(200).json({
-        data: EmployeeProfile,
-        message: "Authenticated successfully!",
-        status: true,
-      });
-    }
-  });
+router.get("/loggedInUser", function (req, res) {
+  res.send(req.user);
 });
 
 router.get("/logout", async (req, res) => {

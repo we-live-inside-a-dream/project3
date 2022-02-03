@@ -24,12 +24,11 @@ import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-// const events2 = [
-//   { name: "" },
-//   { name: "Coffe" },
-//   { name: "Lunch" },
-//   { name: "Coffe2" },
-// ];
+const breakList = [
+  { name: "Coffee" },
+  { name: "Lunch" },
+  { name: "Coffee2" },
+];
 
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
@@ -57,53 +56,14 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  // useEffect(()=>{
-  //   if(employeeId){
-
-  //     console.log("employeeId",employeeId)
-  //     const empAvail = async ()=>{
-  //       let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
-  //       let employeeAvailibility = await fetchAvailibility.json()
-  //       setEmpAvailibility(employeeAvailibility)
-  //     }
-  //     empAvail()
-  //   }
-  //   // console.log(empAvailibility)
-  // },[employeeId])
-
-  // useEffect(()=>{
-  //   function isEmployeeavailable(){
-  //     let availableToday = empAvailibility.days[dayOfWeek]//dayOfweek is the index for days array monday=0, sunday=6
-  //   if(!availableToday.available){
-  //     console.log("employee not available");
-  //   }else if(!availableToday.allDay){
-  //     console.log(`employee is available between ${availableToday.start} and ${availableToday.end}`);
-  //   }else{
-  //     console.log("employee is free to suffer all day!!");
-  //   }
-  //     // need to ensure employee isnt working over 40 hours this week
-  //     // need to see if employee has vacation or time off booked
-  //     // need to compare day of the week to weekly availibility
-  //     //       first figure out what day of the week it is...
-  //     console.log('employee weekly availibility',availableToday)
-  //   }
-  //   let dayOfWeek = fns.getDay(new Date(date));
-  // if(empAvailibility){ console.log(empAvailibility)
-  //   console.log("date is...",date)
-  //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-  //   isEmployeeavailable()
-  // };
-  // },[date])
-
-
-  // Wed Feb 02 2022 01:00:00 GMT-0700 (Mountain Standard Time)
+  
   useEffect(() => {
     if (existingValues) {
       setFirstName(existingValues.firstName);
       setEmployeeId(existingValues.employeeId);
       setLastName(existingValues.lastName);
-      setStart(` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`);
-      setEnd(` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`);
+      setStart(` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`);//dont look at this! HH:mm => ISO string so the time picker with accept the value
+      setEnd(` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`);// its FINE
       setDate(existingValues.date);
       setBreaks(existingValues.breaks);
     }
@@ -138,7 +98,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       employeeId,
       firstName,
       lastName,
-      start: fns.format(new Date(start),"HH:mm").toString(),
+      start: fns.format(new Date(start),"HH:mm").toString(),//ISO date => HH:mm
       end: fns.format(new Date(end),"HH:mm").toString(),
       date,
       breaks,
@@ -159,7 +119,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     let breaky = {};
     let newBreak = [...breaks];
     breaky.name = breakName;
-    breaky.start =fns.format(new Date(breakStart),"HH:mm").toString()
+    breaky.start =fns.format(new Date(breakStart),"HH:mm").toString()//ISO date => HH:mm
     breaky.end = fns.format(new Date(breakEnd),"HH:mm").toString()
     breaky.paid = breakPaid;
 
@@ -181,7 +141,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       {/* <StyledFormWrapper> */}
       <StyledModal>
         <div>
-          <InputLabel id="demo-simple-select-helper-label">
+          <InputLabel>
             Employee Name
           </InputLabel>
           <NativeSelect
@@ -248,7 +208,30 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
         </div>
         
         <div>
-          <InputLabel>Breaks</InputLabel>
+            <InputLabel>
+           Breaks
+          </InputLabel>
+          <NativeSelect   
+            label="name"
+            value={breakName}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setBreakName);
+            }}
+            style={{
+              width:"100%"
+            }}
+          >
+            {/* {name} */}
+            <option></option>
+            {breakList?.map((event,index) => {
+              return (
+                <option key={index} 
+                value={event.name}>
+                  {event.name}
+                </option>
+              );
+            })}
+          </NativeSelect>
 
           <BasicTimePicker
             label="Break Start"
@@ -263,53 +246,9 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={breakEnd}
             onChange={(value) => onInputUpdate(value, setBreakEnd)}
           />
+  <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>Add Break</StyledButton>
           </div>   
-            <div2>
-          <input
-            value={breakName}
-            onChange={(event) => {
-              onInputUpdate(event.target.value, setBreakName);
-            }}
-            />
-           <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
-            +
-          </StyledButton>
-            </div2>
-
-        
-
-        {/* <div>
-this is for making breaks list
-<Select
-labelId="demo-simple-select-helper-label"
-id="name-imput"
-value={name}
-label="name"
-onChange={(event) => onInputUpdate(event, setBreakName)}
-style={{ 
-  height:"50px",
-  width: "200px",
-  fontSize: "1em",
-  textAlign: "center",
-  color: "#4488AB",
-  backgroundColor: "white", 
-  border: "2px solid #4488AB",
-  filter: "dropShadow(5px 5px 10px grey)",
-}}
->
-{name}
-
-{events2?.map((event, index) => {
-  return (
-    <MenuItem key={index} value={event.name}>
-    {event.name}
-    </MenuItem>
-    );
-  })}
-  </Select>
-  <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
-</div> */}
-
+            
         <CenterStyle>
           <div>
             {breaks?.map((breakys, index) => (
@@ -323,6 +262,7 @@ style={{
           </div>
           <StyledButton onClick={postData}>SUBMIT</StyledButton>
         </CenterStyle>
+
       </StyledModal>
       {/* </StyledFormWrapper> */}
     </>

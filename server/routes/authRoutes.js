@@ -64,7 +64,7 @@ router.get("/loggedInUser", function (req, res) {
   res.send(req.user);
 });
 
-router.get("/logout", async (req, res) => {
+router.get("/logout", (req, res) => {
   req.logout();
   res.sendStatus(200);
 });

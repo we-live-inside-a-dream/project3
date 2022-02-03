@@ -6,7 +6,7 @@ let dashBoxStyle = {
   height: "0",
   paddingBottom: "30%",
   border: "2px solid lightGrey",
-  // margin: "auto auto",
+  margin: "auto auto",
   borderRadius: "5%",
   overflow: "hidden",
 

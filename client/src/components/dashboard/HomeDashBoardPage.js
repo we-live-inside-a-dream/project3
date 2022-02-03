@@ -3,6 +3,7 @@ import StyledPage from "../reusable/styled-page/StyledPage";
 import StyledPageTitle from "../reusable/styled-page/StyledPageTitle";
 import moment from "moment";
 import DashboardGridNav from "./DashboardGridNav";
+// import HighlightsHeader from "./HighlightsHeader";
 
 function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
@@ -31,7 +32,10 @@ function HomeDashBoardPage() {
   return (
     <>
       <StyledPage>
-        <StyledPageTitle>{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle>
+        <StyledPageTitle
+          style={{ marginTop: "50px" }}
+        >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle>
+        {/* <HighlightsHeader style={{ color: "darkGrey" }} /> */}
         <DashboardGridNav />
       </StyledPage>
     </>

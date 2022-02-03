@@ -2,8 +2,9 @@ import React from "react";
 import ScheduleBox from "./ScheduleBox";
 import MessagesBox from "./MessagesBox";
 import AnnouncementsBox from "./AnnouncementsBox";
-
 import { CalendarBox } from "./CalendarBox";
+import HumanResourcesBox from "./HumanResourcesBox";
+import FilesBox from "./FilesBox";
 
 let dashGridStyle = {
   display: "flex",
@@ -30,6 +31,8 @@ const DashboardGridNav = function () {
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />
+      <HumanResourcesBox />
+      <FilesBox />
     </div>
   );
 };

@@ -4,10 +4,10 @@ const employeeTimeOffModel = require('../models/timeOff')
 
 
 router.post('/', async (req, res) => {
-    // console.log("Im here save me")
     let newEmployeeTimeOff = req.body
     let createdId = await employeeTimeOffModel.createEmployeeTimeOff(newEmployeeTimeOff)
     res.send(createdId)
+    console.log("Im here save me", newEmployeeTimeOff)
 })
 
 module.exports = router

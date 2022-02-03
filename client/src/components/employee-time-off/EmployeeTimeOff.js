@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import { StyledInput } from "../reusable/Inputs/StyledEmployeeForm";
-import Modal from "../reusable/Modal";
+import Modal from "../reusable/Modal"; 
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -17,15 +17,11 @@ const EmployeeTimeOff = () => {
   const [type, setType] = useState([]);
   const [comment, setComment] = useState("");
   const [absence, setAbsence] = useState();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false)
-
-  function deleteHandler() {
-    setModalIsOpen(true);
-  }
+  const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [modalDiscardIsOpen, setModalDiscardIsOpen] = useState(false);
 
   function confirmHandler() {
-    setModalIsOpen(true);
+    setModalConfirmIsOpen(true);
   }
 
   const typeHandler = (newType) => {
@@ -39,13 +35,13 @@ const EmployeeTimeOff = () => {
   }
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
-    await fetch('/api/timeOff', {
+    await fetch("/api/timeOff", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(newEmployeeTimeOff),
-    })
+    });
   }
 
   async function postData() {
@@ -53,15 +49,15 @@ const EmployeeTimeOff = () => {
       type: [type.value],
       start,
       end,
-      comment
-    }
-    console.log("posting Time Off", newEmployeeTimeOff)
-    await createEmployeeTimeOff(newEmployeeTimeOff)
+      comment,
+    };
+    console.log("posting Time Off", newEmployeeTimeOff);
+    await createEmployeeTimeOff(newEmployeeTimeOff);
   }
 
   return (
     <div>
-      <Modal
+      {/* <Modal
         onClose={() => {
           setModalIsOpen(false);
         }}
@@ -69,7 +65,7 @@ const EmployeeTimeOff = () => {
       >
         <label>Absence:</label>
         <input></input>
-      </Modal>
+      </Modal> */}
       <h2>Time Off Request</h2>
       <div>
         <label>Type:</label>
@@ -107,14 +103,28 @@ const EmployeeTimeOff = () => {
           onChange={(event) => onInputUpdate(event, setComment)}
         />
       </div>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <button onClick={postData}>Confirm</button>
+        <button onClick={() => setModalConfirmIsOpen(false)}>Cancel</button>
+      </Modal>
       <div>
-        <button onClick={postData}>Apply Time Off</button>
-        <button onClick={deleteHandler}>Discard</button>
+        <button onClick={confirmHandler}>Apply Time Off</button>
       </div>
+      <Modal onClose={() => {
+        setModalDiscardIsOpen(false)
+      }}
+      open={modalDiscardIsOpen}
+      >Are you sure you want to discard your changes?
+      <button >Discard Changes</button>
+      <button onClick={() => {setModalDiscardIsOpen(false)}}>Cancel</button>
+      </Modal>
     </div>
   );
 };
 
 export default EmployeeTimeOff;
-
-

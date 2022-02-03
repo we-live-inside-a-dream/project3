@@ -71,6 +71,7 @@ router.get("/by-employee/:id", async (req, res) => {
 });
 
 router.get("/availability-day/:id", async (req, res) => {
+  console.log("after availability fetch")
   let id = req.params.id;
   let profile = await availabilityModel.getAvailabilityById(id);
   res.json(profile);

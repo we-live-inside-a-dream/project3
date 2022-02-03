@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-// import * as fns from "date-fns";
+import * as fns from "date-fns";
 
 import { NativeSelect } from "@mui/material";
 // import MenuPopupState from "../UNUSED/MenuPopupState";
@@ -17,17 +17,19 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
+  StyledModal,
+  OneColumn,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import ScheduleAvailability from "./ScheduleAvailability";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-// const events2 = [
-//   { name: "" },
-//   { name: "Coffe" },
-//   { name: "Lunch" },
-//   { name: "Coffe2" },
-// ];
+const breakList = [
+  { name: "Coffee" },
+  { name: "Lunch" },
+  { name: "Coffee2" },
+];
 
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
@@ -37,8 +39,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
-  const [breakStart, setBreakStart] = useState();
-  const [breakEnd, setBreakEnd] = useState();
+  const [breakStart, setBreakStart] = useState("");
+  const [breakEnd, setBreakEnd] = useState("");
   const [breakPaid, setBreakPaid] = useState();
   const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
@@ -55,51 +57,14 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  // useEffect(()=>{
-  //   if(employeeId){
-
-  //     console.log("employeeId",employeeId)
-  //     const empAvail = async ()=>{
-  //       let fetchAvailibility = await fetch(`/api/availability/availibility/profile?id=${employeeId}`)
-  //       let employeeAvailibility = await fetchAvailibility.json()
-  //       setEmpAvailibility(employeeAvailibility)
-  //     }
-  //     empAvail()
-  //   }
-  //   // console.log(empAvailibility)
-  // },[employeeId])
-
-  // useEffect(()=>{
-  //   function isEmployeeavailable(){
-  //     let availableToday = empAvailibility.days[dayOfWeek]//dayOfweek is the index for days array monday=0, sunday=6
-  //   if(!availableToday.available){
-  //     console.log("employee not available");
-  //   }else if(!availableToday.allDay){
-  //     console.log(`employee is available between ${availableToday.start} and ${availableToday.end}`);
-  //   }else{
-  //     console.log("employee is free to suffer all day!!");
-  //   }
-  //     // need to ensure employee isnt working over 40 hours this week
-  //     // need to see if employee has vacation or time off booked
-  //     // need to compare day of the week to weekly availibility
-  //     //       first figure out what day of the week it is...
-  //     console.log('employee weekly availibility',availableToday)
-  //   }
-  //   let dayOfWeek = fns.getDay(new Date(date));
-  // if(empAvailibility){ console.log(empAvailibility)
-  //   console.log("date is...",date)
-  //   console.log("week day is...",dayOfWeek,"of 6" )//monday = 0 sunday = 6
-  //   isEmployeeavailable()
-  // };
-  // },[date])
-
+  
   useEffect(() => {
     if (existingValues) {
       setFirstName(existingValues.firstName);
       setEmployeeId(existingValues.employeeId);
       setLastName(existingValues.lastName);
-      setStart(existingValues.start);
-      setEnd(existingValues.end);
+      setStart(` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`);//dont look at this! HH:mm => ISO string so the time picker with accept the value
+      setEnd(` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`);// its FINE
       setDate(existingValues.date);
       setBreaks(existingValues.breaks);
     }
@@ -134,8 +99,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       employeeId,
       firstName,
       lastName,
-      start:new Date(start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      end:new Date(end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      start: fns.format(new Date(start),"HH:mm").toString(),//ISO date => HH:mm
+      end: fns.format(new Date(end),"HH:mm").toString(),
       date,
       breaks,
     };
@@ -155,8 +120,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     let breaky = {};
     let newBreak = [...breaks];
     breaky.name = breakName;
-    breaky.start = breakStart;
-    breaky.end = breakEnd;
+    breaky.start =fns.format(new Date(breakStart),"HH:mm").toString()//ISO date => HH:mm
+    breaky.end = fns.format(new Date(breakEnd),"HH:mm").toString()
     breaky.paid = breakPaid;
 
     newBreak.push(breaky);
@@ -174,150 +139,127 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   return (
     <>
-      <StyledFormWrapper>
-        <StyledForm>
+      {/* <StyledFormWrapper> */}
+      <StyledModal>
+        <div>
+          <InputLabel>
+            Employee Name
+          </InputLabel>
+          <NativeSelect
+            defaultValue={employeeId}
+            id="name-imput"
+            value={employeeId}
+            label="name"
+            onChange={(event) =>
+              onInputUpdate(event.target.value, setEmployeeId)
+            }
+
+          >
+            {/* {name} */}
+            <option></option>
+            {empNames?.map((event) => {
+              return (
+                <option key={event._id} value={event._id}>
+                  {event.firstName + " " + event.lastName}
+                </option>
+              );
+            })}
+          </NativeSelect>
+        </div>
+
+        <div>
+          <InputLabel>Date</InputLabel>
+          <StyledInput
+            label="shift day"
+            type="date"
+            value={date}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setDate)
+            console.log("this is the date in EditSchedule",date)
+            }}
+          />
+          <ScheduleAvailability date={date} id={employeeId}/>
+        </div>
+
+        <div>
+          <InputLabel>Schedule Shift Time</InputLabel>
+          <BasicTimePicker
+            label="Shift Start"
+            type="time"
+            value={start}
+            onChange={(value) => {
+              onInputUpdate(value, setStart);
+              (console.log(value))
+            }}      
+          />
+
+          <BasicTimePicker
+            label="Shift End"
+            type="time"
+            onAccept
+            value={end}
+            onChange={(value) => onInputUpdate(value, setEnd)}
+          />
+        </div>
+        
+        <div>
+            <InputLabel>
+           Breaks
+          </InputLabel>
+          <NativeSelect   
+            label="name"
+            value={breakName}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setBreakName);
+            }}
+            style={{
+              width:"100%"
+            }}
+          >
+            {/* {name} */}
+            <option></option>
+            {breakList?.map((event,index) => {
+              return (
+                <option key={index} 
+                value={event.name}>
+                  {event.name}
+                </option>
+              );
+            })}
+          </NativeSelect>
+
+          <BasicTimePicker
+            label="Break Start"
+            type="time"
+            value={breakStart}
+            onChange={(value) => onInputUpdate(value, setBreakStart)}
+          />
+
+          <BasicTimePicker
+            label="Break End"
+            type="time"
+            value={breakEnd}
+            onChange={(value) => onInputUpdate(value, setBreakEnd)}
+          />
+  <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>Add Break</StyledButton>
+          </div>   
+            
+        <CenterStyle>
           <div>
-            <InputLabel id="demo-simple-select-helper-label">
-              Employee Name
-            </InputLabel>
-            <NativeSelect
-              defaultValue={employeeId}
-              id="name-imput"
-              value={employeeId}
-              label="name"
-              onChange={(event) => onInputUpdate(event.target.value, setEmployeeId)}
-              // style={{
-              //   width: "275px",
-              //   fontSize: "1em",
-              //   textAlign: "center",
-              //   margin: "10px",
-              //   color: "#4488AB",
-              //   backgroundColor: "white",
-              //   border: "2px solid #4488AB",
-              //   boarderRadius: "3px",
-              //   filter: "dropShadow(5px 5px 10px grey)",
-              // }}
-            >
-              {/* {name} */}
-              <option></option>
-              {empNames?.map((event) => {
-                return (
-                  <option key={event._id} value={event._id}>
-                    {event.firstName + " " + event.lastName}
-                  </option>
-                );
-              })}
-            </NativeSelect>
+            {breaks?.map((breakys, index) => (
+              <BreaksComponent
+                myKey={breakys._id}
+                breakys={breakys}
+                index={index}
+                onRemoveBreak={onRemoveBreak}
+              />
+            ))}
           </div>
+          <StyledButton onClick={postData}>SUBMIT</StyledButton>
+        </CenterStyle>
 
-          <div>
-            <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
-            <StyledInput
-              label="shift day"
-              type="date"
-              value={date}
-              onChange={(event) => onInputUpdate(event.target.value, setDate)}
-            />
-          </div>
-
-          <div>
-            <InputLabel id="demo-simple-select-helper-label">
-              Shift Time
-            </InputLabel>
-            <BasicTimePicker
-              label="start time"
-              type="time"
-              value={start}
-              
-              onChange={(value) =>{ onInputUpdate(value, setStart)}}
-            />
-
-            <BasicTimePicker
-              label="end time"
-              type="time"
-              onAccept
-              value={end}
-              onChange={(value) => onInputUpdate(value, setEnd)}
-           
-              
-            />
-          </div>
-          <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
-
-          <div>
-            <StyledInput
-              label="break start time"
-              type="time"
-              value={breakStart}
-              onChange={(event) => onInputUpdate(event.target.value, setBreakStart)}
-            />
-
-            <StyledInput
-              label="break end time"
-              type="time"
-              value={breakEnd}
-              onChange={(event) => onInputUpdate(event.target.value, setBreakEnd)}
-            />
-          </div>
-          <div>
-            <StyledInput
-              value={breakName}
-              onChange={(event) => {
-                onInputUpdate(event.target.value, setBreakName);
-              }}
-            />
-
-            <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
-              +
-            </StyledButton>
-          </div>
-          {/* <div>
-this is for making breaks list
-<Select
-          labelId="demo-simple-select-helper-label"
-          id="name-imput"
-          value={name}
-          label="name"
-          onChange={(event) => onInputUpdate(event, setBreakName)}
-          style={{ 
-            height:"50px",
-            width: "200px",
-          fontSize: "1em",
-          textAlign: "center",
-          color: "#4488AB",
-          backgroundColor: "white", 
-          border: "2px solid #4488AB",
-          filter: "dropShadow(5px 5px 10px grey)",
-           }}
-        >
-          {name}
-
-          {events2?.map((event, index) => {
-            return (
-              <MenuItem key={index} value={event.name}>
-                {event.name}
-              </MenuItem>
-            );
-          })}
-          </Select>
-          <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
-</div> */}
-
-          <CenterStyle>
-            <div>
-              {breaks?.map((breakys, index) => (
-                <BreaksComponent
-                  myKey={breakys._id}
-                  breakys={breakys}
-                  index={index}
-                  onRemoveBreak={onRemoveBreak}
-                />
-              ))}
-            </div>
-            <StyledButton onClick={postData}>SUBMIT</StyledButton>
-          </CenterStyle>
-        </StyledForm>
-      </StyledFormWrapper>
+      </StyledModal>
+      {/* </StyledFormWrapper> */}
     </>
   );
 } //final brace

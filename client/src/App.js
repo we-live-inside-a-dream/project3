@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
-
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
@@ -19,9 +18,10 @@ import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
-import EmployeeTimeOff from './components/employee-time-off/EmployeeTimeOff'
-import HomeDashBoardPage from "./components/HomeDashBoardPage";
+import EmployeeTimeOff from "./components/employee-time-off/EmployeeTimeOff";
+import HomeDashBoardPage from "./components/dashboard/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
+import EventsPage from "./pages/common/EventsPage";
 
 function App() {
   // useEffect(() => {
@@ -44,6 +44,7 @@ function App() {
         <Route path="/" element={<HomeDashBoardPage />} />
         <Route path="/employeeList" element={<EmployeesList />} />
         <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
+        <Route path="/events" element={<EventsPage />} />
         {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
         <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
         <Route path="/createEmployee" element={<CreateEmployeePage />} />

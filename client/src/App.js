@@ -22,6 +22,7 @@ import SchedulePage from "./pages/manager/SchedulePage";
 import EmployeeTimeOff from './components/employee-time-off/EmployeeTimeOff'
 import HomeDashBoardPage from "./components/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
+import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
 
 function App() {
   // useEffect(() => {
@@ -47,7 +48,7 @@ function App() {
         {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
         <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
         <Route path="/createEmployee" element={<CreateEmployeePage />} />
-        <Route path="/timeOff" element={<EmployeeTimeOff />} />
+        <Route path="/timeOff" element={<EmployeeTimeOffPage />} />
         <Route
           path="/availability-edit/:id"
           element={<EmployeeAvailabilityEditPage />}

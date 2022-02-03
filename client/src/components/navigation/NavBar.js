@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import {
   NavbarContainer,
@@ -16,10 +16,12 @@ import {
   StyledAvatarButton,
 } from "./StyledNavBar";
 import LogoImg from "./logo.png";
+import { Link } from "react-router-dom";
+import AuthenticationContext from "../login/AuthenticationContext";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
-
+  const authContext = useContext(AuthenticationContext);
   return (
     <NavbarContainer>
       <NavbarInnerContainer>
@@ -33,8 +35,7 @@ function NavBar() {
             {/* <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink> */}
             <NavbarLink to="/createEmployee">EmpForm</NavbarLink>
             <NavbarLink to="/availabilities">Availabilities</NavbarLink>
-            <NavbarLink to='/timeOff'>Time OFF</NavbarLink>
-            <NavbarLink to="/login">Login</NavbarLink>
+            <NavbarLink to="/timeOff">Time OFF</NavbarLink>
             <NavbarLink to="/logout">Logout</NavbarLink>
             <OpenLinksButton
               onClick={() => {
@@ -45,9 +46,12 @@ function NavBar() {
             </OpenLinksButton>
           </NavbarLinkContainer>
         </LeftContainer>
-
         <RightContainer>
-          <StyledNavButton>LOG IN</StyledNavButton>
+          {!authContext.user && (
+            <Link to="/login">
+              <StyledNavButton>LOG IN</StyledNavButton>
+            </Link>
+          )}
           <StyledAvatarButton />
         </RightContainer>
       </NavbarInnerContainer>

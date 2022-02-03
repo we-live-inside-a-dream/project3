@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
-// import * as fns from "date-fns";
+import * as fns from "date-fns";
 
 import { NativeSelect } from "@mui/material";
 // import MenuPopupState from "../UNUSED/MenuPopupState";
@@ -17,6 +17,8 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
+  StyledModal,
+  OneColumn,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 
@@ -37,8 +39,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
-  const [breakStart, setBreakStart] = useState();
-  const [breakEnd, setBreakEnd] = useState();
+  const [breakStart, setBreakStart] = useState("");
+  const [breakEnd, setBreakEnd] = useState("");
   const [breakPaid, setBreakPaid] = useState();
   const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
@@ -93,13 +95,15 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   // };
   // },[date])
 
+
+  // Wed Feb 02 2022 01:00:00 GMT-0700 (Mountain Standard Time)
   useEffect(() => {
     if (existingValues) {
       setFirstName(existingValues.firstName);
       setEmployeeId(existingValues.employeeId);
       setLastName(existingValues.lastName);
-      setStart(existingValues.start);
-      setEnd(existingValues.end);
+      setStart(` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`);
+      setEnd(` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`);
       setDate(existingValues.date);
       setBreaks(existingValues.breaks);
     }
@@ -134,8 +138,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       employeeId,
       firstName,
       lastName,
-      start:new Date(start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      end:new Date(end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      start: fns.format(new Date(start),"HH:mm").toString(),
+      end: fns.format(new Date(end),"HH:mm").toString(),
       date,
       breaks,
     };
@@ -155,8 +159,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     let breaky = {};
     let newBreak = [...breaks];
     breaky.name = breakName;
-    breaky.start = breakStart;
-    breaky.end = breakEnd;
+    breaky.start =fns.format(new Date(breakStart),"HH:mm").toString()
+    breaky.end = fns.format(new Date(breakEnd),"HH:mm").toString()
     breaky.paid = breakPaid;
 
     newBreak.push(breaky);
@@ -174,150 +178,153 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
 
   return (
     <>
-      <StyledFormWrapper>
-        <StyledForm>
-          <div>
-            <InputLabel id="demo-simple-select-helper-label">
-              Employee Name
-            </InputLabel>
-            <NativeSelect
-              defaultValue={employeeId}
-              id="name-imput"
-              value={employeeId}
-              label="name"
-              onChange={(event) => onInputUpdate(event.target.value, setEmployeeId)}
-              // style={{
-              //   width: "275px",
-              //   fontSize: "1em",
-              //   textAlign: "center",
-              //   margin: "10px",
-              //   color: "#4488AB",
-              //   backgroundColor: "white",
-              //   border: "2px solid #4488AB",
-              //   boarderRadius: "3px",
-              //   filter: "dropShadow(5px 5px 10px grey)",
-              // }}
-            >
-              {/* {name} */}
-              <option></option>
-              {empNames?.map((event) => {
-                return (
-                  <option key={event._id} value={event._id}>
-                    {event.firstName + " " + event.lastName}
-                  </option>
-                );
-              })}
-            </NativeSelect>
-          </div>
+      {/* <StyledFormWrapper> */}
+      <StyledModal>
+        <div>
+          <InputLabel id="demo-simple-select-helper-label">
+            Employee Name
+          </InputLabel>
+          <NativeSelect
+            defaultValue={employeeId}
+            id="name-imput"
+            value={employeeId}
+            label="name"
+            onChange={(event) =>
+              onInputUpdate(event.target.value, setEmployeeId)
+            }
+            // style={{
+            //   width: "275px",
+            //   fontSize: "1em",
+            //   textAlign: "center",
+            //   margin: "10px",
+            //   color: "#4488AB",
+            //   backgroundColor: "white",
+            //   border: "2px solid #4488AB",
+            //   boarderRadius: "3px",
+            //   filter: "dropShadow(5px 5px 10px grey)",
+            // }}
+          >
+            {/* {name} */}
+            <option></option>
+            {empNames?.map((event) => {
+              return (
+                <option key={event._id} value={event._id}>
+                  {event.firstName + " " + event.lastName}
+                </option>
+              );
+            })}
+          </NativeSelect>
+        </div>
 
-          <div>
-            <InputLabel id="demo-simple-select-helper-label">Date</InputLabel>
-            <StyledInput
-              label="shift day"
-              type="date"
-              value={date}
-              onChange={(event) => onInputUpdate(event.target.value, setDate)}
-            />
-          </div>
+        <div>
+          <InputLabel>Date</InputLabel>
+          <StyledInput
+            label="shift day"
+            type="date"
+            value={date}
+            onChange={(event) => onInputUpdate(event.target.value, setDate)}
+          />
+        </div>
 
-          <div>
-            <InputLabel id="demo-simple-select-helper-label">
-              Shift Time
-            </InputLabel>
-            <BasicTimePicker
-              label="start time"
-              type="time"
-              value={start}
-              
-              onChange={(value) =>{ onInputUpdate(value, setStart)}}
-            />
+        <div>
+          <InputLabel>Schedule Shift Time</InputLabel>
+          <BasicTimePicker
+            label="Shift Start"
+            type="time"
+            value={start}
+            onChange={(value) => {
+              onInputUpdate(value, setStart);
+              (console.log(value))
+            }}
+          />
 
-            <BasicTimePicker
-              label="end time"
-              type="time"
-              onAccept
-              value={end}
-              onChange={(value) => onInputUpdate(value, setEnd)}
-           
-              
-            />
-          </div>
-          <InputLabel id="demo-simple-select-helper-label">Breaks</InputLabel>
+          <BasicTimePicker
+            label="Shift End"
+            type="time"
+            onAccept
+            value={end}
+            onChange={(value) => onInputUpdate(value, setEnd)}
+          />
+        </div>
+        
+        <div>
+          <InputLabel>Breaks</InputLabel>
 
-          <div>
-            <StyledInput
-              label="break start time"
-              type="time"
-              value={breakStart}
-              onChange={(event) => onInputUpdate(event.target.value, setBreakStart)}
-            />
+          <BasicTimePicker
+            label="Break Start"
+            type="time"
+            value={breakStart}
+            onChange={(value) => onInputUpdate(value, setBreakStart)}
+          />
 
-            <StyledInput
-              label="break end time"
-              type="time"
-              value={breakEnd}
-              onChange={(event) => onInputUpdate(event.target.value, setBreakEnd)}
+          <BasicTimePicker
+            label="Break End"
+            type="time"
+            value={breakEnd}
+            onChange={(value) => onInputUpdate(value, setBreakEnd)}
+          />
+          </div>   
+            <div2>
+          <input
+            value={breakName}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setBreakName);
+            }}
             />
-          </div>
-          <div>
-            <StyledInput
-              value={breakName}
-              onChange={(event) => {
-                onInputUpdate(event.target.value, setBreakName);
-              }}
-            />
+           <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
+            +
+          </StyledButton>
+            </div2>
 
-            <StyledButton fontSize={"1.5em"} padding={"0"} onClick={onAddBreak}>
-              +
-            </StyledButton>
-          </div>
-          {/* <div>
+        
+
+        {/* <div>
 this is for making breaks list
 <Select
-          labelId="demo-simple-select-helper-label"
-          id="name-imput"
-          value={name}
-          label="name"
-          onChange={(event) => onInputUpdate(event, setBreakName)}
-          style={{ 
-            height:"50px",
-            width: "200px",
-          fontSize: "1em",
-          textAlign: "center",
-          color: "#4488AB",
-          backgroundColor: "white", 
-          border: "2px solid #4488AB",
-          filter: "dropShadow(5px 5px 10px grey)",
-           }}
-        >
-          {name}
+labelId="demo-simple-select-helper-label"
+id="name-imput"
+value={name}
+label="name"
+onChange={(event) => onInputUpdate(event, setBreakName)}
+style={{ 
+  height:"50px",
+  width: "200px",
+  fontSize: "1em",
+  textAlign: "center",
+  color: "#4488AB",
+  backgroundColor: "white", 
+  border: "2px solid #4488AB",
+  filter: "dropShadow(5px 5px 10px grey)",
+}}
+>
+{name}
 
-          {events2?.map((event, index) => {
-            return (
-              <MenuItem key={index} value={event.name}>
-                {event.name}
-              </MenuItem>
-            );
-          })}
-          </Select>
-          <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
+{events2?.map((event, index) => {
+  return (
+    <MenuItem key={index} value={event.name}>
+    {event.name}
+    </MenuItem>
+    );
+  })}
+  </Select>
+  <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>+</StyledButton>
 </div> */}
 
-          <CenterStyle>
-            <div>
-              {breaks?.map((breakys, index) => (
-                <BreaksComponent
-                  myKey={breakys._id}
-                  breakys={breakys}
-                  index={index}
-                  onRemoveBreak={onRemoveBreak}
-                />
-              ))}
-            </div>
-            <StyledButton onClick={postData}>SUBMIT</StyledButton>
-          </CenterStyle>
-        </StyledForm>
-      </StyledFormWrapper>
+        <CenterStyle>
+          <div>
+            {breaks?.map((breakys, index) => (
+              <BreaksComponent
+                myKey={breakys._id}
+                breakys={breakys}
+                index={index}
+                onRemoveBreak={onRemoveBreak}
+              />
+            ))}
+          </div>
+          <StyledButton onClick={postData}>SUBMIT</StyledButton>
+        </CenterStyle>
+      </StyledModal>
+      {/* </StyledFormWrapper> */}
     </>
   );
 } //final brace

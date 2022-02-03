@@ -65,7 +65,8 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
-      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+    prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+      
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
@@ -168,12 +169,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                         style={{
                           // backgroundColor: "#EEAA78",
                           backgroundColor: "#66b9bf",
-
                           height: "30px",
                           padding: "0px",
                           border: "1px solid #66b9bf",
                           // border: "1px solid #EEAA78",
-
                           margin: "2px 0",
                         }}
                       ></div>

@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
   const [hourGreeting, setHourGreeting] = useState("");
-
+  const authContext = useContext(AuthenticationContext);
   useEffect(() => {
     let getGreeting = function () {
       let hourValue;

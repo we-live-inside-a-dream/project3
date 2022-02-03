@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import Select from "react-select";
-import { StyledInput, StyledForm, StyledFormWrapper } from "../reusable/Inputs/StyledEmployeeForm";
-import StyledButton from '../reusable/Inputs/StyledButton'
+import {
+  StyledInput,
+  StyledForm,
+  StyledFormWrapper,
+} from "../reusable/Inputs/StyledEmployeeForm";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import {
+  StyledCheck,
+  StyledTextArea,
+} from "../reusable/Inputs/StyledEmployeeForm";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -14,11 +22,13 @@ const typeData = [
 ];
 
 const EmployeeTimeOff = () => {
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
-  const [type, setType] = useState([]);
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [type, setType] = useState("");
   const [comment, setComment] = useState("");
-  const [absence, setAbsence] = useState();
+  const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [modalAbsenceIsOpen, setModalAbsenceIsOpen] = useState(false);
 
@@ -35,6 +45,9 @@ const EmployeeTimeOff = () => {
     let newValue = event.target.value;
     setter(newValue);
   }
+  function onTimeInputUpdate(value, setter) {
+    setter(value);
+  }
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
     await fetch("/api/timeOff", {
@@ -49,9 +62,13 @@ const EmployeeTimeOff = () => {
   async function postData() {
     let newEmployeeTimeOff = {
       type: [type.value],
-      start,
-      end,
-      comment,
+      // id: user._id,
+      startTime: startTime,
+      endTime: endTime,
+      startDate: startDate,
+      endDate: endDate,
+      allDay: allDay,
+      comment: comment,
     };
     console.log("posting Time Off", newEmployeeTimeOff);
     await createEmployeeTimeOff(newEmployeeTimeOff);
@@ -60,82 +77,176 @@ const EmployeeTimeOff = () => {
   return (
     <div>
       <StyledFormWrapper>
-      <StyledForm>
-        
-        <h2>Time Off Request</h2>
-        <div></div>
-        <div>
-          
-          <label>Type:</label>
-          <Select value={type} options={typeData} onChange={typeHandler} />
-        </div>
-        <div></div>
-        <Modal
-        onClose={() => {
-          setModalAbsenceIsOpen(false);
-        }}
-        open={modalAbsenceIsOpen}
-      >
-        <label>Absence:</label>
-        <input></input>
-      </Modal>
-        <div>
-          <label>Start Day:</label>
-          <input
-            type="date"
-            id="single-day"
-            name="day"
-            value={start}
-            onChange={(e) => {
-              setStart(e.target.value);
+        <StyledForm>
+          <h2>Time Off Request</h2>
+          <div></div>
+          <div>
+            <label>Type:</label>
+            <Select value={type} options={typeData} onChange={typeHandler} />
+          </div>
+          <div></div>
+          <Modal
+            onClose={() => {
+              setModalAbsenceIsOpen(false);
             }}
-          />
-        </div>
-        <div>
-          <label>End Day:</label>
-          <input
-            type="date"
-            id="single-day"
-            name="day"
-            value={end}
-            onChange={(e) => {
-              setEnd(e.target.value);
-            }}
-          />
-        </div>
-        <BasicTimePicker
-              label="start time"
-              type="time"
-              value={start}
-              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+            open={modalAbsenceIsOpen}
+          >
+            <label>Absence:</label>
+            <input></input>
+          </Modal>
+          <div>
+            <label>Start Day:</label>
+            <input
+              type="date"
+              id="single-day"
+              name="day"
+              value={startDate}
+              onChange={(e) => {
+                setStartDate(e.target.value);
+              }}
             />
-        <BasicTimePicker
-              label="start time"
-              type="time"
-              value={end}
-              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+          </div>
+          <div>
+            <label>End Day:</label>
+            <input
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(e) => {
+                setEndDate(e.target.value);
+              }}
             />
-        <div>
-          <label>Comments:</label>
-          <StyledInput
-            value={comment}
-            onChange={(event) => onInputUpdate(event, setComment)}
-          />
-        </div>
-        <div></div>
-        <Modal
-          onClose={() => {
-            setModalConfirmIsOpen(false);
+          </div>
+          {/*  */}
+          {/* <StyledCheck
+          className="check"
+          name="available"
+          type="checkbox"
+          value={available}
+          checked={available === true}
+          onChange={(e) => {
+            setAvailable(e.target.checked);
+            if (!e.target.checked) {
+              setAllDay(false);
+            }
           }}
-          open={modalConfirmIsOpen}
-        >
-          <StyledButton onClick={postData}>Confirm</StyledButton>
-          <StyledButton onClick={() => setModalConfirmIsOpen(false)}>Cancel</StyledButton>
-        </Modal>
+        />
+        Available
+      </label>{" "}
+      <br />
+      {available === true && (
+        <label className="check-label">
+          <StyledCheck
+            className="check"
+            name="all-day"
+            type="checkbox"
+            value={allDay}
+            checked={allDay === true}
+            onChange={(e) => {
+              setAllDay(e.target.checked);
+              if (e.target.checked) {
+                setStart(0);
+                setEnd(0);
+              }
+            }}
+          />
+          Available all day
+          <br />
+        </label>
+      )}
+      {allDay === false && available === true ? (
         <div>
-          <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
+          <label>Start time</label>
+          <StyledTimeDate
+            name="all-day"
+            type="time"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+          />{" "}
+          <label>End time</label>
+          <StyledTimeDate
+            name="all-day"
+            type="time"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+          />
         </div>
-      </StyledForm>
+      ) : null} */}
+          {/*  */}
+          {startDate === endDate && (
+            <>
+              <label>
+                All Day
+                <StyledCheck
+                  className="check"
+                  name="all-day"
+                  type="checkbox"
+                  value={allDay}
+                  checked={allDay === true}
+                  onChange={(e) => {
+                    setAllDay(e.target.checked);
+                    if (e.target.checked) {
+                      setStartTime("");
+                      setEndTime("");
+                    }
+                  }}
+                />
+              </label>
+              <div></div>
+            </>
+          )}
+          {allDay === false && (
+            <>
+              <label>
+                Start Time:
+                <BasicTimePicker
+                  // label=""
+                  type="time"
+                  value={startTime}
+                  onChange={(value) => {
+                    onTimeInputUpdate(value, setStartTime);
+                  }}
+                />
+              </label>
+              <label>
+                End Time:
+                <BasicTimePicker
+                  // label="end time"
+                  type="time"
+                  value={endTime}
+                  onChange={(value) => {
+                    onTimeInputUpdate(value, setStartTime);
+                  }}
+                />
+              </label>
+            </>
+          )}
+          <div></div>
+          <div></div>
+          <div>
+            <label>Comments:</label>
+            <StyledTextArea
+              value={comment}
+              onChange={(event) => onInputUpdate(event, setComment)}
+            />
+          </div>
+          <div></div>
+          <Modal
+            onClose={() => {
+              setModalConfirmIsOpen(false);
+            }}
+            open={modalConfirmIsOpen}
+          >
+            <StyledButton onClick={postData}>Confirm</StyledButton>
+            <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+              Cancel
+            </StyledButton>
+          </Modal>
+          <div>
+            <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
+          </div>
+        </StyledForm>
       </StyledFormWrapper>
     </div>
   );

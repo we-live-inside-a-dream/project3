@@ -5,11 +5,23 @@ type: {
     type: [String],
     required: true,
 },
-start: {
+startDate: {
+    type: String,
+    required: true,
+},
+endDate: {
+    type: String,
+    required: true,
+},
+
+startTime:{
     type: String,
 },
-end: {
+endTime:{
     type: String,
+},
+allDay: {
+    type: Boolean,
 },
 comment: {
     type: String,

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Select from "react-select";
-import { StyledInput, StyledForm } from "../reusable/Inputs/StyledEmployeeForm";
+import { StyledInput, StyledForm, StyledFormWrapper } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledButton from '../reusable/Inputs/StyledButton'
 import Modal from "../reusable/Modal";
 
@@ -58,6 +58,7 @@ const EmployeeTimeOff = () => {
 
   return (
     <div>
+      <StyledFormWrapper>
       <StyledForm>
         
         <h2>Time Off Request</h2>
@@ -108,6 +109,7 @@ const EmployeeTimeOff = () => {
             onChange={(event) => onInputUpdate(event, setComment)}
           />
         </div>
+        <div></div>
         <Modal
           onClose={() => {
             setModalConfirmIsOpen(false);
@@ -121,6 +123,7 @@ const EmployeeTimeOff = () => {
           <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
         </div>
       </StyledForm>
+      </StyledFormWrapper>
     </div>
   );
 };

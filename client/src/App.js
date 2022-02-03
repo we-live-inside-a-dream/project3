@@ -1,7 +1,7 @@
 import "./App.css";
 import EmployeesList from "./pages/manager/EmployeesList";
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
@@ -19,48 +19,104 @@ import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
-import EmployeeTimeOff from './components/employee-time-off/EmployeeTimeOff'
-import HomeDashBoardPage from "./components/HomeDashBoardPage";
+import EmployeeTimeOff from "./components/employee-time-off/EmployeeTimeOff";
+import HomeDashBoardPage from "./pages/common/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
+import AuthenticationProvider from "./components/login/AuthenticationProvider";
+import MustBeManager from "./components/login/MustBeManager";
+import RequireAuth from "./components/login/RequireAuth";
+import AuthenticationContext from "./components/login/AuthenticationContext";
 
 function App() {
-  // useEffect(() => {
-  //   axios.post("/user/loggedInUser").then(function (response) {
-  //     if (response.data) {
-  //       setUser(response.data);
-  //       console.log(response);
-  //     }
-  //   });
-  // }, []);
+  const authContext = useContext(AuthenticationContext);
   return (
-    <div
-      style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
-      className="App"
-    >
-      <GlobalStyle />
-      <NavBar />
-      <Routes>
-        <Route path="/schedules" element={<SchedulePage />} />
-        <Route path="/" element={<HomeDashBoardPage />} />
-        <Route path="/employeeList" element={<EmployeesList />} />
-        <Route path="/availabilities" element={<EmployeeAvailabilityPage />} />
-        {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
-        <Route path="/employeeDetail/edit/:id" element={<EmployeeEditPage />} />
-        <Route path="/createEmployee" element={<CreateEmployeePage />} />
-        <Route path="/timeOff" element={<EmployeeTimeOff />} />
-        <Route
-          path="/availability-edit/:id"
-          element={<EmployeeAvailabilityEditPage />}
-        />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/logout" element={<LogOut />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route
-          path="/avail-detail/:id"
-          element={<EmployeeAvailabilityDetail />}
-        ></Route>
-      </Routes>
-    </div>
+    <AuthenticationProvider>
+      <div
+        style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
+        className="App"
+      >
+        <GlobalStyle />
+        <NavBar />
+        <Routes>
+          <Route
+            path="/schedules"
+            element={
+              <RequireAuth>
+                <SchedulePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <HomeDashBoardPage />
+              </RequireAuth>
+            }
+          />
+          <Route path="/employeeList" element={<EmployeesList />} />
+          <Route
+            path="/availabilities"
+            element={<EmployeeAvailabilityPage />}
+          />
+          {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
+          <Route
+            path="/employeeDetail/edit/:id"
+            element={
+              <RequireAuth>
+                <EmployeeEditPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/createEmployee"
+            element={
+              <MustBeManager>
+                <CreateEmployeePage />
+              </MustBeManager>
+            }
+          />
+          <Route
+            path="/timeOff"
+            element={
+              <RequireAuth>
+                <EmployeeTimeOff />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/availability-edit/:id"
+            element={
+              <RequireAuth>
+                <EmployeeAvailabilityEditPage />
+              </RequireAuth>
+            }
+          />
+          <Route path="/login" element={<LogIn />} />
+          <Route
+            path="/logout"
+            element={
+              <RequireAuth>
+                <LogOut />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/avail-detail/:id"
+            element={<EmployeeAvailabilityDetail />}
+          ></Route>
+        </Routes>
+        )
+      </div>
+    </AuthenticationProvider>
   );
 }
 

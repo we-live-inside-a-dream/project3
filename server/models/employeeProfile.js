@@ -61,7 +61,7 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
 };
 
 const logIn = async (user) => {
-  let employeeProfile = await EmployeeProfile.find({
+  let employeeProfile = await EmployeeProfile.findOne({
     email: user.email,
     password: user.password,
   });

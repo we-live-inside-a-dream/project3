@@ -1,16 +1,20 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthenticationContext from "./AuthenticationContext";
 
-const LogOut = ({ setUser }) => {
+const LogOut = () => {
   const navigate = useNavigate();
-
+  const authContext = useContext(AuthenticationContext);
+  console.log(authContext);
   useEffect(() => {
     fetch("/api/auth/logout").then(() => {
-      setUser(null);
+      console.log("above authcontext");
+      authContext.logOut();
+      console.log("whatever");
       navigate("/");
     });
   }, []);
-  return null;
+  return "Hello";
 };
 
 export default LogOut;

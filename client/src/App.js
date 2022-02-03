@@ -25,10 +25,9 @@ import EmployeeAvailabilityDetail from "./components/employee-availabilities/Ava
 import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
-import AuthenticationContext from "./components/login/AuthenticationContext";
+import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
 
 function App() {
-  const authContext = useContext(AuthenticationContext);
   return (
     <AuthenticationProvider>
       <div

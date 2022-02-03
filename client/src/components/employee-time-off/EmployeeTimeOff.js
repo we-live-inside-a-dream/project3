@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Select from "react-select";
-import { StyledInput } from "../reusable/Inputs/StyledEmployeeForm";
+import { StyledInput, StyledForm, StyledFormWrapper } from "../reusable/Inputs/StyledEmployeeForm";
+import StyledButton from '../reusable/Inputs/StyledButton'
 import Modal from "../reusable/Modal";
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -17,15 +19,11 @@ const EmployeeTimeOff = () => {
   const [type, setType] = useState([]);
   const [comment, setComment] = useState("");
   const [absence, setAbsence] = useState();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false)
-
-  function deleteHandler() {
-    setModalIsOpen(true);
-  }
+  const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [modalAbsenceIsOpen, setModalAbsenceIsOpen] = useState(false);
 
   function confirmHandler() {
-    setModalIsOpen(true);
+    setModalConfirmIsOpen(true);
   }
 
   const typeHandler = (newType) => {
@@ -39,13 +37,13 @@ const EmployeeTimeOff = () => {
   }
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
-    await fetch('/api/timeOff', {
+    await fetch("/api/timeOff", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(newEmployeeTimeOff),
-    })
+    });
   }
 
   async function postData() {
@@ -53,68 +51,94 @@ const EmployeeTimeOff = () => {
       type: [type.value],
       start,
       end,
-      comment
-    }
-    console.log("posting Time Off", newEmployeeTimeOff)
-    await createEmployeeTimeOff(newEmployeeTimeOff)
+      comment,
+    };
+    console.log("posting Time Off", newEmployeeTimeOff);
+    await createEmployeeTimeOff(newEmployeeTimeOff);
   }
 
   return (
     <div>
-      <Modal
+      <StyledFormWrapper>
+      <StyledForm>
+        
+        <h2>Time Off Request</h2>
+        <div></div>
+        <div>
+          
+          <label>Type:</label>
+          <Select value={type} options={typeData} onChange={typeHandler} />
+        </div>
+        <div></div>
+        <Modal
         onClose={() => {
-          setModalIsOpen(false);
+          setModalAbsenceIsOpen(false);
         }}
-        open={modalIsOpen}
+        open={modalAbsenceIsOpen}
       >
         <label>Absence:</label>
         <input></input>
       </Modal>
-      <h2>Time Off Request</h2>
-      <div>
-        <label>Type:</label>
-        <Select value={type} options={typeData} onChange={typeHandler} />
-      </div>
-      <div></div>
-      <div>
-        <label>Start:</label>
-        <input
-          type="date"
-          id="single-day"
-          name="day"
-          value={start}
-          onChange={(e) => {
-            setStart(e.target.value);
+        <div>
+          <label>Start Day:</label>
+          <input
+            type="date"
+            id="single-day"
+            name="day"
+            value={start}
+            onChange={(e) => {
+              setStart(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label>End Day:</label>
+          <input
+            type="date"
+            id="single-day"
+            name="day"
+            value={end}
+            onChange={(e) => {
+              setEnd(e.target.value);
+            }}
+          />
+        </div>
+        <BasicTimePicker
+              label="start time"
+              type="time"
+              value={start}
+              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+            />
+        <BasicTimePicker
+              label="start time"
+              type="time"
+              value={end}
+              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+            />
+        <div>
+          <label>Comments:</label>
+          <StyledInput
+            value={comment}
+            onChange={(event) => onInputUpdate(event, setComment)}
+          />
+        </div>
+        <div></div>
+        <Modal
+          onClose={() => {
+            setModalConfirmIsOpen(false);
           }}
-        />
-      </div>
-      <div>
-        <label>End:</label>
-        <input
-          type="date"
-          id="single-day"
-          name="day"
-          value={end}
-          onChange={(e) => {
-            setEnd(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <label>Comment:</label>
-        <StyledInput
-          value={comment}
-          onChange={(event) => onInputUpdate(event, setComment)}
-        />
-      </div>
-      <div>
-        <button onClick={postData}>Apply Time Off</button>
-        <button onClick={deleteHandler}>Discard</button>
-      </div>
+          open={modalConfirmIsOpen}
+        >
+          <StyledButton onClick={postData}>Confirm</StyledButton>
+          <StyledButton onClick={() => setModalConfirmIsOpen(false)}>Cancel</StyledButton>
+        </Modal>
+        <div>
+          <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
+        </div>
+      </StyledForm>
+      </StyledFormWrapper>
     </div>
   );
 };
 
 export default EmployeeTimeOff;
-
-

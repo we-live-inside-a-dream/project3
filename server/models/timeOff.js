@@ -13,12 +13,17 @@ end: {
 },
 comment: {
     type: String,
+},
+status: {
+    type: String,
+    default: "pending"
 }
 })
 
 async function createEmployeeTimeOff(employeeTimeOffData) {
     let newEmployeeTimeOff = new EmployeeTimeOff(employeeTimeOffData)
     let createEmployeeTimeOff = await newEmployeeTimeOff.save()
+    console.log("saving Time OFF info", employeeTimeOffData);
     return createEmployeeTimeOff.id
 } 
 

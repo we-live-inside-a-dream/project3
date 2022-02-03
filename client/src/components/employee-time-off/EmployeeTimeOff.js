@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Select from "react-select";
-import { StyledInput } from "../reusable/Inputs/StyledEmployeeForm";
-import Modal from "../reusable/Modal"; 
+import { StyledInput, StyledForm } from "../reusable/Inputs/StyledEmployeeForm";
+import StyledButton from '../reusable/Inputs/StyledButton'
+import Modal from "../reusable/Modal";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -18,7 +19,7 @@ const EmployeeTimeOff = () => {
   const [comment, setComment] = useState("");
   const [absence, setAbsence] = useState();
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
-  const [modalDiscardIsOpen, setModalDiscardIsOpen] = useState(false);
+  const [modalAbsenceIsOpen, setModalAbsenceIsOpen] = useState(false);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -57,72 +58,69 @@ const EmployeeTimeOff = () => {
 
   return (
     <div>
-      {/* <Modal
+      <StyledForm>
+        
+        <h2>Time Off Request</h2>
+        <div></div>
+        <div>
+          
+          <label>Type:</label>
+          <Select value={type} options={typeData} onChange={typeHandler} />
+        </div>
+        <div></div>
+        <Modal
         onClose={() => {
-          setModalIsOpen(false);
+          setModalAbsenceIsOpen(false);
         }}
-        open={modalIsOpen}
+        open={modalAbsenceIsOpen}
       >
         <label>Absence:</label>
         <input></input>
-      </Modal> */}
-      <h2>Time Off Request</h2>
-      <div>
-        <label>Type:</label>
-        <Select value={type} options={typeData} onChange={typeHandler} />
-      </div>
-      <div></div>
-      <div>
-        <label>Start:</label>
-        <input
-          type="date"
-          id="single-day"
-          name="day"
-          value={start}
-          onChange={(e) => {
-            setStart(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <label>End:</label>
-        <input
-          type="date"
-          id="single-day"
-          name="day"
-          value={end}
-          onChange={(e) => {
-            setEnd(e.target.value);
-          }}
-        />
-      </div>
-      <div>
-        <label>Comment:</label>
-        <StyledInput
-          value={comment}
-          onChange={(event) => onInputUpdate(event, setComment)}
-        />
-      </div>
-      <Modal
-        onClose={() => {
-          setModalConfirmIsOpen(false);
-        }}
-        open={modalConfirmIsOpen}
-      >
-        <button onClick={postData}>Confirm</button>
-        <button onClick={() => setModalConfirmIsOpen(false)}>Cancel</button>
       </Modal>
-      <div>
-        <button onClick={confirmHandler}>Apply Time Off</button>
-      </div>
-      <Modal onClose={() => {
-        setModalDiscardIsOpen(false)
-      }}
-      open={modalDiscardIsOpen}
-      >Are you sure you want to discard your changes?
-      <button >Discard Changes</button>
-      <button onClick={() => {setModalDiscardIsOpen(false)}}>Cancel</button>
-      </Modal>
+        <div>
+          <label>Start:</label>
+          <input
+            type="date"
+            id="single-day"
+            name="day"
+            value={start}
+            onChange={(e) => {
+              setStart(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label>End:</label>
+          <input
+            type="date"
+            id="single-day"
+            name="day"
+            value={end}
+            onChange={(e) => {
+              setEnd(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <label>Comment:</label>
+          <StyledInput
+            value={comment}
+            onChange={(event) => onInputUpdate(event, setComment)}
+          />
+        </div>
+        <Modal
+          onClose={() => {
+            setModalConfirmIsOpen(false);
+          }}
+          open={modalConfirmIsOpen}
+        >
+          <StyledButton onClick={postData}>Confirm</StyledButton>
+          <StyledButton onClick={() => setModalConfirmIsOpen(false)}>Cancel</StyledButton>
+        </Modal>
+        <div>
+          <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
+        </div>
+      </StyledForm>
     </div>
   );
 };

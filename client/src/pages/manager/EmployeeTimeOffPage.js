@@ -4,11 +4,10 @@ import StyledPage from "../../components/reusable/styled-page/StyledPage";
 
 const EmployeeTimeOffPage = () => {
   return (
-    <div>
+
       <StyledPage>
         <EmployeeTimeOff />
       </StyledPage>
-    </div>
   );
 };
 

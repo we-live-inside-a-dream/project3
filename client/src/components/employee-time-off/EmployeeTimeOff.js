@@ -3,6 +3,7 @@ import Select from "react-select";
 import { StyledInput, StyledForm, StyledFormWrapper } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledButton from '../reusable/Inputs/StyledButton'
 import Modal from "../reusable/Modal";
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -79,7 +80,7 @@ const EmployeeTimeOff = () => {
         <input></input>
       </Modal>
         <div>
-          <label>Start:</label>
+          <label>Start Day:</label>
           <input
             type="date"
             id="single-day"
@@ -91,7 +92,7 @@ const EmployeeTimeOff = () => {
           />
         </div>
         <div>
-          <label>End:</label>
+          <label>End Day:</label>
           <input
             type="date"
             id="single-day"
@@ -102,8 +103,20 @@ const EmployeeTimeOff = () => {
             }}
           />
         </div>
+        <BasicTimePicker
+              label="start time"
+              type="time"
+              value={start}
+              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+            />
+        <BasicTimePicker
+              label="start time"
+              type="time"
+              value={end}
+              onChange={(value) =>{ onInputUpdate(value, setStart)}}
+            />
         <div>
-          <label>Comment:</label>
+          <label>Comments:</label>
           <StyledInput
             value={comment}
             onChange={(event) => onInputUpdate(event, setComment)}

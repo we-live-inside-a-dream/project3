@@ -24,13 +24,12 @@ function HomeDashBoardPage() {
     };
     getGreeting();
   }, [currentHour]);
-
   return (
     <>
       <StyledPage>
         <StyledPageTitle
           style={{ marginTop: "50px" }}
-        >{`Good ${hourGreeting}, Jim Bob`}</StyledPageTitle>
+        >{`Good ${hourGreeting}, ${authContext.firstName}`}</StyledPageTitle>
         {/* // >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle> */}
         {/* <HighlightsHeader style={{ color: "darkGrey" }} /> */}
         <DashboardGridNav />

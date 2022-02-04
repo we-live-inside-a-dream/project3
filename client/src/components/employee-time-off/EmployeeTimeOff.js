@@ -216,7 +216,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
+                    onTimeInputUpdate(value, setEndTime);
                   }}
                 />
               </label>

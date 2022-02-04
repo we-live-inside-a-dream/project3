@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
-
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
@@ -20,12 +19,14 @@ import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import SchedulePage from "./pages/manager/SchedulePage";
 import EmployeeTimeOff from "./components/employee-time-off/EmployeeTimeOff";
+import EventsPage from "./pages/common/EventsPage";
 import HomeDashBoardPage from "./pages/common/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
 import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
+import MessangerPage from "./pages/common/MessangerPage";
 
 function App() {
   return (
@@ -48,9 +49,9 @@ function App() {
           <Route
             path="/"
             element={
-              <RequireAuth>
-                <HomeDashBoardPage />
-              </RequireAuth>
+              // <RequireAuth>
+              <HomeDashBoardPage />
+              // </RequireAuth>
             }
           />
           <Route path="/employeeList" element={<EmployeesList />} />
@@ -70,9 +71,9 @@ function App() {
           <Route
             path="/createEmployee"
             element={
-              <MustBeManager>
-                <CreateEmployeePage />
-              </MustBeManager>
+              // <MustBeManager>
+              <CreateEmployeePage />
+              // </MustBeManager>
             }
           />
           <Route
@@ -83,6 +84,7 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route path="/createEvent" element={<EventsPage />} />
           <Route
             path="/availability-edit/:id"
             element={
@@ -105,6 +107,14 @@ function App() {
             element={
               <RequireAuth>
                 <ProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <RequireAuth>
+                <MessangerPage/>
               </RequireAuth>
             }
           />

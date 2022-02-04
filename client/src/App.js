@@ -79,9 +79,9 @@ function App() {
           <Route
             path="/timeOff"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <EmployeeTimeOff />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route path="/createEvent" element={<EventsPage />} />

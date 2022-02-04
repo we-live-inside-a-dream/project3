@@ -44,20 +44,20 @@ const EventEditForm = ({ existingValues }) => {
   let params = useParams();
   let eventId = params.eventId;
 
-  // useEffect(() => {
-  //   if (existingValues) {
-  //     setTitle(existingValues.title);
-  //     setStartTime(existingValues.startTime);
-  //     setEndTime(existingValues.endTime);
-  //     setStartDate(existingValues.startDate);
-  //     setEndDate(existingValues.endDate);
-  //     setType(existingValues.type);
-  //     setNotes(existingValues.notes);
-  //     setAllDay(existingValues.allDay);
-  //     setVisibility(existingValues.visibility);
-  //     setMandatory(existingValues.mandatory);
-  //   }
-  // }, [existingValues]);
+  useEffect(() => {
+    if (existingValues) {
+      setTitle(existingValues.title);
+      setStartTime(existingValues.startTime);
+      setEndTime(existingValues.endTime);
+      setStartDate(existingValues.startDate);
+      setEndDate(existingValues.endDate);
+      setType(existingValues.type);
+      setNotes(existingValues.notes);
+      setAllDay(existingValues.allDay);
+      setVisibility(existingValues.visibility);
+      setMandatory(existingValues.mandatory);
+    }
+  }, [existingValues]);
 
   const typeHandler = (newType) => {
     setType(newType);

@@ -12,7 +12,7 @@ const AuthenticationProvider = ({ children }) => {
   };
   const authContext = { user, logIn, logOut };
   return (
-    <AuthenticationContext.Provider value={authContext}>
+    <AuthenticationContext.Provider value={authContext} user={user}>
       {children}
     </AuthenticationContext.Provider>
   );

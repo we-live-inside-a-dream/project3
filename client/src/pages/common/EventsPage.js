@@ -5,37 +5,37 @@ import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTit
 import EventEditForm from "../../components/events/EventEditForm";
 
 function EventsPage() {
-  let params = useParams()
-  let eventId = params.id
-  const [event, setEvent] = useState()
+  let params = useParams();
+  let eventId = params.id;
+  const [event, setEvent] = useState();
 
-  useEffect(() => {
-    const fetchEvent = async () => {
-      let fetchResult = await fetch(
-        '/api/event/:id/' + eventId
-      )
-      let fetchedEvent = await fetchResult.json()
-      console.log('Fetched Event', fetchedEvent)
-      setEvent(fetchedEvent)
-    }
-    fetchEvent()
-  },[eventId])
+  // useEffect(() => {
+  //   const fetchEvent = async () => {
+  //     let fetchResult = await fetch(
+  //       '/api/event/:id/' + eventId
+  //     )
+  //     let fetchedEvent = await fetchResult.json()
+  //     console.log('Fetched Event', fetchedEvent)
+  //     setEvent(fetchedEvent)
+  //   }
+  //   fetchEvent()
+  // },[eventId])
 
   async function updateEvent(updatedEvent) {
-    await fetch('/api/:id', + eventId, {
+    await fetch("/api/:id", +eventId, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedEvent)
-    })
+      body: JSON.stringify(updatedEvent),
+    });
   }
 
   return (
     <div>
       <StyledPage>
         <StyledPageTitle title="EVENTS CALENDAR" />
-        <EventEditForm existingValues={event} onSave={updateEvent}/>
+        <EventEditForm existingValues={event} onSave={updateEvent} />
       </StyledPage>
     </div>
   );

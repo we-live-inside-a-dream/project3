@@ -1,18 +1,17 @@
-import { useReducer, useState } from "react";
+import { useContext, useState } from "react";
 import Select from "react-select";
-import {
-  StyledInput,
-  StyledForm,
-  StyledFormWrapper,
-} from "../reusable/Inputs/StyledEmployeeForm";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import {
   StyledCheck,
   StyledTextArea,
+  StyledForm,
+  StyledFormWrapper,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -32,6 +31,8 @@ const EmployeeTimeOff = () => {
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [modalAbsenceIsOpen, setModalAbsenceIsOpen] = useState(false);
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -50,7 +51,7 @@ const EmployeeTimeOff = () => {
     setter(value);
   }
 
-  let navigate =  useNavigate()
+  let navigate = useNavigate();
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
     await fetch("/api/timeOff", {
@@ -60,15 +61,16 @@ const EmployeeTimeOff = () => {
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
-    
   }
 
   async function postData() {
     let newEmployeeTimeOff = {
       type: [type.value],
-      // id: user._id,
-      startTime: startTime,
-      endTime: endTime,
+      employeeProfileId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
       startDate: startDate,
       endDate: endDate,
       allDay: allDay,
@@ -76,8 +78,9 @@ const EmployeeTimeOff = () => {
     };
     console.log("posting Time Off", newEmployeeTimeOff);
     await createEmployeeTimeOff(newEmployeeTimeOff);
-    navigate('/')
+    navigate("/");
   }
+  console.log("USER:", user.firstName, user.lastName);
 
   return (
     <div>

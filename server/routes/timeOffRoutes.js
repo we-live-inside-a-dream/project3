@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     let newEmployeeTimeOff = req.body
     let createdId = await employeeTimeOffModel.createEmployeeTimeOff(newEmployeeTimeOff)
     res.send(createdId)
-    console.log("Im here save me", newEmployeeTimeOff)
+    console.log("Im here save me", newEmployeeTimeOff, createdId)
 })
 
 module.exports = router

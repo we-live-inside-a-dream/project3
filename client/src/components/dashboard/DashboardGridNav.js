@@ -15,7 +15,6 @@ let dashGridStyle = {
   rowGap: "30px",
   width: "85%",
   height: "auto",
-  //   border: "1px solid black",
   margin: "50px auto",
 };
 

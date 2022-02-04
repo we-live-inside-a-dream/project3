@@ -48,9 +48,9 @@ function App() {
           <Route
             path="/"
             element={
-              <RequireAuth>
-                <HomeDashBoardPage />
-              </RequireAuth>
+              // <RequireAuth>
+              <HomeDashBoardPage />
+              // </RequireAuth>
             }
           />
           <Route path="/employeeList" element={<EmployeesList />} />
@@ -70,9 +70,9 @@ function App() {
           <Route
             path="/createEmployee"
             element={
-              <MustBeManager>
-                <CreateEmployeePage />
-              </MustBeManager>
+              // <MustBeManager>
+              <CreateEmployeePage />
+              // </MustBeManager>
             }
           />
           <Route
@@ -83,6 +83,7 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route path="/createEvent" element={<EventsPage />} />
           <Route
             path="/availability-edit/:id"
             element={

@@ -25,11 +25,7 @@ import ScheduleAvailability from "./ScheduleAvailability";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
-const breakList = [
-  { name: "Coffee" },
-  { name: "Lunch" },
-  { name: "Coffee2" },
-];
+const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 
 function EditSchedule({ onClose, shiftId, existingValues }) {
   const [firstName, setFirstName] = useState("");
@@ -57,14 +53,17 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     fetchNames();
   }, []);
 
-  
   useEffect(() => {
     if (existingValues) {
       setFirstName(existingValues.firstName);
       setEmployeeId(existingValues.employeeId);
       setLastName(existingValues.lastName);
-      setStart(` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`);//dont look at this! HH:mm => ISO string so the time picker with accept the value
-      setEnd(` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`);// its FINE
+      setStart(
+        ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
+      ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
+      setEnd(
+        ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
+      ); // its FINE
       setDate(existingValues.date);
       setBreaks(existingValues.breaks);
     }
@@ -99,8 +98,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       employeeId,
       firstName,
       lastName,
-      start: fns.format(new Date(start),"HH:mm").toString(),//ISO date => HH:mm
-      end: fns.format(new Date(end),"HH:mm").toString(),
+      start: fns.format(new Date(start), "HH:mm").toString(), //ISO date => HH:mm
+      end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
     };
@@ -120,8 +119,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     let breaky = {};
     let newBreak = [...breaks];
     breaky.name = breakName;
-    breaky.start =fns.format(new Date(breakStart),"HH:mm").toString()//ISO date => HH:mm
-    breaky.end = fns.format(new Date(breakEnd),"HH:mm").toString()
+    breaky.start = fns.format(new Date(breakStart), "HH:mm").toString(); //ISO date => HH:mm
+    breaky.end = fns.format(new Date(breakEnd), "HH:mm").toString();
     breaky.paid = breakPaid;
 
     newBreak.push(breaky);
@@ -142,9 +141,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       {/* <StyledFormWrapper> */}
       <StyledModal>
         <div>
-          <InputLabel>
-            Employee Name
-          </InputLabel>
+          <InputLabel>Employee Name</InputLabel>
           <NativeSelect
             defaultValue={employeeId}
             id="name-imput"
@@ -153,7 +150,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             onChange={(event) =>
               onInputUpdate(event.target.value, setEmployeeId)
             }
-
           >
             {/* {name} */}
             <option></option>
@@ -174,11 +170,11 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             type="date"
             value={date}
             onChange={(event) => {
-              onInputUpdate(event.target.value, setDate)
-            console.log("this is the date in EditSchedule",date)
+              onInputUpdate(event.target.value, setDate);
+              console.log("this is the date in EditSchedule", date);
             }}
           />
-          <ScheduleAvailability date={date} id={employeeId}/>
+          <ScheduleAvailability date={date} id={employeeId} />
         </div>
 
         <div>
@@ -189,8 +185,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={start}
             onChange={(value) => {
               onInputUpdate(value, setStart);
-              (console.log(value))
-            }}      
+              console.log(value);
+            }}
           />
 
           <BasicTimePicker
@@ -201,27 +197,24 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             onChange={(value) => onInputUpdate(value, setEnd)}
           />
         </div>
-        
+
         <div>
-            <InputLabel>
-           Breaks
-          </InputLabel>
-          <NativeSelect   
+          <InputLabel>Breaks</InputLabel>
+          <NativeSelect
             label="name"
             value={breakName}
             onChange={(event) => {
               onInputUpdate(event.target.value, setBreakName);
             }}
             style={{
-              width:"100%"
+              width: "100%",
             }}
           >
             {/* {name} */}
             <option></option>
-            {breakList?.map((event,index) => {
+            {breakList?.map((event, index) => {
               return (
-                <option key={index} 
-                value={event.name}>
+                <option key={index} value={event.name}>
                   {event.name}
                 </option>
               );
@@ -241,9 +234,16 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={breakEnd}
             onChange={(value) => onInputUpdate(value, setBreakEnd)}
           />
-  <StyledButton fontSize={"1.5em"} margin={"1em"} padding={"10"} onClick={onAddBreak}>Add Break</StyledButton>
-          </div>   
-            
+          <StyledButton
+            fontSize={"1.5em"}
+            margin={"1em"}
+            padding={"10"}
+            onClick={onAddBreak}
+          >
+            Add Break
+          </StyledButton>
+        </div>
+
         <CenterStyle>
           <div>
             {breaks?.map((breakys, index) => (
@@ -257,7 +257,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
           </div>
           <StyledButton onClick={postData}>SUBMIT</StyledButton>
         </CenterStyle>
-
       </StyledModal>
       {/* </StyledFormWrapper> */}
     </>

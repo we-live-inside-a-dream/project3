@@ -1,10 +1,9 @@
-import moment from "moment";
-import DashboardGridNav from "./DashboardGridNav";
 import React, { useContext, useEffect, useState } from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import moment from "moment";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
+import DashboardGridNav from "../../components/dashboard/DashboardGridNav";
 
 function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
@@ -31,7 +30,8 @@ function HomeDashBoardPage() {
       <StyledPage>
         <StyledPageTitle
           style={{ marginTop: "50px" }}
-        >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle>
+        >{`Good ${hourGreeting}, Jim Bob`}</StyledPageTitle>
+        {/* // >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle> */}
         {/* <HighlightsHeader style={{ color: "darkGrey" }} /> */}
         <DashboardGridNav />
       </StyledPage>

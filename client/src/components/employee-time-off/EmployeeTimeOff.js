@@ -60,6 +60,7 @@ const EmployeeTimeOff = () => {
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+    
   }
 
   async function postData() {

@@ -13,6 +13,7 @@ import {
   StyledTextArea,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import { useNavigate } from "react-router-dom";
+import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -37,16 +38,16 @@ const EmployeeTimeOff = () => {
     setModalConfirmIsOpen(true);
   }
 
-  const typeHandler = (newType) => {
-    setType(newType);
-    console.log("Vacation type", newType);
-  };
+  // const typeHandler = (newType) => {
+  //   setType(newType);
+  //   console.log("Vacation type", newType);
+  // };
 
-  function onInputUpdate(event, setter) {
-    let newValue = event.target.value;
-    setter(newValue);
-  }
-  function onTimeInputUpdate(value, setter) {
+  // function onInputUpdate(event, setter) {
+  //   let newValue = event.target.value;
+  //   setter(newValue);
+  // }
+  function onInputUpdate(value, setter) {
     setter(value);
   }
 
@@ -87,7 +88,7 @@ const EmployeeTimeOff = () => {
           <div></div>
           <div>
             <label>Type:</label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select value={type} options={typeData} onChange={(value) => onInputUpdate(value, setType)} />
           </div>
           <div></div>
           <Modal
@@ -99,30 +100,29 @@ const EmployeeTimeOff = () => {
             <label>Absence:</label>
             <input></input>
           </Modal>
-          <div>
-            <label>Start Day:</label>
-            <input
-              type="date"
+          
+          {/* <label>Start Day:</label> */}
+          <BasicDatePicker
+              label="Start Date"
               id="single-day"
               name="day"
               value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
+              onChange={(value) => {
+                onTimeInputUpdate(value, setStartDate);
               }}
             />
-          </div>
-          <div>
+          
             <label>End Day:</label>
-            <input
+          <BasicDatePicker
               type="date"
               id="single-day"
               name="day"
               value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
+              onChange={(value) => {
+                onTimeInputUpdate(value, setEndDate);
               }}
             />
-          </div>
+          
           {/*  */}
           {/* <StyledCheck
           className="check"

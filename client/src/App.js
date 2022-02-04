@@ -41,9 +41,9 @@ function App() {
           <Route
             path="/schedules"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <SchedulePage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route
@@ -63,9 +63,9 @@ function App() {
           <Route
             path="/employeeDetail/edit/:id"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <EmployeeEditPage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route
@@ -88,34 +88,34 @@ function App() {
           <Route
             path="/availability-edit/:id"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <EmployeeAvailabilityEditPage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route path="/login" element={<LogIn />} />
           <Route
             path="/logout"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <LogOut />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route
             path="/profile"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <ProfilePage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route
             path="/chat"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <MessangerPage/>
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route

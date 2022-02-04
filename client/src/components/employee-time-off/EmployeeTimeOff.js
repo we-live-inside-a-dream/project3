@@ -12,6 +12,7 @@ import {
   StyledCheck,
   StyledTextArea,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import { useNavigate } from "react-router-dom";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -49,6 +50,8 @@ const EmployeeTimeOff = () => {
     setter(value);
   }
 
+  let navigate =  useNavigate()
+
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
     await fetch("/api/timeOff", {
       method: "POST",
@@ -57,6 +60,7 @@ const EmployeeTimeOff = () => {
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+    
   }
 
   async function postData() {
@@ -72,6 +76,7 @@ const EmployeeTimeOff = () => {
     };
     console.log("posting Time Off", newEmployeeTimeOff);
     await createEmployeeTimeOff(newEmployeeTimeOff);
+    navigate('/')
   }
 
   return (
@@ -216,7 +221,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
+                    onTimeInputUpdate(value, setEndTime);
                   }}
                 />
               </label>

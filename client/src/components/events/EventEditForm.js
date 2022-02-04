@@ -249,8 +249,10 @@ const EventEditForm = ({ existingValues }) => {
           )}
           <div></div>
           <div></div>
-          <div>
-            <StyledButton onClick={postData}>Confirm</StyledButton>
+          <div style={{ display: "flex" }}>
+            <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
+              Confirm
+            </StyledButton>
           </div>
           <div>
             <label>Notes:</label>

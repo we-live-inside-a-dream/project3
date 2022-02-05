@@ -5,6 +5,22 @@ const path = require("path");
 
 dotenv.config();
 const port = process.env.PORT || 5001;
+const io = require('socket.io')(3000)
+
+io.on('connection', socket => {
+  const id = socket.handshake.query.id
+  socket.join(id)
+
+  socket.on('send-message', ({ recipients, text }) => { //recipients is the person receiving the text
+    recipients.forEach(recipient => {
+      const newRecipients = recipients.filter(r => r !== recipient)
+      newRecipients.push(id)
+      socket.broadcast.to(recipient).emit('receive-message', {
+        recipients: newRecipients, sender: id, text
+      })
+    })
+  })
+})
 
 const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
@@ -32,5 +48,6 @@ app.use("*", (req, res) => {
 });
 
 app.listen(port, () => {
+  console.log(`socket open at http://localhost:${io}`)
   console.log(`Example app listening at http://localhost:${port}`);
 });

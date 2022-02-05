@@ -61,7 +61,9 @@ router.get("/employees", async (req, res) => {
 });
 
 router.get("/employees/names", async (req, res) => {
+  
   let employeeNames = await getActiveEmployeeNames();
+  console.log("empNames:",employeeNames)
   res.send(employeeNames);
 });
 

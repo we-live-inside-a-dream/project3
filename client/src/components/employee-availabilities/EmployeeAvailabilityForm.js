@@ -7,7 +7,7 @@ import {
   StyledButton,
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const EmployeeAvailabilityForm = ({
   existingValues,
@@ -31,6 +31,8 @@ const EmployeeAvailabilityForm = ({
     lastName: "",
     employeeProfileId: "",
   });
+
+  let navigate = useNavigate()
 
   console.log("ONCE INSIDE THE AVAIL FORM THE ID IS", theId);
   useEffect(() => {
@@ -70,6 +72,7 @@ const EmployeeAvailabilityForm = ({
     };
     console.log("Saving availability for: ", firstName, lastName);
     await updateAvailability(updatedAvailability);
+    navigate('/availabilities')
   }
 
   async function updateAvailability(updatedAvailability) {

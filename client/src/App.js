@@ -26,7 +26,12 @@ import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
+
 import MessangerPage2 from "./pages/common/MessangerPage2";
+
+
+import AuthenticationContext from "./components/login/AuthenticationContext";
+
 
 function App() {
   return (
@@ -79,9 +84,9 @@ function App() {
           <Route
             path="/timeOff"
             element={
-              <RequireAuth>
-                <EmployeeTimeOff />
-              </RequireAuth>
+              // <RequireAuth>
+              <EmployeeTimeOff />
+              // </RequireAuth>
             }
           />
           <Route path="/createEvent" element={<EventsPage />} />
@@ -113,9 +118,12 @@ function App() {
           <Route
             path="/chat"
             element={
+
               // <RequireAuth>
                 <MessangerPage2/>
               // </RequireAuth>
+
+
             }
           />
           <Route

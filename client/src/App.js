@@ -26,7 +26,7 @@ import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
-import MessangerPage from "./pages/common/MessangerPage";
+import MessangerPage2 from "./pages/common/MessangerPage2";
 
 function App() {
   return (
@@ -114,7 +114,7 @@ function App() {
             path="/chat"
             element={
               // <RequireAuth>
-                <MessangerPage/>
+                <MessangerPage2/>
               // </RequireAuth>
             }
           />

@@ -42,9 +42,9 @@ function App() {
           <Route
             path="/schedules"
             element={
-              <RequireAuth>
-                <SchedulePage />
-              </RequireAuth>
+              // <RequireAuth>
+              <SchedulePage />
+              // </RequireAuth>
             }
           />
           <Route
@@ -64,9 +64,9 @@ function App() {
           <Route
             path="/employeeDetail/edit/:id"
             element={
-              <RequireAuth>
-                <EmployeeEditPage />
-              </RequireAuth>
+              // <RequireAuth>
+              <EmployeeEditPage />
+              // </RequireAuth>
             }
           />
           <Route

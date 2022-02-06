@@ -18,7 +18,17 @@ export default function Messenger() {
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
-    const user = useContext(AuthenticationContext);
+    // const user = useContext(AuthenticationContext);
+    const [user,setUser]=useState({ "_id": "61f9ba8ed69e5da25ae15c18",
+    "firstName": "Derek",
+    "lastName": "Birtwistle",
+    "email": "derekbirtwistle@hotmail.com",
+    "password": "password",
+    "phoneNumber": "55555555555",
+    "positions": [
+        "supervisor"
+    ],
+    "status": "active",})
     
     const scrollRef = useRef();
   
@@ -51,7 +61,7 @@ export default function Messenger() {
     useEffect(() => {
       const getConversations = async () => {
         try {
-          const res = await axios.get("/conversations/" + user._id);
+          const res = await axios.get("api/conversations/" + user._id);
           setConversations(res.data);
         } catch (err) {
             console.log(user)
@@ -64,7 +74,7 @@ export default function Messenger() {
     useEffect(() => {
       const getMessages = async () => {
         try {
-          const res = await axios.get("/messages/" + currentChat?._id);
+          const res = await axios.get("api/messages/" + currentChat?._id);
           setMessages(res.data);
         } catch (err) {
           console.log(err);
@@ -92,7 +102,7 @@ export default function Messenger() {
       });
   
       try {
-        const res = await axios.post("/messages", message);
+        const res = await axios.post("api/messages", message);
         setMessages([...messages, res.data]);
         setNewMessage("");
       } catch (err) {
@@ -148,7 +158,7 @@ export default function Messenger() {
               )}
             </div>
           </div>
-          <div className="chatOnline">
+          {/* <div className="chatOnline">
             <div className="chatOnlineWrapper">
               <ChatOnline
                 onlineUsers={onlineUsers}
@@ -156,7 +166,7 @@ export default function Messenger() {
                 setCurrentChat={setCurrentChat}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </>
     );

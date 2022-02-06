@@ -11,7 +11,7 @@ export default function Conversation({ conversation, currentUser }) {
 
     const getUser = async () => {
       try {
-        const res = await axios("/users?userId=" + friendId);
+        const res = await axios("api/employeeProfile/getByProfileId/" + friendId);
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -31,7 +31,7 @@ export default function Conversation({ conversation, currentUser }) {
         }
         alt=""
       />
-      <span className="conversationName">{user?.username}</span>
+      <span className="conversationName">{user?.firstName}</span>
     </div>
   );
 }

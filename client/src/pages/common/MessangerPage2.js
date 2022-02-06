@@ -4,9 +4,10 @@ import Conversation from "../../components/messanger2/Conversation";
 import Message from "../../components/messanger2/Message";
 import ChatOnline from "../../components/messanger2/ChatOnline";
 import { useContext, useEffect, useRef, useState } from "react";
-// import { AuthContext } from "../../context/AuthContext";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 import axios from "axios";
 import { io } from "socket.io-client";
+
 
 
 export default function Messenger() {
@@ -17,11 +18,12 @@ export default function Messenger() {
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
-    const  [user,setUser]  = useState({_id:"61f9ba8ed69e5da25ae15c18"});
+    const user = useContext(AuthenticationContext);
+    
     const scrollRef = useRef();
   
     useEffect(() => {
-      socket.current = io("ws://localhost:8900");
+      socket.current = io("ws://localhost:5050");
       socket.current.on("getMessage", (data) => {
         setArrivalMessage({
           sender: data.senderId,
@@ -37,14 +39,14 @@ export default function Messenger() {
         setMessages((prev) => [...prev, arrivalMessage]);
     }, [arrivalMessage, currentChat]);
   
-    useEffect(() => {
-      socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", (users) => {
-        setOnlineUsers(
-          user.followings.filter((f) => users.some((u) => u.userId === f))
-        );
-      });
-    }, [user]);
+    // useEffect(() => {
+    //   socket.current.emit("addUser", user._id);
+    //   socket.current.on("getUsers", (users) => {
+    //     setOnlineUsers(
+    //       user.followings.filter((f) => users.some((u) => u.userId === f))
+    //     );
+    //   });
+    // }, [user]);
   
     useEffect(() => {
       const getConversations = async () => {
@@ -52,6 +54,7 @@ export default function Messenger() {
           const res = await axios.get("/conversations/" + user._id);
           setConversations(res.data);
         } catch (err) {
+            console.log(user)
           console.log(err);
         }
       };

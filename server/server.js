@@ -56,9 +56,9 @@ app.use("/api/events", eventsRouter);
 app.use("/api/schedule", scheduleRouter);
 app.use("/", express.static("../client/build"));
 
-app.use("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
+// app.use("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+// });
 
 app.listen(port, () => {
   // console.log(`socket open at http://localhost:${io}`)

@@ -16,7 +16,8 @@ export default function OpenConversation() {
 
     sendMessage(
       selectedConversation.recipients.map(r => r.id),
-      text
+      text,
+      console.log(selectedConversation)
     )
     setText('')
   }

@@ -35,6 +35,7 @@ const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const authRouter = require("./routes/authRoutes");
 const timeOffRouter = require("./routes/timeOffRoutes");
 const eventsRouter = require("./routes/eventsRoutes");
+const chatRouter = require("./routes/chatRoutes")
 
 const app = express();
 app.use(bodyParser.json());
@@ -42,6 +43,7 @@ app.use(bodyParser.json());
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false, limit: "10mb" }));
 
+app.use("/api/chat",chatRouter);
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
 app.use("/api/timeOff", timeOffRouter);

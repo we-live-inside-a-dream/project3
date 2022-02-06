@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const chatModel = require("..models/chat")
+const chatModel = require("../models/chat")
 
 router.post("/create", async (req, res) => {
     let newConvo = req.body;

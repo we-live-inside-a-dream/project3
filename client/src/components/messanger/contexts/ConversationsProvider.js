@@ -27,12 +27,27 @@ export function ConversationsProvider({ id, children }) {
 
 //loading page needs to fetch all conversations for user
 
-  function createConversation(recipients) {
+  async function createConversation(recipients) {
     setConversations(prevConversations => {
       return [...prevConversations, { recipients, messages: [] }]
       //create new convo in DB with recipients.id => can be multiple recipients
     })
   }
+  //   useEffect(()=>{
+
+  //     await fetch("/api/chat/create", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(conversations),
+  //     });
+
+  //   }
+    
+  // },[createConversation])
+  
+
 
   //below needs to update DB using recipients.id
   const addMessageToConversation = useCallback(({ recipients, text, sender }) => {

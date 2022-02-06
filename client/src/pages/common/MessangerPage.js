@@ -13,7 +13,7 @@ function MessangerPage() {
   const authContext = useContext(AuthenticationContext)
 
   return(
-    // <SocketProvider id={id}>
+    <SocketProvider id={id}>
       <ContactsProvider id={id}>
         <ConversationsProvider id={id}>
           <Dashboard id={id} />

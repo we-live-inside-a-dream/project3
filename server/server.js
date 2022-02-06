@@ -5,10 +5,15 @@ const path = require("path");
 
 dotenv.config();
 const port = process.env.PORT || 5001;
-const io = require('socket.io')(3000)
+const io = require('socket.io')(5002, {
+  cors:{origin:["http://localhost:3001"],
+},
+})
 
 io.on('connection', socket => {
   const id = socket.handshake.query.id
+  // displayMessage(`you connected with id:${id}`)
+  console.log(`user ${id} connected`)
   socket.join(id)
 
   socket.on('send-message', ({ recipients, text }) => { //recipients is the person receiving the text
@@ -20,6 +25,8 @@ io.on('connection', socket => {
       })
     })
   })
+  // socket.on("",()=>{})
+
 })
 
 const scheduleRouter = require("./routes/scheduleRoutes");

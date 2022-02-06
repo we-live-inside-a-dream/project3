@@ -15,12 +15,26 @@ export function ConversationsProvider({ id, children }) {
   const { contacts } = useContacts()
   const socket = useSocket()
 
+  // useEffect(() => {
+  //   const fetchConversations = async () => {
+  //     // let fetchResult = await fetch("/api/conversations");
+  //     let fetchedConversations = await fetchResult.json();
+
+  //     setConversations(fetchedConversations);
+  //   };
+  //   fetchConversations();
+  // }, []);
+
+//loading page needs to fetch all conversations for user
+
   function createConversation(recipients) {
     setConversations(prevConversations => {
       return [...prevConversations, { recipients, messages: [] }]
+      //create new convo in DB with recipients.id => can be multiple recipients
     })
   }
 
+  //below needs to update DB using recipients.id
   const addMessageToConversation = useCallback(({ recipients, text, sender }) => {
     setConversations(prevConversations => {
       let madeChange = false
@@ -67,7 +81,7 @@ export function ConversationsProvider({ id, children }) {
       const contact = contacts.find(contact => {
         return contact.id === recipient
       })
-      const name = (contact && contact.name) || recipient
+      const name = (contact && contact.firstName) || recipient
       return { id: recipient, name }
     })
 

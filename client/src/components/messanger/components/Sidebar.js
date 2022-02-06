@@ -75,7 +75,8 @@ export default function Sidebar() {
 
 
   return (
-    <div>
+    <>
+    
     <Box sx={{ width: '100%' }}>
     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -103,7 +104,7 @@ export default function Sidebar() {
   <Modal open={isOpen} onClose={() => setIsOpen(false)}>
   <NewConversationModal setIsOpen={(setIsOpen)}/>:
   </Modal>
-   </div>
+  </>
   );
 }
 //     <div style={{ width: "250px" }} className="d-flex flex-column">

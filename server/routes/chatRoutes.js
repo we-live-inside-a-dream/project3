@@ -2,6 +2,13 @@ const express = require("express");
 const router = express.Router();
 const chatModel = require("..models/chat")
 
+router.post("/create", async (req, res) => {
+    let newConvo = req.body;
+    let createdConversation = await chatModel.create(newConvo);
+    res.send(createdConversation);
+    console.log("From API new Conversation:", createdConversation);
+  });
+
 router.get("/id", async (req, res) => {
     let id = req.query.id;
     let conversations = await chatModel.findById(id);
@@ -15,5 +22,6 @@ router.get("/id", async (req, res) => {
     let newConvo = await chatModel.update(id, updateConvo);
     res.json(newConvo);
   });
+
 
   module.exports = router;

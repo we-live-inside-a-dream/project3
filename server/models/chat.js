@@ -18,14 +18,22 @@ selected:Boolean
     return Schedule.findById(id);
   }
 
-  async function update(id, newScheduleData) {
-    return Schedule.findByIdAndUpdate(id, newScheduleData, {
+  async function update(id, newConvoData) {
+    return Schedule.findByIdAndUpdate(id, newConvoData, {
       returnDocument: "after",
     });
   }
 
+  async function create(convoData) {
+    let newConversation = new Schedule(convoData);
+    let createdConversation = await newConversation.save();
+    console.log("trying to create schedule", createdConversation);
+    return createdConversation;
+  }
+
   module.exports = {
 findById,
-update
+update,
+create
   };
   

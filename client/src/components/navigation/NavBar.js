@@ -34,7 +34,6 @@ function NavBar() {
             <NavbarLink to="/createEmployee">EmpForm</NavbarLink> */}
             {/* <NavbarLink to="/availabilities">Availabilities</NavbarLink> */}
             <NavbarLink to="/timeOff">Time OFF</NavbarLink>
-            <NavbarLink to="/logout">Logout</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);
@@ -45,11 +44,16 @@ function NavBar() {
           </NavbarLinkContainer>
         </LeftContainer>
         <RightContainer>
-          {!authContext.user && (
+          {authContext.user && (
+            <Link to="/logout">
+              <StyledNavButton>LOG OUT</StyledNavButton>
+            </Link>
+          )}
+          {/* {!authContext.user && (
             <Link to="/login">
               <StyledNavButton>LOG IN</StyledNavButton>
             </Link>
-          )}
+          )} */}
           <StyledAvatarButton />
         </RightContainer>
       </NavbarInnerContainer>

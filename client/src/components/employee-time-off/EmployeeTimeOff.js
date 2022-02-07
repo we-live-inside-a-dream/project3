@@ -47,9 +47,6 @@ const EmployeeTimeOff = () => {
     let newValue = event.target.value;
     setter(newValue);
   }
-  function onTimeInputUpdate(value, setter) {
-    setter(value);
-  }
 
   let navigate = useNavigate();
 
@@ -109,8 +106,8 @@ const EmployeeTimeOff = () => {
               id="single-day"
               name="day"
               value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
+              onChange={(value) => {
+                onInputUpdate(value, setStartDate);
               }}
             />
           </div>
@@ -121,8 +118,8 @@ const EmployeeTimeOff = () => {
               id="single-day"
               name="day"
               value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
+              onChange={(value) => {
+                onInputUpdate(value, setEndDate);
               }}
             />
           </div>
@@ -213,7 +210,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
+                    onInputUpdate(value, setStartTime);
                   }}
                 />
               </label>
@@ -224,7 +221,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setEndTime);
+                    onInputUpdate(value, setEndTime);
                   }}
                 />
               </label>

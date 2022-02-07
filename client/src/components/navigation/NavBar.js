@@ -30,11 +30,9 @@ function NavBar() {
         </LogoNavbarLink>
         <LeftContainer>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
-            {/* <NavbarLink to="/schedules">Schedules</NavbarLink> */}
-            <NavbarLink to="/employeeList">Employees</NavbarLink>
-            {/* <NavbarLink to="/employeeDetail">Employee Detail</NavbarLink> */}
-            <NavbarLink to="/createEmployee">EmpForm</NavbarLink>
-            <NavbarLink to="/availabilities">Availabilities</NavbarLink>
+            {/* <NavbarLink to="/employeeList">Employees</NavbarLink>
+            <NavbarLink to="/createEmployee">EmpForm</NavbarLink> */}
+            {/* <NavbarLink to="/availabilities">Availabilities</NavbarLink> */}
             <NavbarLink to="/timeOff">Time OFF</NavbarLink>
             <OpenLinksButton
               onClick={() => {

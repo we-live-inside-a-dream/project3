@@ -6,7 +6,7 @@ import MonthSchedulePage from "./MonthSchedulePage";
 import React from "react";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 
-function SchedulePage() {
+function ScheduleMenuPage() {
   const [currentTab, setCurrentTab] = useState(1);
   //   const CurrentTabContext = React.createContext(currentTab);
   return (
@@ -38,4 +38,4 @@ function SchedulePage() {
   );
 }
 
-export default SchedulePage;
+export default ScheduleMenuPage;

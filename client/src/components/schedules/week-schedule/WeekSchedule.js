@@ -10,7 +10,7 @@ import StyledTable from "../../reusable/tables/StyledTable";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
-import StyledButtonGroup from "../StyledScheduleButtonGroup";
+import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -127,7 +127,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     <div className="container">
       <div style={{ display: "grid", gridTemplateColumns: "30% 70%" }}>
         <div style={{ gridTempalteRow: "1", marginBottom: "0%" }}>
-          <StyledButtonGroup
+          <StyledScheduleButtonGroup
             setCurrentTab={setCurrentTab}
             currentTab={currentTab}
           />

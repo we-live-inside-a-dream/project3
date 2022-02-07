@@ -4,7 +4,7 @@ import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import NamePicTableData from "../../reusable/NamePicTableData";
-import StyledButtonGroup from "../StyledScheduleButtonGroup";
+import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import { bottomNavigationActionClasses } from "@mui/material";
 
@@ -74,7 +74,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           height: "auto",
         }}
       >
-        <StyledButtonGroup
+        <StyledScheduleButtonGroup
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
         />

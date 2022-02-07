@@ -2,14 +2,12 @@ import React from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import EmployeeProfileList from "../../components/employee-list/EmployeeProfileList";
 
-function EmployeesList() {
+function EmployeesListPage() {
   return (
     <div>
-      <StyledPage>
-        <EmployeeProfileList />
-      </StyledPage>
+      <EmployeeProfileList />
     </div>
   );
 }
 
-export default EmployeesList;
+export default EmployeesListPage;

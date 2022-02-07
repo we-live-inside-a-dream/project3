@@ -8,7 +8,7 @@
 } */
 
 .grid-container {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 1fr;
   justify-items: stretch;

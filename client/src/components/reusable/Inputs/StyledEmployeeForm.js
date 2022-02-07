@@ -5,7 +5,7 @@ const sharedStyles = css`
   height: 38px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  margin: 10px 0 20px 0;
+  margin: 1px 0 20px 0;
   padding-left: 20px;
   box-sizing: border-box;
 `;
@@ -76,6 +76,7 @@ export const StyledTextArea = styled.textarea`
   min-height: 100px;
   resize: none;
   ${sharedStyles}
+  padding-top: 5px;
 `;
 
 export const StyledButton = styled.button`

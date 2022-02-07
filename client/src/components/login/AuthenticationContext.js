@@ -4,6 +4,8 @@ const AuthenticationContext = createContext({
   username: "",
   logIn: () => {},
   logOut: () => {},
-});
+},
+
+);
 
 export default AuthenticationContext;

@@ -39,10 +39,8 @@ export default function Messenger() {
 //socket.emit will take data from ("String",FETCH);
 
     useEffect(() => {
-      const location = window.location
-      console.log(location)
-
-      socket.current = io("ws://localhost:5001");
+      const host = window.location.host
+      socket.current = io("ws://"+host);
       socket.current.on("getMessage", (data) => {
         setArrivalMessage({
           sender: data.senderId,

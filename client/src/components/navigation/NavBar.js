@@ -51,11 +51,11 @@ function NavBar() {
               <StyledNavButton>LOG OUT</StyledNavButton>
             </Link>
           )}
-          {/* {!authContext.user && (
+          {!authContext.user && (
             <Link to="/login">
               <StyledNavButton>LOG IN</StyledNavButton>
             </Link>
-          )} */}
+          )}
           <StyledAvatarButton />
         </RightContainer>
       </NavbarInnerContainer>

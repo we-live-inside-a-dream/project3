@@ -15,14 +15,14 @@ const Schedule = mongoose.model("schedule", {
 async function createSchedule(ScheduleData) {
   let newSchedule = new Schedule(ScheduleData);
   let createdSchedule = await newSchedule.save();
-  console.log("trying to create schedule", createdSchedule);
+  // console.log("trying to create schedule", createdSchedule);
   return createdSchedule.id;
 }
 
 // {date:{$gte:ISODate("2021-01-01"),$lte:ISODate("2020-05-01"}}
 
 async function listScheduleByDay(day) {
-  console.log("from model,", day);
+  // console.log("from model,", day);
   return Schedule.find({ date: day });
 }
 async function listScheduleByWeek(start, end) {

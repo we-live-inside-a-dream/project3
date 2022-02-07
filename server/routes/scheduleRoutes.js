@@ -77,6 +77,7 @@ router.post("/schedule/update", async (req, res) => {
   let id = req.query.id;
   let updateSchedule = req.body;
   let newSchedule = await scheduleModel.update(id, updateSchedule);
+  console.log("NEW SCHEDULE!!!!!", newSchedule);
   res.json(newSchedule);
 });
 

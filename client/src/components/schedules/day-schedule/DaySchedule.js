@@ -18,12 +18,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
 
   useEffect(() => {
     if (shiftId) {
-      console.log("shiftId is", shiftId);
       const fetchShift = async () => {
         let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
         let fetchedShift = await fetchResult.json();
         setShift(fetchedShift);
-        // console.log("AFTER USE EFFECT SHIFT ID", shiftId);
       };
       const deleteShiftById = async () => {
         await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
@@ -32,13 +30,11 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       };
       //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
       if (deleteShift) {
-        console.log("trying to delete shift!!");
         deleteShiftById();
         setDeleteShift(false);
       } else {
         fetchShift();
       }
-      console.log("AFTER USE EFFECT SHIFT ID", shiftId);
     }
   }, [shiftId, deleteShift]);
 
@@ -46,11 +42,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
       let fetchedDay = await fetchResult.json();
-      // console.log("FETCHED DAY", fetchedDay);
       setSchedule(fetchedDay);
     };
     fetchSchedule();
-  }, [day]);
+  }, [day, isOpen]);
 
   //business hours should come from a db fetch
   let startTime = 8;
@@ -65,8 +60,8 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
-    prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
-      
+      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
@@ -114,6 +109,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               if (hour === Math.floor(hour)) {
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{ minWidth: "25px", padding: "0px" }}
                   >
                     {hour}
@@ -122,6 +118,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               } else if (hour - 0.5 === Math.floor(hour)) {
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{
                       minWidth: "25px",
                       padding: "0px",
@@ -131,6 +128,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               } else
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{
                       minWidth: "25px",
                       padding: "0px",

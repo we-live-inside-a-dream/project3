@@ -3,7 +3,7 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 
 function StyledButtonGroup({ setCurrentTab, currentTab }) {
   const [activeButton, setActiveButton] = useState();
-  console.log("CURRENT TAB AND ACTIVE BUTTON", currentTab, activeButton);
+  // console.log("CURRENT TAB AND ACTIVE BUTTON", currentTab, activeButton);
 
   useEffect(() => {
     setActiveButton(currentTab);

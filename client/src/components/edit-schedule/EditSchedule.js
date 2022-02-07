@@ -106,11 +106,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     onClose();
 
     if (existingValues) {
-      console.log(existingValues);
-      console.log("updateShift with...", newShift);
       await updateShift(newShift);
     } else {
-      console.log("Saving shift", newShift);
       await createShift(newShift);
     }
   }
@@ -129,10 +126,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }
 
   function onRemoveBreak(index) {
-    console.log("removing break at index", index);
     let newBreak = [...breaks];
     newBreak.splice(index, 1);
-    console.log("breaks are... ", newBreak);
     setBreaks(newBreak);
   }
 
@@ -143,7 +138,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
         <div>
           <InputLabel>Employee Name</InputLabel>
           <NativeSelect
-            defaultValue={employeeId}
+            // defaultValue={employeeId}
             id="name-imput"
             value={employeeId}
             label="name"
@@ -171,7 +166,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={date}
             onChange={(event) => {
               onInputUpdate(event.target.value, setDate);
-              console.log("this is the date in EditSchedule", date);
             }}
           />
           <ScheduleAvailability date={date} id={employeeId} />

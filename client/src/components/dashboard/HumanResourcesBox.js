@@ -12,7 +12,7 @@ function HumanResourcesBox() {
       <DashboardBox
         title="EMPLOYEES"
         content={theContent}
-        clickFunction={navigate("/human-resources")}
+        clickFunction={() => navigate("/human-resources")}
       />
     </>
   );

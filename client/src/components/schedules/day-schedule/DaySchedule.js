@@ -4,7 +4,7 @@ import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import NamePicTableData from "../../reusable/NamePicTableData";
-import StyledButtonGroup from "../StyledScheduleButtonGroup";
+import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import { bottomNavigationActionClasses } from "@mui/material";
 
@@ -65,8 +65,8 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
-    prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
-      
+      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
@@ -79,7 +79,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           height: "auto",
         }}
       >
-        <StyledButtonGroup
+        <StyledScheduleButtonGroup
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
         />

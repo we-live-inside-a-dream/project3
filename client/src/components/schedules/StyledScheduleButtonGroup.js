@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
 
-function StyledButtonGroup({ setCurrentTab, currentTab }) {
+function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
   const [activeButton, setActiveButton] = useState();
   console.log("CURRENT TAB AND ACTIVE BUTTON", currentTab, activeButton);
 
@@ -60,4 +60,4 @@ function StyledButtonGroup({ setCurrentTab, currentTab }) {
     </div>
   );
 }
-export default StyledButtonGroup;
+export default StyledScheduleButtonGroup;

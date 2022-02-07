@@ -1,9 +1,8 @@
 import EmployeeAvailabilityForm from "../../components/employee-availabilities/EmployeeAvailabilityForm";
 import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
-import StyledPage from "../../components/reusable/styled-page/StyledPage";
+// import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import EmployeeEditPage from "./EmployeeEditPage";
 
 const CreateEmployeePage = () => {
   const [createdEmployeeId, setCreatedEmployeeId] = useState("");
@@ -28,7 +27,7 @@ const CreateEmployeePage = () => {
     createdEmployeeId
   );
   return (
-    <StyledPage>
+    <>
       {currentTab === 1 && (
         <EmployeeEditForm
           setId={setCreatedEmployeeId}
@@ -41,7 +40,7 @@ const CreateEmployeePage = () => {
           theId={createdEmployeeId}
         />
       )}
-    </StyledPage>
+    </>
   );
 };
 

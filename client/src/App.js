@@ -1,5 +1,5 @@
 import "./App.css";
-import EmployeesList from "./pages/manager/EmployeesList";
+import EmployeesList from "./pages/manager/EmployeesListPage";
 import { Routes, Route } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import CalendarScratch from "./components/calendar/CalendarScratch";
@@ -17,7 +17,7 @@ import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 // import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
-import SchedulePage from "./pages/manager/SchedulePage";
+import ScheduleMenuPage from "./pages/manager/ScheduleMenuPage";
 import EmployeeTimeOff from "./components/employee-time-off/EmployeeTimeOff";
 import EventsPage from "./pages/common/EventsPage";
 import HomeDashBoardPage from "./pages/common/HomeDashBoardPage";
@@ -26,12 +26,9 @@ import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
-
+import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
-
-
 import AuthenticationContext from "./components/login/AuthenticationContext";
-
 
 function App() {
   return (
@@ -44,14 +41,6 @@ function App() {
         <NavBar />
         <Routes>
           <Route
-            path="/schedules"
-            element={
-              // <RequireAuth>
-              <SchedulePage />
-              // </RequireAuth>
-            }
-          />
-          <Route
             path="/"
             element={
               // <RequireAuth>
@@ -59,7 +48,16 @@ function App() {
               // </RequireAuth>
             }
           />
-          <Route path="/employeeList" element={<EmployeesList />} />
+          <Route
+            path="/schedules"
+            element={
+              // <RequireAuth>
+              <ScheduleMenuPage />
+              // </RequireAuth>
+            }
+          />
+
+          {/* <Route path="/employeeList" element={<EmployeesList />} /> */}
           <Route
             path="/availabilities"
             element={<EmployeeAvailabilityPage />}
@@ -86,6 +84,14 @@ function App() {
             element={
               // <RequireAuth>
               <EmployeeTimeOff />
+              // </RequireAuth>
+            }
+          />
+          <Route
+            path="/human-resources"
+            element={
+              // <RequireAuth>
+              <EmployeesMenuPage />
               // </RequireAuth>
             }
           />
@@ -118,12 +124,9 @@ function App() {
           <Route
             path="/chat"
             element={
-
               // <RequireAuth>
-                <MessangerPage2/>
+              <MessangerPage2 />
               // </RequireAuth>
-
-
             }
           />
           <Route

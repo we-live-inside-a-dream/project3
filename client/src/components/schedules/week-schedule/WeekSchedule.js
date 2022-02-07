@@ -11,6 +11,7 @@ import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
+import WeekScheduleLegend from "./WeekScheduleLegend";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -129,15 +130,20 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "30% 70%",
+          gridTemplateColumns: " 50% 50%",
           height: "auto",
         }}
       >
-        <StyledScheduleButtonGroup
-          setCurrentTab={setCurrentTab}
-          currentTab={currentTab}
-        />
-        {/* </div> */}
+        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
+          <StyledScheduleButtonGroup
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+            style={{ marginRight: "20px", alignSelf: "baseline" }}
+          />
+          <WeekScheduleLegend
+            style={{ marginLeft: "15px", paddingBottom: "0px" }}
+          />
+        </div>
         <div style={{ gridTemplateRow: "1" }}>
           <h2
             style={{

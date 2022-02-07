@@ -11,6 +11,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
+import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const typeData = [
@@ -38,10 +39,10 @@ const EmployeeTimeOff = () => {
     setModalConfirmIsOpen(true);
   }
 
-  const typeHandler = (newType) => {
-    setType(newType);
-    console.log("Vacation type", newType);
-  };
+  // const typeHandler = (newType) => {
+  //   setType(newType);
+  //   console.log("Vacation type", newType);
+  // };
 
   function onInputUpdate(event, setter) {
     let newValue = event.target.value;
@@ -87,7 +88,7 @@ const EmployeeTimeOff = () => {
           <div></div>
           <div>
             <label>Type:</label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select value={type} options={typeData} onChange={(value) => onInputUpdate(value, setType)} />
           </div>
           <div></div>
           <Modal
@@ -99,10 +100,10 @@ const EmployeeTimeOff = () => {
             <label>Absence:</label>
             <input></input>
           </Modal>
-          <div>
-            <label>Start Day:</label>
-            <input
-              type="date"
+          
+          {/* <label>Start Day:</label> */}
+          <BasicDatePicker
+              label="Start Date"
               id="single-day"
               name="day"
               value={startDate}
@@ -110,10 +111,9 @@ const EmployeeTimeOff = () => {
                 onInputUpdate(value, setStartDate);
               }}
             />
-          </div>
-          <div>
+          
             <label>End Day:</label>
-            <input
+          <BasicDatePicker
               type="date"
               id="single-day"
               name="day"
@@ -122,7 +122,7 @@ const EmployeeTimeOff = () => {
                 onInputUpdate(value, setEndDate);
               }}
             />
-          </div>
+          
           {/*  */}
           {/* <StyledCheck
           className="check"

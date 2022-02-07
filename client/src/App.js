@@ -93,26 +93,26 @@ function App() {
           <Route
             path="/availability-edit/:id"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <EmployeeAvailabilityEditPage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route path="/login" element={<LogIn />} />
           <Route
             path="/logout"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <LogOut />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route
             path="/profile"
             element={
-              <RequireAuth>
+              // <RequireAuth>
                 <ProfilePage />
-              </RequireAuth>
+              // </RequireAuth>
             }
           />
           <Route

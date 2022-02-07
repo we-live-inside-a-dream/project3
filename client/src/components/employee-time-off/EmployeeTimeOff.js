@@ -44,12 +44,9 @@ const EmployeeTimeOff = () => {
   //   console.log("Vacation type", newType);
   // };
 
-  // function onInputUpdate(event, setter) {
-  //   let newValue = event.target.value;
-  //   setter(newValue);
-  // }
-  function onInputUpdate(value, setter) {
-    setter(value);
+  function onInputUpdate(event, setter) {
+    let newValue = event.target.value;
+    setter(newValue);
   }
 
   let navigate = useNavigate();
@@ -111,7 +108,7 @@ const EmployeeTimeOff = () => {
               name="day"
               value={startDate}
               onChange={(value) => {
-                onTimeInputUpdate(value, setStartDate);
+                onInputUpdate(value, setStartDate);
               }}
             />
           
@@ -122,7 +119,7 @@ const EmployeeTimeOff = () => {
               name="day"
               value={endDate}
               onChange={(value) => {
-                onTimeInputUpdate(value, setEndDate);
+                onInputUpdate(value, setEndDate);
               }}
             />
           
@@ -213,7 +210,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
+                    onInputUpdate(value, setStartTime);
                   }}
                 />
               </label>
@@ -224,7 +221,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onTimeInputUpdate(value, setEndTime);
+                    onInputUpdate(value, setEndTime);
                   }}
                 />
               </label>

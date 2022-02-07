@@ -2,32 +2,67 @@ const dotenv = require("dotenv");
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const session = require('express-session')
+const passport = require('passport')
+
 
 dotenv.config();
 const port = process.env.PORT || 5001;
-// const io = require('socket.io')(5002, {
-//   cors:{origin:["http://localhost:3001"],
-// },
-// })
+const app = require('express')();
+const http = require('http').Server(app);
 
-// io.on('connection', socket => {
-//   const id = socket.handshake.query.id
-//   // displayMessage(`you connected with id:${id}`)
-//   console.log(`user ${id} connected`)
-//   socket.join(id)
+const io = require('socket.io')(http);
 
-//   socket.on('send-message', ({ recipients, text }) => { //recipients is the person receiving the text
-//     recipients.forEach(recipient => {
-//       const newRecipients = recipients.filter(r => r !== recipient)
-//       newRecipients.push(id)
-//       socket.broadcast.to(recipient).emit('receive-message', {
-//         recipients: newRecipients, sender: id, text
-//       })
-//     })
-//   })
-//   // socket.on("",()=>{})
+let users = [];
+  
+  const addUser = (userId, socketId) => {
+    !users.some((user) => user.userId === userId) &&
+      users.push({ userId, socketId });
+     
+  };
+  
+  const removeUser = (socketId) => {
+    users = users.filter((user) => user.socketId !== socketId);
+  };
+  
+  const getUser = (userId) => {
+    return users.find((user) => user.userId === userId);
+  };
+  
+  io.on("connection", (socket) => {
+    //when connect
+    // console.log(socket)
+    //take userId and socketId from user
+    //new socketId is created everytime page is refreshed
+    socket.on("addUser", (userId) => {
+      console.log("a user connected.",userId);
+      addUser(userId, socket.id);
 
-// })
+      io.emit("getUsers", users);
+    });
+  
+    //send and get message
+    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+      const user = getUser(receiverId);
+      console.log(user)
+      io.to(user.socketId).emit("getMessage", {
+        senderId,
+        text,
+      });
+    });
+  
+    //when disconnect
+    socket.on("disconnect", () => {
+      console.log("a user disconnected!");
+      removeUser(socket.id);
+      io.emit("getUsers", users);
+    });
+  });
+
+
+
+
+
 
 const scheduleRouter = require("./routes/scheduleRoutes");
 const availabilityRouter = require("./routes/availabilityRoutes");
@@ -39,8 +74,13 @@ const chatRouter = require("./routes/chatRoutes")
 const conversationsRouter = require("./routes/conversationsRoutes")
 const messagesRouter = require("./routes/messagesRoutes")
 
-const app = express();
-app.use(bodyParser.json());
+
+
+
+app.use(session({ secret: 'cats' }))
+app.use(express.json())
+app.use(passport.initialize())
+app.use(passport.session())
 
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false, limit: "10mb" }));
@@ -60,7 +100,7 @@ app.use("/", express.static("../client/build"));
 //   res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 // });
 
-app.listen(port, () => {
-  // console.log(`socket open at http://localhost:${io}`)
+http.listen(port, () => {
+ 
   console.log(`Example app listening at http://localhost:${port}`);
 });

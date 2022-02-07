@@ -30,7 +30,7 @@ function HomeDashBoardPage() {
       <StyledPage>
         <StyledPageTitle
           style={{ marginTop: "50px" }}
-        >{`Good ${hourGreeting}, ${user._id}`}</StyledPageTitle>
+        >{`Good ${hourGreeting}, ${user?._id}`}</StyledPageTitle>
         {/* // >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle> */}
         {/* <HighlightsHeader style={{ color: "darkGrey" }} /> */}
         <DashboardGridNav />

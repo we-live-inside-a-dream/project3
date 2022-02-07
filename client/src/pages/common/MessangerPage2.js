@@ -18,17 +18,20 @@ export default function Messenger() {
     const [arrivalMessage, setArrivalMessage] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
-    // const user = useContext(AuthenticationContext);
-    const [user,setUser]=useState({"_id":"61f9ba8ed69e5da25ae15c18",
-    "firstName":"Derek",
-    "lastName":"Birtwistle",
-    "email":"derekbirtwistle@hotmail.com",
-    "password":"password",
-    "phoneNumber":"55555555555",
-    "positions":[
-        "supervisor"
-    ],
-    "status": "active",})
+    const authContext = useContext(AuthenticationContext);
+    const user = authContext.user
+   
+
+    // const [user,setUser]=useState({ "_id" : "61fc6b7939ecd01d0e3a50eb",
+    // "firstName" : "Julie",
+    // "lastName" : "Weir",
+    // "email" : "weirjulieanne@gmail.com",
+    // "password" : "juliejuliejulie",
+    // "phoneNumber" : "555-666-7777",
+    // "positions" : [ 
+    //     "manager"
+    // ],
+    // "status" : "active",})
     
     const scrollRef = useRef();
   
@@ -36,7 +39,10 @@ export default function Messenger() {
 //socket.emit will take data from ("String",FETCH);
 
     useEffect(() => {
-      socket.current = io("ws://localhost:5050");
+      const location = window.location
+      console.log(location)
+
+      socket.current = io("ws://localhost:5001");
       socket.current.on("getMessage", (data) => {
         setArrivalMessage({
           sender: data.senderId,
@@ -53,26 +59,31 @@ export default function Messenger() {
     }, [arrivalMessage, currentChat]);
   
     useEffect(() => {
-      socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", (users) => {
-        setOnlineUsers(
-          user.followings.filter((f) => users.some((u) => u.userId === f))
-        );
-      });
+      if(user){
+
+        socket.current.emit("addUser", user._id);
+        socket.current.on("getUsers", (users) => {
+          // setOnlineUsers(
+            //   user.followings.filter((f) => users.some((u) => u.userId === f))
+            // );
+          });
+        }
     }, [user]);
   
     useEffect(() => {
       const getConversations = async () => {
-        try {
-          const res = await axios.get("api/conversations/" + user._id);
-          setConversations(res.data);
-        } catch (err) {
+        if(user){
+          try {
+            const res = await axios.get("api/conversations/" + user._id);
+            setConversations(res.data);
+          } catch (err) {
             console.log(user)
-          console.log(err);
-        }
-      };
+            console.log(err);
+          }
+        };
+      }
       getConversations();
-    }, [user._id]);
+    }, [user]);
   
     useEffect(() => {
       const getMessages = async () => {

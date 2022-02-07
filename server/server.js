@@ -67,7 +67,7 @@ const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 
-app.use(session({ secret: "cats" }));
+app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());

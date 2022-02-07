@@ -8,11 +8,10 @@ import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTit
 
 function ScheduleMenuPage() {
   const [currentTab, setCurrentTab] = useState(1);
-  //   const CurrentTabContext = React.createContext(currentTab);
   return (
     <>
       <StyledPage>
-        <StyledPageTitle style={{ gridTemplateRow: "1" }}>
+        <StyledPageTitle style={{ gridTemplateRow: "1", marginBottom: "40px" }}>
           SCHEDULES
         </StyledPageTitle>
         {currentTab === 1 && (

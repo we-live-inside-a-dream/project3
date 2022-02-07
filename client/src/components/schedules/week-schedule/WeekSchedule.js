@@ -103,7 +103,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       // console.log(
       //   `employee is available between ${availableToday?.start} and ${availableToday?.end}`
       // );
-      return "yellow";
+      return "gold";
     } else {
       // console.log("employee is free to suffer all day!!");
       return "#32cd32";

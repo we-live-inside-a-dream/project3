@@ -9,7 +9,6 @@ function WeekScheduleLegend() {
         gridTemplateColumns: "1fr 12fr",
       }}
     >
-      {/* <div style={{ display: "inline",  }}> */}
       <div
         style={{
           borderRadius: "50%",
@@ -24,14 +23,13 @@ function WeekScheduleLegend() {
         }}
       ></div>
       <p style={{ padding: "0px", margin: "0px", gridRow: "1" }}>Unavailable</p>
-      {/* </div> */}
-      {/* <div style={{ display: "inline" }}> */}
+
       <div
         style={{
           borderRadius: "50%",
           height: "10px",
           width: "10px",
-          backgroundColor: "yellow",
+          backgroundColor: "gold",
           lineHeight: ".5",
           display: "inline-block",
           margin: " 0px 8px",
@@ -42,8 +40,7 @@ function WeekScheduleLegend() {
       <p style={{ padding: "0px", margin: "0px", gridRow: "2" }}>
         Available part-day
       </p>
-      {/* </div> */}
-      {/* <div style={{ display: "inline" }}> */}
+
       <div
         style={{
           borderRadius: "50%",

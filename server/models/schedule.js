@@ -49,7 +49,9 @@ async function listScheduleByMonth(month) {
 async function findById(id) {
   return Schedule.findById(id);
 }
-
+async function findByEmployeeProfileId(id) {
+  return Schedule.find({ employeeId: id });
+}
 async function update(id, newScheduleData) {
   return Schedule.findByIdAndUpdate(id, newScheduleData, {
     returnDocument: "after",
@@ -96,6 +98,7 @@ module.exports = {
   listScheduleByWeek,
   listScheduleByMonth,
   findById,
+  findByEmployeeProfileId,
   update,
   deleteSchedule,
   listByWeekDays,

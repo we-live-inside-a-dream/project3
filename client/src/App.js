@@ -29,6 +29,7 @@ import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
 import AuthenticationContext from "./components/login/AuthenticationContext";
+import EmployeeProfilePage from "./components/employee/EmployeeProfilePage";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             path="/availabilities"
             element={<EmployeeAvailabilityPage />}
           />
+          <Route path="/my-page" element={<EmployeeProfilePage />} />
           {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
           <Route
             path="/employeeDetail/edit/:id"

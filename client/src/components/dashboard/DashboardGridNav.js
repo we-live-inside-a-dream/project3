@@ -5,6 +5,7 @@ import AnnouncementsBox from "./AnnouncementsBox";
 import { CalendarBox } from "./CalendarBox";
 import HumanResourcesBox from "./HumanResourcesBox";
 import FilesBox from "./FilesBox";
+import UpcomingShiftsBox from "./UpcomingShiftsBox";
 
 let dashGridStyle = {
   display: "flex",
@@ -24,6 +25,7 @@ const DashboardGridNav = function () {
     <div style={dashGridStyle}>
       <ScheduleBox />
       <CalendarBox />
+      <UpcomingShiftsBox />
       <HumanResourcesBox />
       <MessagesBox />
       <AnnouncementsBox />

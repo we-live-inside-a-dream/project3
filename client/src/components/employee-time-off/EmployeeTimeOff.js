@@ -47,9 +47,6 @@ const EmployeeTimeOff = () => {
     let newValue = event.target.value;
     setter(newValue);
   }
-  function onTimeInputUpdate(value, setter) {
-    setter(value);
-  }
 
   let navigate = useNavigate();
 

@@ -105,6 +105,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       return "yellow";
     } else {
       // console.log("employee is free to suffer all day!!");
+      return "#32cd32";
     }
   }
 
@@ -125,28 +126,33 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
 
   return (
     <div className="container">
-      <div style={{ display: "grid", gridTemplateColumns: "30% 70%" }}>
-        <div style={{ gridTempalteRow: "1", marginBottom: "0%" }}>
-          <StyledScheduleButtonGroup
-            setCurrentTab={setCurrentTab}
-            currentTab={currentTab}
-          />
-        </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "30% 70%",
+          height: "auto",
+        }}
+      >
+        <StyledScheduleButtonGroup
+          setCurrentTab={setCurrentTab}
+          currentTab={currentTab}
+        />
+        {/* </div> */}
         <div style={{ gridTemplateRow: "1" }}>
           <h2
             style={{
-              width: "auto",
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
               color: "#07889b",
-              marginTop: "20px",
+              marginTop: "0px",
               marginBottom: "0px",
               paddingBottom: "0px",
             }}
           >
             Week Starting:
             <StyledInput
+              style={{ marginBottom: "0px" }}
               type="date"
               id="single-day"
               name="day"

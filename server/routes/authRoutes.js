@@ -61,7 +61,9 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.get("/loggedInUser", function (req, res) {
-  res.send(req.user);
+  
+  console.log("USER IS HERE",req.user)
+  res.json(req.user);
 });
 
 router.get("/logout", (req, res) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import {
@@ -12,6 +12,7 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const typeData = [
   { value: "holiday", label: "Holiday" },
@@ -40,9 +41,11 @@ const EventEditForm = ({ existingValues }) => {
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
   let params = useParams();
-  let eventId = params.eventId;
+  // let eventId = params.eventId;
 
   useEffect(() => {
     if (existingValues) {
@@ -98,6 +101,9 @@ const EventEditForm = ({ existingValues }) => {
   async function postData() {
     let newEvent = {
       title: title,
+      employeeProfileId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
       type: [type.value],
       startTime: fns.format(new Date(startTime), "HH:mm").toString(),
       endTime: fns.format(new Date(endTime), "HH:mm").toString(),
@@ -243,8 +249,10 @@ const EventEditForm = ({ existingValues }) => {
           )}
           <div></div>
           <div></div>
-          <div>
-            <StyledButton onClick={postData}>Confirm</StyledButton>
+          <div style={{ display: "flex" }}>
+            <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
+              Confirm
+            </StyledButton>
           </div>
           <div>
             <label>Notes:</label>

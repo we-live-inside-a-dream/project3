@@ -29,7 +29,7 @@ export default function LogIn() {
       password,
     });
     let user = response.data;
-    console.log(response);
+    console.log("LOGGIN",response);
     authContext.logIn(user);
     navigate("/");
   };

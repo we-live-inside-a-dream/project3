@@ -9,7 +9,8 @@ function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
   const [hourGreeting, setHourGreeting] = useState("");
   const authContext = useContext(AuthenticationContext);
-  
+  let user = authContext.user;
+
   useEffect(() => {
     let getGreeting = function () {
       let hourValue;
@@ -24,14 +25,15 @@ function HomeDashBoardPage() {
     };
     getGreeting();
   }, [currentHour]);
-
   return (
     <>
       <StyledPage>
         <StyledPageTitle
           style={{ marginTop: "50px" }}
-        >{`Good ${hourGreeting}, Jim Bob`}</StyledPageTitle>
-        {/* // >{`Good ${hourGreeting}, ${userName}!`}</StyledPageTitle> */}
+
+          // >{`Good ${hourGreeting}, ${user._id}`}</StyledPageTitle>
+        >{`Good ${hourGreeting}, ${user.firstName}!`}</StyledPageTitle>
+
         {/* <HighlightsHeader style={{ color: "darkGrey" }} /> */}
         <DashboardGridNav />
       </StyledPage>

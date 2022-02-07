@@ -19,19 +19,22 @@ export default function Messenger() {
     const [onlineUsers, setOnlineUsers] = useState([]);
     const socket = useRef();
     // const user = useContext(AuthenticationContext);
-    const [user,setUser]=useState({ "_id": "61f9ba8ed69e5da25ae15c18",
-    "firstName": "Derek",
-    "lastName": "Birtwistle",
-    "email": "derekbirtwistle@hotmail.com",
-    "password": "password",
-    "phoneNumber": "55555555555",
-    "positions": [
+    const [user,setUser]=useState({"_id":"61f9ba8ed69e5da25ae15c18",
+    "firstName":"Derek",
+    "lastName":"Birtwistle",
+    "email":"derekbirtwistle@hotmail.com",
+    "password":"password",
+    "phoneNumber":"55555555555",
+    "positions":[
         "supervisor"
     ],
     "status": "active",})
     
     const scrollRef = useRef();
   
+//socket.on will send data to ("String",(POST)=>{};
+//socket.emit will take data from ("String",FETCH);
+
     useEffect(() => {
       socket.current = io("ws://localhost:5050");
       socket.current.on("getMessage", (data) => {
@@ -49,14 +52,14 @@ export default function Messenger() {
         setMessages((prev) => [...prev, arrivalMessage]);
     }, [arrivalMessage, currentChat]);
   
-    // useEffect(() => {
-    //   socket.current.emit("addUser", user._id);
-    //   socket.current.on("getUsers", (users) => {
-    //     setOnlineUsers(
-    //       user.followings.filter((f) => users.some((u) => u.userId === f))
-    //     );
-    //   });
-    // }, [user]);
+    useEffect(() => {
+      socket.current.emit("addUser", user._id);
+      socket.current.on("getUsers", (users) => {
+        setOnlineUsers(
+          user.followings.filter((f) => users.some((u) => u.userId === f))
+        );
+      });
+    }, [user]);
   
     useEffect(() => {
       const getConversations = async () => {
@@ -91,6 +94,7 @@ export default function Messenger() {
         conversationId: currentChat._id,
       };
   
+      //member is an array of Id's for members of convo
       const receiverId = currentChat.members.find(
         (member) => member !== user._id
       );

@@ -4,6 +4,9 @@ const io = require("socket.io")(5050, {
     },
   });
   
+//socket.on will send data to ("String",(POST)=>{};
+//socket.emit will take data from ("String",FETCH);
+
   let users = [];
   
   const addUser = (userId, socketId) => {
@@ -20,10 +23,11 @@ const io = require("socket.io")(5050, {
   };
   
   io.on("connection", (socket) => {
-    //when ceonnect
+    //when connect
     console.log("a user connected.");
   
     //take userId and socketId from user
+    //new socketId is created everytime page is refreshed
     socket.on("addUser", (userId) => {
       addUser(userId, socket.id);
       io.emit("getUsers", users);

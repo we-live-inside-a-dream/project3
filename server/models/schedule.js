@@ -49,8 +49,8 @@ async function listScheduleByMonth(month) {
 async function findById(id) {
   return Schedule.findById(id);
 }
-async function findByEmployeeProfileId(id) {
-  return Schedule.find({ employeeId: id });
+async function findByEmployeeProfileId(id, today) {
+  return Schedule.find({ employeeId: id, date: { $gte: today } });
 }
 async function update(id, newScheduleData) {
   return Schedule.findByIdAndUpdate(id, newScheduleData, {

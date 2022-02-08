@@ -36,8 +36,9 @@ router.get("/id", async (req, res) => {
 });
 router.get("/employee-id", async (req, res) => {
   let id = req.query.id;
+  let today = req.query.today;
   console.log("from API, looking for shifts for employee with id", id);
-  let shiftsList = await scheduleModel.findByEmployeeProfileId(id);
+  let shiftsList = await scheduleModel.findByEmployeeProfileId(id, today);
   console.log("from API id", shiftsList);
   res.json(shiftsList);
 });

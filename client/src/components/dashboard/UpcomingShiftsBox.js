@@ -1,19 +1,26 @@
 import React from "react";
-import DashboardBoxScale from "./DashboardBoxScale";
 import { useNavigate } from "react-router-dom";
+// import DaySchedule from "../schedules/day-schedule/DaySchedule";
+import DashboardBoxScale from "./DashboardBoxScale";
+import EmployeeUpcomingShiftList from "./EmployeeUpcomingShiftList";
 
-function UpcomingShiftsBox() {
+function ScheduleBox() {
   let navigate = useNavigate();
-  let content = "";
+
   return (
-    <div>
+    <>
       <DashboardBoxScale
-        title="MY UPCOMING SHIFTS"
+        padding="20px"
+        top={0}
+        left={0}
+        transform={"Scale(1)"}
+        transformOrigin={"top left"}
+        title="UPCOMING SHIFTS"
         clickFunction={() => navigate("/my-page")}
-        content={content}
+        content={<EmployeeUpcomingShiftList />}
       />
-    </div>
+    </>
   );
 }
 
-export default UpcomingShiftsBox;
+export default ScheduleBox;

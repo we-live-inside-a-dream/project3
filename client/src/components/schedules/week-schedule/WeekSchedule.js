@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import moment from "moment";
 import * as fns from "date-fns";
 import StyledTable from "../../reusable/tables/StyledTable";
-// import Modal from "../../reusable/Modal";
-// import StyledButton from "../../reusable/Inputs/StyledButton";
-// import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import WeekScheduleLegend from "./WeekScheduleLegend";
+import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -125,6 +122,12 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   // };
   // },[date])
 
+  function onInputUpdate(value, setter) {
+    let newValue = fns.format(new Date(value), "yyyy-MM-dd").toString();
+    console.log(newValue, "is the new formatted value for startDay");
+    setter(newValue);
+  }
+
   return (
     <div className="container">
       <div
@@ -144,7 +147,13 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
             style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
         </div>
-        <div style={{ gridTemplateRow: "1" }}>
+        <div
+          style={{
+            gridTemplateRow: "1",
+            display: "inline",
+            alignContent: "baseline",
+          }}
+        >
           <h2
             style={{
               fontWeight: "400",
@@ -154,17 +163,15 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
               marginTop: "0px",
               marginBottom: "0px",
               paddingBottom: "0px",
+              display: "inline",
             }}
           >
-            Week Starting:
-            <StyledInput
-              style={{ marginBottom: "0px" }}
-              type="date"
-              id="single-day"
-              name="day"
+            Week starting:
+            <BasicDatePicker
               value={startDay}
-              onChange={(e) => {
-                setStartDay(e.target.value);
+              onChange={(value) => {
+                onInputUpdate(value, setStartDay);
+                console.log(value, "is the newStartDay");
               }}
             />
           </h2>

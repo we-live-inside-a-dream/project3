@@ -1,20 +1,14 @@
 import "./App.css";
-import EmployeesList from "./pages/manager/EmployeesListPage";
 import { Routes, Route } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import CalendarScratch from "./components/calendar/CalendarScratch";
 import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
 import EmployeeAvailabilityEditPage from "./pages/manager/EmployeeAvailabilityEditPage";
-import AvailabilityDetailPage from "./pages/manager/AvailabilityDetailPage";
-// import EmployeeDetail from "./components/employee-list/EmployeeDetail";
 import LogIn from "./components/login/LogIn";
 import LogOut from "./components/login/LogOut";
 import ProfilePage from "./pages/common/ProfilePage";
 import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
-// import EmployeeDetailPage from "./pages/manager/EmployeeDetailPage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import ScheduleMenuPage from "./pages/manager/ScheduleMenuPage";
@@ -25,10 +19,8 @@ import EmployeeAvailabilityDetail from "./components/employee-availabilities/Ava
 import AuthenticationProvider from "./components/login/AuthenticationProvider";
 import MustBeManager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
-import EmployeeTimeOffPage from "./pages/manager/EmployeeTimeOffPage";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
-import AuthenticationContext from "./components/login/AuthenticationContext";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
 
 function App() {

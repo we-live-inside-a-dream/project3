@@ -12,6 +12,7 @@ import {
 import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
+import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -43,9 +44,8 @@ const EmployeeTimeOff = () => {
     console.log("Vacation type", newType);
   };
 
-  function onInputUpdate(event, setter) {
-    let newValue = event.target.value;
-    setter(newValue);
+  function onInputUpdate(value, setter) {
+    setter(value);
   }
 
   let navigate = useNavigate();
@@ -79,6 +79,9 @@ const EmployeeTimeOff = () => {
   }
   console.log("USER:", user.firstName, user.lastName);
 
+  let typeOfTimeOff = setType()
+
+
   return (
     <div>
       <StyledFormWrapper>
@@ -99,86 +102,33 @@ const EmployeeTimeOff = () => {
             <label>Absence:</label>
             <input></input>
           </Modal>
-          <div>
-            <label>Start Day:</label>
-            <input
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDate}
-              onChange={(value) => {
-                onInputUpdate(value, setStartDate);
-              }}
-            />
-          </div>
-          <div>
-            <label>End Day:</label>
-            <input
-              type="date"
-              id="single-day"
-              name="day"
-              value={endDate}
-              onChange={(value) => {
-                onInputUpdate(value, setEndDate);
-              }}
-            />
-          </div>
-          {/*  */}
-          {/* <StyledCheck
-          className="check"
-          name="available"
-          type="checkbox"
-          value={available}
-          checked={available === true}
-          onChange={(e) => {
-            setAvailable(e.target.checked);
-            if (!e.target.checked) {
-              setAllDay(false);
-            }
-          }}
-        />
-        Available
-      </label>{" "}
-      <br />
-      {available === true && (
-        <label className="check-label">
-          <StyledCheck
-            className="check"
-            name="all-day"
-            type="checkbox"
-            value={allDay}
-            checked={allDay === true}
-            onChange={(e) => {
-              setAllDay(e.target.checked);
-              if (e.target.checked) {
-                setStart(0);
-                setEnd(0);
-              }
-            }}
-          />
-          Available all day
-          <br />
-        </label>
-      )}
-      {allDay === false && available === true ? (
-        <div>
-          <label>Start time</label>
-          <StyledTimeDate
-            name="all-day"
-            type="time"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-          />{" "}
-          <label>End time</label>
-          <StyledTimeDate
-            name="all-day"
-            type="time"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
-          />
-        </div>
-      ) : null} */}
-          {/*  */}
+          
+            <label>
+              Start Day:
+              <BasicDatePicker
+                type="date"
+                id="single-day"
+                name="day"
+                value={startDate}
+                onChange={(value) => {
+                  onInputUpdate(value, setStartDate);
+                }}
+              />
+            </label>
+       
+            <label>
+              End Day:
+              <BasicDatePicker
+                type="date"
+                id="single-day"
+                name="day"
+                value={endDate}
+                onChange={(value) => {
+                  onInputUpdate(value, setEndDate);
+                }}
+              />
+            </label>
+      
           {startDate === endDate && (
             <>
               <label>
@@ -206,7 +156,6 @@ const EmployeeTimeOff = () => {
               <label>
                 Start Time:
                 <BasicTimePicker
-                  // label=""
                   type="time"
                   value={startTime}
                   onChange={(value) => {
@@ -217,7 +166,6 @@ const EmployeeTimeOff = () => {
               <label>
                 End Time:
                 <BasicTimePicker
-                  // label="end time"
                   type="time"
                   value={endTime}
                   onChange={(value) => {
@@ -243,6 +191,8 @@ const EmployeeTimeOff = () => {
             }}
             open={modalConfirmIsOpen}
           >
+            <label>Type of time off: </label>
+            <div value={}></div>
             <StyledButton onClick={postData}>Confirm</StyledButton>
             <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
               Cancel

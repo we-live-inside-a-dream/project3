@@ -13,6 +13,7 @@ import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
+import moment from "moment";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -49,6 +50,7 @@ const EmployeeTimeOff = () => {
 
   function onInputUpdate(value, setter) {
     setter(value);
+    console.log(value)
   }
 
   function onCommentInputUpdate(event, setter ){
@@ -85,7 +87,7 @@ const EmployeeTimeOff = () => {
     await createEmployeeTimeOff(newEmployeeTimeOff);
     navigate("/");
   }
-  console.log("USER:", user.firstName, user.lastName);
+  console.log("USER:", user?.firstName, user?.lastName);
 
 
   return (
@@ -198,10 +200,10 @@ const EmployeeTimeOff = () => {
             open={modalConfirmIsOpen}
           >
             <p>Type of time off:{type.label}</p>
-            {/* <p>Start Day: {startDate}</p> */}
-            {/* <p>end Day: {endDate}</p> */}
-            <p>Start Time: {startTime.value}</p>
-            <p>End Time: {endTime}</p>
+            <p>Start Day: {moment(startDate).format("ddd-Do")}</p>
+            <p>end Day: {moment(endDate).format("yyyy-MM-dd")}</p>
+            <p>Start Time: {moment(startTime).format("h:mm a")}</p>
+            <p>End Time: {moment(endTime).format("h:mm a")}</p>
             <p>Comments:{comment}</p>
             <div></div>
             

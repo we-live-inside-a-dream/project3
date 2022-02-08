@@ -14,7 +14,7 @@ function EmployeesMenuPage() {
         <StyledPageTitle
           style={{ gridTemplateRow: "1", justifyContent: "center" }}
         >
-          EMPLOYEES PAGE{" "}
+          HUMAN RESOURCES
         </StyledPageTitle>
         <div style={{ margin: "auto", justifyContent: "center" }}>
           <StyledEmployeePageButtonGroup

@@ -12,7 +12,7 @@ function ScheduleBox() {
         padding="20px"
         top={0}
         left={0}
-        transform={"Scale(.3)"}
+        transform={"Scale(.4)"}
         transformOrigin={"top left"}
         title="SCHEDULES"
         clickFunction={() => navigate("/schedules")}

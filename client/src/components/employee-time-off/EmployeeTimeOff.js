@@ -79,8 +79,7 @@ const EmployeeTimeOff = () => {
   }
   console.log("USER:", user.firstName, user.lastName);
 
-  let typeOfTimeOff = setType()
-
+  let typeOfTimeOff = setType();
 
   return (
     <div>
@@ -102,33 +101,33 @@ const EmployeeTimeOff = () => {
             <label>Absence:</label>
             <input></input>
           </Modal>
-          
-            <label>
-              Start Day:
-              <BasicDatePicker
-                type="date"
-                id="single-day"
-                name="day"
-                value={startDate}
-                onChange={(value) => {
-                  onInputUpdate(value, setStartDate);
-                }}
-              />
-            </label>
-       
-            <label>
-              End Day:
-              <BasicDatePicker
-                type="date"
-                id="single-day"
-                name="day"
-                value={endDate}
-                onChange={(value) => {
-                  onInputUpdate(value, setEndDate);
-                }}
-              />
-            </label>
-      
+
+          <label>
+            Start Day:
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={startDate}
+              onChange={(value) => {
+                onInputUpdate(value, setStartDate);
+              }}
+            />
+          </label>
+
+          <label>
+            End Day:
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(value) => {
+                onInputUpdate(value, setEndDate);
+              }}
+            />
+          </label>
+
           {startDate === endDate && (
             <>
               <label>
@@ -192,7 +191,7 @@ const EmployeeTimeOff = () => {
             open={modalConfirmIsOpen}
           >
             <label>Type of time off: </label>
-            <div value={}></div>
+            {/* <div value={}></div> */}
             <StyledButton onClick={postData}>Confirm</StyledButton>
             <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
               Cancel

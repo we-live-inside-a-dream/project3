@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-// import DaySchedule from "../schedules/day-schedule/DaySchedule";
 import DashboardBoxScale from "./DashboardBoxScale";
 import EmployeeUpcomingShiftList from "./EmployeeUpcomingShiftList";
 

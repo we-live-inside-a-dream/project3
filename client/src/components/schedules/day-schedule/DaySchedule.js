@@ -5,8 +5,8 @@ import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
-import StyledInput from "../../reusable/Inputs/StyledInput";
-import { bottomNavigationActionClasses } from "@mui/material";
+import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
+import moment from "moment";
 
 function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
@@ -56,7 +56,11 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     businessHours.push(i);
     headerHours.push(i < 13 ? i : i - 12);
   }
-
+  function onInputUpdate(value, setter) {
+    let newValue = moment(value).format("yyyy-MM-DD");
+    console.log(newValue, "is the new formatted value for startDay");
+    setter(newValue);
+  }
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
@@ -91,13 +95,12 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           }}
         >
           For day:
-          <StyledInput
-            style={{ marginBottom: "0px" }}
-            type="date"
-            id="single-day"
-            name="day"
+          <BasicDatePicker
             value={day}
-            onChange={(e) => setDay(e.target.value)}
+            onChange={(value) => {
+              onInputUpdate(value, setDay);
+              console.log(value, "is the newStartDay");
+            }}
           />
         </h2>
       </div>

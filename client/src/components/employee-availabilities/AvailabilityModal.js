@@ -9,7 +9,6 @@ function AvailabilityModal({ day, setModalOpen }) {
           existingValues={day}
           onClose={() => setModalOpen(false)}
         />
-        **editDay**
       </Modal>
     </div>
   );

@@ -14,7 +14,7 @@ function ScheduleBox() {
         left={0}
         transform={"Scale(1)"}
         transformOrigin={"top left"}
-        title="UPCOMING SHIFTS"
+        title="MY UPCOMING SHIFTS"
         clickFunction={() => navigate("/my-page")}
         content={<EmployeeUpcomingShiftList />}
       />

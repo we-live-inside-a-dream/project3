@@ -7,6 +7,7 @@ import Modal from "../reusable/Modal";
 import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
 import NamePicTableData from "../reusable/NamePicTableData";
+import StyledPage from "../reusable/styled-page/StyledPage";
 
 function EmployeeAvailabilityDetail({}) {
   const [modalDay, setModalDay] = useState("");
@@ -66,85 +67,73 @@ function EmployeeAvailabilityDetail({}) {
 
   return (
     <div>
-      <h1
-        style={{
-          fontWeight: "400",
-          fontFamily: "Arial, Helvetica, sans-serif",
-          textAlign: "center",
-          // textShadow: "1px 1px 2px grey",
-          color: "#07889b",
-          marginTop: "0px",
-          marginBottom: "10px",
-          paddingBottom: "0px",
-          paddingTop: "25px",
-        }}
-      >
-        Employee Recurring Availability List
-      </h1>
+      <StyledPage>
+        <h1
+          style={{
+            fontWeight: "400",
+            fontFamily: "Arial, Helvetica, sans-serif",
+            textAlign: "center",
+            // textShadow: "1px 1px 2px grey",
+            color: "#07889b",
+            marginTop: "0px",
+            marginBottom: "10px",
+            paddingBottom: "0px",
+            paddingTop: "25px",
+          }}
+        >
+          Employee Recurring Availability List
+        </h1>
 
-      <StyledTable
-        style={{ paddingTop: "10px", marginTop: "20px", paddingBottom: "20px" }}
-      >
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th style={{ padding: "10px 30px" }}>Max Hrs/Week</th>
-            {businessDays.map((day, index) => {
-              return (
-                <th key={index} style={{ padding: "10px 30px" }}>
-                  {day}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <NamePicTableData
-              firstName={firstName}
-              lastName={lastName}
-              edit="edit"
-            />
-            <td>
-              {maxHoursPerWeek}
-              <br />
-              <StyledEditButton
-                onClick={() => setMaxHoursIsOpen(!maxHoursIsOpen)}
-              >
-                ✎
-              </StyledEditButton>
-              <Modal
-                open={maxHoursIsOpen}
-                onClose={() => setMaxHoursIsOpen(false)}
-              >
-                <EditMaxHours
-                  existingValues={availability}
-                  onClose={() => setMaxHoursIsOpen(false)}
-                />
-                ** max hours**
-              </Modal>
-            </td>
-            {availability?.days?.map((day, index) => {
-              return (
-                <td key={index}>
-                  {renderAvailability(day)}
-                  <br />
-                  <StyledEditButton
-                    onClick={() => {
-                      setModalDay(day);
-                      setModalOpen(true);
-                    }}
-                  >
-                    ✎
-                  </StyledEditButton>
-                </td>
-              );
-            })}
-          </tr>
-        </tbody>
-      </StyledTable>
+        <StyledTable
+          style={{
+            paddingTop: "10px",
+            marginTop: "20px",
+            paddingBottom: "20px",
+          }}
+        >
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th style={{ padding: "10px 30px" }}>Max Hrs/Week</th>
+              {businessDays.map((day, index) => {
+                return (
+                  <th key={index} style={{ padding: "10px 30px" }}>
+                    {day}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <NamePicTableData
+                firstName={firstName}
+                lastName={lastName}
+                edit="edit"
+                onClick={() => setModalOpen(true)}
+              />
+              <td>
+                {maxHoursPerWeek}
+                <br />
+              </td>
+              {availability?.days?.map((day, index) => {
+                return (
+                  <td key={index}>
+                    {renderAvailability(day)}
+                    <br />
+                  </td>
+                );
+              })}
+            </tr>
+          </tbody>
+        </StyledTable>
+      </StyledPage>
       {modalOpen && (
-        <AvailabilityModal day={modalDay} setModalOpen={setModalOpen} />
+        <AvailabilityModal
+          existingValues={availability}
+          setModalOpen={setModalOpen}
+          theId={id}
+        />
       )}
     </div>
   );

@@ -27,7 +27,7 @@ import ScheduleAvailability from "./ScheduleAvailability";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 
-function EditSchedule({ onClose, shiftId, existingValues }) {
+function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState("");
@@ -52,6 +52,25 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
     };
     fetchNames();
   }, []);
+
+  // useEffect(() => {
+  //   if (employeeId) {
+  //     console.log("the employee id is...", employeeId);
+  //     const firstName = empNames.find(findNames).firstName;
+  //     const lastName = empNames.find(findNames).lastName;
+  //     console.log("first name..", firstName);
+  //     console.log("last name..", lastName);
+
+  //     function findNames(empName) {
+  //       return (empName._id = employeeId);
+  //     }
+  //   }
+
+  // console.log("the names...", empNames);
+
+  // setFirstName()
+  // setLastName()
+  // }, [employeeId]);
 
   useEffect(() => {
     if (existingValues) {
@@ -80,6 +99,7 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }
 
   async function updateShift(updatedUser) {
+    console.log("new user data", updatedUser);
     await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
@@ -104,13 +124,11 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
       breaks,
     };
     onClose();
-
     if (existingValues) {
-      console.log(existingValues);
-      console.log("updateShift with...", newShift);
+      console.log("New Shift...", newShift);
       await updateShift(newShift);
     } else {
-      console.log("Saving shift", newShift);
+      console.log("New Shift...", newShift);
       await createShift(newShift);
     }
   }
@@ -129,10 +147,8 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
   }
 
   function onRemoveBreak(index) {
-    console.log("removing break at index", index);
     let newBreak = [...breaks];
     newBreak.splice(index, 1);
-    console.log("breaks are... ", newBreak);
     setBreaks(newBreak);
   }
 
@@ -143,13 +159,13 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
         <div>
           <InputLabel>Employee Name</InputLabel>
           <NativeSelect
-            defaultValue={employeeId}
+            // defaultValue={employeeId}
             id="name-imput"
             value={employeeId}
             label="name"
-            onChange={(event) =>
-              onInputUpdate(event.target.value, setEmployeeId)
-            }
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setEmployeeId);
+            }}
           >
             {/* {name} */}
             <option></option>
@@ -171,7 +187,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={date}
             onChange={(event) => {
               onInputUpdate(event.target.value, setDate);
-              console.log("this is the date in EditSchedule", date);
             }}
           />
           <ScheduleAvailability date={date} id={employeeId} />
@@ -185,7 +200,6 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
             value={start}
             onChange={(value) => {
               onInputUpdate(value, setStart);
-              console.log(value);
             }}
           />
 
@@ -255,8 +269,10 @@ function EditSchedule({ onClose, shiftId, existingValues }) {
               />
             ))}
           </div>
-          <StyledButton onClick={postData}>SUBMIT</StyledButton>
         </CenterStyle>
+        <StyledButton onClick={postData}>SUBMIT</StyledButton>
+        <StyledButton onClick={onClose}>Cancle</StyledButton>
+        <StyledButton onClick={deleteShift}>Delete</StyledButton>
       </StyledModal>
       {/* </StyledFormWrapper> */}
     </>

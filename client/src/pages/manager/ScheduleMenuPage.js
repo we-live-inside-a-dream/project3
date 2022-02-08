@@ -6,13 +6,12 @@ import MonthSchedulePage from "./MonthSchedulePage";
 import React from "react";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 
-function SchedulePage() {
+function ScheduleMenuPage() {
   const [currentTab, setCurrentTab] = useState(1);
-  //   const CurrentTabContext = React.createContext(currentTab);
   return (
     <>
       <StyledPage>
-        <StyledPageTitle style={{ gridTemplateRow: "1" }}>
+        <StyledPageTitle style={{ gridTemplateRow: "1", marginBottom: "40px" }}>
           SCHEDULES
         </StyledPageTitle>
         {currentTab === 1 && (
@@ -38,4 +37,4 @@ function SchedulePage() {
   );
 }
 
-export default SchedulePage;
+export default ScheduleMenuPage;

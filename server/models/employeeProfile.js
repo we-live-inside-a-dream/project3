@@ -56,7 +56,7 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
     password: hashedpassword,
   });
   let createdProfile = await newEmployeeProfile.save();
-  console.log("saving employee profile", createdProfile);
+  // console.log("saving employee profile", createdProfile);
   return createdProfile.id;
 };
 

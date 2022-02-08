@@ -32,6 +32,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       if (deleteShift) {
         deleteShiftById();
         setDeleteShift(false);
+        setIsOpen(false);
       } else {
         fetchShift();
       }
@@ -191,6 +192,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           shiftId={shiftId}
           existingValues={shift}
           onClose={() => setIsOpen(false)}
+          deleteShift={() => setDeleteShift(true)}
         />
         **edit**
       </Modal>

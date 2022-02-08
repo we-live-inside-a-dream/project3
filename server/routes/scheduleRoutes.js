@@ -7,9 +7,9 @@ const employeeProfileModel = require("../models/employeeProfile");
 
 router.get("/day", async (req, res) => {
   let day = req.query.day;
-  console.log("from API day", day);
+  // console.log("from API day", day);
   let scheduleList = await scheduleModel.listScheduleByDay(day);
-  console.log("from API scheduleList", scheduleList);
+  // console.log("from API scheduleList", scheduleList);
   res.json(scheduleList);
 });
 
@@ -29,17 +29,17 @@ router.get("/month", async (req, res) => {
 
 router.get("/id", async (req, res) => {
   let id = req.query.id;
-  console.log("from API Id", id);
+  // console.log("from API Id", id);
   let singleSchedule = await scheduleModel.findById(id);
-  console.log("from API id", singleSchedule);
+  // console.log("from API id", singleSchedule);
   res.json(singleSchedule);
 });
 router.get("/employee-id", async (req, res) => {
   let id = req.query.id;
   let today = req.query.today;
-  console.log("from API, looking for shifts for employee with id", id);
+  // console.log("from API, looking for shifts for employee with id", id);
   let shiftsList = await scheduleModel.findByEmployeeProfileId(id, today);
-  console.log("from API id", shiftsList);
+  // console.log("from API id", shiftsList);
   res.json(shiftsList);
 });
 
@@ -59,9 +59,18 @@ router.post("/schedule/new", async (req, res) => {
 });
 
 router.post("/schedule/update", async (req, res) => {
-  let id = req.query.id;
+  let shiftId = req.query.id;
   let updateSchedule = req.body;
-  let newSchedule = await scheduleModel.update(id, updateSchedule);
+  let empId = updateSchedule.employeeId;
+  console.log("new Schedule", updateSchedule);
+  let foundName = await employeeProfileModel.getEmployeeProfileByProfileId(
+    empId
+  );
+  let newFirstName = foundName.firstName;
+  let newLastName = foundName.lastName;
+  updateSchedule.firstName = newFirstName;
+  updateSchedule.lastName = newLastName;
+  let newSchedule = await scheduleModel.update(shiftId, updateSchedule);
   console.log("NEW SCHEDULE!!!!!", newSchedule);
   res.json(newSchedule);
 });

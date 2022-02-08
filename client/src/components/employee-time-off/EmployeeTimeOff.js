@@ -35,6 +35,9 @@ const EmployeeTimeOff = () => {
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
+  console.log(startTime)
+  
+
   function confirmHandler() {
     setModalConfirmIsOpen(true);
   }
@@ -47,6 +50,11 @@ const EmployeeTimeOff = () => {
   function onInputUpdate(value, setter) {
     setter(value);
   }
+
+  function onCommentInputUpdate(event, setter ){
+    let newValue = event.target.value
+    setter(newValue)
+}
 
   let navigate = useNavigate();
 
@@ -79,7 +87,6 @@ const EmployeeTimeOff = () => {
   }
   console.log("USER:", user.firstName, user.lastName);
 
-  let typeOfTimeOff = setType()
 
 
   return (
@@ -181,7 +188,7 @@ const EmployeeTimeOff = () => {
             <label>Comments:</label>
             <StyledTextArea
               value={comment}
-              onChange={(event) => onInputUpdate(event, setComment)}
+              onChange={(event) => onCommentInputUpdate(event, setComment)}
             />
           </div>
           <div></div>
@@ -191,8 +198,14 @@ const EmployeeTimeOff = () => {
             }}
             open={modalConfirmIsOpen}
           >
-            <label>Type of time off: </label>
-            <div value={}></div>
+            <p>Type of time off:{type.label}</p>
+            {/* <p>Start Day: {startDate}</p> */}
+            {/* <p>end Day: {endDate}</p> */}
+            <p>Start Time: {startTime.value}</p>
+            <p>End Time: {endTime}</p>
+            <p>Comments:{comment}</p>
+            <div></div>
+            
             <StyledButton onClick={postData}>Confirm</StyledButton>
             <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
               Cancel

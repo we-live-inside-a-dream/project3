@@ -123,7 +123,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   // },[date])
 
   function onInputUpdate(value, setter) {
-    let newValue = moment(value).format("yyyy-MM-DD");
+    let newValue = fns.format(new Date(value), "yyyy-MM-dd").toString();
     console.log(newValue, "is the new formatted value for startDay");
     setter(newValue);
   }
@@ -173,7 +173,6 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                 onInputUpdate(value, setStartDay);
                 console.log(value, "is the newStartDay");
               }}
-              // label="week starting"
             />
           </h2>
         </div>

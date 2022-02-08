@@ -13,9 +13,7 @@ function DaySchedulePage({ setCurrentTab, currentTab }) {
         setCurrentTab={setCurrentTab}
         currentTab={currentTab}
       />
-      <StyledButton onClick={() => setIsOpen(true)}>
-        **Add Schedule**
-      </StyledButton>
+      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT</StyledButton>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EditSchedule onClose={() => setIsOpen(false)} />
       </Modal>

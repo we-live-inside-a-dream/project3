@@ -32,6 +32,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       if (deleteShift) {
         deleteShiftById();
         setDeleteShift(false);
+        setIsOpen(false);
       } else {
         fetchShift();
       }
@@ -74,27 +75,42 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "30% 70%",
+          gridTemplateColumns: " 50%  20% 30%",
           height: "auto",
         }}
       >
-        <StyledScheduleButtonGroup
-          setCurrentTab={setCurrentTab}
-          currentTab={currentTab}
-        />
+        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
+          <StyledScheduleButtonGroup
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+            style={{ marginRight: "20px", alignSelf: "baseline" }}
+          />
+        </div>
+        <div className="emptyDivForSpacing"> </div>
 
-        <h2
+        <div
           style={{
-            fontWeight: "400",
-            fontFamily: "Arial, Helvetica, sans-serif",
-            textAlign: "right",
-            color: "#07889b",
-            marginTop: "0px",
-            marginBottom: "0px",
-            paddingBottom: "0px",
+            gridTemplateRow: "1",
+            display: "inline",
+            alignContent: "baseline",
+            alignItems: "baseLine",
+            justifyContent: "right",
           }}
         >
-          For day:
+          <h2
+            style={{
+              fontWeight: "400",
+              fontFamily: "Arial, Helvetica, sans-serif",
+              textAlign: "right",
+              color: "#07889b",
+              marginTop: "0px",
+              marginBottom: "0px",
+              paddingBottom: "0px",
+              display: "inline",
+            }}
+          >
+            For day:
+          </h2>
           <BasicDatePicker
             value={day}
             onChange={(value) => {
@@ -102,7 +118,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               console.log(value, "is the newStartDay");
             }}
           />
-        </h2>
+        </div>
       </div>
       <StyledTable>
         <thead>
@@ -194,6 +210,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           shiftId={shiftId}
           existingValues={shift}
           onClose={() => setIsOpen(false)}
+          deleteShift={() => setDeleteShift(true)}
         />
         **edit**
       </Modal>

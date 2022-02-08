@@ -88,7 +88,6 @@ const EmployeeTimeOff = () => {
   console.log("USER:", user.firstName, user.lastName);
 
 
-
   return (
     <div>
       <StyledFormWrapper>
@@ -109,33 +108,33 @@ const EmployeeTimeOff = () => {
             <label>Absence:</label>
             <input></input>
           </Modal>
-          
-            <label>
-              Start Day:
-              <BasicDatePicker
-                type="date"
-                id="single-day"
-                name="day"
-                value={startDate}
-                onChange={(value) => {
-                  onInputUpdate(value, setStartDate);
-                }}
-              />
-            </label>
-       
-            <label>
-              End Day:
-              <BasicDatePicker
-                type="date"
-                id="single-day"
-                name="day"
-                value={endDate}
-                onChange={(value) => {
-                  onInputUpdate(value, setEndDate);
-                }}
-              />
-            </label>
-      
+
+          <label>
+            Start Day:
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={startDate}
+              onChange={(value) => {
+                onInputUpdate(value, setStartDate);
+              }}
+            />
+          </label>
+
+          <label>
+            End Day:
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(value) => {
+                onInputUpdate(value, setEndDate);
+              }}
+            />
+          </label>
+
           {startDate === endDate && (
             <>
               <label>

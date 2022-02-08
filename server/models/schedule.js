@@ -88,7 +88,7 @@ async function updateWithName(id, newFirstName, newLastName) {
 // );
 
 async function deleteSchedule(id) {
-  console.log(id, "id in the model...");
+  // console.log(id, "id in the model...");
   return Schedule.findByIdAndDelete(id);
 }
 

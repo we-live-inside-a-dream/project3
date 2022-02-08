@@ -133,7 +133,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: " 50% 50%",
+          gridTemplateColumns: " 50% 15% 35%",
           height: "auto",
         }}
       >
@@ -147,11 +147,14 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
             style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
         </div>
+        <div className="emptyDivForSpacing"> </div>
         <div
           style={{
             gridTemplateRow: "1",
             display: "inline",
             alignContent: "baseline",
+            alignItems: "baseLine",
+            justifyContent: "right",
           }}
         >
           <h2
@@ -167,14 +170,14 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
             }}
           >
             Week starting:
-            <BasicDatePicker
-              value={startDay}
-              onChange={(value) => {
-                onInputUpdate(value, setStartDay);
-                console.log(value, "is the newStartDay");
-              }}
-            />
           </h2>
+          <BasicDatePicker
+            value={startDay}
+            onChange={(value) => {
+              onInputUpdate(value, setStartDay);
+              console.log(value, "is the newStartDay");
+            }}
+          />
         </div>
       </div>
       <StyledTable>

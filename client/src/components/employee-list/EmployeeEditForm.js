@@ -41,7 +41,7 @@ const EmployeeEditForm = ({
 
   // useEffect(() => {
   //   async function fetchExistingValues() {
-  //     let fetchResult = await fetch(
+  //     let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+
   //       `/api/employeeProfile/getByProfileId/${theId}`
   //     );
   //     console.log(
@@ -84,7 +84,7 @@ const EmployeeEditForm = ({
 
   async function createEmployee(newEmployee) {
     // const newEmployee = {firstName: "", lastName: ""}
-    let response = await fetch("/api/employeeProfile/create", {
+    let response = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -19,12 +19,12 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   useEffect(() => {
     if (shiftId) {
       const fetchShift = async () => {
-        let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+        let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/id?id=${shiftId}`);
         let fetchedShift = await fetchResult.json();
         setShift(fetchedShift);
       };
       const deleteShiftById = async () => {
-        await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+        await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/schedule/delete?id=${shiftId}`, {
           method: "DELETE",
         });
       };
@@ -41,7 +41,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/day?day=${day}`);
       let fetchedDay = await fetchResult.json();
       setSchedule(fetchedDay);
     };

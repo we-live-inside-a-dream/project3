@@ -46,7 +46,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
 
   useEffect(() => {
     const fetchNames = async () => {
-      let fetchResult = await fetch("/api/employeeProfile/employees/names");
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
 
       setEmpNames(fetchedNames);
@@ -90,7 +90,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   }, [existingValues]);
 
   async function createShift(createdUser) {
-    await fetch("/api/schedule/schedule/new", {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/schedule/schedule/new", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,7 +101,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
 
   async function updateShift(updatedUser) {
     console.log("new user data", updatedUser);
-    await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/schedule/update?id=${shiftId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

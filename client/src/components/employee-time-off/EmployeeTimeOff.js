@@ -59,7 +59,7 @@ const EmployeeTimeOff = () => {
   let navigate = useNavigate();
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
-    await fetch("/api/timeOff", {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/timeOff", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -31,7 +31,7 @@ const ScheduleAvailability = ({ date, id }) => {
   useEffect(() => {
     if (id) {
       const fetchAvailabilityById = async () => {
-        let fetchResult = await fetch("/api/availability/by-employee/" + id);
+        let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/availability/by-employee/" + id);
         let theAvailability = await fetchResult.json();
         setAvailability(theAvailability);
         setMaxHoursPerWeek(theAvailability?.maxHoursPerWeek);

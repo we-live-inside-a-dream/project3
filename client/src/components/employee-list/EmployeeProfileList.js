@@ -15,7 +15,7 @@ function EmployeeProfileList() {
   useEffect(() => {
     let isMounted = true;
     const fetchEmployeesList = async () => {
-      let fetchResult = await fetch(`/api/employeeProfile/employees`);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/employeeProfile/employees`);
       let employeeList = await fetchResult.json();
       if (isMounted) {
         setEmployees(employeeList);

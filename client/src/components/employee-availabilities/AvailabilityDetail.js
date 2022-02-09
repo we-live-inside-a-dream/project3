@@ -29,7 +29,7 @@ function EmployeeAvailabilityDetail({}) {
 
   useEffect(() => {
     const fetchAvailabilityById = async () => {
-      let fetchResult = await fetch("/api/availability/availability-day/" + id);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/availability/availability-day/" + id);
       let theAvailability = await fetchResult.json();
       console.log("fetching employee availability", theAvailability);
       setAvailability(theAvailability);

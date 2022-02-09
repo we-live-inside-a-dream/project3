@@ -8,7 +8,7 @@ function DynamicScheduleTrial() {
   useEffect(() => {
     console.log("day is ", day);
     const fetchSchedule = async () => {
-      let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/day?day=${day}`);
       console.log("fetch result", fetchResult);
       let fetchedDay = await fetchResult.json();
       console.log("fetchedDay is", fetchedDay);

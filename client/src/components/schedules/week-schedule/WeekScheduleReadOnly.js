@@ -26,7 +26,7 @@ function WeekSchedule() {
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
     const getAllTheEmployees = async function () {
-      let employeeLst = await fetch("/api/employeeProfile/employees/names");
+      let employeeLst = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/employees/names");
       let nameIdList = await employeeLst.json();
       setActiveEmployeeList(nameIdList);
     };
@@ -34,7 +34,7 @@ function WeekSchedule() {
 
     const fetchAllTheDays = async function () {
       async function fetchWeek() {
-        let theQueryWeek = await fetch(`/api/schedule/week?day0=${startDay}`);
+        let theQueryWeek = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/week?day0=${startDay}`);
         let fetchResult = await theQueryWeek.json();
         setTheWholeWeek(fetchResult);
       }

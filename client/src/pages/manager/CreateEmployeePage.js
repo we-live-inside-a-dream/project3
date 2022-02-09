@@ -11,7 +11,7 @@ const CreateEmployeePage = () => {
   let navigate = useNavigate();
   // async function createEmployee() {
   //   const newEmployee = { firstName: "", lastName: "" };
-  //   await fetch("/api/employeeProfile/create", {
+  //   await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/create", {
   //     method: "POST",
   //     headers: {
   //       "Content-Type": "application/json",

@@ -80,7 +80,7 @@ const EventEditForm = ({ existingValues }) => {
   }
 
   async function createEvent(newEvent) {
-    await fetch("/api/events/create-event", {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/events/create-event", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +89,7 @@ const EventEditForm = ({ existingValues }) => {
     });
   }
   // async function updateEvent(newEvent) {
-  //   await fetch("/api/events/" + eventId, {
+  //   await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/events/" + eventId, {
   //     method: "POST",
   //     headers: {
   //       "Content-Type": "application/json",

@@ -11,7 +11,7 @@ function EventsPage() {
 
   // useEffect(() => {
   //   const fetchEvent = async () => {
-  //     let fetchResult = await fetch(
+  //     let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+
   //       '/api/event/:id/' + eventId
   //     )
   //     let fetchedEvent = await fetchResult.json()
@@ -22,7 +22,7 @@ function EventsPage() {
   // },[eventId])
 
   async function updateEvent(updatedEvent) {
-    await fetch("/api/:id", +eventId, {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/:id", +eventId, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

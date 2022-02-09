@@ -31,7 +31,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
     const getAllTheEmployees = async function () {
-      let employeeLst = await fetch("/api/employeeProfile/employees/names");
+      let employeeLst = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/employees/names");
       let nameIdList = await employeeLst.json();
       setActiveEmployeeList(nameIdList);
     };
@@ -39,7 +39,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
 
     const fetchAllTheDays = async function () {
       async function fetchWeek() {
-        let theQueryWeek = await fetch(`/api/schedule/week?day0=${startDay}`);
+        let theQueryWeek = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/week?day0=${startDay}`);
         let fetchResult = await theQueryWeek.json();
         setTheWholeWeek(fetchResult);
       }
@@ -47,7 +47,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     };
 
     const empAvail = async () => {
-      let fetchResult = await fetch(`/api/availability/availability-all`);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/availability/availability-all`);
       let theAvailabilityList = await fetchResult.json();
       console.log("fetching employee availability list", theAvailabilityList);
 
@@ -57,7 +57,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     };
 
     // const empAvail = async ()=>{
-    //         let fetchAvailibility = await fetch(`/api/availability/availability-all}`)
+    //         let fetchAvailibility = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/availability/availability-all}`)
     //         let employeeAvailibility = await fetchAvailibility.json()
     //         console.log("employeeAvailibility...",employeeAvailibility)
     //         setEmpAvailibility(employeeAvailibility)

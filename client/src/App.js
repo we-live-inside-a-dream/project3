@@ -24,6 +24,7 @@ import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
 
 function App() {
+  console.log("heeeeey", process.env);
   return (
     <AuthenticationProvider>
       <div
@@ -128,7 +129,6 @@ function App() {
             element={<EmployeeAvailabilityDetail />}
           ></Route>
         </Routes>
-        )
       </div>
     </AuthenticationProvider>
   );

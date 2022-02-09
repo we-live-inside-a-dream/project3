@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
-
+const cors = require('cors')
 dotenv.config();
 const port = process.env.PORT || 5001;
 const app = require("express")();
@@ -69,7 +69,7 @@ const eventsRouter = require("./routes/eventsRoutes");
 const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
-
+app.use(cors())
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(express.json());
 app.use(passport.initialize());

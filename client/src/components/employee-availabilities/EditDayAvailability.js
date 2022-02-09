@@ -33,7 +33,7 @@ function EditDayAvailability({ existingValues }) {
 
   async function updateDayAvailability(updatedDay) {
     console.log("Updating day:", dayName, "with new availability ", updatedDay);
-    await fetch(`/api/availability/availability-update-day?id=${dayId}`, {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/availability/availability-update-day?id=${dayId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -33,7 +33,7 @@ const EmployeeList = ({ setSelectedEmployeeId }) => {
   useEffect(() => {
     async function fetchData() {
       console.log("Fetching employee data!");
-      let fetchResult = await fetch("/api/employeeProfile/employees");
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/employeeProfile/employees");
       let employeeList = await fetchResult.json();
       setEmployees(employeeList);
     }

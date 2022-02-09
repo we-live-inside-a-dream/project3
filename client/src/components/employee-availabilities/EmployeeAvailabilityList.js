@@ -12,7 +12,7 @@ function EmployeeAvailabilityList() {
     let isMounted = true;
     const fetchAvailabilityList = async () => {
       console.log("from useEffect, trying to fetch endpoint");
-      let fetchResult = await fetch(`/api/availability/availability-all`);
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/availability/availability-all`);
       console.log("fetch result", fetchResult);
       let theAvailabilityList = await fetchResult.json();
       console.log("fetching employee availability list", theAvailabilityList);

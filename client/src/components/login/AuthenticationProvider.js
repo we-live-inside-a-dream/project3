@@ -10,7 +10,7 @@ const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     const getLoggedInUser = async () => {
-      const response = await fetch("/api/auth/loggedInUser");
+      const response = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/auth/loggedInUser");
       if (response.status === 200) {
         const loggedInUser = await response.json();
         if (loggedInUser) {

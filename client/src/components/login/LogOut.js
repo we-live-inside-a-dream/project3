@@ -9,7 +9,7 @@ const LogOut = () => {
   console.log(authContext);
 
   useEffect(() => {
-    fetch("/api/auth/logout").then(() => {
+    fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/auth/logout").then(() => {
       authContext.logOut();
       console.log("Logged out successfully.");
       navigate("/");

@@ -61,7 +61,7 @@ function CalendarNewShiftForm() {
 
   async function updateShift(updatedUser) {
     console.log("Posting to user", name, "with data", updatedUser);
-    await fetch("/api/schedule/schedule", {
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/schedule/schedule", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

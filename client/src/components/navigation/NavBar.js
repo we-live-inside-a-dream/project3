@@ -33,7 +33,7 @@ function NavBar() {
             {/* <NavbarLink to="/employeeList">Employees</NavbarLink>
             <NavbarLink to="/createEmployee">EmpForm</NavbarLink> */}
             {/* <NavbarLink to="/availabilities">Availabilities</NavbarLink> */}
-            <NavbarLink to="/timeOff">Time OFF</NavbarLink>
+            <NavbarLink to="/timeOff">Time Off</NavbarLink>
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

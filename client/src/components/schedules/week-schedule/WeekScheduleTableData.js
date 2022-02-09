@@ -12,7 +12,7 @@
 //   useEffect(() => {
 //     setTheId(id);
 //     const empAvail = async () => {
-//       let fetchResult = await fetch(
+//       let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+
 //         `/api/availability/availability-day-id/day=${theDay}&id=${id}`
 //       );
 //       let theAvailabilityList = await fetchResult.json();

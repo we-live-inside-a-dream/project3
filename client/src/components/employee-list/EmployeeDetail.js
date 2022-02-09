@@ -18,7 +18,7 @@ const EmployeeDetail = ({ employeeId }) => {
 
   useEffect(() => {
     const fetchEmployee = async () => {
-      let fetchResult = await fetch(
+      let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+
         "/api/employeeProfile/getByProfileId/" + profileId
       );
       let fetchedEmployee = await fetchResult.json();
@@ -35,7 +35,7 @@ const EmployeeDetail = ({ employeeId }) => {
   //     "with data",
   //     updatedEmployee
   //   );
-  //   await fetch(`/api/employeeProfile/update?id=${employeeId}`, {
+  //   await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/employeeProfile/update?id=${employeeId}`, {
   //     method: "POST",
   //     headers: {
   //       "Content-Type": "application/json",

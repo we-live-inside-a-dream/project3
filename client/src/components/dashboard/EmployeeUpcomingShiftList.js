@@ -14,7 +14,8 @@ function EmployeeUpcomingShiftList() {
   useEffect(() => {
     const getUpcomingShiftsById = async function () {
       let employeeLst = await fetch(
-        `/api/schedule/employee-id?id=${id}&today=${today}`
+        process.env.REACT_APP_ELECTRON_SERVER +
+          `/api/schedule/employee-id?id=${id}&today=${today}`
       );
       let nameIdList = await employeeLst.json();
       setShifts(nameIdList);

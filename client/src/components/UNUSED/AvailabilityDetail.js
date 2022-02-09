@@ -19,7 +19,7 @@
 //   useEffect(() => {
 //     const fetchAvailabilityById = async () => {
 //       console.log("from useEffect, trying to fetch  for availability detail");
-//       let fetchResult = await fetch(
+//       let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+
 //         `/api/availability/availability-day/${params.id}`
 //       );
 //       console.log("fetch result", fetchResult);

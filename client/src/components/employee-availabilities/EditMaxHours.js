@@ -33,7 +33,7 @@ function EditMaxHours({ existingValues }) {
       "with max hours:",
       maxHoursPerWeek
     );
-    await fetch(
+    await fetch(process.env.REACT_APP_ELECTRON_SERVER+
       "/api/availability/availability-update-maxhours/" + existingValues._id,
       {
         method: "POST",

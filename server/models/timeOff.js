@@ -51,6 +51,13 @@ async function createEmployeeTimeOff(employeeTimeOffData) {
   return createEmployeeTimeOff.id;
 }
 
+// get Employee Profile by Profile id
+
+async function getEmployeeTimeOffByProfileId(employeeProfile_id) {
+  return EmployeeTimeOff.findById(employeeProfile_id);
+}
+
 module.exports = {
   createEmployeeTimeOff,
+  getEmployeeTimeOffByProfileId,
 };

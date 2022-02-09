@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const availabilityModel = require("../models/availability");
+const employeeTimeOffModel = require("../models/timeOff");
 
 // router.post("/availability-add", async (req, res) => {
 //   let newAvailability = req.body;
@@ -66,6 +67,8 @@ router.post("/availability/:id", async (req, res) => {
 router.get("/by-employee/:id", async (req, res) => {
   let id = req.params.id;
   let profile = await availabilityModel.getAvailabilityByEmployeeProfileId(id);
+  // let vacation = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id);
+  // let profile = [{ vacation, availabilities }];
   // console.log("THE PROFILE", profile);
   res.json(profile);
 });

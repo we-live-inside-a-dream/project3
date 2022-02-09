@@ -94,7 +94,7 @@ function App() {
             path="/availability-edit/:id"
             element={
               // <RequireAuth>
-                <EmployeeAvailabilityEditPage />
+              <EmployeeAvailabilityEditPage />
               // </RequireAuth>
             }
           />
@@ -103,7 +103,7 @@ function App() {
             path="/logout"
             element={
               // <RequireAuth>
-                <LogOut />
+              <LogOut />
               // </RequireAuth>
             }
           />
@@ -111,7 +111,7 @@ function App() {
             path="/profile"
             element={
               // <RequireAuth>
-                <ProfilePage />
+              <ProfilePage />
               // </RequireAuth>
             }
           />

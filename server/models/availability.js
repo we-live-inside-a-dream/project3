@@ -3,10 +3,6 @@ const moment = require("moment");
 //Mongo Model - Availabilities
 // Employee Name, Hour per Week
 const availability = new mongoose.Schema({
-  // profileId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "employeeProfile",
-  // },
   employeeProfileId: {
     type: String,
     required: true,
@@ -27,8 +23,8 @@ const availability = new mongoose.Schema({
       dayName: String,
       available: Boolean,
       allDay: Boolean,
-      start: Number,
-      end: Number,
+      start: String,
+      end: String,
     },
   ],
 });
@@ -38,57 +34,57 @@ const dayArray = [
     dayName: "monday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "tuesday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "wednesday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "thursday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "friday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "saturday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
   {
     dayName: "sunday",
     available: true,
     allDay: true,
-    start: 0,
-    end: 0,
+    start: "",
+    end: "",
   },
 ];
 
 const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (id, firstName, lastName) => {
-  console.log("this is the id", id);
+  // console.log("this is the id", id);
   try {
     let availability = await Availability.create({
       employeeProfileId: id,
@@ -111,12 +107,12 @@ const createAvailability = async (id, firstName, lastName) => {
 
 const getAvailabilityById = async (id) => {
   let employeeAvail = await Availability.findOne({ _id: id });
-  console.log("EMPLOYEE MODEL", employeeAvail);
+  // console.log("EMPLOYEE MODEL", employeeAvail);
   return employeeAvail;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
   let employeeAvail = await Availability.findOne({ employeeProfileId: id });
-  console.log("from model, employeeAvail", employeeAvail);
+  // console.log("from model, employeeAvail", employeeAvail);
   return employeeAvail;
 };
 
@@ -126,10 +122,14 @@ const listOfEmployeesAvailabilities = async () => {
   return Availability.find({});
 };
 async function updateAvailabilityById(id, updatedAvailability) {
+  console.log(
+    "from the model updatedAvailability before update",
+    updatedAvailability
+  );
   let newAvailability = await Availability.findByIdAndUpdate(
     id,
-    updatedAvailability,
-    { returnDocument: "after" }
+    updatedAvailability
+    // { returnDocument: "after" }
   );
 
   console.log(

@@ -10,24 +10,24 @@ const AuthenticationProvider = ({ children }) => {
 
   useEffect(() => {
     const getLoggedInUser = async () => {
-        const response = await fetch('/api/auth/loggedInUser')
-        console.log(response,"11111111")
-        const loggedInUser = await response.json()
-        console.log(loggedInUser)
+      const response = await fetch("/api/auth/loggedInUser");
+      if (response.status === 200) {
+        const loggedInUser = await response.json();
         if (loggedInUser) {
-            logIn(loggedInUser)
+          logIn(loggedInUser);
         }
-    }
-    getLoggedInUser()
-}, [])
+      }
+    };
+    getLoggedInUser();
+  }, []);
 
-  useEffect(()=>{
-    console.log(user)
-  },[user])
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const logOut = () => {
     setUser(null);
   };
-  const authContext = { user, logIn, logOut};
+  const authContext = { user, logIn, logOut };
   return (
     <AuthenticationContext.Provider value={authContext}>
       {children}

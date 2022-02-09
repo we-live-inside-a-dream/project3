@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardBoxScale from "./DashboardBoxScale";
-import EmployeeAvailabilityList from "../employee-availabilities/EmployeeAvailabilityList";
+import EmployeeUpcomingShiftList from "./EmployeeUpcomingShiftList";
 
 function ScheduleBox() {
   let navigate = useNavigate();
@@ -9,14 +9,14 @@ function ScheduleBox() {
   return (
     <>
       <DashboardBoxScale
-        padding="5px"
+        padding="20px"
         top={0}
         left={0}
-        transform={"Scale(.3)"}
+        transform={"Scale(1)"}
         transformOrigin={"top left"}
-        title="EMPLOYEES"
-        clickFunction={() => navigate("/human-resources")}
-        content={<EmployeeAvailabilityList />}
+        title="MY UPCOMING SHIFTS"
+        clickFunction={() => navigate("/my-page")}
+        content={<EmployeeUpcomingShiftList />}
       />
     </>
   );

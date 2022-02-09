@@ -12,9 +12,9 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
   let userInfo = req.body;
-  console.log(userInfo);
+  // console.log(userInfo);
   let user = await logIn(userInfo);
-  console.log("Log in successful!");
+  // console.log("Log in successful!");
   res.json(user);
 });
 
@@ -25,11 +25,11 @@ passport.use(
       passwordField: "password",
     },
     function verify(email, password, done) {
-      console.log("Verified.");
+      // console.log("Verified.");
       findEmployeeByProfileEmail(email)
         .then((employeeProfile) => {
           if (!employeeProfile.email || employeeProfile.password !== password) {
-            console.log("failed", employeeProfile, password);
+            // console.log("failed", employeeProfile, password);
             done(null, false, {
               message: "Email/Password was incorrect. Please try again.",
             });
@@ -43,7 +43,7 @@ passport.use(
 );
 
 passport.serializeUser(function (EmployeeProfile, done) {
-  console.log("Passport wants to store this user in a cookie", EmployeeProfile);
+  // console.log("Passport wants to store this user in a cookie", EmployeeProfile);
   done(null, EmployeeProfile.id);
 });
 
@@ -61,9 +61,10 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.get("/loggedInUser", function (req, res) {
-  
-  console.log("USER IS HERE",req.user)
-  res.json(req.user);
+  if (req.user) {
+    res.json(req.user);
+  }
+  res.sendStatus(401);
 });
 
 router.get("/logout", (req, res) => {

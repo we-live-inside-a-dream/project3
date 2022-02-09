@@ -17,7 +17,7 @@ const {
 */
 router.post("/create", async (req, res) => {
   let newEmployeeProfile = req.body;
-  console.log(newEmployeeProfile);
+  // console.log(newEmployeeProfile);
   try {
     let employeeProfileId = await createEmployeeProfile(newEmployeeProfile);
     // PLEASE LEAVE LINES 23-28 HERE!!! It's needed to create availabilities!!!
@@ -43,11 +43,11 @@ router.post("/create", async (req, res) => {
 router.post("/update/", async (req, res) => {
   let updatedEmployeeProfile = req.body;
   let id = req.query.id;
-  console.log(req.body);
-  console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
+  // console.log(req.body);
+  // console.log("Updating employee profile", id, "with", updatedEmployeeProfile);
   let updatedEmployee = await updateEmployeeProfile(id, updatedEmployeeProfile);
   res.send(updatedEmployee);
-  console.log("updated employee...", updatedEmployee);
+  // console.log("updated employee...", updatedEmployee);
 });
 
 /** Get: All employees in database
@@ -61,9 +61,8 @@ router.get("/employees", async (req, res) => {
 });
 
 router.get("/employees/names", async (req, res) => {
-  
   let employeeNames = await getActiveEmployeeNames();
-  console.log("empNames:",employeeNames)
+  // console.log("empNames:",employeeNames)
   res.send(employeeNames);
 });
 
@@ -75,9 +74,9 @@ router.get("/getByEmail/:email", async (req, res) => {
 
 router.get("/getByProfileId/:profileId", async (req, res) => {
   let profileId = req.params.profileId;
-  console.log("from API", profileId);
+  // console.log("from API", profileId);
   let profile = await getEmployeeProfileByProfileId(profileId);
-  console.log("from API, profile", profile);
+  // console.log("from API, profile", profile);
   res.json(profile);
 });
 

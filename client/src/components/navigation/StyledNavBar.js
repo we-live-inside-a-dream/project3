@@ -20,7 +20,6 @@ export const RightContainer = styled.div`
   flex: 30%;
   display: flex;
   justify-content: flex-end;
-  padding-left: 50%;
 
   @media (min-width: 700px) {
     height: 80px;

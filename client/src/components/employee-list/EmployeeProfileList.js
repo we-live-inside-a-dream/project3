@@ -16,9 +16,7 @@ function EmployeeProfileList() {
     let isMounted = true;
     const fetchEmployeesList = async () => {
       let fetchResult = await fetch(`/api/employeeProfile/employees`);
-      console.log("fetch result", fetchResult);
       let employeeList = await fetchResult.json();
-      console.log("fetching employee list", employeeList);
       if (isMounted) {
         setEmployees(employeeList);
       }
@@ -26,7 +24,6 @@ function EmployeeProfileList() {
     fetchEmployeesList();
     return () => (isMounted = false);
   }, []);
-  console.log("AFTER USE EFFECT", employees);
 
   // selects the employee id to navigate to the page to edit that particular employee
   function selectProfileId(id) {
@@ -60,12 +57,14 @@ function EmployeeProfileList() {
         style={{ paddingTop: "0px", marginTop: "0px", paddingBottom: "20px" }}
       >
         <thead>
-          <StyledTableHeader>NAME</StyledTableHeader>
-          <StyledTableHeader>EMAIL</StyledTableHeader>
-          <StyledTableHeader>PHONE#</StyledTableHeader>
-          <StyledTableHeader>POSITION(S)</StyledTableHeader>
-          <StyledTableHeader>STATUS</StyledTableHeader>
-          <StyledTableHeader>PERMISSIONS</StyledTableHeader>
+          <tr>
+            <StyledTableHeader>NAME</StyledTableHeader>
+            <StyledTableHeader>EMAIL</StyledTableHeader>
+            <StyledTableHeader>PHONE#</StyledTableHeader>
+            <StyledTableHeader>POSITION(S)</StyledTableHeader>
+            <StyledTableHeader>STATUS</StyledTableHeader>
+            <StyledTableHeader>PERMISSIONS</StyledTableHeader>
+          </tr>
         </thead>
         <tbody>
           {employees?.map((employee, index) => {

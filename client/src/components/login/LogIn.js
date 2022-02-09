@@ -16,7 +16,7 @@ export default function LogIn() {
   const authContext = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
-  console.log(authContext);
+  // console.log(authContext);
   const handleChange = (event, setter) => {
     const value = event.target.value;
     setter(value);

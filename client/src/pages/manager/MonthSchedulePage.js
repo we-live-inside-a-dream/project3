@@ -1,11 +1,11 @@
 import React from "react";
 import CalendarScratch from "../../components/calendar/CalendarScratch";
-import StyledButtonGroup from "../../components/schedules/StyledScheduleButtonGroup";
+import StyledScheduleButtonGroup from "../../components/schedules/StyledScheduleButtonGroup";
 
 function MonthSchedulePage({ setCurrentTab, currentTab }) {
   return (
     <>
-      <StyledButtonGroup
+      <StyledScheduleButtonGroup
         setCurrentTab={setCurrentTab}
         currentTab={currentTab}
       />

@@ -1,28 +1,21 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import DatePicker from "@mui/lab/DatePicker";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import TextField from "@mui/material/TextField";
+import parseISO from "date-fns/parseISO";
 
-
-function BasicDatePicker({onChange, value, label}) {
-
-//   const handleChange = (newValue) => {
-//     setValue(newValue);
-//   };
-
+// dateAdapter={AdapterDateFns({lib:"date-fns"},{formats:"fullTime24h"})}>
+export default function BasicDatePicker({ onChange, value, label }) {
+  console.log(value, label, onChange)
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
- 
-        <DesktopDatePicker
-          label={label}
-          inputFormat="yyyy-mm-dd"
-          value={value}
-          onChange={onChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-
+      <DatePicker
+        format={"yyyy/MM/dd"}
+        label={label}
+        value={parseISO(value)}
+        onChange={onChange}
+        renderInput={(params) => <TextField {...params} />}
+      />
     </LocalizationProvider>
   );
 }
-export default BasicDatePicker

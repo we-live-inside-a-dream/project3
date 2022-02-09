@@ -88,7 +88,7 @@ const dayArray = [
 const Availability = mongoose.model("Availability", availability);
 
 const createAvailability = async (id, firstName, lastName) => {
-  console.log("this is the id", id);
+  // console.log("this is the id", id);
   try {
     let availability = await Availability.create({
       employeeProfileId: id,
@@ -111,12 +111,12 @@ const createAvailability = async (id, firstName, lastName) => {
 
 const getAvailabilityById = async (id) => {
   let employeeAvail = await Availability.findOne({ _id: id });
-  console.log("EMPLOYEE MODEL", employeeAvail);
+  // console.log("EMPLOYEE MODEL", employeeAvail);
   return employeeAvail;
 };
 const getAvailabilityByEmployeeProfileId = async (id) => {
   let employeeAvail = await Availability.findOne({ employeeProfileId: id });
-  console.log("from model, employeeAvail", employeeAvail);
+  // console.log("from model, employeeAvail", employeeAvail);
   return employeeAvail;
 };
 
@@ -132,10 +132,10 @@ async function updateAvailabilityById(id, updatedAvailability) {
     { returnDocument: "after" }
   );
 
-  console.log(
-    "from availability model, updated availability is",
-    newAvailability
-  );
+  // console.log(
+  //   "from availability model, updated availability is",
+  //   newAvailability
+  // );
   return newAvailability;
 }
 

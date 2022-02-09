@@ -2,7 +2,7 @@ const mongoose = require("./mongooseDb");
 
 const EmployeeTimeOff = mongoose.model("employeeTimeOff", {
   type: {
-    type: [String],
+    type: String,
     required: true,
   },
   employeeProfileId: {

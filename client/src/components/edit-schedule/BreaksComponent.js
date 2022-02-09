@@ -5,7 +5,6 @@ const BreaksComponent = (props) => {
   const myBreakys = props.breakys;
   const onRemoveBreak = props.onRemoveBreak;
   const myKey = props.myKey;
-
   return (
     <div key={myKey}>
       <div>

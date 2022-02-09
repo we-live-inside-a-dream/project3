@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import EditSchedule from "../edit-schedule/EditSchedule";
 import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import moment from "moment";
 import * as fns from "date-fns";
 import StyledTable from "../../reusable/tables/StyledTable";
-// import Modal from "../../reusable/Modal";
-// import StyledButton from "../../reusable/Inputs/StyledButton";
-// import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
 import NamePicTableData from "../../reusable/NamePicTableData";
-import StyledButtonGroup from "../StyledScheduleButtonGroup";
+import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
+import WeekScheduleLegend from "./WeekScheduleLegend";
+import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -102,9 +100,10 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       // console.log(
       //   `employee is available between ${availableToday?.start} and ${availableToday?.end}`
       // );
-      return "yellow";
+      return "gold";
     } else {
       // console.log("employee is free to suffer all day!!");
+      return "#32cd32";
     }
   }
 
@@ -123,39 +122,62 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   // };
   // },[date])
 
+  function onInputUpdate(value, setter) {
+    let newValue = fns.format(new Date(value), "yyyy-MM-dd").toString();
+    console.log(newValue, "is the new formatted value for startDay");
+    setter(newValue);
+  }
+
   return (
     <div className="container">
-      <div style={{ display: "grid", gridTemplateColumns: "30% 70%" }}>
-        <div style={{ gridTempalteRow: "1", marginBottom: "0%" }}>
-          <StyledButtonGroup
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: " 50% 15% 35%",
+          height: "auto",
+        }}
+      >
+        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
+          <StyledScheduleButtonGroup
             setCurrentTab={setCurrentTab}
             currentTab={currentTab}
+            style={{ marginRight: "20px", alignSelf: "baseline" }}
+          />
+          <WeekScheduleLegend
+            style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
         </div>
-        <div style={{ gridTemplateRow: "1" }}>
+        <div className="emptyDivForSpacing"> </div>
+        <div
+          style={{
+            gridTemplateRow: "1",
+            display: "inline",
+            alignContent: "baseline",
+            alignItems: "baseLine",
+            justifyContent: "right",
+          }}
+        >
           <h2
             style={{
-              width: "auto",
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
               color: "#07889b",
-              marginTop: "20px",
+              marginTop: "0px",
               marginBottom: "0px",
               paddingBottom: "0px",
+              display: "inline",
             }}
           >
-            Week Starting:
-            <StyledInput
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDay}
-              onChange={(e) => {
-                setStartDay(e.target.value);
-              }}
-            />
+            Week starting:
           </h2>
+          <BasicDatePicker
+            value={startDay}
+            onChange={(value) => {
+              onInputUpdate(value, setStartDay);
+              console.log(value, "is the newStartDay");
+            }}
+          />
         </div>
       </div>
       <StyledTable>

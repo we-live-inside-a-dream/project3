@@ -4,9 +4,9 @@ import StyledTableHeader from "../../reusable/tables/StyledTableHeader";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import NamePicTableData from "../../reusable/NamePicTableData";
-import StyledButtonGroup from "../StyledScheduleButtonGroup";
-import StyledInput from "../../reusable/Inputs/StyledInput";
-import { bottomNavigationActionClasses } from "@mui/material";
+import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
+import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
+import moment from "moment";
 
 function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
@@ -18,12 +18,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
 
   useEffect(() => {
     if (shiftId) {
-      console.log("shiftId is", shiftId);
       const fetchShift = async () => {
         let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
         let fetchedShift = await fetchResult.json();
         setShift(fetchedShift);
-        // console.log("AFTER USE EFFECT SHIFT ID", shiftId);
       };
       const deleteShiftById = async () => {
         await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
@@ -32,13 +30,12 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       };
       //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
       if (deleteShift) {
-        console.log("trying to delete shift!!");
         deleteShiftById();
         setDeleteShift(false);
+        setIsOpen(false);
       } else {
         fetchShift();
       }
-      console.log("AFTER USE EFFECT SHIFT ID", shiftId);
     }
   }, [shiftId, deleteShift]);
 
@@ -46,11 +43,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
       let fetchedDay = await fetchResult.json();
-      // console.log("FETCHED DAY", fetchedDay);
       setSchedule(fetchedDay);
     };
     fetchSchedule();
-  }, [day]);
+  }, [day, isOpen]);
 
   //business hours should come from a db fetch
   let startTime = 8;
@@ -61,12 +57,16 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     businessHours.push(i);
     headerHours.push(i < 13 ? i : i - 12);
   }
-
+  function onInputUpdate(value, setter) {
+    let newValue = moment(value).format("yyyy-MM-DD");
+    console.log(newValue, "is the new formatted value for startDay");
+    setter(newValue);
+  }
   // const deleteEmployeeShift
   function convertTime(prop) {
     let timeString =
-    prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
-      
+      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
+
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
@@ -75,36 +75,50 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "30% 70%",
+          gridTemplateColumns: " 50%  20% 30%",
           height: "auto",
         }}
       >
-        <StyledButtonGroup
-          setCurrentTab={setCurrentTab}
-          currentTab={currentTab}
-        />
+        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
+          <StyledScheduleButtonGroup
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+            style={{ marginRight: "20px", alignSelf: "baseline" }}
+          />
+        </div>
+        <div className="emptyDivForSpacing"> </div>
 
-        <h2
+        <div
           style={{
-            fontWeight: "400",
-            fontFamily: "Arial, Helvetica, sans-serif",
-            textAlign: "right",
-            color: "#07889b",
-            marginTop: "0px",
-            marginBottom: "0px",
-            paddingBottom: "0px",
+            gridTemplateRow: "1",
+            display: "inline",
+            alignContent: "baseline",
+            alignItems: "baseLine",
+            justifyContent: "right",
           }}
         >
-          For day:
-          <StyledInput
-            style={{ marginBottom: "0px" }}
-            type="date"
-            id="single-day"
-            name="day"
+          <h2
+            style={{
+              fontWeight: "400",
+              fontFamily: "Arial, Helvetica, sans-serif",
+              textAlign: "right",
+              color: "#07889b",
+              marginTop: "0px",
+              marginBottom: "0px",
+              paddingBottom: "0px",
+              display: "inline",
+            }}
+          >
+            For day:
+          </h2>
+          <BasicDatePicker
             value={day}
-            onChange={(e) => setDay(e.target.value)}
+            onChange={(value) => {
+              onInputUpdate(value, setDay);
+              console.log(value, "is the newStartDay");
+            }}
           />
-        </h2>
+        </div>
       </div>
       <StyledTable>
         <thead>
@@ -114,6 +128,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               if (hour === Math.floor(hour)) {
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{ minWidth: "25px", padding: "0px" }}
                   >
                     {hour}
@@ -122,6 +137,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               } else if (hour - 0.5 === Math.floor(hour)) {
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{
                       minWidth: "25px",
                       padding: "0px",
@@ -131,6 +147,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               } else
                 return (
                   <StyledTableHeader
+                    key={hour}
                     style={{
                       minWidth: "25px",
                       padding: "0px",
@@ -193,6 +210,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           shiftId={shiftId}
           existingValues={shift}
           onClose={() => setIsOpen(false)}
+          deleteShift={() => setDeleteShift(true)}
         />
         **edit**
       </Modal>

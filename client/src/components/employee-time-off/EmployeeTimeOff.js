@@ -33,7 +33,7 @@ const EmployeeTimeOff = () => {
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
-  let user = authContext.user;
+  const user = authContext.user;
 
   console.log(startTime);
 

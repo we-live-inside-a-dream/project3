@@ -55,7 +55,7 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
       setFirstName(existingValues.firstName);
       setLastName(existingValues.lastName);
       setEmail(existingValues.email);
-      setPassword(existingValues.password);
+
       setPhoneNumber(existingValues.phoneNumber);
       setPositions(existingValues.positions);
       setStatus(existingValues.status);

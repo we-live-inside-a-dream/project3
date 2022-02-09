@@ -56,14 +56,14 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
     password: hashedpassword,
   });
   let createdProfile = await newEmployeeProfile.save();
-  // console.log("saving employee profile", createdProfile);
-  return createdProfile.id;
+  console.log("saving employee profile", createdProfile);
+  return createdProfile._id;
 };
 
 const logIn = async (user) => {
+
   let employeeProfile = await EmployeeProfile.findOne({
     email: user.email,
-    password: user.password,
   });
   return employeeProfile;
 };

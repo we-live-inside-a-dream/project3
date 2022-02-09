@@ -22,6 +22,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import ScheduleAvailability from "./ScheduleAvailability";
+import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
@@ -110,6 +111,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   }
 
   function onInputUpdate(value, setter) {
+    console.log(value);
     setter(value);
   }
 
@@ -181,12 +183,15 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
 
         <div>
           <InputLabel>Date</InputLabel>
-          <StyledInput
+          <BasicDatePicker
             label="shift day"
             type="date"
             value={date}
-            onChange={(event) => {
-              onInputUpdate(event.target.value, setDate);
+            onChange={(value) => {
+              onInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setDate
+              );
             }}
           />
           <ScheduleAvailability date={date} id={employeeId} />

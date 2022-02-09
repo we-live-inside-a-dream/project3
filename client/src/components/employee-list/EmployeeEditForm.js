@@ -20,7 +20,12 @@ const statusData = [
   { value: "inactive", label: "Inactive" },
 ];
 
-const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
+const EmployeeEditForm = ({
+  onSave,
+  setId,
+  setCurrentCreateTab,
+  existingValues,
+}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -111,7 +116,7 @@ const EmployeeEditForm = ({ onSave, setId, setCurrentTab, existingValues }) => {
     } else {
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
-      setCurrentTab(2);
+      setCurrentCreateTab(12);
       // navigate("/employeeList");
     }
   }

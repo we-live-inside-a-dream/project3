@@ -130,6 +130,7 @@ function EmployeeAvailabilityDetail({}) {
       </StyledPage>
       {modalOpen && (
         <AvailabilityModal
+          edit="edit"
           existingValues={availability}
           setModalOpen={setModalOpen}
           theId={id}

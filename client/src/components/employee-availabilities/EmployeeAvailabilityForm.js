@@ -9,7 +9,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
+const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,34 +19,36 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
 
   const [availability, setAvailability] = useState({});
 
-  if (!existingValues) {
-    setAvailability({
-      days: [],
-      day: "",
-      maxHoursPerWeek: 0,
-      firstName: "",
-      lastName: "",
-      employeeProfileId: "",
-    });
-  }
+  // if (create) {
+  //   setAvailability({
+  //     days: [],
+  //     day: "",
+  //     maxHoursPerWeek: 0,
+  //     firstName: "",
+  //     lastName: "",
+  //     employeeProfileId: "",
+  //   });
+  // }
 
   let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const fetchAvailabilityById = async () => {
-  //     console.log(
-  //       "from useEffect, trying to fetch endpoint for availability by id"
-  //     );
-  //     let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
-  //     console.log("fetch result", fetchResult);
-  //     let theAvailability = await fetchResult.json();
-  //     console.log("fetching availability for ", theAvailability);
+  useEffect(() => {
+    if (edit) {
+      const fetchAvailabilityById = async () => {
+        console.log(
+          "from useEffect, trying to fetch endpoint for availability by id"
+        );
+        let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
+        console.log("fetch result", fetchResult);
+        let theAvailability = await fetchResult.json();
+        console.log("fetching availability for ", theAvailability);
 
-  //     setAvailability(theAvailability);
-  //   };
+        setAvailability(theAvailability);
+      };
 
-  //   fetchAvailabilityById();
-  // }, [theId]);
+      fetchAvailabilityById();
+    }
+  }, [theId, edit]);
 
   useEffect(() => {
     if (existingValues) {
@@ -55,6 +57,7 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   }, [existingValues]);
 
   useEffect(() => {
+    // if (!create) {
     if (availability) {
       setEmployeeId(availability.employeeProfileId);
       setFirstName(availability.firstName);
@@ -63,7 +66,18 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
       setDays(availability.days); // will be a use context for managers settings
       setDay(availability.day);
     }
-  }, [availability]);
+    // } else {
+    //   setAvailability({
+    //     days: [],
+    //     day: "",
+    //     maxHoursPerWeek: 0,
+    //     firstName: "",
+    //     lastName: "",
+    //     employeeProfileId: "",
+    //   });
+    // }
+    // }
+  }, [availability, create]);
 
   async function postData() {
     let updatedAvailability = {

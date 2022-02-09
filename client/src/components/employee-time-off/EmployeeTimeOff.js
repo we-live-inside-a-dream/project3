@@ -13,7 +13,6 @@ import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
-import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
 
 const typeData = [

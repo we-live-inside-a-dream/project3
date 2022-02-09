@@ -126,7 +126,7 @@ async function updateAvailabilityById(id, updatedAvailability) {
     "from the model updatedAvailability before update",
     updatedAvailability
   );
-  let newAvailability = await Availability.day.findByIdAndUpdate(
+  let newAvailability = await Availability.findByIdAndUpdate(
     id,
     updatedAvailability
     // { returnDocument: "after" }

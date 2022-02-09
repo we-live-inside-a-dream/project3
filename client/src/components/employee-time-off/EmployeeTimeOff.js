@@ -35,8 +35,7 @@ const EmployeeTimeOff = () => {
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
-  console.log(startTime)
-  
+  console.log(startTime);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -51,10 +50,10 @@ const EmployeeTimeOff = () => {
     setter(value);
   }
 
-  function onCommentInputUpdate(event, setter ){
-    let newValue = event.target.value
-    setter(newValue)
-}
+  function onCommentInputUpdate(event, setter) {
+    let newValue = event.target.value;
+    setter(newValue);
+  }
 
   let navigate = useNavigate();
 
@@ -86,7 +85,6 @@ const EmployeeTimeOff = () => {
     navigate("/");
   }
   console.log("USER:", user.firstName, user.lastName);
-
 
   return (
     <div>
@@ -204,7 +202,7 @@ const EmployeeTimeOff = () => {
             <p>End Time: {endTime}</p>
             <p>Comments:{comment}</p>
             <div></div>
-            
+
             <StyledButton onClick={postData}>Confirm</StyledButton>
             <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
               Cancel

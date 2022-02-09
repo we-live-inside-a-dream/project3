@@ -6,6 +6,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
+import moment from "moment";
 
 function AvailabilityDay({ day, availability, setAvailability, index }) {
   const [available, setAvailable] = useState(day.available);
@@ -17,14 +18,22 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
     const newAvailability = { ...availability };
     newAvailability.days = newAvailability.days.map((day, position) => {
       if (position === index) {
-        return { available, start, end, allDay, dayName: day.dayName };
+        return {
+          available,
+          start,
+          end,
+          allDay,
+          dayName: day.dayName,
+        };
       } else return day;
     });
     setAvailability(newAvailability);
   }, [available, start, end, allDay]);
 
   function onInputUpdate(value, setter) {
-    setter(value);
+    let newValue = fns.format(new Date(value), "HH:mm").toString();
+    console.log(newValue);
+    setter(newValue);
   }
 
   return (
@@ -72,14 +81,14 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
           <label>Start time</label>
 
           <BasicTimePicker
-            value={start}
+            value={` Wed Feb 02 2022 ${start}:00 GMT-0700 (Mountain Standard Time)`}
             onChange={(value) => {
               onInputUpdate(value, setStart);
             }}
           />
           <label>End time</label>
           <BasicTimePicker
-            value={end}
+            value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}
             onChange={(value) => {
               onInputUpdate(value, setEnd);
             }}

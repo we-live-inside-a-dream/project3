@@ -9,13 +9,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const EmployeeAvailabilityForm = ({
-  existingValues,
-  setCurrentTab,
-  onSave,
-  theId,
-}) => {
-  console.log(theId, "is the id inside the availability form!!!!!!!!!!!!");
+const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,37 +17,46 @@ const EmployeeAvailabilityForm = ({
   const [days, setDays] = useState([]); // will be a use context for managers settings
   const [day, setDay] = useState("");
 
-  const [availability, setAvailability] = useState({
-    days: [],
-    day: "",
-    maxHoursPerWeek: 0,
-    firstName: "",
-    lastName: "",
-    employeeProfileId: "",
-  });
+  const [availability, setAvailability] = useState({});
 
-  let navigate = useNavigate()
+  if (!existingValues) {
+    setAvailability({
+      days: [],
+      day: "",
+      maxHoursPerWeek: 0,
+      firstName: "",
+      lastName: "",
+      employeeProfileId: "",
+    });
+  }
 
-  console.log("ONCE INSIDE THE AVAIL FORM THE ID IS", theId);
+  let navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const fetchAvailabilityById = async () => {
+  //     console.log(
+  //       "from useEffect, trying to fetch endpoint for availability by id"
+  //     );
+  //     let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
+  //     console.log("fetch result", fetchResult);
+  //     let theAvailability = await fetchResult.json();
+  //     console.log("fetching availability for ", theAvailability);
+
+  //     setAvailability(theAvailability);
+  //   };
+
+  //   fetchAvailabilityById();
+  // }, [theId]);
+
   useEffect(() => {
-    const fetchAvailabilityById = async () => {
-      console.log(
-        "from useEffect, trying to fetch endpoint for availability by id"
-      );
-      let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
-      console.log("fetch result", fetchResult);
-      let theAvailability = await fetchResult.json();
-      console.log("fetching availability for ", theAvailability);
-
-      setAvailability(theAvailability);
-    };
-
-    fetchAvailabilityById();
-  }, [theId]);
+    if (existingValues) {
+      setAvailability(existingValues);
+    }
+  }, [existingValues]);
 
   useEffect(() => {
     if (availability) {
-      setEmployeeId(availability._id);
+      setEmployeeId(availability.employeeProfileId);
       setFirstName(availability.firstName);
       setLastName(availability.lastName);
       setMaxHoursPerWeek(availability.maxHoursPerWeek);
@@ -72,7 +75,7 @@ const EmployeeAvailabilityForm = ({
     };
     console.log("Saving availability for: ", firstName, lastName);
     await updateAvailability(updatedAvailability);
-    navigate('/availabilities')
+    navigate("/availabilities");
   }
 
   async function updateAvailability(updatedAvailability) {
@@ -96,7 +99,8 @@ const EmployeeAvailabilityForm = ({
             Max weekly hours
             <StyledInput
               type="number"
-              value={availability.maxHoursPerWeek}
+              min={0}
+              value={availability?.maxHoursPerWeek}
               onChange={(e) =>
                 setAvailability({
                   ...availability,

@@ -1,15 +1,16 @@
 import Modal from "../reusable/Modal";
-import EditDayAvailability from "./EditDayAvailability";
+// import EditDayAvailability from "./EditDayAvailability";
+import EmployeeAvailabilityForm from "./EmployeeAvailabilityForm";
 
-function AvailabilityModal({ day, setModalOpen }) {
+function AvailabilityModal({ existingValues, setModalOpen, theId }) {
   return (
     <div>
       <Modal open={true} onClose={() => setModalOpen(false)}>
-        <EditDayAvailability
-          existingValues={day}
+        <EmployeeAvailabilityForm
+          existingValues={existingValues}
+          theId={theId}
           onClose={() => setModalOpen(false)}
         />
-        **editDay**
       </Modal>
     </div>
   );

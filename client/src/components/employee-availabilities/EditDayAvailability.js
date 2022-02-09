@@ -1,21 +1,24 @@
 import { InputLabel } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import StyledButton from "../reusable/Inputs/StyledButton";
+import * as fns from "date-fns";
+
 import {
   StyledCheck,
-  StyledTimeDate,
+  // StyledFormWrapper,
+  StyledForm,
 } from "../reusable/Inputs/StyledEmployeeForm";
 
-function EditMaxHours({ existingValues }) {
+function EditDayAvailability({ existingValues }) {
   const [dayName, setDayName] = useState("");
   const [dayId, setDayId] = useState("");
   const [available, setAvailable] = useState(false);
   const [allDay, setAllDay] = useState(false);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
 
   useEffect(() => {
-    let isMounted = true;
     if (existingValues) {
       setDayId(existingValues._id);
       setDayName(existingValues.dayName);
@@ -24,67 +27,104 @@ function EditMaxHours({ existingValues }) {
       setStart(existingValues.start);
       setEnd(existingValues.end);
     }
-    if (isMounted) {
-      console.log("THIS IS THE DAY ID", dayId);
-    }
-    return () => (isMounted = false);
+
+    console.log("THIS IS THE DAY ID", dayId);
   }, [existingValues, dayId]);
 
-  async function updateMaxHours(updatedDay) {
-    console.log("Updating day:", dayName, "with max hours:", updatedDay);
-    await fetch(
-      `/api/availability/availability-update-day?id=${existingValues._id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedDay),
-      }
-    );
+  async function updateDayAvailability(updatedDay) {
+    console.log("Updating day:", dayName, "with new availability ", updatedDay);
+    await fetch(`/api/availability/availability-update-day?id=${dayId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedDay),
+    });
   }
   async function postData() {
     let updatedDay = {
       dayName,
       available,
       allDay,
-      start,
-      end,
+      start: fns.format(new Date(start), "HH:mm").toString(),
+      end: fns.format(new Date(end), "HH:mm").toString(),
     };
-    console.log("posting updated availability for", dayName);
-    await updateMaxHours(updatedDay);
+    console.log("posting updated availability for", dayName, updatedDay);
+    await updateDayAvailability(updatedDay);
+  }
+  function onInputUpdate(value, setter) {
+    setter(value);
   }
 
   return (
     <div>
-      <h2>Update Availability for {dayName}</h2>
-      <InputLabel>Available</InputLabel>
-      <StyledCheck
-        type="checkbox"
-        checked={available}
-        onChange={(e) => setAvailable(e.target.checked)}
-      />
-      <InputLabel>All day</InputLabel>
-      <StyledCheck
-        type="checkbox"
-        checked={allDay}
-        onChange={(e) => setAllDay(e.target.checked)}
-      />
-      <InputLabel>Available starting at: </InputLabel>
-      <StyledTimeDate
-        type="time"
-        value={start}
-        onChange={(e) => setStart(e.target.value)}
-      />
-      <InputLabel>Available until:</InputLabel>
-      <StyledTimeDate
-        type="time"
-        value={end}
-        onChange={(e) => setEnd(e.target.value)}
-      />
-      <StyledButton onClick={postData}>SAVE</StyledButton>
+      <StyledForm>
+        <h2 style={{ margin: "0px" }}>Edit Availability for {dayName}</h2>
+        <div></div>
+        <div>
+          <InputLabel>
+            Available
+            <StyledCheck
+              type="checkbox"
+              checked={available}
+              onChange={(e) => {
+                setAvailable(e.target.checked);
+                if (!e.target.checked) {
+                  setAllDay(false);
+                }
+              }}
+            />
+          </InputLabel>
+          {available === true && (
+            <InputLabel>
+              All day
+              <StyledCheck
+                type="checkbox"
+                checked={allDay}
+                onChange={(e) => setAllDay(e.target.checked)}
+              />
+            </InputLabel>
+          )}
+        </div>
+        <div></div>
+        {allDay === false && available === true && (
+          <div>
+            <label>
+              Start Time:
+              <BasicTimePicker
+                // label=""
+                type="time"
+                value={start}
+                onChange={(value) => {
+                  onInputUpdate(value, setStart);
+                }}
+              />
+            </label>
+          </div>
+        )}
+        {allDay === false && available === true && (
+          <div>
+            <label>
+              End Time:
+              <BasicTimePicker
+                // label=""
+                type="time"
+                value={end}
+                onChange={(value) => {
+                  onInputUpdate(value, setEnd);
+                }}
+              />
+            </label>
+          </div>
+        )}
+
+        <div>
+          <StyledButton onClick={postData}>SAVE</StyledButton>
+        </div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 }
 
-export default EditMaxHours;
+export default EditDayAvailability;

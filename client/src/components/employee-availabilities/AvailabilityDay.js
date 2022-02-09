@@ -4,6 +4,9 @@ import {
   StyledCheck,
   StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import * as fns from "date-fns";
+import moment from "moment";
 
 function AvailabilityDay({ day, availability, setAvailability, index }) {
   const [available, setAvailable] = useState(day.available);
@@ -12,18 +15,26 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
   const [allDay, setAllDay] = useState(day.allDay);
 
   useEffect(() => {
-    let isMounted = true;
     const newAvailability = { ...availability };
     newAvailability.days = newAvailability.days.map((day, position) => {
       if (position === index) {
-        return { available, start, end, allDay, dayName: day.dayName };
+        return {
+          available,
+          start,
+          end,
+          allDay,
+          dayName: day.dayName,
+        };
       } else return day;
     });
-    if (isMounted) {
-      setAvailability(newAvailability);
-    }
-    return () => (isMounted = false);
+    setAvailability(newAvailability);
   }, [available, start, end, allDay]);
+
+  function onInputUpdate(value, setter) {
+    let newValue = fns.format(new Date(value), "HH:mm").toString();
+    console.log(newValue);
+    setter(newValue);
+  }
 
   return (
     <div>
@@ -56,8 +67,8 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
             onChange={(e) => {
               setAllDay(e.target.checked);
               if (e.target.checked) {
-                setStart(0);
-                setEnd(0);
+                setStart("");
+                setEnd("");
               }
             }}
           />
@@ -65,24 +76,25 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
           <br />
         </label>
       )}
-      {allDay === false && available === true ? (
+      {allDay === false && available === true && (
         <div>
           <label>Start time</label>
-          <StyledTimeDate
-            name="all-day"
-            type="time"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-          />{" "}
+
+          <BasicTimePicker
+            value={` Wed Feb 02 2022 ${start}:00 GMT-0700 (Mountain Standard Time)`}
+            onChange={(value) => {
+              onInputUpdate(value, setStart);
+            }}
+          />
           <label>End time</label>
-          <StyledTimeDate
-            name="all-day"
-            type="time"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
+          <BasicTimePicker
+            value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}
+            onChange={(value) => {
+              onInputUpdate(value, setEnd);
+            }}
           />
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

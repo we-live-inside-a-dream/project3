@@ -48,9 +48,9 @@ const EmployeeTimeOff = () => {
 
   function onInputUpdate(value, setter) {
     setter(value);
-    console.log(value)
+    console.log(value);
   }
-  
+
   function onCommentInputUpdate(event, setter) {
     let newValue = event.target.value;
     setter(newValue);

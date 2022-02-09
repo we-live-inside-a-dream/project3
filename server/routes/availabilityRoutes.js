@@ -91,17 +91,17 @@ router.post("/availability-update-maxhours/:id", async (req, res) => {
 router.post("/availability-update-day/", async (req, res) => {
   let id = req.query.id;
   let updatedAvailability = req.body;
-  // console.log(
-  // "FROM API ROUTER THE ID AND UPDATED AVAILABILITY",
-  // id,
-  // updatedAvailability
-  // );
+  console.log(
+    "FROM API ROUTER THE ID AND UPDATED AVAILABILITY",
+    id,
+    updatedAvailability
+  );
   let dayObject = await availabilityModel.updateAvailabilityById(
     id,
     updatedAvailability
   );
-  // console.log(id, "is the id");
-  // console.log("from availability API the updated availability is", dayObject);
+  console.log(id, "is the id");
+  console.log("from availability API the updated availability is", dayObject);
   res.json(dayObject);
 });
 

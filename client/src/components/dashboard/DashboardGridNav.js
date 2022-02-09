@@ -24,12 +24,11 @@ const DashboardGridNav = function () {
   return (
     <div style={dashGridStyle}>
       <ScheduleBox />
-      <CalendarBox />
-      <UpcomingShiftsBox />
       <HumanResourcesBox />
+      <UpcomingShiftsBox />
+      <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />
-      <ScheduleBox />
       <FilesBox />
     </div>
   );

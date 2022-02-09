@@ -13,6 +13,7 @@ import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
+import moment from "moment";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -31,7 +32,6 @@ const EmployeeTimeOff = () => {
   const [comment, setComment] = useState("");
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
-  const [modalAbsenceIsOpen, setModalAbsenceIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -48,6 +48,7 @@ const EmployeeTimeOff = () => {
 
   function onInputUpdate(value, setter) {
     setter(value);
+    console.log(value);
   }
 
   function onCommentInputUpdate(event, setter) {
@@ -69,14 +70,14 @@ const EmployeeTimeOff = () => {
 
   async function postData() {
     let newEmployeeTimeOff = {
-      type: [type.value],
+      type: type.value,
       employeeProfileId: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       startTime: fns.format(new Date(startTime), "HH:mm").toString(),
       endTime: fns.format(new Date(endTime), "HH:mm").toString(),
-      startDate: startDate,
-      endDate: endDate,
+      startDate,
+      endDate,
       allDay: allDay,
       comment: comment,
     };
@@ -84,7 +85,7 @@ const EmployeeTimeOff = () => {
     await createEmployeeTimeOff(newEmployeeTimeOff);
     navigate("/");
   }
-  console.log("USER:", user.firstName, user.lastName);
+  console.log("USER:", user?.firstName, user?.lastName);
 
   return (
     <div>
@@ -97,15 +98,6 @@ const EmployeeTimeOff = () => {
             <Select value={type} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
-          <Modal
-            onClose={() => {
-              setModalAbsenceIsOpen(false);
-            }}
-            open={modalAbsenceIsOpen}
-          >
-            <label>Absence:</label>
-            <input></input>
-          </Modal>
 
           <label>
             Start Day:
@@ -115,20 +107,26 @@ const EmployeeTimeOff = () => {
               name="day"
               value={startDate}
               onChange={(value) => {
-                onInputUpdate(value, setStartDate);
+                onInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setStartDate
+                );
               }}
             />
           </label>
 
           <label>
-            End Day:
+            End Day: &nbsp;
             <BasicDatePicker
               type="date"
               id="single-day"
               name="day"
               value={endDate}
               onChange={(value) => {
-                onInputUpdate(value, setEndDate);
+                onInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setEndDate
+                );
               }}
             />
           </label>
@@ -195,21 +193,33 @@ const EmployeeTimeOff = () => {
             }}
             open={modalConfirmIsOpen}
           >
-            <p>Type of time off:{type.label}</p>
-            {/* <p>Start Day: {startDate}</p> */}
-            {/* <p>end Day: {endDate}</p> */}
-            <p>Start Time: {startTime.value}</p>
-            <p>End Time: {endTime}</p>
-            <p>Comments:{comment}</p>
-            <div></div>
+            <div style={{ padding: "20px" }}>
+              <h3>Confirm Time Off</h3>
+              <p>Type of time off:{type.label}</p>
+              <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
+              <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
+              {allDay === false && (
+                <>
+                  <p>Start Time: {moment(startTime).format("h:mm a")}</p>
+                  <p>End Time: {moment(endTime).format("h:mm a")}</p>
+                </>
+              )}
+              <p>Comments:{comment}</p>
+              <div></div>
 
-            <StyledButton onClick={postData}>Confirm</StyledButton>
-            <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
-              Cancel
-            </StyledButton>
+              <StyledButton onClick={postData}>Confirm</StyledButton>
+              <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+                Cancel
+              </StyledButton>
+            </div>
           </Modal>
           <div>
-            <StyledButton onClick={confirmHandler}>Apply Time Off</StyledButton>
+            <StyledButton
+              style={{ marginLeft: "1px" }}
+              onClick={confirmHandler}
+            >
+              Apply Time Off
+            </StyledButton>
           </div>
         </StyledForm>
       </StyledFormWrapper>

@@ -9,7 +9,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
+const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,22 +33,20 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (edit) {
-      const fetchAvailabilityById = async () => {
-        console.log(
-          "from useEffect, trying to fetch endpoint for availability by id"
-        );
-        let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
-        console.log("fetch result", fetchResult);
-        let theAvailability = await fetchResult.json();
-        console.log("fetching availability for ", theAvailability);
+    const fetchAvailabilityById = async () => {
+      console.log(
+        "from useEffect, trying to fetch endpoint for availability by id"
+      );
+      let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
+      console.log("fetch result", fetchResult);
+      let theAvailability = await fetchResult.json();
+      console.log("fetching availability for ", theAvailability);
 
-        setAvailability(theAvailability);
-      };
+      setAvailability(theAvailability);
+    };
 
-      fetchAvailabilityById();
-    }
-  }, [theId, edit]);
+    fetchAvailabilityById();
+  }, [theId]);
 
   useEffect(() => {
     if (existingValues) {
@@ -77,7 +75,7 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
     //   });
     // }
     // }
-  }, [availability, create]);
+  }, [availability]);
 
   async function postData() {
     let updatedAvailability = {

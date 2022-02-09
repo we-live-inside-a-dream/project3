@@ -66,10 +66,11 @@ router.post("/availability/:id", async (req, res) => {
 
 router.get("/by-employee/:id", async (req, res) => {
   let id = req.params.id;
+  console.log("id in route...", id);
   let profile = await availabilityModel.getAvailabilityByEmployeeProfileId(id);
   // let vacation = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id);
   // let profile = [{ vacation, availabilities }];
-  // console.log("THE PROFILE", profile);
+  console.log("THE PROFILE", profile);
   res.json(profile);
 });
 
@@ -120,8 +121,8 @@ router.get(`/availibility/profile`, async (req, res) => {
   let id = req.query.id;
   let employeeAvailibility =
     await availabilityModel.getAvailabilityByEmployeeProfileId(id);
-  // console.log("employee Availibility...", employeeAvailibility);
-  res.send(employeeAvailibility);
+  console.log("employee Availibility...", employeeAvailibility);
+  res.json(employeeAvailibility);
 });
 
 router.post("/availability-add", async (req, res) => {

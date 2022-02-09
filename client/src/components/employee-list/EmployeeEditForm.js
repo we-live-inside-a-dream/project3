@@ -92,7 +92,7 @@ const EmployeeEditForm = ({
       body: JSON.stringify(newEmployee),
       // body: newEmployee
     });
-    let id = await response.text();
+    let id = await response.json();
     // navigate("/createEmployee/" + newEmployee._id);
     console.log("just before the id is set to ", id);
     setId(id);

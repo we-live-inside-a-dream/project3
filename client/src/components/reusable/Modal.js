@@ -8,7 +8,7 @@ const ModalInner = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 0px;
+  padding: 10px;
   z-index: 1000;
   /* border: 10px solid #4488ab; */
   border-radius: 10px;

@@ -80,7 +80,7 @@ app.use(passport.session());
 
 app.use("/api/conversations", conversationsRouter);
 app.use("/api/messages", messagesRouter);
-app.use("/api/chat", chatRouter);
+// app.use("/api/chat", chatRouter);
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
 app.use("/api/timeOff", timeOffRouter);

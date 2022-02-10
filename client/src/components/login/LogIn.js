@@ -66,7 +66,7 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setEmail);
               }}
-              onKeyPress={handleSubmit}
+              // onKeyPress={handleSubmit}
             />
             <label>Password</label>
             <StyledInput
@@ -82,7 +82,7 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setPassword);
               }}
-              onKeyPress={handleSubmit}
+              // onKeyPress={handleSubmit}
             />
             <StyledButton
               id="submit"

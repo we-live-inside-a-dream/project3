@@ -22,7 +22,7 @@ import RequireAuth from "./components/login/RequireAuth";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
-import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
+// import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
   return (
@@ -50,7 +50,6 @@ function App() {
               </RequireAuth>
             }
           />
-
           {/* <Route path="/employeeList" element={<EmployeesList />} /> */}
           <Route
             path="/availabilities"
@@ -116,14 +115,13 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
+          {/* <Route
             path="/unauthorized"
             element={
               // <RequireAuth>
               <ErrorUnauthorizedUser />
-              /* </RequireAuth> */
-            }
-          />
+              /* </RequireAuth> */}
+          /> */}
           <Route
             path="/chat"
             element={

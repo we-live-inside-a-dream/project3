@@ -23,6 +23,9 @@ export default function LogIn() {
   };
 
   const handleSubmit = async (event) => {
+    if (event.keyCode === 13) {
+      console.log("enter was pressed");
+    }
     event.preventDefault();
     let response = await axios.post("/api/auth/login", {
       email,
@@ -36,8 +39,8 @@ export default function LogIn() {
 
   // const handleKeypress = (e) => {
   //   //it triggers by pressing the enter key
-  //   if (e.keyCode === 13) {
-  //     console.log("enter was pressed");
+  // if (e.keyCode === 13) {
+  //   console.log("enter was pressed");
   //     handleSubmit();
   //   }
   // };
@@ -63,7 +66,7 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setEmail);
               }}
-              // onKeyPress={handleKeypress}
+              onKeyPress={handleSubmit}
             />
             <label>Password</label>
             <StyledInput
@@ -79,12 +82,12 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setPassword);
               }}
-              // onKeyPress={handleKeypress}
+              onKeyPress={handleSubmit}
             />
             <StyledButton
               id="submit"
               type="submit"
-              // onKeyPress={handleKeypress}
+              onKeyPress={handleSubmit}
               onClick={handleSubmit}
             >
               Log In

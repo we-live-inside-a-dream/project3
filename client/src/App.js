@@ -17,11 +17,12 @@ import EventsPage from "./pages/common/EventsPage";
 import HomeDashBoardPage from "./pages/common/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
 import AuthenticationProvider from "./components/login/AuthenticationProvider";
-import MustBeManager from "./components/login/MustBeManager";
+import Manager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
+import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
   return (
@@ -36,17 +37,17 @@ function App() {
           <Route
             path="/"
             element={
-              // <RequireAuth>
-              <HomeDashBoardPage />
-              // </RequireAuth>
+              <RequireAuth>
+                <HomeDashBoardPage />
+              </RequireAuth>
             }
           />
           <Route
             path="/schedules"
             element={
-              // <RequireAuth>
-              <ScheduleMenuPage />
-              // </RequireAuth>
+              <RequireAuth>
+                <ScheduleMenuPage />
+              </RequireAuth>
             }
           />
 
@@ -60,59 +61,67 @@ function App() {
           <Route
             path="/employeeDetail/edit/:id"
             element={
-              // <RequireAuth>
-              <EmployeeEditPage />
-              // </RequireAuth>
+              <RequireAuth>
+                <EmployeeEditPage />
+              </RequireAuth>
             }
           />
           <Route
             path="/createEmployee"
             element={
-              // <MustBeManager>
-              <CreateEmployeePage />
-              // </MustBeManager>
+              <RequireAuth>
+                <CreateEmployeePage />
+              </RequireAuth>
             }
           />
           <Route
             path="/timeOff"
             element={
-              // <RequireAuth>
-              <EmployeeTimeOff />
-              // </RequireAuth>
+              <RequireAuth>
+                <EmployeeTimeOff />
+              </RequireAuth>
             }
           />
           <Route
             path="/human-resources"
             element={
-              // <RequireAuth>
-              <EmployeesMenuPage />
-              // </RequireAuth>
+              <Manager>
+                <EmployeesMenuPage />
+              </Manager>
             }
           />
           <Route path="/createEvent" element={<EventsPage />} />
           <Route
             path="/availability-edit/:id"
             element={
-              // <RequireAuth>
-              <EmployeeAvailabilityEditPage />
-              // </RequireAuth>
+              <RequireAuth>
+                <EmployeeAvailabilityEditPage />
+              </RequireAuth>
             }
           />
           <Route path="/login" element={<LogIn />} />
           <Route
             path="/logout"
             element={
-              // <RequireAuth>
-              <LogOut />
-              // </RequireAuth>
+              <RequireAuth>
+                <LogOut />
+              </RequireAuth>
             }
           />
           <Route
             path="/profile"
             element={
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/unauthorized"
+            element={
               // <RequireAuth>
-              <ProfilePage />
-              // </RequireAuth>
+              <ErrorUnauthorizedUser />
+              /* </RequireAuth> */
             }
           />
           <Route

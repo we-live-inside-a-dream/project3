@@ -29,10 +29,18 @@ export default function LogIn() {
       password,
     });
     let user = response.data;
-    console.log("LOGGIN",response);
+    console.log("LOG IN", response);
     authContext.logIn(user);
     navigate("/");
   };
+
+  // const handleKeypress = (e) => {
+  //   //it triggers by pressing the enter key
+  //   if (e.keyCode === 13) {
+  //     console.log("enter was pressed");
+  //     handleSubmit();
+  //   }
+  // };
 
   return (
     <>
@@ -55,6 +63,7 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setEmail);
               }}
+              // onKeyPress={handleKeypress}
             />
             <label>Password</label>
             <StyledInput
@@ -70,8 +79,14 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setPassword);
               }}
+              // onKeyPress={handleKeypress}
             />
-            <StyledButton type="submit" onClick={handleSubmit}>
+            <StyledButton
+              id="submit"
+              type="submit"
+              // onKeyPress={handleKeypress}
+              onClick={handleSubmit}
+            >
               Log In
             </StyledButton>
           </div>

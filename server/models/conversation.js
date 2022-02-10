@@ -1,11 +1,28 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const ConversationSchema = new mongoose.Schema(
+const Conversation = mongoose.model("conversation", {
+  members: [
     {
-        members:{
-            type:Array,
-        },
+      value: String,
+      label: String,
     },
-    {timeStamps:true}
-)
-module.exports = mongoose.model("conversation",ConversationSchema)
+  ],
+});
+
+async function create(Data) {
+  let newConversation = new Conversation(Data);
+  let createdConversation = await newConversation.save();
+  // console.log("trying to create schedule", createdSchedule);
+  return createdConversation.id;
+}
+
+// const getConversationsByEmployeeProfileId = async (id) => {
+//   const conversation = await Conversation.find({ id });
+//   // console.log("from model, employeeAvail", employeeAvail);
+//   return employeeAvail;
+// };
+
+module.exports = {
+  create,
+  Conversation,
+};

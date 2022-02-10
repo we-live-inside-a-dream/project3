@@ -16,37 +16,32 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
   const [days, setDays] = useState([]); // will be a use context for managers settings
   const [day, setDay] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [globalError, setGlobalError] = useState(false);
 
   const [availability, setAvailability] = useState({});
 
-  // if (create) {
-  //   setAvailability({
-  //     days: [],
-  //     day: "",
-  //     maxHoursPerWeek: 0,
-  //     firstName: "",
-  //     lastName: "",
-  //     employeeProfileId: "",
-  //   });
-  // }
-
   let navigate = useNavigate();
 
+  console.log("IS ERROR:", isError);
+
   useEffect(() => {
-    const fetchAvailabilityById = async () => {
-      console.log(
-        "from useEffect, trying to fetch endpoint for availability by id"
-      );
-      let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
-      console.log("fetch result", fetchResult);
-      let theAvailability = await fetchResult.json();
-      console.log("fetching availability for ", theAvailability);
+    if (!existingValues) {
+      const fetchAvailabilityById = async () => {
+        console.log(
+          "from useEffect, trying to fetch endpoint for availability by id"
+        );
+        let fetchResult = await fetch(`/api/availability/by-employee/${theId}`);
+        console.log("fetch result", fetchResult);
+        let theAvailability = await fetchResult.json();
+        console.log("fetching availability for ", theAvailability);
 
-      setAvailability(theAvailability);
-    };
+        setAvailability(theAvailability);
+      };
 
-    fetchAvailabilityById();
-  }, [theId]);
+      fetchAvailabilityById();
+    }
+  }, [theId, existingValues]);
 
   useEffect(() => {
     if (existingValues) {
@@ -55,7 +50,6 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   }, [existingValues]);
 
   useEffect(() => {
-    // if (!create) {
     if (availability) {
       setEmployeeId(availability.employeeProfileId);
       setFirstName(availability.firstName);
@@ -64,17 +58,6 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
       setDays(availability.days); // will be a use context for managers settings
       setDay(availability.day);
     }
-    // } else {
-    //   setAvailability({
-    //     days: [],
-    //     day: "",
-    //     maxHoursPerWeek: 0,
-    //     firstName: "",
-    //     lastName: "",
-    //     employeeProfileId: "",
-    //   });
-    // }
-    // }
   }, [availability]);
 
   async function postData() {
@@ -99,7 +82,6 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
       },
       body: JSON.stringify(updatedAvailability),
     });
-    // Navigate("/employeeList");
   }
 
   return (
@@ -124,17 +106,21 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
           {availability?.days?.map((day, index) => {
             return (
               <AvailabilityDay
-                index={index}
+                key={index}
                 day={day}
                 setAvailability={setAvailability}
                 availability={availability}
+                setIsError={setIsError}
               />
             );
           })}
-
-          <StyledButton className="btn btn-primary" onClick={postData}>
+          {/* {globalError === false ? ( */}
+          <StyledButton onClick={postData}>
             SAVE AVAILABILITY DETAILS
           </StyledButton>
+          {/* ) : (
+            <p>Errors</p>
+          )} */}
         </StyledForm>
       </StyledFormWrapper>
     </div>

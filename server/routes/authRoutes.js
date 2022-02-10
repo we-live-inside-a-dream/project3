@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
 const {
   logIn,
@@ -11,11 +12,8 @@ const {
 router.post("/login", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
-  let userInfo = req.body;
-  // console.log(userInfo);
-  let user = await logIn(userInfo);
   // console.log("Log in successful!");
-  res.json(user);
+  return res.json(req.user);
 });
 
 passport.use(
@@ -28,7 +26,10 @@ passport.use(
       // console.log("Verified.");
       findEmployeeByProfileEmail(email)
         .then((employeeProfile) => {
-          if (!employeeProfile.email || employeeProfile.password !== password) {
+          if (
+            !employeeProfile.email ||
+            !bcrypt.compareSync(password, employeeProfile.password)
+          ) {
             // console.log("failed", employeeProfile, password);
             done(null, false, {
               message: "Email/Password was incorrect. Please try again.",

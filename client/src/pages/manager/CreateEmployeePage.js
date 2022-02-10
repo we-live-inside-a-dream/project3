@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const CreateEmployeePage = () => {
   const [createdEmployeeId, setCreatedEmployeeId] = useState("");
-  const [currentTab, setCurrentTab] = useState(1);
+  const [currentCreateTab, setCurrentCreatetTab] = useState(10);
 
   let navigate = useNavigate();
   // async function createEmployee() {
@@ -28,16 +28,17 @@ const CreateEmployeePage = () => {
   );
   return (
     <>
-      {currentTab === 1 && (
+      {currentCreateTab === 10 && (
         <EmployeeEditForm
           setId={setCreatedEmployeeId}
-          setCurrentTab={setCurrentTab}
+          setCurrentCreateTab={setCurrentCreatetTab}
         />
       )}
-      {currentTab === 2 && (
+      {currentCreateTab === 12 && (
         <EmployeeAvailabilityForm
-          setCurrentTab={setCurrentTab}
+          // setCurrentCreateTab={setCurrentCreatetTab}
           theId={createdEmployeeId}
+          create="create"
         />
       )}
     </>

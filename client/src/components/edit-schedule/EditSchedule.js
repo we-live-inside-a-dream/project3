@@ -263,21 +263,23 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
           </StyledButton>
         </div>
 
-        <CenterStyle>
-          <div>
-            {breaks?.map((breakys, index) => (
-              <BreaksComponent
-                myKey={breakys._id}
-                breakys={breakys}
-                index={index}
-                onRemoveBreak={onRemoveBreak}
-              />
-            ))}
-          </div>
-        </CenterStyle>
-        <StyledButton onClick={postData}>SUBMIT</StyledButton>
-        <StyledButton onClick={onClose}>Cancle</StyledButton>
-        <StyledButton onClick={deleteShift}>Delete</StyledButton>
+        <div styles={{ display: "flex", flexDirection: "row" }}>
+          <StyledButton onClick={postData}>SUBMIT</StyledButton>
+          <StyledButton onClick={onClose}>Cancle</StyledButton>
+        </div>
+
+        <div>
+          {breaks?.map((breakys, index) => (
+            <BreaksComponent
+              myKey={breakys._id}
+              breakys={breakys}
+              index={index}
+              onRemoveBreak={onRemoveBreak}
+            />
+          ))}
+          <div></div>
+          <StyledButton onClick={deleteShift}>Delete</StyledButton>
+        </div>
       </StyledModal>
       {/* </StyledFormWrapper> */}
     </>

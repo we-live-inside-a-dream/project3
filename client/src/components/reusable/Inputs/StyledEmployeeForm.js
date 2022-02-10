@@ -55,10 +55,9 @@ export const StyledModal = styled.div`
     grid-column-start: 1;
     grid-column-end: 3;
     margin-bottom: 30px;
-  };
-  input{
-    width:100%;
-    
+  }
+  input {
+    width: 100%;
   }
 `;
 export const OneColumn = styled.div`
@@ -80,7 +79,6 @@ export const StyledTextArea = styled.textarea`
 `;
 
 export const StyledButton = styled.button`
-  display: block;
   /* background-color: #f7797d; */
   background-color: #35a1b9;
   color: #fff;
@@ -88,8 +86,8 @@ export const StyledButton = styled.button`
   border: 0;
   border-radius: 5px;
   height: 38px;
-  padding: 0px 20px;
-  align-self: flex-end;
+  padding: 0px 5px;
+  /* align-self: flex-end; */
   cursor: pointer;
   box-sizing: border-box;
 `;

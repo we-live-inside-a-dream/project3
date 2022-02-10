@@ -28,7 +28,7 @@ router.post("/create", async (req, res) => {
     );
     //sends initial availability info availability model (imported above)
     if (!employeeProfileId) res.status(500).send("Failed to create.");
-    res.status(200).send(employeeProfileId);
+    res.status(200).json(employeeProfileId);
   } catch (error) {
     console.log(error.message);
     res.status(400).send(error.message);

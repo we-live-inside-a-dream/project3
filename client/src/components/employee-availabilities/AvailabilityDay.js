@@ -8,7 +8,13 @@ import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
 import moment from "moment";
 
-function AvailabilityDay({ day, availability, setAvailability, index }) {
+function AvailabilityDay({
+  day,
+  availability,
+  setAvailability,
+  index,
+  setIsError,
+}) {
   const [available, setAvailable] = useState(day.available);
   const [start, setStart] = useState(day.start);
   const [end, setEnd] = useState(day.end);
@@ -29,6 +35,17 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
     });
     setAvailability(newAvailability);
   }, [available, start, end, allDay]);
+
+  useEffect(() => {
+    if (start > end) {
+      setIsError((curr) => {
+        return { ...curr, [day.dayName]: true };
+      });
+    } else
+      setIsError((curr) => {
+        return { ...curr, [day.dayName]: false };
+      });
+  }, [start, end, setIsError, day.dayName]);
 
   function onInputUpdate(value, setter) {
     let newValue = fns.format(new Date(value), "HH:mm").toString();
@@ -93,6 +110,12 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
               onInputUpdate(value, setEnd);
             }}
           />
+
+          {end < start && (
+            <p style={{ color: "red" }}>
+              End time must be greater than start time!
+            </p>
+          )}
         </div>
       )}
     </div>

@@ -119,7 +119,7 @@ export default function Messenger() {
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
     );
-
+    console.log("reveicerId", receiverId);
     socket.current.emit("sendMessage", {
       senderId: user._id,
       receiverId,

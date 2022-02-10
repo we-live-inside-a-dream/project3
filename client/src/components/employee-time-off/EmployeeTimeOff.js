@@ -11,8 +11,8 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
-import AuthenticationContext from "../../components/login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 import moment from "moment";
 
 const typeData = [
@@ -41,10 +41,10 @@ const EmployeeTimeOff = () => {
     setModalConfirmIsOpen(true);
   }
 
-  const typeHandler = (newType) => {
-    setType(newType);
-    console.log("Vacation type", newType);
-  };
+  // const typeHandler = (newType) => {
+  //   setType(newType);
+  //   console.log("Vacation type", newType);
+  // };
 
   function onInputUpdate(value, setter) {
     setter(value);
@@ -95,7 +95,7 @@ const EmployeeTimeOff = () => {
           <div></div>
           <div>
             <label>Type:</label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select value={type} options={typeData} onChange={(value) => onInputUpdate(value, setType)} />
           </div>
           <div></div>
 

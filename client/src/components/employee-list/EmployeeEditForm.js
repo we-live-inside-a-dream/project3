@@ -49,6 +49,7 @@ const EmployeeEditForm = ({
   const [posMessageVal, setPosMessageVal] = useState(null);
   const [statusMessageVal, setStatusMessageVal] = useState(null);
   const [passMessageVal, setPassMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
 
   // const [message, setMessage] = useState("");
 
@@ -102,6 +103,53 @@ const EmployeeEditForm = ({
     // setCurrentTab(2);
   }
 
+  async function validateForm() {
+    if (
+      emailMessageVal ||
+      phoneMessageVal ||
+      fnameMessageVal ||
+      lnameMessageVal ||
+      passMessageVal ||
+      posMessageVal ||
+      statusMessageVal
+    ) {
+      console.log(
+        "email:",
+        emailMessageVal,
+        "phone:",
+        phoneMessageVal,
+        "first:",
+        fnameMessageVal,
+        "last:",
+        lnameMessageVal,
+        "password:",
+        passMessageVal,
+        "position:",
+        posMessageVal,
+        "status:",
+        statusMessageVal
+      );
+      return "please that all fields are valid";
+    } else
+      console.log(
+        "email:",
+        emailMessageVal,
+        "phone:",
+        phoneMessageVal,
+        "first:",
+        fnameMessageVal,
+        "last:",
+        lnameMessageVal,
+        "password:",
+        passMessageVal,
+        "position:",
+        posMessageVal,
+        "status:",
+        statusMessageVal
+      );
+    return null;
+  }
+
   async function postData() {
     let newEmployeeInfo = {
       firstName,
@@ -112,23 +160,20 @@ const EmployeeEditForm = ({
       positions: [positions.value],
       status: status.value,
     };
-    // setEmailMessageVal(emailValidation(email));
-    // setPhoneMessageVal(phoneNumberValidation(phoneNumber));
-    // setFnameMessageVal(firstNameValidation(firstName));
-    // setLnameMessageVal(lastNameValidation(lastName));
-    // setPosMessageVal(positionValidation(positions.value));
-    // setStatusMessageVal(statusValidation(status.value));
-    // setPassMessageVal(passwordValidation(password));
-
-    console.log("Saving new employee information", newEmployeeInfo);
-    if (existingValues) {
-      await onSave(newEmployeeInfo);
-    } else {
-      await createEmployee(newEmployeeInfo);
-      console.log("just before tab is set to 2");
-      setCurrentCreateTab(12);
-      // navigate("/employeeList");
-    }
+    validateForm();
+    if (validateForm === null) {
+      console.log("Saving new employee information", newEmployeeInfo);
+      if (existingValues) {
+        await onSave(newEmployeeInfo);
+      } else {
+        setShown(false);
+        await createEmployee(newEmployeeInfo);
+        console.log("just before tab is set to 2");
+        setCurrentCreateTab(12);
+        // navigate("/employeeList");
+      }
+    } else setShown(true);
+    // return "this form needs serious help";
   }
 
   // function onAddPosition() {
@@ -276,7 +321,9 @@ const EmployeeEditForm = ({
               required="true"
             />
           </div>
+          {shown ? <p>form is crap</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
+
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
               Status

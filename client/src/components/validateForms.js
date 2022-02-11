@@ -55,12 +55,20 @@ const statusValidation = function (value) {
 };
 
 const passwordValidation = function (value) {
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  // const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+  const regex = /^[A-Za-z]\w{7,15}$/;
+
   if (regex.test(value)) {
     return null;
   } else if (!regex.test(value) && value !== "") {
     return "Minimum eight characters, at least one letter and one number";
   } else return null;
+};
+
+const dateValidation = function (start, end) {
+  if (start <= end) {
+    return null;
+  } else return "end date must be greater than or equal to start date";
 };
 
 module.exports = {
@@ -71,4 +79,5 @@ module.exports = {
   positionValidation,
   statusValidation,
   passwordValidation,
+  dateValidation,
 };

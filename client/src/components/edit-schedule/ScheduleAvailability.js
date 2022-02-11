@@ -77,7 +77,26 @@ const ScheduleAvailability = ({ date, id }) => {
   useEffect(() => {
     console.log("availability", availability);
     console.log("timeoff", timeoff);
-  }, [timeoff]);
+  }, [timeoff, availability]);
+
+  //     if (time.startDate === time.endDate) {
+  //       if (!time.allDay) {
+  //         return ` ${time.startDate} hours are ${time.startTime} to ${time.endTime} scheduled off `;
+  //         // scheduled off but not all day
+  //       } else {
+  //         return `employee is off ${time.startDate}`;
+  //       } // scheduled off all day
+  //     } else {
+  //       setRenderTimeoff(
+  //         `approved ${time.type} ${time.startDate} to ${time.endDate}`
+  //       );
+  //     } //multiple days off
+  //     // setRenderTimeoff("Time off true");
+  //   } else {
+  //     setRenderTimeoff(null);
+  //   }
+  // }
+
   // useEffect(()=>{
   //     let AvailableToday = function (dayObject) {
   //         // console.log("rendering availability for ", dayObject);
@@ -106,3 +125,23 @@ const ScheduleAvailability = ({ date, id }) => {
 };
 
 export default ScheduleAvailability;
+
+// function isTimeoff(time) {
+//   let returnValue;
+//   if (
+//     date === time.startDate &&
+//     date === time.endDate &&
+//     time.allDay === true
+//   ) {
+//     returnValue = `Employee is booked off for all of ${time.startTime}`;
+//   } else if (
+//     date === time.startDate &&
+//     date === time.endDate &&
+//     time.allDay === false
+//   ) {
+//     returnValue = `Employee is booked off on ${time.startDay} from ${time.startTime} to ${time.endTime}`;
+//   } else if (date >= time.startDate && date <= time.endTime) {
+//     returnValue = `Employee is booked off from ${time.startDate} to ${time.endDate}`;
+//   } else returnValue = null;
+//   return returnValue;
+// }

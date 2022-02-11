@@ -7,7 +7,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import axios from "axios";
 import { io } from "socket.io-client";
-import { ContactsList } from "../../components/messanger2/ContactsList";
+import ContactsList from "../../components/messanger2/ContactsList";
 
 export default function Messenger() {
   const [conversations, setConversations] = useState([]);
@@ -146,7 +146,7 @@ export default function Messenger() {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" />
-            <ContactsList />
+            {/* <ContactsList /> */}
             {conversations?.map((c) => (
               <div key={c._id} onClick={() => setCurrentChat(c)}>
                 <Conversation conversation={c} currentUser={user} />

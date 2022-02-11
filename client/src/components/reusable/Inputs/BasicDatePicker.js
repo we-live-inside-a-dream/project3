@@ -6,7 +6,7 @@ import parseISO from "date-fns/parseISO";
 
 // dateAdapter={AdapterDateFns({lib:"date-fns"},{formats:"fullTime24h"})}>
 export default function BasicDatePicker({ onChange, value, label }) {
-  console.log(value, label, onChange)
+  // console.log(value, label, onChange)
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker

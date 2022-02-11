@@ -50,7 +50,6 @@ function App() {
               </RequireAuth>
             }
           />
-
           {/* <Route path="/employeeList" element={<EmployeesList />} /> */}
           <Route
             path="/availabilities"

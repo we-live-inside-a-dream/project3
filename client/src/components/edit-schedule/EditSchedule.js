@@ -111,7 +111,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   }
 
   function onInputUpdate(value, setter) {
-    console.log(value);
+    // console.log(value);
     setter(value);
   }
 

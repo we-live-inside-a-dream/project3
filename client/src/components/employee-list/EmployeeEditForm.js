@@ -102,7 +102,7 @@ const EmployeeEditForm = ({
     console.log("the id for the created employee is:", response);
     // setCurrentTab(2);
   }
-
+  let validation;
   async function validateForm() {
     if (
       emailMessageVal ||
@@ -129,7 +129,8 @@ const EmployeeEditForm = ({
         "status:",
         statusMessageVal
       );
-      return "please that all fields are valid";
+      validation = "please make sure that all fields are valid";
+      return validation;
     } else
       console.log(
         "email:",
@@ -147,7 +148,8 @@ const EmployeeEditForm = ({
         "status:",
         statusMessageVal
       );
-    return null;
+    validation = null;
+    return validation;
   }
 
   async function postData() {
@@ -161,18 +163,19 @@ const EmployeeEditForm = ({
       status: status.value,
     };
     validateForm();
-    if (validateForm === null) {
-      console.log("Saving new employee information", newEmployeeInfo);
-      if (existingValues) {
-        await onSave(newEmployeeInfo);
-      } else {
-        setShown(false);
-        await createEmployee(newEmployeeInfo);
-        console.log("just before tab is set to 2");
-        setCurrentCreateTab(12);
-        // navigate("/employeeList");
-      }
+    console.log("validate form", validation);
+    console.log("Saving new employee information", newEmployeeInfo);
+
+    //happy if existing values and validate form is all good:
+    if (!existingValues && validation === null) {
+      await createEmployee(newEmployeeInfo);
+      console.log("just before tab is set to 2");
+      setCurrentCreateTab(12);
     } else setShown(true);
+
+    if (existingValues) {
+      await onSave(newEmployeeInfo);
+    }
     // return "this form needs serious help";
   }
 
@@ -321,7 +324,7 @@ const EmployeeEditForm = ({
               required="true"
             />
           </div>
-          {shown ? <p>form is crap</p> : null}
+          {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
 
           <div>

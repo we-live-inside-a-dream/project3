@@ -115,14 +115,14 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
+          {/* <Route
             path="/unauthorized"
             element={
-              // <RequireAuth>
+              <RequireAuth>
               <ErrorUnauthorizedUser />
-              /* </RequireAuth> */
+               </RequireAuth> 
             }
-          />
+          /> */}
           <Route
             path="/chat"
             element={

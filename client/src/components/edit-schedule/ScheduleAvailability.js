@@ -49,11 +49,11 @@ const ScheduleAvailability = ({ date, id }) => {
           } //multiple days off
           // setRenderTimeoff("Time off true");
         } else {
+          return "im here";
           setRenderTimeoff(null);
         }
       });
     }
-
     isTimeoff();
     isEmployeeavailable();
   }, [availability, date]);
@@ -75,9 +75,10 @@ const ScheduleAvailability = ({ date, id }) => {
   }, [id]);
 
   useEffect(() => {
-    console.log("availability", availability);
-    console.log("timeoff", timeoff);
-  }, [timeoff]);
+    console.log("time off function", renderTimeoff);
+  }, [renderTimeoff]);
+
+  
   // useEffect(()=>{
   //     let AvailableToday = function (dayObject) {
   //         // console.log("rendering availability for ", dayObject);

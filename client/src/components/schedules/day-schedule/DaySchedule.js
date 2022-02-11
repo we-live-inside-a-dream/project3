@@ -11,12 +11,15 @@ import moment from "moment";
 function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
-  const [day, setDay] = useState("2022-01-14");
+  const [day, setDay] = useState();
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
   const [deleteShift, setDeleteShift] = useState(false);
 
+  let today = new Date();
+  console.log("today is", today);
   useEffect(() => {
+    setDay(moment(today).format("yyyy-MM-DD"));
     if (shiftId) {
       const fetchShift = async () => {
         let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);

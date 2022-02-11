@@ -2,43 +2,66 @@ const emailValidation = function (value) {
   const regex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   if (regex.test(value)) {
-    alert("email is valid");
+    return null;
+    // alert("email is valid");
   } else if (!regex.test(value) && value !== "") {
-    alert("email is not valid");
-  } else alert("email's not valid or invalid");
+    // alert("email is not valid");
+    return "email is not valid";
+    // alert("email's not valid or invalid");
+  } else return "not valid";
 };
 
 const phoneNumberValidation = function (value) {
-  const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  const regex = /^\d{9}$/;
   if (regex.test(value)) {
-    alert(" phone # is valid");
+    return null;
+    // alert(" phone # is valid");
   } else if (!regex.test(value) && value !== "") {
-    alert("phone# not valid");
-  } else alert(" phone #'s not valid or invalid");
+    // alert("phone# not valid");
+    return "phone # is not valid";
+  } else return "not valid";
 };
 const firstNameValidation = function (value) {
   if (value === "") {
-    alert("firstName is invalid");
-  } else alert("firstName is valid");
+    // alert("firstName is required");
+    return "First Name is a required field";
+  }
+  // alert("firstName is valid");
+  else return null;
 };
 const lastNameValidation = function (value) {
   if (value === "") {
-    alert("last name is required");
-  } else alert("last name is ok");
+    // alert("last name is required");
+    return "last name is required";
+  }
+  // alert("last name is ok");
+  else return null;
 };
 const positionValidation = function (value) {
-  if (value === "") {
-    alert("at least one position is required");
-  } else alert("position is ok");
+  if (value.length === 0) {
+    // alert("at least one position is required");
+    return "at least one position is required";
+  }
+  // alert("position is ok");
+  else return null;
 };
-// const passwordValidation = function (value) {
-//   // const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$;
-//   if (regex.test(value)) {
-//     alert(" password is valid");
-//   } else if (!regex.test(value) && value !== "") {
-//     alert("Minimum eight characters, at least one letter and one number");
-//   } else alert(" password not valid or invalid");
-// };
+const statusValidation = function (value) {
+  if (value.length === 0) {
+    // alert("at status is required");
+    return "status is requried";
+  }
+  // alert("position is ok");
+  else return null;
+};
+
+const passwordValidation = function (value) {
+  const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (regex.test(value)) {
+    return null;
+  } else if (!regex.test(value) && value !== "") {
+    return "Minimum eight characters, at least one letter and one number";
+  } else return null;
+};
 
 module.exports = {
   emailValidation,
@@ -46,5 +69,6 @@ module.exports = {
   firstNameValidation,
   lastNameValidation,
   positionValidation,
-  // passwordValidation,
+  statusValidation,
+  passwordValidation,
 };

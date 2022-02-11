@@ -13,6 +13,9 @@ import {
   phoneNumberValidation,
   firstNameValidation,
   lastNameValidation,
+  statusValidation,
+  positionValidation,
+  passwordValidation,
 } from "../validateForms.js";
 
 const positionData = [
@@ -37,8 +40,16 @@ const EmployeeEditForm = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [positions, setPositions] = useState([]);
-  const [status, setStatus] = useState("");
+  const [positions, setPositions] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [emailMessageVal, setEmailMessageVal] = useState(null);
+  const [phoneMessageVal, setPhoneMessageVal] = useState(null);
+  const [fnameMessageVal, setFnameMessageVal] = useState(null);
+  const [lnameMessageVal, setLnameMessageVal] = useState(null);
+  const [posMessageVal, setPosMessageVal] = useState(null);
+  const [statusMessageVal, setStatusMessageVal] = useState(null);
+  const [passMessageVal, setPassMessageVal] = useState(null);
+
   // const [message, setMessage] = useState("");
 
   // const [positionToAdd, setPositionToAdd] = useState("");
@@ -63,11 +74,13 @@ const EmployeeEditForm = ({
 
   const handlePositionChange = (newPosition) => {
     setPositions(newPosition);
+    setPosMessageVal(positionValidation(newPosition));
     console.log("Positions", newPosition);
   };
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
+    setStatusMessageVal(statusValidation(newStatus));
     console.log("status", newStatus);
   };
 
@@ -99,10 +112,13 @@ const EmployeeEditForm = ({
       positions: [positions.value],
       status: status.value,
     };
-    emailValidation(email);
-    phoneNumberValidation(phoneNumber);
-    firstNameValidation(firstName);
-    lastNameValidation(lastName);
+    // setEmailMessageVal(emailValidation(email));
+    // setPhoneMessageVal(phoneNumberValidation(phoneNumber));
+    // setFnameMessageVal(firstNameValidation(firstName));
+    // setLnameMessageVal(lastNameValidation(lastName));
+    // setPosMessageVal(positionValidation(positions.value));
+    // setStatusMessageVal(statusValidation(status.value));
+    // setPassMessageVal(passwordValidation(password));
 
     console.log("Saving new employee information", newEmployeeInfo);
     if (existingValues) {
@@ -129,50 +145,135 @@ const EmployeeEditForm = ({
           <h2>Employee Description</h2>
           <div></div>
           <div>
-            <label>First Name</label>
+            <label style={{ marginBottom: "0px" }}>First Name</label>{" "}
+            {firstName === "" ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {"required"}
+              </p>
+            ) : null}
             <StyledInput
               value={firstName}
-              onChange={(event) => onInputUpdate(event, setFirstName)}
+              onChange={(event) => {
+                onInputUpdate(event, setFirstName);
+                setFnameMessageVal(firstNameValidation(firstName));
+              }}
+              required
             />
           </div>
           <div>
             <label>Last Name</label>
+            {lastName === "" ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {"required"}
+              </p>
+            ) : null}
             <StyledInput
               value={lastName}
-              onChange={(event) => onInputUpdate(event, setLastName)}
+              onChange={(event) => {
+                onInputUpdate(event, setLastName);
+                setLnameMessageVal(lastNameValidation(lastName));
+              }}
             />
           </div>
           <div>
-            <label>Email</label>
+            <label></label>
+            {!emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {"required"}
+              </p>
+            ) : null}
+            {emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {emailMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               type="email"
               value={email}
-              onChange={(event) => onInputUpdate(event, setEmail)}
+              onChange={(event) => {
+                onInputUpdate(event, setEmail);
+                setEmailMessageVal(emailValidation(email));
+              }}
             />
           </div>
           <div>
             <label>password</label>
+
+            {!passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {"required"}
+              </p>
+            ) : null}
+            {passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {passMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               value={password}
               type="password"
-              onChange={(event) => onInputUpdate(event, setPassword)}
+              onChange={(event) => {
+                onInputUpdate(event, setPassword);
+                setPassMessageVal(passwordValidation(password));
+              }}
             />
           </div>
           <div>
             <label>Phone Number</label>
+            {!phoneMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {"required"}
+              </p>
+            ) : null}
+            {phoneMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {phoneMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               value={phoneNumber}
-              onChange={(event) => onInputUpdate(event, setPhoneNumber)}
+              onChange={(event) => {
+                onInputUpdate(event, setPhoneNumber);
+                setPhoneMessageVal(phoneNumberValidation(phoneNumber));
+              }}
             />
           </div>
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
               Positions
-            </label>
+            </label>{" "}
+            {!positions ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                }}
+              >
+                {"required"}
+              </p>
+            ) : null}
             <Select
               value={positions}
               options={positionData}
               onChange={handlePositionChange}
+              required="true"
             />
           </div>
           <StyledButton onClick={postData}>Save Details</StyledButton>
@@ -180,10 +281,22 @@ const EmployeeEditForm = ({
             <label style={{ marginBottom: "10px", display: "block" }}>
               Status
             </label>
+            {!status ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                }}
+              >
+                {"required"}
+              </p>
+            ) : null}
             <Select
               value={status}
               options={statusData}
               onChange={handleStatusChange}
+              required="true"
             />
           </div>
         </StyledForm>

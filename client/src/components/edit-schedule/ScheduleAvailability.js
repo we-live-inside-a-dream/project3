@@ -49,11 +49,11 @@ const ScheduleAvailability = ({ date, id }) => {
           } //multiple days off
           // setRenderTimeoff("Time off true");
         } else {
+          return "im here";
           setRenderTimeoff(null);
         }
       });
     }
-
     isTimeoff();
     isEmployeeavailable();
   }, [availability, date]);
@@ -75,27 +75,8 @@ const ScheduleAvailability = ({ date, id }) => {
   }, [id]);
 
   useEffect(() => {
-    console.log("availability", availability);
-    console.log("timeoff", timeoff);
-  }, [timeoff, availability]);
-
-  //     if (time.startDate === time.endDate) {
-  //       if (!time.allDay) {
-  //         return ` ${time.startDate} hours are ${time.startTime} to ${time.endTime} scheduled off `;
-  //         // scheduled off but not all day
-  //       } else {
-  //         return `employee is off ${time.startDate}`;
-  //       } // scheduled off all day
-  //     } else {
-  //       setRenderTimeoff(
-  //         `approved ${time.type} ${time.startDate} to ${time.endDate}`
-  //       );
-  //     } //multiple days off
-  //     // setRenderTimeoff("Time off true");
-  //   } else {
-  //     setRenderTimeoff(null);
-  //   }
-  // }
+    console.log("time off function", renderTimeoff);
+  }, [renderTimeoff]);
 
   // useEffect(()=>{
   //     let AvailableToday = function (dayObject) {

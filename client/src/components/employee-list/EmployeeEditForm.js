@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
@@ -8,6 +8,12 @@ import {
   StyledInput,
   StyledButton,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import {
+  emailValidation,
+  phoneNumberValidation,
+  firstNameValidation,
+  lastNameValidation,
+} from "../validateForms.js";
 
 const positionData = [
   { value: "manager", label: "Manager" },
@@ -33,27 +39,10 @@ const EmployeeEditForm = ({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState("");
+  // const [message, setMessage] = useState("");
 
   // const [positionToAdd, setPositionToAdd] = useState("");
-  let navigate = useNavigate();
-  // const params = useParams();
-  //const theId = params.theId;
-
-  // useEffect(() => {
-  //   async function fetchExistingValues() {
-  //     let fetchResult = await fetch(
-  //       `/api/employeeProfile/getByProfileId/${theId}`
-  //     );
-  //     console.log(
-  //       "fetch result for finding employee contact info",
-  //       fetchResult
-  //     );
-  //     let employeeInfo = await fetchResult.json();
-  //     console.log("fetching employee list", employeeInfo);
-  //     setExistingValues(employeeInfo);
-  //   }
-  //   fetchExistingValues();
-  // }, [theId]);
+  // let navigate = useNavigate();
 
   useEffect(() => {
     if (existingValues) {
@@ -110,6 +99,11 @@ const EmployeeEditForm = ({
       positions: [positions.value],
       status: status.value,
     };
+    emailValidation(email);
+    phoneNumberValidation(phoneNumber);
+    firstNameValidation(firstName);
+    lastNameValidation(lastName);
+
     console.log("Saving new employee information", newEmployeeInfo);
     if (existingValues) {
       await onSave(newEmployeeInfo);
@@ -151,6 +145,7 @@ const EmployeeEditForm = ({
           <div>
             <label>Email</label>
             <StyledInput
+              type="email"
               value={email}
               onChange={(event) => onInputUpdate(event, setEmail)}
             />

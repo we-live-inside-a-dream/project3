@@ -78,7 +78,6 @@ const ScheduleAvailability = ({ date, id }) => {
     console.log("time off function", renderTimeoff);
   }, [renderTimeoff]);
 
-  
   // useEffect(()=>{
   //     let AvailableToday = function (dayObject) {
   //         // console.log("rendering availability for ", dayObject);
@@ -107,3 +106,23 @@ const ScheduleAvailability = ({ date, id }) => {
 };
 
 export default ScheduleAvailability;
+
+// function isTimeoff(time) {
+//   let returnValue;
+//   if (
+//     date === time.startDate &&
+//     date === time.endDate &&
+//     time.allDay === true
+//   ) {
+//     returnValue = `Employee is booked off for all of ${time.startTime}`;
+//   } else if (
+//     date === time.startDate &&
+//     date === time.endDate &&
+//     time.allDay === false
+//   ) {
+//     returnValue = `Employee is booked off on ${time.startDay} from ${time.startTime} to ${time.endTime}`;
+//   } else if (date >= time.startDate && date <= time.endTime) {
+//     returnValue = `Employee is booked off from ${time.startDate} to ${time.endDate}`;
+//   } else returnValue = null;
+//   return returnValue;
+// }

@@ -71,6 +71,12 @@ const dateValidation = function (start, end) {
   } else return "end date must be greater than or equal to start date";
 };
 
+const timeValidation = function (start, end) {
+  if (start <= end) {
+    return null;
+  } else return "end time must be greater than or equal to start time";
+};
+
 module.exports = {
   emailValidation,
   phoneNumberValidation,

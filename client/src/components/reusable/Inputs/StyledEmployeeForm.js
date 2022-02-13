@@ -1,3 +1,4 @@
+import { flexbox } from "@mui/system";
 import styled, { css } from "styled-components";
 
 const sharedStyles = css`
@@ -18,6 +19,17 @@ export const StyledFormWrapper = styled.div`
   height: 92vh;
   padding: 0 20px;
 `;
+
+
+export function RedStar() { //the saddest component eve (,~_~)
+  return (
+    <>
+      <p style={{display: "inline-flex", color: "red", size: "15px", margin: "0", padding: "3px"}}>*</p>
+    </>
+  )
+}
+
+
 
 export const StyledForm = styled.div`
   display: grid;

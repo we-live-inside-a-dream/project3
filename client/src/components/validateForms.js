@@ -65,6 +65,12 @@ const passwordValidation = function (value) {
   } else return null;
 };
 
+const requiredValidation = function (value) {
+  if (value === ""){
+    return "This field is required"
+ } else return null
+} 
+
 const dateValidation = function (start, end) {
   if (start <= end) {
     return null;
@@ -86,4 +92,6 @@ module.exports = {
   statusValidation,
   passwordValidation,
   dateValidation,
+  timeValidation,
+  requiredValidation
 };

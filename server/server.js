@@ -17,19 +17,20 @@ io.on("connection", (socket) => {
   const id = socket.handshake.query.id;
   // console.log("userId", id);
   socket.join(id); //this becomes users socket.id
-  console.log("joined room", id);
+  // console.log("joined room", id);
 
   //send and get message
   socket.on("sendMessage", ({ recipients, sender, text }) => {
-    console.log("starts with", recipients);
-    console.log(id);
+    //recipient currently holds sender ID aswell
+    // console.log("starts with", recipients);
+    // console.log(id);
     recipients.forEach((recipient) => {
-      const newRecipients = recipients.filter((r) => r !== recipient); // removes current recipient from list
-      console.log("old REc", newRecipients);
-      newRecipients.push(id);
-      console.log("new REC", newRecipients);
-      console.log("broadcast to room", recipient);
-      // console.log("this is a room", socket.to(id).emit("jjj"));
+      const newRecipients = recipients.filter((r) => r !== recipient && r !==sender); // removes current recipient from list
+      // console.log("old REc", newRecipients);
+      // newRecipients.push(id);
+      // console.log("new REC", newRecipients);
+      // console.log("broadcast to room", recipient);
+
       socket.broadcast.to(recipient).emit("getMessage", {
         recipients,
         sender,

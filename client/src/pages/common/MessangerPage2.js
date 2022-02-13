@@ -20,17 +20,6 @@ export default function Messenger() {
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  // const [user,setUser]=useState({ "_id" : "61fc6b7939ecd01d0e3a50eb",
-  // "firstName" : "Julie",
-  // "lastName" : "Weir",
-  // "email" : "weirjulieanne@gmail.com",
-  // "password" : "juliejuliejulie",
-  // "phoneNumber" : "555-666-7777",
-  // "positions" : [
-  //     "manager"
-  // ],
-  // "status" : "active",})
-
   const scrollRef = useRef();
 
   //socket.on will send data to ("String",(POST)=>{};
@@ -68,17 +57,6 @@ export default function Messenger() {
 
   useEffect(() => {
     if (user._id) {
-      // socket.current.emit("addUser", user._id);
-      // socket.current.on("getUsers", (users) => {
-      // setOnlineUsers(
-      //   user.followings.filter((f) => users.some((u) => u.userId === f))
-      // );
-      // });
-    }
-  }, [user._id]);
-
-  useEffect(() => {
-    if (user._id) {
       const getConversations = async () => {
         console.log(user._id);
         let id = user._id;
@@ -91,21 +69,6 @@ export default function Messenger() {
       getConversations();
     }
   }, [user._id]);
-
-  // useEffect(() => {
-  //   const getConversations = async () => {
-  //     if (user) {
-  //       try {
-  //         const res = await axios.get("api/conversations/" + user._id);
-  //         setConversations(res.data);
-  //       } catch (err) {
-  //         console.log(user);
-  //         console.log(err);
-  //       }
-  //     }
-  //   };
-  //   getConversations();
-  // }, [user]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -121,8 +84,10 @@ export default function Messenger() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("user", user);
     const message = {
       sender: user._id,
+      senderName: user.firstName + " " + user.lastName[0],
       text: newMessage,
       conversationId: currentChat._id,
     };
@@ -199,15 +164,6 @@ export default function Messenger() {
             )}
           </div>
         </div>
-        {/* <div className="chatOnline">
-            <div className="chatOnlineWrapper">
-              <ChatOnline
-                onlineUsers={onlineUsers}
-                currentId={user._id}
-                setCurrentChat={setCurrentChat}
-              />
-            </div>
-          </div> */}
       </div>
     </>
   );

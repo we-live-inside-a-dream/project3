@@ -7,6 +7,7 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import {
   emailValidation,
@@ -193,12 +194,12 @@ const EmployeeEditForm = ({
           <h2>Employee Description</h2>
           <div></div>
           <div>
-            <label style={{ marginBottom: "0px" }}>First Name</label>{" "}
+            <label style={{ marginBottom: "0px" }}>First Name<RedStar/></label>{" "}
             {firstName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             <StyledInput
@@ -211,12 +212,12 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>Last Name</label>
+            <label>Last Name<RedStar/></label>
             {lastName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             <StyledInput
@@ -228,12 +229,11 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label></label>
+            <label>Email<RedStar/></label>
             {!emailMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {"required"}
               </p>
             ) : null}
             {emailMessageVal ? (
@@ -253,13 +253,13 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>password</label>
+            <label>password<RedStar/></label>
 
             {!passMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             {passMessageVal ? (
@@ -279,12 +279,12 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>Phone Number</label>
+            <label>Phone Number<RedStar/></label>
             {!phoneMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             {phoneMessageVal ? (
@@ -304,7 +304,7 @@ const EmployeeEditForm = ({
           </div>
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Positions
+              Positions<RedStar/>
             </label>{" "}
             {!positions ? (
               <p
@@ -314,7 +314,7 @@ const EmployeeEditForm = ({
                   marginBottom: "0px",
                 }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             <Select
@@ -329,7 +329,7 @@ const EmployeeEditForm = ({
 
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Status
+              Status<RedStar/>
             </label>
             {!status ? (
               <p
@@ -339,7 +339,7 @@ const EmployeeEditForm = ({
                   marginBottom: "0px",
                 }}
               >
-                {"required"}
+                
               </p>
             ) : null}
             <Select

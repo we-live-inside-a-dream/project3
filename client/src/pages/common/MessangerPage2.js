@@ -42,6 +42,7 @@ export default function Messenger() {
     // console.log("window location...", window.location);
     socket.current = io(host);
     socket.current.on("getMessage", (data) => {
+      console.log("get message...", data);
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -57,7 +58,7 @@ export default function Messenger() {
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
-    if (user) {
+    if (user._id) {
       socket.current.emit("addUser", user._id);
       // socket.current.on("getUsers", (users) => {
       // setOnlineUsers(
@@ -65,20 +66,22 @@ export default function Messenger() {
       // );
       // });
     }
-  }, [user]);
+  }, [user._id]);
 
   useEffect(() => {
-    if (user) {
+    if (user._id) {
       const getConversations = async () => {
-        let fetchResult = await fetch("api/conversations/" + user._id);
+        console.log(user._id);
+        let id = user._id;
+        let fetchResult = await fetch(`api/conversations/${id}`);
         let fetchedConversation = await fetchResult.json();
         console.log("fetched Convo", fetchedConversation);
         setConversations(fetchedConversation);
       };
-      console.log(user._id);
+
       getConversations();
     }
-  }, [user]);
+  }, [user._id]);
 
   // useEffect(() => {
   //   const getConversations = async () => {
@@ -115,10 +118,13 @@ export default function Messenger() {
       conversationId: currentChat._id,
     };
 
+    // db.inventory.find({ tags: "red" });
+
     //member is an array of Id's for members of convo
-    const receiverId = currentChat.members.find(
-      (member) => member !== user._id
-    );
+    const receiverId = currentChat.members.map((r) => r.value);
+    console.log("socket...", socket.current);
+    console.log("user id", user._id);
+    console.log("currentChat", currentChat);
     console.log("reveicerId", receiverId);
     socket.current.emit("sendMessage", {
       senderId: user._id,

@@ -35,6 +35,7 @@ io.on("connection", (socket) => {
   //new socketId is created everytime page is refreshed
   socket.on("addUser", (userId) => {
     console.log("a user connected.", userId);
+    // console.log("user joined a new socket...", socket);
     addUser(userId, socket.id);
 
     io.emit("getUsers", users);
@@ -42,8 +43,9 @@ io.on("connection", (socket) => {
 
   //send and get message
   socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    console.log("receiver is ...", receiverId);
     const user = getUser(receiverId);
-    console.log(user);
+    console.log("user is...", user);
     if (user?.socketId) {
       io.to(user.socketId).emit("getMessage", {
         senderId,

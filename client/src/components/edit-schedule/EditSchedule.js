@@ -9,20 +9,20 @@ import { NativeSelect } from "@mui/material";
 // import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
 // import StyledInput from "../reusable/Inputs/StyledInput";
-// import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
 import {
   firstNameValidation,
   dateValidation,
   timeValidation,
-  requiredValidation
+  requiredValidation,
 } from "../validateForms";
+
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
-  StyledButton,
   StyledModal,
   RedStar,
   OneColumn,
@@ -220,15 +220,18 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
       {/* <StyledFormWrapper> */}
       <StyledModal>
         <div>
-          <InputLabel>Employee Name<RedStar/></InputLabel>
+          <InputLabel>
+            Employee Name
+            <RedStar />
+          </InputLabel>
           {employeeId === "" ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
-
-            </p>
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
           ) : null}
           <NativeSelect
             // defaultValue={employeeId}
-            id="name-imput"
+            id="name-input"
             value={employeeId}
             label="name"
             onChange={(event) => {
@@ -249,15 +252,16 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
         </div>
 
         <div>
-          <InputLabel>Date<RedStar/></InputLabel>
-          
+          <InputLabel>
+            Date
+            <RedStar />
+          </InputLabel>
+
           {date === "" ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {"required"}
-              </p>
-            ) : null}
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {"required"}
+            </p>
+          ) : null}
           <BasicDatePicker
             label="shift day"
             type="date"
@@ -266,15 +270,18 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
               onInputUpdate(
                 fns.format(new Date(value), "yyyy-MM-dd").toString(),
                 setDate
-                );
-                setShiftDateMessageVal(requiredValidation(date))
+              );
+              setShiftDateMessageVal(requiredValidation(date));
             }}
           />
           <ScheduleAvailability date={date} id={employeeId} />
         </div>
 
         <div>
-          <InputLabel>Schedule Shift Time<RedStar/></InputLabel>
+          <InputLabel>
+            Schedule Shift Time
+            <RedStar />
+          </InputLabel>
           {!shiftTimeMessageVal ? (
             <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
               {" "}
@@ -302,7 +309,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
             value={end}
             onChange={(value) => {
               onInputUpdate(value, setEnd);
-              setShiftTimeMessageVal(timeValidation(start,end));
+              setShiftTimeMessageVal(timeValidation(start, end));
             }}
           />
         </div>

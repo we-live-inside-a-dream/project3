@@ -188,10 +188,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                       <div
                         style={{
                           // backgroundColor: "#EEAA78",
-                          backgroundColor: "#66b9bf",
+                          backgroundColor: "var(--scheduleTimeBar)",
                           height: "30px",
                           padding: "0px",
-                          border: "1px solid #66b9bf",
+                          border: "1px solid var(--scheduleTimeBar)",
                           // border: "1px solid #EEAA78",
                           margin: "2px 0",
                         }}

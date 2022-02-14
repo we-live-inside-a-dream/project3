@@ -20,16 +20,24 @@ export const StyledFormWrapper = styled.div`
   padding: 0 20px;
 `;
 
-
-export function RedStar() { //the saddest component eve (,~_~)
+export function RedStar() {
+  //the saddest component eve (,~_~)
   return (
     <>
-      <p style={{display: "inline-flex", color: "red", size: "15px", margin: "0", padding: "3px"}}>*</p>
+      <p
+        style={{
+          display: "inline-flex",
+          color: "red",
+          size: "15px",
+          margin: "0",
+          padding: "3px",
+        }}
+      >
+        *
+      </p>
     </>
-  )
+  );
 }
-
-
 
 export const StyledForm = styled.div`
   display: grid;
@@ -90,18 +98,40 @@ export const StyledTextArea = styled.textarea`
   padding-top: 5px;
 `;
 
+// export const StyledButton = styled.button`
+//   /* background-color: #f7797d; */
+//   background-color: #35a1b9;
+//   color: #fff;
+//   font-size: 0.9rem;
+//   border: 0;
+//   border-radius: 5px;
+//   height: 38px;
+//   padding: 0px 5px;
+//   /* align-self: flex-end; */
+//   cursor: pointer;
+//   box-sizing: border-box;
+// `;
 export const StyledButton = styled.button`
-  /* background-color: #f7797d; */
-  background-color: #35a1b9;
-  color: #fff;
-  font-size: 0.9rem;
-  border: 0;
-  border-radius: 5px;
-  height: 38px;
-  padding: 0px 5px;
-  /* align-self: flex-end; */
+  font-size: ${(props) => props.fontSize || "1em"};
+  padding: ${(props) => props.padding || "0.8rem"};
+  margin: ${(props) => props.margin || "1em"};
+  text-align: ${(props) => props.textAlign || "center"};
+  color: var(--headerWhiteFont);
+  background-color: var(--styledButtonBackground);
+  border: 2px solid var(--styledButtonBackground);
+  border-radius: 3px;
   cursor: pointer;
-  box-sizing: border-box;
+  transition-duration: 0.4s;
+  &:hover {
+    cursor: pointer;
+    background-color: var(--styledButtonHoverBackground);
+    border: 2px solid var(--styledButtonHoverBorder);
+  }
+  &:active {
+    /* background-color: #3e8e41; */
+    box-shadow: 0 2px #666;
+    transform: translate(5% 5%);
+  }
 `;
 
 export const StyledFieldset = styled.fieldset`

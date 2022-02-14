@@ -28,7 +28,7 @@ function NamePicTableData({
               margin: "auto",
               alignSelf: "center",
               borderRadius: "50%",
-              border: "3px solid #e37222",
+              border: "3px solid var(--nameIconBorder)",
             }}
           ></div>
         </div>
@@ -36,7 +36,7 @@ function NamePicTableData({
         <div
           style={{
             margin: "auto 10px auto 10px",
-            color: "#4488AB",
+            color: "var(--accentColorTitle)",
             fontWeight: "600",
             display: "block",
             textAlign: "left",

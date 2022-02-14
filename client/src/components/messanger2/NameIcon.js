@@ -22,7 +22,7 @@ function NameIcon({ name }) {
             margin: "auto",
             alignSelf: "center",
             borderRadius: "50%",
-            border: "3px solid #e37222",
+            border: "3px solid var(--nameIconBorder)",
           }}
         ></div>
       </div>

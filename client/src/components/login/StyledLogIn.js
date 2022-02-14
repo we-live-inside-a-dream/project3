@@ -6,7 +6,8 @@ export const StyledLogIn = createGlobalStyle`
   }
   body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
+    ${"" /* background: linear-gradient(to bottom, #f05053, #e1eec3); */}
+    background: "var(--appBackground)";
     height: 100%;
     margin: 0;
     color: #555;

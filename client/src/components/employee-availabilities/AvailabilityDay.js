@@ -7,6 +7,7 @@ import {
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
 import moment from "moment";
+import { timeValidation } from "../validateForms";
 
 function AvailabilityDay({
   day,
@@ -19,6 +20,7 @@ function AvailabilityDay({
   const [start, setStart] = useState(day.start);
   const [end, setEnd] = useState(day.end);
   const [allDay, setAllDay] = useState(day.allDay);
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
 
   useEffect(() => {
     const newAvailability = { ...availability };
@@ -51,6 +53,9 @@ function AvailabilityDay({
     let newValue = fns.format(new Date(value), "HH:mm").toString();
     console.log(newValue);
     setter(newValue);
+    if (timeMessageVal) {
+      setTimeMessageVal(true);
+    } else setTimeMessageVal(null);
   }
 
   return (
@@ -103,6 +108,12 @@ function AvailabilityDay({
               onInputUpdate(value, setStart);
             }}
           />
+
+          {timeMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {timeMessageVal}
+            </p>
+          ) : null}
           <label>End time</label>
           <BasicTimePicker
             value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}

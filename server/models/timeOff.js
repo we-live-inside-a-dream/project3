@@ -1,4 +1,5 @@
 const mongoose = require("./mongooseDb");
+const moment = require("moment");
 
 const EmployeeTimeOff = mongoose.model("employeeTimeOff", {
   type: {
@@ -61,7 +62,21 @@ async function getEmployeeTimeOffByProfileId(employeeProfile_id) {
   return approvedTimeoff;
 }
 
+async function getWeeklyTimeOffs(start) {
+  console.log("from time off model, week starting", start);
+  let end = moment(start)
+    .add(6, "days")
+    .startOf("day")
+    .format("dddd, Do")
+    .toString();
+  let weekList = EmployeeTimeOff.find({
+    date: { $gte: start, $lte: end },
+  });
+  console.log("from time off Model: ", weekList);
+  return weekList;
+}
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,
+  getWeeklyTimeOffs,
 };

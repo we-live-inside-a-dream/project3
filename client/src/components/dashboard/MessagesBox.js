@@ -1,13 +1,23 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardBox from "./DashboardBox";
+import MessangerPage2 from "../../pages/common/MessangerPage2";
 
 function MessagesBox() {
-  const theContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+  let navigate = useNavigate();
 
   return (
     <>
-      <DashboardBox title="MESSAGES" content={theContent} />
+      <DashboardBox
+        title="MESSAGES"
+        padding="5px"
+        top={0}
+        left={0}
+        transform={"Scale(.3)"}
+        transformOrigin={"top left"}
+        clickFunction={() => navigate("/chat")}
+        content={<MessangerPage2 />}
+      />
     </>
   );
 }

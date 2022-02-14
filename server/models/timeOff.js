@@ -74,9 +74,20 @@ async function getWeeklyTimeOffs(start) {
   });
   console.log("from time off Model: ", weekList);
   return weekList;
+//get all timeOffs
+const listOfTimeOff = async () => {
+  return EmployeeTimeOff.find({});
+};
+//update timeOffs
+async function update(id, timeOffApproval) {
+  return EmployeeTimeOff.findByIdAndUpdate(id, timeOffApproval, {
+    returnDocument: "after",
+  });
 }
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,
   getWeeklyTimeOffs,
+  update,
+  listOfTimeOff,
 };

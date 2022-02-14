@@ -182,10 +182,6 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
       await createShift(newShift);
     } else setShown(true);
 
-    if (existingValues) {
-      await onClose(newShift);
-    }
-
     onClose();
     if (existingValues) {
       console.log("New Shift...", newShift);

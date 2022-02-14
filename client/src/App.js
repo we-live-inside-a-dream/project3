@@ -22,6 +22,7 @@ import RequireAuth from "./components/login/RequireAuth";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
+import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
@@ -135,6 +136,12 @@ function App() {
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
           ></Route>
+          <Route
+            path="/timeOff/approval"
+            element={<TimeOffApprovalPage />}
+          ></Route>
+
+          {/* last router */}
         </Routes>
         )
       </div>

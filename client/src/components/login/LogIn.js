@@ -31,7 +31,7 @@ export default function LogIn() {
     let user = response.data;
     console.log("LOG IN", response);
     authContext.logIn(user);
-    navigate("/chat");
+    navigate("/");
   };
 
   const handleKeypress = (e) => {

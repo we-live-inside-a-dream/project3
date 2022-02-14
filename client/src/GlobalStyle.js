@@ -75,6 +75,7 @@ ${
 // light blue #5ab9ea;
 // turquoise #84ceeb;
 // blue #5680e9
+// dark turquoise #12b8e6
 
 :root {
   --mainHeader: #5680e9;
@@ -83,8 +84,8 @@ ${
   --loginButtonMain:  #5680e9;
   --loginButtonHoverBackground: #5ab9ea;
   --loginButtonHoverBorder:  #5680e9;
-  --styledButtonBackground: #84ceeb;
-  --styledButtonHoverBackground: #5ab9ea;
+   --styledButtonBackground: #84ceeb;
+  --styledButtonHoverBackground: #12b8e6;
   --styledButtonHoverBorder: #84ceeb;
   --styledButtonGroupBorder:  #84ceeb;
   --dashGridBoxBackground: white;

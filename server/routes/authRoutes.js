@@ -49,7 +49,7 @@ passport.serializeUser(function (EmployeeProfile, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  console.log("passport is trying to recover the user from the cookie", id);
+  // console.log("passport is trying to recover the user from the cookie", id);
   getEmployeeProfileByProfileId(id)
     .then((email) => {
       if (!email) {

@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import AuthenticationContext from "./AuthenticationContext";
 
-const MustBeManager = ({ children }) => {
+const Manager = ({ children }) => {
   const authContext = useContext(AuthenticationContext);
-  if (authContext.user.positions.includes("manager")) {
+  console.log(authContext);
+  if (authContext?.user?.positions?.includes("manager")) {
     return children;
   } else if (!authContext.user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/unauthorized" />;
   } else return <Navigate to="/" />;
 };
 
-export default MustBeManager;
+export default Manager;

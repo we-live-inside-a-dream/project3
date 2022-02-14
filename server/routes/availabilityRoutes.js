@@ -68,8 +68,17 @@ router.get("/by-employee/:id", async (req, res) => {
   let id = req.params.id;
   console.log("id in route...", id);
   let profile = await availabilityModel.getAvailabilityByEmployeeProfileId(id);
-  // let vacation = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id);
-  // let profile = [{ vacation, availabilities }];
+
+  console.log("THE PROFILE", profile);
+  res.json(profile);
+});
+router.get("/by-employee/off/:id", async (req, res) => {
+  let id = req.params.id;
+  console.log("id in route...", id);
+  let availabilities =
+    await availabilityModel.getAvailabilityByEmployeeProfileId(id);
+  let vacation = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id);
+  let profile = { vacation, availabilities };
   console.log("THE PROFILE", profile);
   res.json(profile);
 });

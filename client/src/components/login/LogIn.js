@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 import {
   StyledLogIn,
   StyledFormWrapper,
@@ -23,10 +24,6 @@ export default function LogIn() {
   };
 
   const handleSubmit = async (event) => {
-    if (event.keyCode === 13) {
-      console.log("enter was pressed");
-    }
-    event.preventDefault();
     let response = await axios.post("/api/auth/login", {
       email,
       password,
@@ -37,13 +34,13 @@ export default function LogIn() {
     navigate("/");
   };
 
-  // const handleKeypress = (e) => {
-  //   //it triggers by pressing the enter key
-  // if (e.keyCode === 13) {
-  //   console.log("enter was pressed");
-  //     handleSubmit();
-  //   }
-  // };
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.charCode === 13) {
+      console.log("enter was pressed");
+      handleSubmit();
+    }
+  };
 
   return (
     <>
@@ -82,16 +79,21 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setPassword);
               }}
-              // onKeyPress={handleSubmit}
+              onKeyPress={handleKeypress}
             />
             <StyledButton
               id="submit"
               type="submit"
-              onKeyPress={handleSubmit}
               onClick={handleSubmit}
+              // onKeyPress={handleSubmit}
             >
               Log In
             </StyledButton>
+            <Grid container>
+              <Grid item>
+                <Link to="#">Forgot Password</Link>
+              </Grid>
+            </Grid>
           </div>
         </StyledForm>
       </StyledFormWrapper>

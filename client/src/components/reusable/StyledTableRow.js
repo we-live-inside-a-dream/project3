@@ -5,8 +5,8 @@ const StyledTableRow = styled.tr`
   height: 4rem;
   text-align: center;
   font-weight: 300;
-  color: Black;
-  background-color: white;
+  color: var(--tableFont);
+  background-color: var(--tableBackground);
   border: none;
   border-radius: 0px;
   padding: 10px 40px;

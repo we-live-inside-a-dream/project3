@@ -162,7 +162,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
-              color: "#07889b",
+              color: "var(--accentColorTitle)",
               marginTop: "0px",
               marginBottom: "0px",
               paddingBottom: "0px",

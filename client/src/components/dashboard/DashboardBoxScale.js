@@ -9,6 +9,7 @@ let dashBoxStyle = {
   margin: "auto auto",
   borderRadius: "5%",
   overflow: "hidden",
+  background: "var(--dashGridBoxBackground)",
 
   //   justifyContent: "spaceAround",
 };
@@ -28,12 +29,12 @@ const DashboardBoxScale = function ({
       <div
         onClick={clickFunction}
         style={{
-          background: "#e37222",
+          background: "var(--mainHeader)",
           alignSelf: "flex-start",
           // margin: "0px auto 0px auto",
-          color: "white",
+          color: "var(--headerWhiteFont)",
           textAlign: "center",
-          border: "2px solid #e37222",
+          border: "2px solid var(--mainHeader)",
           cursor: "pointer",
         }}
       >

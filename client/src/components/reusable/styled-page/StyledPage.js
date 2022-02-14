@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledPage = styled.div`
-  background-color: white;
+  background-color: var(--styledPage);
   padding: 20px;
   width: 80%;
   margin: auto;

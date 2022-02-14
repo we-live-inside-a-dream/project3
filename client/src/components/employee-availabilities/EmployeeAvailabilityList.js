@@ -67,7 +67,7 @@ function EmployeeAvailabilityList() {
           fontFamily: "Arial, Helvetica, sans-serif",
           textAlign: "center",
           // textShadow: "1px 1px 2px grey",
-          color: "#07889b",
+          color: "var(--accentColorTitle)",
           marginTop: "0px",
           marginBottom: "10px",
           paddingBottom: "0px",

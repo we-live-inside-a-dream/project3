@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
   StyledButton,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import {
+  emailValidation,
+  phoneNumberValidation,
+  firstNameValidation,
+  lastNameValidation,
+  statusValidation,
+  positionValidation,
+  passwordValidation,
+} from "../validateForms.js";
 
 const positionData = [
   { value: "manager", label: "Manager" },
@@ -31,29 +41,21 @@ const EmployeeEditForm = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [positions, setPositions] = useState([]);
-  const [status, setStatus] = useState("");
+  const [positions, setPositions] = useState(null);
+  const [status, setStatus] = useState(null);
+  const [emailMessageVal, setEmailMessageVal] = useState(null);
+  const [phoneMessageVal, setPhoneMessageVal] = useState(null);
+  const [fnameMessageVal, setFnameMessageVal] = useState(null);
+  const [lnameMessageVal, setLnameMessageVal] = useState(null);
+  const [posMessageVal, setPosMessageVal] = useState(null);
+  const [statusMessageVal, setStatusMessageVal] = useState(null);
+  const [passMessageVal, setPassMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
+
+  // const [message, setMessage] = useState("");
 
   // const [positionToAdd, setPositionToAdd] = useState("");
-  let navigate = useNavigate();
-  // const params = useParams();
-  //const theId = params.theId;
-
-  // useEffect(() => {
-  //   async function fetchExistingValues() {
-  //     let fetchResult = await fetch(
-  //       `/api/employeeProfile/getByProfileId/${theId}`
-  //     );
-  //     console.log(
-  //       "fetch result for finding employee contact info",
-  //       fetchResult
-  //     );
-  //     let employeeInfo = await fetchResult.json();
-  //     console.log("fetching employee list", employeeInfo);
-  //     setExistingValues(employeeInfo);
-  //   }
-  //   fetchExistingValues();
-  // }, [theId]);
+  // let navigate = useNavigate();
 
   useEffect(() => {
     if (existingValues) {
@@ -74,11 +76,13 @@ const EmployeeEditForm = ({
 
   const handlePositionChange = (newPosition) => {
     setPositions(newPosition);
+    setPosMessageVal(positionValidation(newPosition));
     console.log("Positions", newPosition);
   };
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
+    setStatusMessageVal(statusValidation(newStatus));
     console.log("status", newStatus);
   };
 
@@ -99,6 +103,55 @@ const EmployeeEditForm = ({
     console.log("the id for the created employee is:", response);
     // setCurrentTab(2);
   }
+  let validation;
+  async function validateForm() {
+    if (
+      emailMessageVal ||
+      phoneMessageVal ||
+      fnameMessageVal ||
+      lnameMessageVal ||
+      passMessageVal ||
+      posMessageVal ||
+      statusMessageVal
+    ) {
+      console.log(
+        "email:",
+        emailMessageVal,
+        "phone:",
+        phoneMessageVal,
+        "first:",
+        fnameMessageVal,
+        "last:",
+        lnameMessageVal,
+        "password:",
+        passMessageVal,
+        "position:",
+        posMessageVal,
+        "status:",
+        statusMessageVal
+      );
+      validation = "please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "email:",
+        emailMessageVal,
+        "phone:",
+        phoneMessageVal,
+        "first:",
+        fnameMessageVal,
+        "last:",
+        lnameMessageVal,
+        "password:",
+        passMessageVal,
+        "position:",
+        posMessageVal,
+        "status:",
+        statusMessageVal
+      );
+    validation = null;
+    return validation;
+  }
 
   async function postData() {
     let newEmployeeInfo = {
@@ -110,15 +163,21 @@ const EmployeeEditForm = ({
       positions: [positions.value],
       status: status.value,
     };
+    validateForm();
+    console.log("validate form", validation);
     console.log("Saving new employee information", newEmployeeInfo);
-    if (existingValues) {
-      await onSave(newEmployeeInfo);
-    } else {
+
+    //happy if existing values and validate form is all good:
+    if (!existingValues && validation === null) {
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
-      // navigate("/employeeList");
+    } else setShown(true);
+
+    if (existingValues) {
+      await onSave(newEmployeeInfo);
     }
+    // return "this form needs serious help";
   }
 
   // function onAddPosition() {
@@ -135,60 +194,159 @@ const EmployeeEditForm = ({
           <h2>Employee Description</h2>
           <div></div>
           <div>
-            <label>First Name</label>
+            <label style={{ marginBottom: "0px" }}>First Name<RedStar/></label>{" "}
+            {firstName === "" ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                
+              </p>
+            ) : null}
             <StyledInput
               value={firstName}
-              onChange={(event) => onInputUpdate(event, setFirstName)}
+              onChange={(event) => {
+                onInputUpdate(event, setFirstName);
+                setFnameMessageVal(firstNameValidation(firstName));
+              }}
+              required
             />
           </div>
           <div>
-            <label>Last Name</label>
+            <label>Last Name<RedStar/></label>
+            {lastName === "" ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                
+              </p>
+            ) : null}
             <StyledInput
               value={lastName}
-              onChange={(event) => onInputUpdate(event, setLastName)}
+              onChange={(event) => {
+                onInputUpdate(event, setLastName);
+                setLnameMessageVal(lastNameValidation(lastName));
+              }}
             />
           </div>
           <div>
-            <label>Email</label>
+            <label>Email<RedStar/></label>
+            {!emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+              </p>
+            ) : null}
+            {emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {emailMessageVal}
+              </p>
+            ) : null}
             <StyledInput
+              type="email"
               value={email}
-              onChange={(event) => onInputUpdate(event, setEmail)}
+              onChange={(event) => {
+                onInputUpdate(event, setEmail);
+                setEmailMessageVal(emailValidation(email));
+              }}
             />
           </div>
           <div>
-            <label>password</label>
+            <label>password<RedStar/></label>
+
+            {!passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                
+              </p>
+            ) : null}
+            {passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {passMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               value={password}
               type="password"
-              onChange={(event) => onInputUpdate(event, setPassword)}
+              onChange={(event) => {
+                onInputUpdate(event, setPassword);
+                setPassMessageVal(passwordValidation(password));
+              }}
             />
           </div>
           <div>
-            <label>Phone Number</label>
+            <label>Phone Number<RedStar/></label>
+            {!phoneMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                
+              </p>
+            ) : null}
+            {phoneMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {phoneMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               value={phoneNumber}
-              onChange={(event) => onInputUpdate(event, setPhoneNumber)}
+              onChange={(event) => {
+                onInputUpdate(event, setPhoneNumber);
+                setPhoneMessageVal(phoneNumberValidation(phoneNumber));
+              }}
             />
           </div>
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Positions
-            </label>
+              Positions<RedStar/>
+            </label>{" "}
+            {!positions ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                }}
+              >
+                
+              </p>
+            ) : null}
             <Select
               value={positions}
               options={positionData}
               onChange={handlePositionChange}
+              required="true"
             />
           </div>
+          {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
+
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Status
+              Status<RedStar/>
             </label>
+            {!status ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                }}
+              >
+                
+              </p>
+            ) : null}
             <Select
               value={status}
               options={statusData}
               onChange={handleStatusChange}
+              required="true"
             />
           </div>
         </StyledForm>

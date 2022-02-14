@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Select from "react-select";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
@@ -8,12 +8,14 @@ import {
   StyledTextArea,
   StyledForm,
   StyledFormWrapper,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
+import { dateValidation } from "../validateForms";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -23,7 +25,7 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = () => {
+const EmployeeTimeOff = (onSave, existingValues) => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -32,10 +34,23 @@ const EmployeeTimeOff = () => {
   const [comment, setComment] = useState("");
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [dateMessageVal, setDateMessageVal] = useState(null);
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  console.log(startTime);
+  useEffect(() => {
+    if (existingValues) {
+      setStartTime(existingValues.startTime)
+      setEndTime(existingValues.endTime)
+      setStartDate(existingValues.startDate)
+      setEndDate(existingValues.endDate)
+      setType(existingValues.type)
+      setComment(existingValues.comment)
+      setAllDay(existingValues.allDay)
+    }
+  })
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -68,24 +83,76 @@ const EmployeeTimeOff = () => {
     });
   }
 
+  let validation
+  async function validateForm() {
+    if (
+      timeMessageVal ||
+      dateMessageVal
+    ) {
+      console.log(
+        "Time off time", 
+        timeMessageVal,
+        "time off Date",
+        dateMessageVal
+      )
+      validation = "Please make sure that all fields are valid"
+      return validation
+    }else 
+    console.log(
+    "Time off time", 
+    timeMessageVal,
+    "time off Date",
+    dateMessageVal
+    )
+    validation = null
+    return validation
+  }
+
   async function postData() {
     let newEmployeeTimeOff = {
       type: type.value,
       employeeProfileId: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
-      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
-      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
+      startTime, 
+      endTime,
       startDate,
       endDate,
       allDay: allDay,
       comment: comment,
     };
+    console.log("start time", startTime);
+    console.log("end time", endTime);
+
     console.log("posting Time Off", newEmployeeTimeOff);
     await createEmployeeTimeOff(newEmployeeTimeOff);
     navigate("/");
+
+    validateForm();
+    console.log("validate form", validation);
+    console.log("saving new time off form", newEmployeeTimeOff);
+
+    if (!existingValues && validation === null) {
+      await createEmployeeTimeOff(newEmployeeTimeOff);
+    } else setShown(true);
+
+    // if (existingValues) {
+    //   await onSave(newEmployeeTimeOff);
+    // }
+
+    // onSave();
+    if (existingValues) {
+      console.log("New Time off...", newEmployeeTimeOff);
+      // await updateShift(newEmployeeTimeOff);
+    } else {
+      console.log("New Time off...", newEmployeeTimeOff);
+      // await createTimeOff(newEmployeeTimeOff);
+    }
   }
+
+    
   console.log("USER:", user?.firstName, user?.lastName);
+
 
   return (
     <div>
@@ -94,13 +161,13 @@ const EmployeeTimeOff = () => {
           <h2>Time Off Request</h2>
           <div></div>
           <div>
-            <label>Type:</label>
+            <label>Type:<RedStar/></label>
             <Select value={type} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
 
           <label>
-            Start Day:
+            Start Day:<RedStar/>
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -116,7 +183,18 @@ const EmployeeTimeOff = () => {
           </label>
 
           <label>
-            End Day: &nbsp;
+            End Day:<RedStar/> &nbsp;
+            {!dateMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {" "}
+            </p>
+          ) : null}
+          {dateMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {" "}
+              {dateMessageVal}
+            </p>
+          ) : null}
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -127,9 +205,11 @@ const EmployeeTimeOff = () => {
                   fns.format(new Date(value), "yyyy-MM-dd").toString(),
                   setEndDate
                 );
+                setDateMessageVal(dateValidation(startDate, endDate));
               }}
             />
-          </label>
+            </label>
+          
 
           {startDate === endDate && (
             <>
@@ -161,7 +241,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onInputUpdate(value, setStartTime);
+                    onInputUpdate(fns.format(new Date(value), "HH:mm").toString(), setStartTime);
                   }}
                 />
               </label>
@@ -171,7 +251,7 @@ const EmployeeTimeOff = () => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onInputUpdate(value, setEndTime);
+                    onInputUpdate(fns.format(new Date(value), "HH:mm").toString(), setEndTime);
                   }}
                 />
               </label>

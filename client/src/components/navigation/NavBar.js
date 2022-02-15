@@ -44,14 +44,9 @@ function NavBar() {
           </NavbarLinkContainer>
         </LeftContainer>
         <RightContainer>
-          {authContext.user.id && (
+          {authContext.user?._id && (
             <Link to="/logout">
               <StyledNavButton>LOG OUT</StyledNavButton>
-            </Link>
-          )}
-          {!authContext.user.id && (
-            <Link to="/login">
-              <StyledNavButton>LOG IN</StyledNavButton>
             </Link>
           )}
           <StyledAvatarButton />

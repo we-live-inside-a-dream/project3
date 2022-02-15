@@ -27,9 +27,6 @@ router.get("/by-start-date", async (req, res) => {
   res.json(timeOffWeek);
 });
 
-const router = express.Router();
-const employeeTimeOffModel = require("../models/timeOff");
-
 router.post("/", async (req, res) => {
   let newEmployeeTimeOff = req.body;
   let createdId = await employeeTimeOffModel.createEmployeeTimeOff(

@@ -74,6 +74,7 @@ async function getWeeklyTimeOffs(start) {
   });
   console.log("from time off Model: ", weekList);
   return weekList;
+}
 //get all timeOffs
 const listOfTimeOff = async () => {
   return EmployeeTimeOff.find({});

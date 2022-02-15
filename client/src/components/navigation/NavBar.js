@@ -44,12 +44,12 @@ function NavBar() {
           </NavbarLinkContainer>
         </LeftContainer>
         <RightContainer>
-          {authContext.user && (
+          {authContext.user.id && (
             <Link to="/logout">
               <StyledNavButton>LOG OUT</StyledNavButton>
             </Link>
           )}
-          {!authContext.user && (
+          {!authContext.user.id && (
             <Link to="/login">
               <StyledNavButton>LOG IN</StyledNavButton>
             </Link>

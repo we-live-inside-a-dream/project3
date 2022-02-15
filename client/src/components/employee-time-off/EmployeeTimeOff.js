@@ -25,7 +25,7 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = (onSave, existingValues) => {
+const EmployeeTimeOff = (existingValues) => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -41,17 +41,18 @@ const EmployeeTimeOff = (onSave, existingValues) => {
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  // useEffect(() => {
-  //   if (existingValues) {
-  //     setStartTime(existingValues.startTime)
-  //     setEndTime(existingValues.endTime)
-  //     setStartDate(existingValues.startDate)
-  //     setEndDate(existingValues.endDate)
-  //     setType(existingValues.type)
-  //     setComment(existingValues.comment)
-  //     setAllDay(existingValues.allDay)
-  //   }
-  // },[existingValues])
+  useEffect(() => {
+    if (existingValues) {
+      setStartTime(existingValues.startTime)
+      setEndTime(existingValues.endTime)
+      setStartDate(existingValues.startDate)
+      setEndDate(existingValues.endDate)
+      setType(existingValues.type)
+      setComment(existingValues.comment)
+      setAllDay(existingValues.allDay)
+    }
+  },[existingValues])
+
   useEffect(() => {
     // if (!user._Id) return;
     const fetchTimeOff = async () => {
@@ -296,7 +297,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
           >
             <div style={{ padding: "20px" }}>
               <h3>Confirm Time Off</h3>
-              <p>Type of time off:{type.label}</p>
+              {/* <p>Type of time off:{type.label}</p> */}
               <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
               <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
               {allDay === false && (

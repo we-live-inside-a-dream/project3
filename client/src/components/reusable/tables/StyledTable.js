@@ -39,9 +39,11 @@ const StyledTable = styled.table`
     /* border: 0.25px solid lightgrey; */
     background-color: ${(props) => props.backgroundColor || "none"};
     border-top: 1px solid #f2f2f2;
-    padding: 0;
+    padding: ${(props) => props.padding || 0};
     margin: 0;
     color: #545454;
+    width: "auto";
+    position: inline;
   }
   td:nth-child(even) {
     background-color: #eee;

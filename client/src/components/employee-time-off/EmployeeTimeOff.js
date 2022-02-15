@@ -124,8 +124,8 @@ const EmployeeTimeOff = (existingValues) => {
       employeeProfileId: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
-      startTime,
-      endTime,
+      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
       startDate,
       endDate,
       allDay: allDay,
@@ -201,14 +201,12 @@ const EmployeeTimeOff = (existingValues) => {
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {" "}
               </p>
             ) : null}
             {dateMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {" "}
                 {dateMessageVal}
               </p>
             ) : null}
@@ -257,9 +255,7 @@ const EmployeeTimeOff = (existingValues) => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onInputUpdate(
-                      fns.format(new Date(value), "HH:mm").toString(),
-                      setStartTime
+                    onInputUpdate(value, setStartTime
                     );
                   }}
                 />
@@ -270,9 +266,7 @@ const EmployeeTimeOff = (existingValues) => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onInputUpdate(
-                      fns.format(new Date(value), "HH:mm").toString(),
-                      setEndTime
+                    onInputUpdate(value, setEndTime,
                     );
                   }}
                 />
@@ -297,7 +291,7 @@ const EmployeeTimeOff = (existingValues) => {
           >
             <div style={{ padding: "20px" }}>
               <h3>Confirm Time Off</h3>
-              {/* <p>Type of time off:{type.label}</p> */}
+              <p>Type of time off:{type?.label}</p>
               <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
               <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
               {allDay === false && (

@@ -1,8 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
+import EmployeeTimeOff from "../../components/employee-time-off/EmployeeTimeOff";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const EmployeeTimeOffViewPage = () => {
   const [timeOff, setTimeOff] = useState(null);
+  //   const [startTime, setStartTime] = useState(null);
+  //   const [endTime, setEndTime] = useState(null);
+  //   const [startDate, setStartDate] = useState(null);
+  //   const [endDate, setEndDate] = useState(null);
+  //   const [type, setType] = useState(null);
+  //   const [comment, setComment] = useState("");
+  //   const [allDay, setAllDay] = useState(true);
+  //   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  //   const [dateMessageVal, setDateMessageVal] = useState(null);
+  //   const [timeMessageVal, setTimeMessageVal] = useState(null);
+  //   const [shown, setShown] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -19,6 +31,19 @@ const EmployeeTimeOffViewPage = () => {
     };
     fetchTimeOff();
   }, [user._id]);
+
+  async function updateTimeOff(updatedTimeOff) {
+      console.log(
+          "posting to user Id", user._id, "with Data", updatedTimeOff
+      );
+      await fetch(`/api/timeOff/update?id=${user._id}`, {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedTimeOff)
+      })
+  }
 
   return (
     <div>
@@ -42,6 +67,7 @@ const EmployeeTimeOffViewPage = () => {
           </div>
         );
       })}
+      <EmployeeTimeOff existingValues={timeOff} onSave={updateTimeOff}/>
     </div>
   );
 };

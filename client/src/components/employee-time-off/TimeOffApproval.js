@@ -22,11 +22,16 @@ const TimeOffApproval = () => {
   const [status, setStatus] = useState();
 
   useEffect(() => {
+    function filterTimeOff(time) {
+      const timeOffFilter = time.filter((r) => r.status == "pending");
+      console.log(timeOffFilter);
+      setTimeOff(timeOffFilter);
+    }
     const fetchTimeOff = async () => {
       let fetchResult = await fetch("/api/timeOff/list");
       let fetchedTimeOff = await fetchResult.json();
-
-      setTimeOff(fetchedTimeOff);
+      console.log("time off...", fetchedTimeOff);
+      filterTimeOff(fetchedTimeOff);
     };
     fetchTimeOff();
   }, [modalConfirmIsOpen]);
@@ -41,6 +46,10 @@ const TimeOffApproval = () => {
       body: JSON.stringify(updatedTime),
     });
   }
+  useEffect(() => {
+    console.log(timeOff);
+  }, [timeOff]);
+
   function onInputUpdate(value, setter) {
     // console.log(value);
     setter(value);
@@ -66,6 +75,7 @@ const TimeOffApproval = () => {
               Pending Time Off
             </InputLabel>
           </h1>
+
           {timeOff?.map((t) => {
             return (
               <div

@@ -23,7 +23,7 @@ const TimeOffApproval = () => {
 
   useEffect(() => {
     const fetchTimeOff = async () => {
-      let fetchResult = await fetch("/api/timeoff/list");
+      let fetchResult = await fetch("/api/timeOff/list");
       let fetchedTimeOff = await fetchResult.json();
 
       setTimeOff(fetchedTimeOff);
@@ -33,7 +33,7 @@ const TimeOffApproval = () => {
 
   async function updateTimeOff(updatedTime) {
     console.log("new user data", updatedTime);
-    await fetch(`/api/timeoff/update?id=${timeOffValues._id}`, {
+    await fetch(`/api/timeOff/update?id=${timeOffValues._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

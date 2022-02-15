@@ -7,6 +7,7 @@ import HumanResourcesBox from "./HumanResourcesBox";
 import FilesBox from "./FilesBox";
 import UpcomingShiftsBox from "./UpcomingShiftsBox";
 import AuthenticationContext from "../login/AuthenticationContext";
+import TimeOffBox from "./TimeOffBox";
 
 let dashGridStyle = {
   display: "flex",
@@ -30,6 +31,7 @@ const DashboardGridNav = function () {
         <HumanResourcesBox />
       )}
       <UpcomingShiftsBox />
+      <TimeOffBox />
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />

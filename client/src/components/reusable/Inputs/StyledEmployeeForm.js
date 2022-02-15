@@ -53,6 +53,31 @@ export const StyledForm = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  h1 {
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 0;
+  }
+  h2 {
+    margin-bottom: 30px;
+  }
+`;
+export const StyledForm2 = styled.div`
+  width: 100%;
+  height: min-content;
+  max-width: 700px;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  h1 {
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 0;
+  }
   h2 {
     margin-bottom: 30px;
   }
@@ -71,10 +96,11 @@ export const StyledModal = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
-  div2 {
+  h1 {
+    text-align: center;
     grid-column-start: 1;
     grid-column-end: 3;
-    margin-bottom: 30px;
+    margin: 0;
   }
   input {
     width: 100%;

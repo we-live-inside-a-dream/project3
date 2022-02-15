@@ -11,15 +11,6 @@ router.post("/", async (req, res) => {
   console.log("Im here save me", newEmployeeTimeOff, createdId);
 });
 //
-router.post("/", async (req, res) => {
-  let newEmployeeTimeOff = req.body;
-  let createdId = await employeeTimeOffModel.createEmployeeTimeOff(
-    newEmployeeTimeOff
-  );
-  res.send(createdId);
-  console.log("Im here save me", newEmployeeTimeOff, createdId);
-});
-//
 router.get("/by-start-date", async (req, res) => {
   let startDay = req.query.startDay;
   console.log("from API time off, startDate is", startDay);
@@ -27,13 +18,6 @@ router.get("/by-start-date", async (req, res) => {
   res.json(timeOffWeek);
 });
 
-router.post("/", async (req, res) => {
-  let newEmployeeTimeOff = req.body;
-  let createdId = await employeeTimeOffModel.createEmployeeTimeOff(
-    newEmployeeTimeOff
-  );
-  res.send(createdId);
-});
 router.post("/update", async (req, res) => {
   let id = req.query.id;
   console.log("id for approval", id);
@@ -48,10 +32,12 @@ router.get("/list", async (req, res) => {
 });
 
 router.get("/listEmployee", async (req, res) => {
-  let id = req.query.id
+  let id = req.query.id;
   console.log("Employee time off list", id);
-  employeeTimeOff = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id)
+  employeeTimeOff = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(
+    id
+  );
   res.json(employeeTimeOff);
-})
+});
 
 module.exports = router;

@@ -2,7 +2,7 @@ import { InputLabel, MenuItem, NativeSelect, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   StyledButton,
-  StyledForm,
+  StyledForm2,
   StyledFormWrapper,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import moment from "moment";
@@ -23,7 +23,7 @@ const TimeOffApproval = () => {
 
   useEffect(() => {
     const fetchTimeOff = async () => {
-      let fetchResult = await fetch("/api/timeoff/list");
+      let fetchResult = await fetch("/api/timeOff/list");
       let fetchedTimeOff = await fetchResult.json();
 
       setTimeOff(fetchedTimeOff);
@@ -33,7 +33,7 @@ const TimeOffApproval = () => {
 
   async function updateTimeOff(updatedTime) {
     console.log("new user data", updatedTime);
-    await fetch(`/api/timeoff/update?id=${timeOffValues._id}`, {
+    await fetch(`/api/timeOff/update?id=${timeOffValues._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,8 +60,12 @@ const TimeOffApproval = () => {
   return (
     <div>
       <StyledFormWrapper>
-        <StyledForm>
-          <InputLabel>Pending Time Off</InputLabel>
+        <StyledForm2>
+          <h1>
+            <InputLabel style={{ fontSize: "30px" }}>
+              Pending Time Off
+            </InputLabel>
+          </h1>
           {timeOff?.map((t) => {
             return (
               <div
@@ -71,6 +75,11 @@ const TimeOffApproval = () => {
                   setModalConfirmIsOpen(true);
                   setTimeOffValues(t);
                   console.log(t);
+                }}
+                style={{
+                  padding: "10px",
+                  textAlign: "center",
+                  height: "auto",
                 }}
               >
                 {`${t.firstName} ${t.lastName[0]}, ${t.status}`}
@@ -125,7 +134,7 @@ const TimeOffApproval = () => {
               </StyledButton>
             </div>
           </Modal>
-        </StyledForm>
+        </StyledForm2>
       </StyledFormWrapper>
     </div>
   );

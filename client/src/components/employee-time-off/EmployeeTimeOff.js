@@ -36,14 +36,9 @@ const EmployeeTimeOff = (onSave, existingValues) => {
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [dateMessageVal, setDateMessageVal] = useState(null);
   const [timeMessageVal, setTimeMessageVal] = useState(null);
-  const [timeOff, setTimeOff] = useState(null);
   const [shown, setShown] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   // useEffect(() => {
   //   if (existingValues) {
@@ -77,17 +72,6 @@ const EmployeeTimeOff = (onSave, existingValues) => {
   }
 
   let navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchTimeOff = async () => {
-      console.log("userrrrr", user._Id);
-      let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
-      let fetchedTimeOff = await fetchResult.json();
-      console.log("fetch time off", fetchedTimeOff);
-      setTimeOff(fetchedTimeOff);
-    };
-    fetchTimeOff();
-  }, [user._Id]);
 
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
     await fetch("/api/timeOff", {

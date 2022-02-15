@@ -12,6 +12,12 @@ const ModalInner = styled.div`
   z-index: 1000;
   /* border: 10px solid #4488ab; */
   border-radius: 10px;
+  h1 {
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 0;
+  }
 `;
 
 const ModalOverlay = styled.div`

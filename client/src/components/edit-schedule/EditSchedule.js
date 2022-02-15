@@ -215,6 +215,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
+        <h1>Schedule</h1>
         <div>
           <InputLabel>
             Employee Name

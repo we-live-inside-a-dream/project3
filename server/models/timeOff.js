@@ -55,9 +55,9 @@ async function createEmployeeTimeOff(employeeTimeOffData) {
 // get Employee Profile by Profile id
 
 async function getEmployeeTimeOffByProfileId(id) {
-  console.log("from time off model id", id)
+  console.log("from time off model id", id);
   let approvedTimeOff = EmployeeTimeOff.find({
-    employeeProfileId: id
+    employeeProfileId: id,
   });
   // console.log("timeOffs", approvedTimeOff);
   return approvedTimeOff;

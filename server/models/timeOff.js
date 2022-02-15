@@ -53,12 +53,13 @@ async function createEmployeeTimeOff(employeeTimeOffData) {
 
 // get Employee Profile by Profile id
 
-async function getEmployeeTimeOffByProfileId(employeeProfile_id) {
-  let approvedTimeoff = EmployeeTimeOff.find({
-    employeeProfileId: employeeProfile_id,
+async function getEmployeeTimeOffByProfileId(id) {
+  console.log("from time off model id", id)
+  let approvedTimeOff = EmployeeTimeOff.find({
+    employeeProfileId: id
   });
-  console.log("timeoffs", approvedTimeoff);
-  return approvedTimeoff;
+  // console.log("timeOffs", approvedTimeOff);
+  return approvedTimeOff;
 }
 //get all timeOffs
 const listOfTimeOff = async () => {
@@ -70,6 +71,7 @@ async function update(id, timeOffApproval) {
     returnDocument: "after",
   });
 }
+
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,

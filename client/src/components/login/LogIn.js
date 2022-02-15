@@ -99,7 +99,6 @@ export default function LogIn() {
             <StyledButton id="submit" type="submit" onClick={handleSubmit}>
               Log In
             </StyledButton>
-            <br></br>
             <Grid container>
               <Grid item>
                 <Link to="#">Forgot Password</Link>

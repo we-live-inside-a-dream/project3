@@ -9,6 +9,7 @@ import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import WeekScheduleLegend from "./WeekScheduleLegend";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
+import TimeOffLegend from "./TimeOffLegend";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -157,7 +158,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: " 50% 15% 35%",
+          gridTemplateColumns: " 65%  35%",
           height: "auto",
         }}
       >
@@ -170,8 +171,9 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           <WeekScheduleLegend
             style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
+          <TimeOffLegend style={{ marginLeft: "15px", paddingBottom: "0px" }} />
         </div>
-        <div className="emptyDivForSpacing"> </div>
+        {/* <div className="emptyDivForSpacing"> </div> */}
         <div
           style={{
             gridTemplateRow: "1",
@@ -279,10 +281,10 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                         <div
                           style={{
                             position: "absolute",
-                            border: "1px solid black",
+                            border: "2px solid black",
                             borderRadius: "50%",
-                            height: "10px",
-                            width: "10px",
+                            height: "6px",
+                            width: "6px",
                             alignSelf: "center",
                             transform: "translate(1050%, -350%)",
                           }}

@@ -45,6 +45,7 @@ const positionValidation = function (value) {
   // alert("position is ok");
   else return null;
 };
+
 const statusValidation = function (value) {
   if (value.length === 0) {
     // alert("at status is required");

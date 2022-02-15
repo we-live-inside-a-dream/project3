@@ -26,7 +26,7 @@ let dashBoxStyle = {
 //   } else return "red";
 // }
 
-const TimeOffBox = function () {
+const TimeOffBox = function ({ onClick }) {
   const [timeOff, setTimeOff] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
@@ -47,9 +47,8 @@ const TimeOffBox = function () {
   console.log(timeOff, "***********TIME OFF FOR ", user.firstName);
   let navigate = useNavigate();
   return (
-    <div style={dashBoxStyle}>
+    <div style={dashBoxStyle} onClick={onClick}>
       <div
-        // onClick={navigate("/timeOff/viewpage")}
         style={{
           background: "var(--mainHeader)",
           alignSelf: "flex-start",
@@ -63,33 +62,33 @@ const TimeOffBox = function () {
         <h3>TIME OFF</h3>
       </div>
       <div style={{ position: "relative" }}>
-        <StyledScaledComponent
+        {/* <StyledScaledComponent
         //   padding={padding}
         //   top={top}
         //   left={left}
         //   transformOrigin={transformOrigin}
         //   transform={transform}
-        >
-          {timeOff?.map((time, index) => {
-            return (
-              <div key={index}>
-                <p
-                  style={{
-                    margin: "5px",
-                    display: "flex",
-                    color: "var(--accentColorTitle)",
-                  }}
-                >
-                  {`${time.type}:`}
-                  <ApprovalSymbol time={time} style={{ display: "flex" }} />
-                </p>
-                <p style={{ margin: "5px" }}>{`${moment(time.startDate).format(
-                  "MMM Do, yyyy"
-                )} - ${moment(time.endDate).format("MMM Do, yyyy")}`}</p>
-              </div>
-            );
-          })}
-        </StyledScaledComponent>
+        > */}
+        {timeOff?.map((time, index) => {
+          return (
+            <div key={index}>
+              <p
+                style={{
+                  margin: "5px",
+                  display: "flex",
+                  color: "var(--accentColorTitle)",
+                }}
+              >
+                {`${time.type}:`}
+                <ApprovalSymbol time={time} style={{ display: "flex" }} />
+              </p>
+              <p style={{ margin: "5px" }}>{`${moment(time.startDate).format(
+                "MMM Do, yyyy"
+              )} - ${moment(time.endDate).format("MMM Do, yyyy")}`}</p>
+            </div>
+          );
+        })}
+        {/* </StyledScaledComponent> */}
       </div>
     </div>
   );

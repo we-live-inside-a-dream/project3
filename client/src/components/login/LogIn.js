@@ -63,7 +63,6 @@ export default function LogIn() {
               onChange={(event) => {
                 handleChange(event, setEmail);
               }}
-              // onKeyPress={handleSubmit}
             />
             <label>Password</label>
             <StyledInput
@@ -81,12 +80,7 @@ export default function LogIn() {
               }}
               onKeyPress={handleKeypress}
             />
-            <StyledButton
-              id="submit"
-              type="submit"
-              onClick={handleSubmit}
-              // onKeyPress={handleSubmit}
-            >
+            <StyledButton id="submit" type="submit" onClick={handleSubmit}>
               Log In
             </StyledButton>
             <Grid container>

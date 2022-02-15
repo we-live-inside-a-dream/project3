@@ -74,7 +74,7 @@ async function getWeeklyTimeOffs(start) {
     date: { $gte: start, $lte: end },
   });
   console.log("from time off Model: ", weekList);
-  return weekList;
+  return weekList;}
 //get all timeOffs
 const listOfTimeOff = async () => {
   return EmployeeTimeOff.find({});

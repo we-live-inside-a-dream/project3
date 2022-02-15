@@ -1,24 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import EmployeeTimeOff from "../../components/employee-time-off/EmployeeTimeOff";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
+import {
+  StyledButton,
+  StyledFormWrapper,
+} from "../../components/reusable/Inputs/StyledEmployeeForm";
+import Modal from "../../components/reusable/Modal";
+import StyledTable from "../../components/reusable/tables/StyledTable";
 
 const EmployeeTimeOffViewPage = () => {
   const [timeOff, setTimeOff] = useState(null);
-  //   const [startTime, setStartTime] = useState(null);
-  //   const [endTime, setEndTime] = useState(null);
-  //   const [startDate, setStartDate] = useState(null);
-  //   const [endDate, setEndDate] = useState(null);
-  //   const [type, setType] = useState(null);
-  //   const [comment, setComment] = useState("");
-  //   const [allDay, setAllDay] = useState(true);
-  //   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
-  //   const [dateMessageVal, setDateMessageVal] = useState(null);
-  //   const [timeMessageVal, setTimeMessageVal] = useState(null);
-  //   const [shown, setShown] = useState(false);
+  const [timeOffValues, setTimeOffValues] = useState(null);
+  const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-
-  console.log(user);
 
   useEffect(() => {
     // if (!user._Id) return;
@@ -33,41 +28,66 @@ const EmployeeTimeOffViewPage = () => {
   }, [user._id]);
 
   async function updateTimeOff(updatedTimeOff) {
-      console.log(
-          "posting to user Id", user._id, "with Data", updatedTimeOff
-      );
-      await fetch(`/api/timeOff/update?id=${user._id}`, {
-          method: 'POST',
-          headers: {
-              "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedTimeOff)
-      })
+    console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
+    await fetch(`/api/timeOff/update?id=${timeOffValues._id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedTimeOff),
+    });
   }
 
   return (
     <div>
-      {timeOff?.map((t) => {
-        return (
-          <div
-            key={t._id}
-            value={t}
-            // onClick={() => {
-            //   setModalConfirmIsOpen(true);
-            //   setTimeOffValues(t);
-            //   console.log(t);
-            // }}
-            style={{
-              padding: "10px",
-              textAlign: "center",
-              height: "auto",
-            }}
-          >
-            {`${t.firstName} ${t.lastName[0]}, ${t.status}`}
-          </div>
-        );
-      })}
-      <EmployeeTimeOff existingValues={timeOff} onSave={updateTimeOff}/>
+      <StyledFormWrapper>
+        <StyledTable padding={"5px"}>
+          <thead></thead>
+          <tbody>
+            {timeOff?.map((t) => {
+              return (
+                <tr
+                  key={t._id}
+                  value={t}
+                  style={{
+                    padding: "10px",
+                    textAlign: "center",
+                    height: "auto",
+                  }}
+                >
+                  <td>{`${t.firstName} ${t.lastName[0]}`}</td>
+                  <td>{`${t.type}`}</td>
+                  <td>{`${t.startDate}`}</td>
+                  <td>{`${t.endDate}`}</td>
+                  <td>{`${t.status}`}</td>
+                  <StyledButton
+                    margin={"0"}
+                    padding={"0"}
+                    onClick={() => {
+                      setModalConfirmIsOpen(true);
+                      setTimeOffValues(t);
+                      console.log("this is t", t);
+                    }}
+                  >
+                    Edit
+                  </StyledButton>
+                </tr>
+              );
+            })}
+          </tbody>
+        </StyledTable>
+      </StyledFormWrapper>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <EmployeeTimeOff
+          existingValues={timeOffValues}
+          onSave={updateTimeOff}
+        />
+      </Modal>
     </div>
   );
 };

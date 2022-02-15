@@ -32,10 +32,12 @@ router.get("/list", async (req, res) => {
 });
 
 router.get("/listEmployee", async (req, res) => {
-  let id = req.query.id
+  let id = req.query.id;
   console.log("Employee time off list", id);
-  employeeTimeOff = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(id)
+  employeeTimeOff = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(
+    id
+  );
   res.json(employeeTimeOff);
-})
+});
 
 module.exports = router;

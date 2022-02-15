@@ -118,10 +118,17 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     );
     if (
       empBookedTimeOff?.startDate <= date &&
-      empBookedTimeOff?.endDate >= date
+      empBookedTimeOff?.endDate >= date &&
+      empBookedTimeOff.allDay === true
     ) {
-      return true;
-    } else return false;
+      return "full";
+    } else if (
+      empBookedTimeOff?.startDate === date &&
+      empBookedTimeOff?.endDate === date &&
+      empBookedTimeOff.allDay === false
+    ) {
+      return "part";
+    } else return null;
   }
 
   // useEffect(()=>{
@@ -255,7 +262,20 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                           ),
                         }}
                       />
-                      {isEmployeeBookedOff(employee._id, date) && (
+                      {isEmployeeBookedOff(employee._id, date) === "full" ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            borderRadius: "50%",
+                            height: "10px",
+                            width: "10px",
+                            alignSelf: "center",
+                            transform: "translate(1050%, -350%)",
+                            backgroundColor: "black",
+                          }}
+                        />
+                      ) : null}
+                      {isEmployeeBookedOff(employee._id, date) === "part" ? (
                         <div
                           style={{
                             position: "absolute",
@@ -264,11 +284,10 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                             height: "10px",
                             width: "10px",
                             alignSelf: "center",
-                            transform: "translate(100%, -300%)",
-                            backgroundColor: "darkGrey",
+                            transform: "translate(1050%, -350%)",
                           }}
                         />
-                      )}
+                      ) : null}
                     </td>
                   );
                 return (

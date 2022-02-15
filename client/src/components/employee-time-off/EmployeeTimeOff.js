@@ -37,6 +37,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
   const [dateMessageVal, setDateMessageVal] = useState(null);
   const [timeMessageVal, setTimeMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
+  const [timeOff, setTimeOff] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -51,6 +52,17 @@ const EmployeeTimeOff = (onSave, existingValues) => {
   //     setAllDay(existingValues.allDay)
   //   }
   // },[existingValues])
+  useEffect(() => {
+    // if (!user._Id) return;
+    const fetchTimeOff = async () => {
+      console.log("userrrrr", user._Id);
+      let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
+      let fetchedTimeOff = await fetchResult.json();
+      console.log("fetch time off", fetchedTimeOff);
+      setTimeOff(fetchedTimeOff);
+    };
+    fetchTimeOff();
+  }, [user._id]);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -83,29 +95,26 @@ const EmployeeTimeOff = (onSave, existingValues) => {
     });
   }
 
-  let validation
+  let validation;
   async function validateForm() {
-    if (
-      timeMessageVal ||
-      dateMessageVal
-    ) {
+    if (timeMessageVal || dateMessageVal) {
       console.log(
-        "Time off time", 
+        "Time off time",
         timeMessageVal,
         "time off Date",
         dateMessageVal
-      )
-      validation = "Please make sure that all fields are valid"
-      return validation
-    }else 
-    console.log(
-    "Time off time", 
-    timeMessageVal,
-    "time off Date",
-    dateMessageVal
-    )
-    validation = null
-    return validation
+      );
+      validation = "Please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "Time off time",
+        timeMessageVal,
+        "time off Date",
+        dateMessageVal
+      );
+    validation = null;
+    return validation;
   }
 
   async function postData() {
@@ -114,7 +123,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
       employeeProfileId: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
-      startTime, 
+      startTime,
       endTime,
       startDate,
       endDate,
@@ -150,9 +159,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
     }
   }
 
-    
   console.log("USER:", user?.firstName, user?.lastName);
-
 
   return (
     <div>
@@ -161,13 +168,17 @@ const EmployeeTimeOff = (onSave, existingValues) => {
           <h2>Time Off Request</h2>
           <div></div>
           <div>
-            <label>Type:<RedStar/></label>
+            <label>
+              Type:
+              <RedStar />
+            </label>
             <Select value={type} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
 
           <label>
-            Start Day:<RedStar/>
+            Start Day:
+            <RedStar />
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -183,18 +194,23 @@ const EmployeeTimeOff = (onSave, existingValues) => {
           </label>
 
           <label>
-            End Day:<RedStar/> &nbsp;
+            End Day:
+            <RedStar /> &nbsp;
             {!dateMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
-              {" "}
-            </p>
-          ) : null}
-          {dateMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
-              {" "}
-              {dateMessageVal}
-            </p>
-          ) : null}
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {" "}
+              </p>
+            ) : null}
+            {dateMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              >
+                {" "}
+                {dateMessageVal}
+              </p>
+            ) : null}
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -208,8 +224,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
                 setDateMessageVal(dateValidation(startDate, endDate));
               }}
             />
-            </label>
-          
+          </label>
 
           {startDate === endDate && (
             <>
@@ -241,7 +256,10 @@ const EmployeeTimeOff = (onSave, existingValues) => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onInputUpdate(fns.format(new Date(value), "HH:mm").toString(), setStartTime);
+                    onInputUpdate(
+                      fns.format(new Date(value), "HH:mm").toString(),
+                      setStartTime
+                    );
                   }}
                 />
               </label>
@@ -251,7 +269,10 @@ const EmployeeTimeOff = (onSave, existingValues) => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onInputUpdate(fns.format(new Date(value), "HH:mm").toString(), setEndTime);
+                    onInputUpdate(
+                      fns.format(new Date(value), "HH:mm").toString(),
+                      setEndTime
+                    );
                   }}
                 />
               </label>

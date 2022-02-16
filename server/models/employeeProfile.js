@@ -36,6 +36,12 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     type: String,
     required: true,
   },
+  // positions: [
+  //   {
+  //     value: String,
+  //     label: String,
+  //   },
+  // ],
   positions: {
     type: [String],
     required: true,
@@ -61,7 +67,6 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
 };
 
 const logIn = async (user) => {
-
   let employeeProfile = await EmployeeProfile.findOne({
     email: user.email,
   });

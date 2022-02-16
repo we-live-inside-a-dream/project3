@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Day from "./Day";
-import StyledTable from "../reusable/tables/StyledTable";
 import CalendarDateHeader from "./CalendarDateHeader";
+import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
 
-const CalendarScratch = function () {
+const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [nav, setNav] = useState(0);
   const [dateDisplay, setDateDisplay] = useState("");
   const [days, setDays] = useState([]);
@@ -14,13 +14,13 @@ const CalendarScratch = function () {
 
   useEffect(() => {
     const weekdays = [
-      "SUNDAY",
-      "MONDAY",
-      "TUESDAY",
-      "WEDNESDAY",
-      "THURSDAY",
-      "FRIDAY",
-      "SATURDAY",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
     ];
     setWeekdayHeaders(weekdays);
     const theDate = new Date();
@@ -38,9 +38,11 @@ const CalendarScratch = function () {
       month: "numeric",
       day: "numeric",
     });
+
     setDateDisplay(
       `${theDate.toLocaleDateString("en-us", { month: "long" })} ${year}`
     );
+
     const paddingDays = weekdays.indexOf(dateString.split(", ")[0]);
     const daysArray = [];
 
@@ -72,15 +74,18 @@ const CalendarScratch = function () {
     margin: "auto",
     display: "flex",
     flexWrap: "wrap",
-
     border: "1px solid black",
   };
-
+  console.log(days);
   return (
     <div
       id="container"
       style={{ width: "95%", border: "1px solid white", margin: "auto" }}
     >
+      <StyledScheduleButtonGroup
+        setCurrentTab={setCurrentTab}
+        currentTab={currentTab}
+      />
       <CalendarDateHeader
         dateDisplay={dateDisplay}
         onNext={() => setNav(nav + 1)}
@@ -129,9 +134,9 @@ const CalendarScratch = function () {
             <Day
               key={index}
               day={day}
-              onClick={() => {
-                setSelectedDay(day.date);
-              }}
+              // onClick={() => {
+              //   setSelectedDay(day.date);
+              // }}
             />
           ))}
         </div>

@@ -11,31 +11,7 @@ const headerStyle = {
   justifyContent: "spaceBetween",
 };
 
-const HeaderTitle = function (day) {
-  return (
-    <div
-      style={{
-        width: "11%",
-        padding: "auto",
-        margin: ".6%",
-        justifyContent: "space-between",
-      }}
-    >
-      {day}
-    </div>
-  );
-};
-
 const CalendarDateHeader = ({ onNext, onBack, dateDisplay }) => {
-  const weekdays = [
-    "SUNDAY",
-    "MONDAY",
-    "TUESDAY",
-    "WEDNESDAY",
-    "THURSDAY",
-    "FRIDAY",
-    "SATURDAY",
-  ];
   return (
     <div id="header" style={headerStyle}>
       <div id="monthDisplay">{dateDisplay}</div>

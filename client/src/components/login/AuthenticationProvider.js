@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AuthenticationContext from "./AuthenticationContext";
 
 const AuthenticationProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({ loading: true });
   const logIn = (logInUser) => {
     // console.log(logInUser);
     setUser(logInUser);
@@ -13,9 +13,14 @@ const AuthenticationProvider = ({ children }) => {
       const response = await fetch(process.env.REACT_APP_ELECTRON_SERVER+"/api/auth/loggedInUser");
       if (response.status === 200) {
         const loggedInUser = await response.json();
+        console.log(loggedInUser);
         if (loggedInUser) {
           logIn(loggedInUser);
+        } else {
+          setUser(null);
         }
+      } else {
+        setUser(null);
       }
     };
     getLoggedInUser();

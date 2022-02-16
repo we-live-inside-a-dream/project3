@@ -9,15 +9,22 @@ import { NativeSelect } from "@mui/material";
 // import StyledLabel from "../reusable/Inputs/StyledLabel";
 import CenterStyle from "../reusable/Inputs/CenterStyle";
 // import StyledInput from "../reusable/Inputs/StyledInput";
-// import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
+import {
+  firstNameValidation,
+  dateValidation,
+  timeValidation,
+  requiredValidation,
+} from "../validateForms";
+
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
   StyledInput,
-  StyledButton,
   StyledModal,
+  RedStar,
   OneColumn,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
@@ -42,7 +49,12 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
+  const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
+  const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
+  const [shiftTimeMessageVal, setShiftTimeMessageVal] = useState(null);
+  const [shiftBrakeMessageVal, setShiftBrakeMessageVal] = useState(null);
   const [empAvailibility, setEmpAvailibility] = useState();
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -111,8 +123,45 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   }
 
   function onInputUpdate(value, setter) {
-    console.log(value);
+    // console.log(value);
     setter(value);
+  }
+
+  let validation;
+  async function validateForm() {
+    if (
+      empNameMessageVal ||
+      shiftDateMessageVal ||
+      shiftTimeMessageVal ||
+      shiftBrakeMessageVal
+    ) {
+      console.log(
+        "Employee Name",
+        empNameMessageVal,
+        "Employee Shift Date",
+        shiftDateMessageVal,
+        "Employee Shift Time",
+        shiftTimeMessageVal,
+        "Employee Brake Time",
+        shiftBrakeMessageVal
+      );
+      validation = "Please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "employeeId",
+        empNameMessageVal,
+        "Employee Name",
+        empNameMessageVal,
+        "Employee Shift Date",
+        shiftDateMessageVal,
+        "Employee Shift Time",
+        shiftTimeMessageVal,
+        "Employee Brake Time",
+        shiftBrakeMessageVal
+      );
+    validation = null;
+    return validation;
   }
 
   async function postData() {
@@ -125,6 +174,14 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
       date,
       breaks,
     };
+    validateForm();
+    console.log("validate form", validation);
+    console.log("saving new schedule form", newShift);
+
+    if (!existingValues && validation === null) {
+      await createShift(newShift);
+    } else setShown(true);
+
     onClose();
     if (existingValues) {
       console.log("New Shift...", newShift);
@@ -158,15 +215,25 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
+        <h1>Schedule</h1>
         <div>
-          <InputLabel>Employee Name</InputLabel>
+          <InputLabel>
+            Employee Name
+            <RedStar />
+          </InputLabel>
+          {employeeId === "" ? (
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
+          ) : null}
           <NativeSelect
             // defaultValue={employeeId}
-            id="name-imput"
+            id="name-input"
             value={employeeId}
             label="name"
             onChange={(event) => {
               onInputUpdate(event.target.value, setEmployeeId);
+              setEmpNameMessageVal(firstNameValidation(employeeId));
             }}
           >
             {/* {name} */}
@@ -182,7 +249,16 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
         </div>
 
         <div>
-          <InputLabel>Date</InputLabel>
+          <InputLabel>
+            Date
+            <RedStar />
+          </InputLabel>
+
+          {date === "" ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {"required"}
+            </p>
+          ) : null}
           <BasicDatePicker
             label="shift day"
             type="date"
@@ -192,13 +268,28 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
                 fns.format(new Date(value), "yyyy-MM-dd").toString(),
                 setDate
               );
+              setShiftDateMessageVal(requiredValidation(date));
             }}
           />
           <ScheduleAvailability date={date} id={employeeId} />
         </div>
 
         <div>
-          <InputLabel>Schedule Shift Time</InputLabel>
+          <InputLabel>
+            Schedule Shift Time
+            <RedStar />
+          </InputLabel>
+          {!shiftTimeMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {" "}
+            </p>
+          ) : null}
+          {shiftTimeMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {" "}
+              {shiftTimeMessageVal}
+            </p>
+          ) : null}
           <BasicTimePicker
             label="Shift Start"
             type="time"
@@ -213,7 +304,10 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
             type="time"
             onAccept
             value={end}
-            onChange={(value) => onInputUpdate(value, setEnd)}
+            onChange={(value) => {
+              onInputUpdate(value, setEnd);
+              setShiftTimeMessageVal(timeValidation(start, end));
+            }}
           />
         </div>
 
@@ -263,21 +357,24 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
           </StyledButton>
         </div>
 
-        <CenterStyle>
-          <div>
-            {breaks?.map((breakys, index) => (
-              <BreaksComponent
-                myKey={breakys._id}
-                breakys={breakys}
-                index={index}
-                onRemoveBreak={onRemoveBreak}
-              />
-            ))}
-          </div>
-        </CenterStyle>
-        <StyledButton onClick={postData}>SUBMIT</StyledButton>
-        <StyledButton onClick={onClose}>Cancle</StyledButton>
-        <StyledButton onClick={deleteShift}>Delete</StyledButton>
+        <div styles={{ display: "flex", flexDirection: "row" }}>
+          {shown === true ? <p>form needs a lotta work</p> : null}
+          <StyledButton onClick={postData}>SUBMIT</StyledButton>
+          <StyledButton onClick={onClose}>Cancle</StyledButton>
+        </div>
+
+        <div>
+          {breaks?.map((breakys, index) => (
+            <BreaksComponent
+              myKey={breakys._id}
+              breakys={breakys}
+              index={index}
+              onRemoveBreak={onRemoveBreak}
+            />
+          ))}
+          <div></div>
+          <StyledButton onClick={deleteShift}>Delete</StyledButton>
+        </div>
       </StyledModal>
       {/* </StyledFormWrapper> */}
     </>

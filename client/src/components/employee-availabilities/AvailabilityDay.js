@@ -7,12 +7,20 @@ import {
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
 import moment from "moment";
+import { timeValidation } from "../validateForms";
 
-function AvailabilityDay({ day, availability, setAvailability, index }) {
+function AvailabilityDay({
+  day,
+  availability,
+  setAvailability,
+  index,
+  setIsError,
+}) {
   const [available, setAvailable] = useState(day.available);
   const [start, setStart] = useState(day.start);
   const [end, setEnd] = useState(day.end);
   const [allDay, setAllDay] = useState(day.allDay);
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
 
   useEffect(() => {
     const newAvailability = { ...availability };
@@ -30,10 +38,24 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
     setAvailability(newAvailability);
   }, [available, start, end, allDay]);
 
+  useEffect(() => {
+    if (start > end) {
+      setIsError((curr) => {
+        return { ...curr, [day.dayName]: true };
+      });
+    } else
+      setIsError((curr) => {
+        return { ...curr, [day.dayName]: false };
+      });
+  }, [start, end, setIsError, day.dayName]);
+
   function onInputUpdate(value, setter) {
     let newValue = fns.format(new Date(value), "HH:mm").toString();
     console.log(newValue);
     setter(newValue);
+    if (timeMessageVal) {
+      setTimeMessageVal(true);
+    } else setTimeMessageVal(null);
   }
 
   return (
@@ -86,6 +108,12 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
               onInputUpdate(value, setStart);
             }}
           />
+
+          {timeMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {timeMessageVal}
+            </p>
+          ) : null}
           <label>End time</label>
           <BasicTimePicker
             value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}
@@ -93,6 +121,12 @@ function AvailabilityDay({ day, availability, setAvailability, index }) {
               onInputUpdate(value, setEnd);
             }}
           />
+
+          {end < start && (
+            <p style={{ color: "red" }}>
+              End time must be greater than start time!
+            </p>
+          )}
         </div>
       )}
     </div>

@@ -9,9 +9,18 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
     setActiveButton(currentTab);
   }, [currentTab]);
 
-  let buttonDay = activeButton === 1 ? "#e37222" : "#07889b";
-  let buttonWeek = activeButton === 2 ? "#e37222" : "#07889b";
-  let buttonMonth = activeButton === 3 ? "#e37222" : "#07889b";
+  let buttonDay =
+    activeButton === 1
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonWeek =
+    activeButton === 2
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonMonth =
+    activeButton === 3
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
 
   return (
     <div style={{ marginBottom: "0%", paddingBottom: "0%" }}>
@@ -23,8 +32,8 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonDay,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         DAY
@@ -37,8 +46,8 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonWeek,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         WEEK
@@ -51,8 +60,8 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonMonth,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         MONTH

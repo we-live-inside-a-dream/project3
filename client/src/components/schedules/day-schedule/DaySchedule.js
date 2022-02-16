@@ -11,12 +11,15 @@ import moment from "moment";
 function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
-  const [day, setDay] = useState("2022-01-14");
+  const [day, setDay] = useState();
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
   const [deleteShift, setDeleteShift] = useState(false);
 
+  let today = new Date();
+  // console.log("today is", today);
   useEffect(() => {
+    setDay(moment(today).format("yyyy-MM-DD"));
     if (shiftId) {
       const fetchShift = async () => {
         let fetchResult = await fetch(process.env.REACT_APP_ELECTRON_SERVER+`/api/schedule/id?id=${shiftId}`);
@@ -59,7 +62,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   }
   function onInputUpdate(value, setter) {
     let newValue = moment(value).format("yyyy-MM-DD");
-    console.log(newValue, "is the new formatted value for startDay");
+    // console.log(newValue, "is the new formatted value for startDay");
     setter(newValue);
   }
   // const deleteEmployeeShift
@@ -115,7 +118,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
             value={day}
             onChange={(value) => {
               onInputUpdate(value, setDay);
-              console.log(value, "is the newStartDay");
+              // console.log(value, "is the newStartDay");
             }}
           />
         </div>
@@ -185,10 +188,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                       <div
                         style={{
                           // backgroundColor: "#EEAA78",
-                          backgroundColor: "#66b9bf",
+                          backgroundColor: "var(--scheduleTimeBar)",
                           height: "30px",
                           padding: "0px",
-                          border: "1px solid #66b9bf",
+                          border: "1px solid var(--scheduleTimeBar)",
                           // border: "1px solid #EEAA78",
                           margin: "2px 0",
                         }}

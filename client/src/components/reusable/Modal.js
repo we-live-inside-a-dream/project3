@@ -8,10 +8,16 @@ const ModalInner = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  padding: 0px;
+  padding: 10px;
   z-index: 1000;
   /* border: 10px solid #4488ab; */
   border-radius: 10px;
+  h1 {
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: 0;
+  }
 `;
 
 const ModalOverlay = styled.div`

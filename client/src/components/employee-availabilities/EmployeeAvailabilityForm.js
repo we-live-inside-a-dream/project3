@@ -8,29 +8,23 @@ import {
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
+import { timeValidation } from "../validateForms";
 
-const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
+const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
   const [days, setDays] = useState([]); // will be a use context for managers settings
   const [day, setDay] = useState("");
-
+  const [isError, setIsError] = useState(false);
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
   const [availability, setAvailability] = useState({});
 
-  // if (create) {
-  //   setAvailability({
-  //     days: [],
-  //     day: "",
-  //     maxHoursPerWeek: 0,
-  //     firstName: "",
-  //     lastName: "",
-  //     employeeProfileId: "",
-  //   });
-  // }
-
   let navigate = useNavigate();
+
+  console.log("IS ERROR:", isError);
 
   useEffect(() => {
     const fetchAvailabilityById = async () => {
@@ -55,7 +49,6 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
   }, [existingValues]);
 
   useEffect(() => {
-    // if (!create) {
     if (availability) {
       setEmployeeId(availability.employeeProfileId);
       setFirstName(availability.firstName);
@@ -64,18 +57,17 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
       setDays(availability.days); // will be a use context for managers settings
       setDay(availability.day);
     }
-    // } else {
-    //   setAvailability({
-    //     days: [],
-    //     day: "",
-    //     maxHoursPerWeek: 0,
-    //     firstName: "",
-    //     lastName: "",
-    //     employeeProfileId: "",
-    //   });
-    // }
-    // }
-  }, [availability, create]);
+  }, [availability]);
+
+  let validation;
+  async function validateForm() {
+    if (timeMessageVal) {
+      console.log(timeMessageVal, "day start Time");
+      validation = "start must be greater than or equal to end time";
+      return validation;
+    } else validation = null;
+    return validation;
+  }
 
   async function postData() {
     let updatedAvailability = {
@@ -99,7 +91,6 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
       },
       body: JSON.stringify(updatedAvailability),
     });
-    // Navigate("/employeeList");
   }
 
   return (
@@ -124,15 +115,17 @@ const EmployeeAvailabilityForm = ({ existingValues, create, edit, theId }) => {
           {availability?.days?.map((day, index) => {
             return (
               <AvailabilityDay
+                key={index}
                 index={index}
                 day={day}
                 setAvailability={setAvailability}
                 availability={availability}
+                setIsError={setIsError}
               />
             );
           })}
 
-          <StyledButton className="btn btn-primary" onClick={postData}>
+          <StyledButton onClick={postData}>
             SAVE AVAILABILITY DETAILS
           </StyledButton>
         </StyledForm>

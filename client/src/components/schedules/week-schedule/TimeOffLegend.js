@@ -1,6 +1,6 @@
 import React from "react";
 
-function WeekScheduleLegend() {
+function TimeOffLegend() {
   return (
     <div
       style={{
@@ -14,7 +14,7 @@ function WeekScheduleLegend() {
           borderRadius: "50%",
           height: "10px",
           width: "10px",
-          backgroundColor: "#FC4445",
+          backgroundColor: "black",
           lineHeight: ".5",
           display: "inline-block",
           margin: " 0px 8px",
@@ -22,14 +22,16 @@ function WeekScheduleLegend() {
           justifyContent: "left",
         }}
       ></div>
-      <p style={{ padding: "0px", margin: "0px", gridRow: "1" }}>Unavailable</p>
+      <p style={{ padding: "0px", margin: "0px", gridRow: "1" }}>
+        Booked off full-day
+      </p>
 
       <div
         style={{
           borderRadius: "50%",
-          height: "10px",
-          width: "10px",
-          backgroundColor: "gold",
+          height: "6px",
+          width: "6px",
+          border: "2px solid black",
           lineHeight: ".5",
           display: "inline-block",
           margin: " 0px 8px",
@@ -38,27 +40,10 @@ function WeekScheduleLegend() {
         }}
       ></div>
       <p style={{ padding: "0px", margin: "0px", gridRow: "2" }}>
-        Available part-day
-      </p>
-
-      <div
-        style={{
-          borderRadius: "50%",
-          height: "10px",
-          width: "10px",
-          backgroundColor: "#32cd32",
-          lineHeight: ".5",
-          display: "inline-block",
-          margin: " 0px 8px",
-          gridRow: "3",
-          justifyContent: "left",
-        }}
-      ></div>
-      <p style={{ padding: "0px", margin: "0px", gridRow: "3" }}>
-        Available all day
+        Booked off part-day
       </p>
     </div>
   );
 }
 
-export default WeekScheduleLegend;
+export default TimeOffLegend;

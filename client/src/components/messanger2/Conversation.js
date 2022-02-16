@@ -1,28 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./conversation.css";
+import NameIcon from "./NameIcon";
 
-export default function Conversation({ conversation, currentUser }) {
-  const [user, setUser] = useState(null);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser._id);
-
-    const getUser = async () => {
-      try {
-        const res = await axios("api/employeeProfile/getByProfileId/" + friendId);
-        setUser(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUser();
-  }, [currentUser, conversation]);
+export default function Conversation({ conversation }) {
+  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
-    <div className="conversation">
-      <img
+    <div style={{ border: "1px solid black" }}>
+      {conversation?.members?.map((m) => {
+        return <NameIcon name={m.label} key={m.value} />;
+      })}
+    </div>
+    //   <div className="conversation">
+    //     {conversation?.map((c) => {
+    //       return <p>{c}</p>;
+    //     })}
+    // {
+    /* <img
         className="conversationImg"
         src={
           user?.profilePicture
@@ -30,8 +25,11 @@ export default function Conversation({ conversation, currentUser }) {
             : PF + "person/noAvatar.png"
         }
         alt=""
-      />
-      <span className="conversationName">{user?.firstName}</span>
-    </div>
+      /> */
+    // }
+    // {
+    /* <span className="conversationName">{user?.firstName}</span> */
+    // }
+    //     </div>
   );
 }

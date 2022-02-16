@@ -6,7 +6,8 @@ export const StyledLogIn = createGlobalStyle`
   }
   body {
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(to bottom, #f05053, #e1eec3);
+    ${"" /* background: linear-gradient(to bottom, #f05053, #e1eec3); */}
+    background: "var(--appBackground)";
     height: 100%;
     margin: 0;
     color: #555;
@@ -33,7 +34,7 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledForm = styled.div`
   width: 100%;
-  height: 45vh;
+  height: 50vh;
   min-width: 400px;
   max-width: 20vw;
   padding: 40px;
@@ -66,7 +67,8 @@ export const StyledButton = styled.button`
   border-radius: 5px;
   height: 40px;
   padding: 0px 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
   cursor: pointer;
   box-sizing: border-box;
 `;

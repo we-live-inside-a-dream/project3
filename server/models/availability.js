@@ -140,7 +140,6 @@ async function updateAvailabilityById(id, updatedAvailability) {
 }
 
 async function weeklyAvailibility(start) {
-  // console.log("FROM MODEL, THIS IS THE WEEK", week);
   let end = moment(start)
     .add(6, "days")
     .startOf("day")

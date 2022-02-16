@@ -12,51 +12,38 @@ const http = require("http").Server(app);
 
 const io = require("socket.io")(http);
 
-let users = [];
-
-const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
-};
-
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
-
-const getUser = (userId) => {
-  console.log("userId...", userId);
-  return users.find((user) => user.userId === userId);
-};
-
 io.on("connection", (socket) => {
-  //when connect
-  // console.log(socket)
-  //take userId and socketId from user
-  //new socketId is created everytime page is refreshed
-  socket.on("addUser", (userId) => {
-    console.log("a user connected.", userId);
-    addUser(userId, socket.id);
-
-    io.emit("getUsers", users);
-  });
+  // console.log(`socketID`, socket.id);
+  const id = socket.handshake.query.id;
+  // console.log("userId", id);
+  socket.join(id); //this becomes users socket.id
+  // console.log("joined room", id);
 
   //send and get message
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-    const user = getUser(receiverId);
-    console.log(user);
-    if (user?.socketId) {
-      io.to(user.socketId).emit("getMessage", {
-        senderId,
+  socket.on("sendMessage", ({ recipients, sender, text }) => {
+    //recipient currently holds sender ID aswell
+    // console.log("starts with", recipients);
+    // console.log(id);
+    recipients.forEach((recipient) => {
+      const newRecipients = recipients.filter((r) => r !== recipient && r !==sender); // removes current recipient from list
+      // console.log("old REc", newRecipients);
+      // newRecipients.push(id);
+      // console.log("new REC", newRecipients);
+      // console.log("broadcast to room", recipient);
+
+      socket.broadcast.to(recipient).emit("getMessage", {
+        recipients,
+        sender,
         text,
       });
-    }
+    });
   });
 
   //when disconnect
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
-    removeUser(socket.id);
-    io.emit("getUsers", users);
+    // removeUser(socket.id);
+    // io.emit("getUsers", users);
   });
 });
 
@@ -66,7 +53,6 @@ const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const authRouter = require("./routes/authRoutes");
 const timeOffRouter = require("./routes/timeOffRoutes");
 const eventsRouter = require("./routes/eventsRoutes");
-const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 app.use(cors())
@@ -80,7 +66,6 @@ app.use(passport.session());
 
 app.use("/api/conversations", conversationsRouter);
 app.use("/api/messages", messagesRouter);
-app.use("/api/chat", chatRouter);
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
 app.use("/api/timeOff", timeOffRouter);

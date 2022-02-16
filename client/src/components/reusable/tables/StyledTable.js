@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const StyledTable = styled.table`
-  color: #545454;
-  background-color: white;
+  color: var() (--tableFont);
+  background-color: var(--tableBackground);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 300;
   border: 1px solid grey;
@@ -22,9 +22,9 @@ const StyledTable = styled.table`
     text-align: center;
     font-weight: 600;
     /* color: #545454; */
-    color: whitesmoke;
+    color: var(--headerWhiteFont);
     /* background-color: #dbdbfc; */
-    background-color: #e37222;
+    background-color: var(--mainHeader);
     border: none;
     border-radius: 0px;
     padding: 10px 53px;
@@ -39,9 +39,11 @@ const StyledTable = styled.table`
     /* border: 0.25px solid lightgrey; */
     background-color: ${(props) => props.backgroundColor || "none"};
     border-top: 1px solid #f2f2f2;
-    padding: 0;
+    padding: ${(props) => props.padding || 0};
     margin: 0;
     color: #545454;
+    width: "auto";
+    position: inline;
   }
   td:nth-child(even) {
     background-color: #eee;
@@ -54,8 +56,8 @@ const StyledTable = styled.table`
     height: 4rem;
     text-align: center;
     font-weight: 300;
-    color: #545454;
-    background-color: white;
+    color: var(--tableFont);
+    background-color: var(--tableBackground);
     border: none;
     border-radius: 0px;
     padding: 10px 40px;

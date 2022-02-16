@@ -9,11 +9,26 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
     setActiveButton(currentTab);
   }, [currentTab]);
 
-  let buttonListAll = activeButton === 1 ? "#e37222" : "#07889b";
-  let buttonCreateNew = activeButton === 2 ? "#e37222" : "#07889b";
-  let buttonAvailabilities = activeButton === 3 ? "#e37222" : "#07889b";
-  let buttonOtherOne = activeButton === 4 ? "#e37222" : "#07889b";
-  let buttonOtherTwo = activeButton === 5 ? "#e37222" : "#07889b";
+  let buttonListAll =
+    activeButton === 1
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonCreateNew =
+    activeButton === 2
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonAvailabilities =
+    activeButton === 3
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonOtherOne =
+    activeButton === 4
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
+  let buttonOtherTwo =
+    activeButton === 5
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
 
   return (
     <div
@@ -33,8 +48,8 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonListAll,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         LIST ALL
@@ -47,8 +62,8 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonCreateNew,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         CREATE NEW
@@ -61,8 +76,8 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonAvailabilities,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         AVAILABILITIES
@@ -75,8 +90,8 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonOtherOne,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         OTHER ONE
@@ -89,8 +104,8 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         style={{
           backgroundColor: buttonOtherTwo,
           margin: "0px",
-          border: "2px solid #66b9bf",
-          "&:Hover": { border: "2px solid #eeaa78" },
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
         OTHER TWO

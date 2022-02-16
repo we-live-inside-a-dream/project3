@@ -8,12 +8,12 @@ router.post("/", async (req, res) => {
     newEmployeeTimeOff
   );
   res.send(createdId);
-  console.log("Im here save me", newEmployeeTimeOff, createdId);
+  // console.log("Im here save me", newEmployeeTimeOff, createdId);
 });
 //
 router.get("/by-start-date", async (req, res) => {
   let startDay = req.query.startDay;
-  console.log("from API time off, startDate is", startDay);
+  // console.log("from API time off, startDate is", startDay);
   let timeOffWeek = await employeeTimeOffModel.getWeeklyTimeOffs(startDay);
   res.json(timeOffWeek);
 });
@@ -33,11 +33,19 @@ router.get("/list", async (req, res) => {
 
 router.get("/listEmployee", async (req, res) => {
   let id = req.query.id;
-  console.log("Employee time off list", id);
+  // console.log("Employee time off list", id);
   employeeTimeOff = await employeeTimeOffModel.getEmployeeTimeOffByProfileId(
     id
   );
   res.json(employeeTimeOff);
 });
+
+router.delete("/deleteTimeOff", async function(req, res) {
+  let id = req.query.id;
+  console.log("this is the routs id", id)
+  let deletedTimeOff = await employeeTimeOffModel.deleteTimeOff(id);
+  console.log("this is the deleted time off from the routs", deletedTimeOff)
+  res.send("Deleted Time off", deletedTimeOff);
+})
 
 module.exports = router;

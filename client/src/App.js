@@ -45,6 +45,14 @@ function App() {
             }
           />
           <Route
+            path="/events"
+            element={
+              <RequireAuth>
+                <EventsPage />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/schedules"
             element={
               <RequireAuth>
@@ -86,9 +94,9 @@ function App() {
           <Route
             path="/timeOff/viewPage"
             element={
-              // <RequireAuth>
+              <RequireAuth>
                 <EmployeeTimeOffViewPage />
-              // </RequireAuth>
+              </RequireAuth>
             }
           />
           <Route

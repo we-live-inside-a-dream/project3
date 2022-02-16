@@ -19,6 +19,8 @@ const AuthenticationProvider = ({ children }) => {
         } else {
           setUser(null);
         }
+      } else {
+        setUser(null);
       }
     };
     getLoggedInUser();

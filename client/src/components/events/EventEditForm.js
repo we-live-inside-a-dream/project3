@@ -11,6 +11,7 @@ import {
 import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import * as fns from "date-fns";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 
@@ -23,6 +24,7 @@ const typeData = [
   { value: "staff", label: "Staff Event" },
 ];
 const visibilityData = [
+  { value: "user", label: "Myself Only" },
   { value: "admin", label: "Admin Only" },
   { value: "manager", label: "Management" },
   { value: "supervisor", label: "Supervisory Staff" },
@@ -78,7 +80,10 @@ const EventEditForm = ({ existingValues }) => {
   function onTimeInputUpdate(value, setter) {
     setter(value);
   }
-
+  function onDateInputUpdate(value, setter) {
+    // console.log(value);
+    setter(value);
+  }
   async function createEvent(newEvent) {
     await fetch("/api/events/create-event", {
       method: "POST",
@@ -105,8 +110,10 @@ const EventEditForm = ({ existingValues }) => {
       firstName: user.firstName,
       lastName: user.lastName,
       type: [type.value],
-      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
-      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
+      // startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      // endTime: fns.format(new Date(endTime), "HH:mm").toString(),
+      startTime,
+      endTime,
       startDate: startDate,
       endDate: endDate,
       allDay: allDay,
@@ -176,7 +183,20 @@ const EventEditForm = ({ existingValues }) => {
 
           <div>
             <label>Start Day:</label>
-            <input
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={startDate}
+              onChange={(value) => {
+                onDateInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setStartDate
+                );
+                // setShiftDateMessageVal(requiredValidation(date));
+              }}
+            />
+            {/* <input
               type="date"
               id="single-day"
               name="day"
@@ -184,11 +204,24 @@ const EventEditForm = ({ existingValues }) => {
               onChange={(e) => {
                 setStartDate(e.target.value);
               }}
-            />
+            /> */}
           </div>
           <div>
             <label>End Day:</label>
-            <input
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(value) => {
+                onDateInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setEndDate
+                );
+                // setShiftDateMessageVal(requiredValidation(date));
+              }}
+            />
+            {/* <input
               type="date"
               id="single-day"
               name="day"
@@ -196,7 +229,7 @@ const EventEditForm = ({ existingValues }) => {
               onChange={(e) => {
                 setEndDate(e.target.value);
               }}
-            />
+            /> */}
           </div>
 
           {startDate === endDate && (
@@ -228,7 +261,7 @@ const EventEditForm = ({ existingValues }) => {
                 <BasicTimePicker
                   // label=""
                   type="time"
-                  value={startTime}
+                  value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
                   onChange={(value) => {
                     onTimeInputUpdate(value, setStartTime);
                   }}
@@ -239,7 +272,7 @@ const EventEditForm = ({ existingValues }) => {
                 <BasicTimePicker
                   // label="end time"
                   type="time"
-                  value={endTime}
+                  value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
                   onChange={(value) => {
                     onTimeInputUpdate(value, setEndTime);
                   }}

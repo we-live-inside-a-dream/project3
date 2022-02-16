@@ -12,7 +12,7 @@ const LogOut = () => {
     fetch("/api/auth/logout").then(() => {
       authContext.logOut();
       console.log("Logged out successfully.");
-      navigate("/");
+      navigate("/login");
     });
   }, []);
   return "Hello";

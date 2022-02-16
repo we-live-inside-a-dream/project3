@@ -3,15 +3,24 @@ import EmployeeTimeOff from "../../components/employee-time-off/EmployeeTimeOff"
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import {
   StyledButton,
+  StyledForm,
+  StyledForm2,
   StyledFormWrapper,
 } from "../../components/reusable/Inputs/StyledEmployeeForm";
-import Modal from "../../components/reusable/Modal";
+import StyledPage from "../../components/reusable/styled-page/StyledPage";
+import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import StyledTable from "../../components/reusable/tables/StyledTable";
+import ApprovalSymbol from "../../components/dashboard/ApprovalSymbol";
+import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
+
+import Modal from "../../components/reusable/Modal";
+
 
 const EmployeeTimeOffViewPage = () => {
   const [timeOff, setTimeOff] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -38,11 +47,44 @@ const EmployeeTimeOffViewPage = () => {
     });
   }
 
+  // async function deleteTimeOff(id) {
+  //   console.log("This is the delete id", id)
+  //   let result = await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
+  //     method: "DELETE",
+  //   });
+  //   console.log("this is the result", result)
+  // }
+  const deleteTimeOff = async (id) => {
+    await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
+      method: "DELETE",
+    });
+  };
+
+  function statusConvert(status) {
+    if (status === "confirm") {
+      return "Approved"
+    } else if (status === "reject") {
+      return "Denied"
+    } else return "Pending"
+  }
+ 
+
   return (
     <div>
-      <StyledFormWrapper>
+      <StyledPage>
+        <StyledPageTitle style={{ marginBottom: "10px"}}>TIME OFF REQUESTS</StyledPageTitle>
         <StyledTable padding={"5px"}>
-          <thead></thead>
+          <thead>
+            <tr>
+              <th>STATUS</th>
+              {/* <th>NAME</th> */}
+              <th>TYPE</th>
+              <th>START DATE</th>
+              <th>END DATE</th>
+              <th>COMMENTS</th>
+              <th>EDIT/DELETE</th>
+            </tr>
+          </thead>
           <tbody>
             {timeOff?.map((t) => {
               return (
@@ -55,28 +97,46 @@ const EmployeeTimeOffViewPage = () => {
                     height: "auto",
                   }}
                 >
-                  <td>{`${t.firstName} ${t.lastName[0]}`}</td>
+                  {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
+                 
+                  <td>{<ApprovalSymbol time={t}  />}{`${statusConvert(t.status)}`}</td>
                   <td>{`${t.type}`}</td>
                   <td>{`${t.startDate}`}</td>
                   <td>{`${t.endDate}`}</td>
-                  <td>{`${t.status}`}</td>
-                  <StyledButton
-                    margin={"0"}
-                    padding={"0"}
+                  {/* <td>{`${t.status}`}</td> */}
+                  <td>{`${t.comment}`}</td>
+                  <td><div><StyledEditButton
+                  fontSize="25px"
+                    // margin={"0"}
+                    // padding={"0"}
                     onClick={() => {
                       setModalConfirmIsOpen(true);
                       setTimeOffValues(t);
                       console.log("this is t", t);
                     }}
                   >
-                    Edit
-                  </StyledButton>
+                    ✎
+                  </StyledEditButton><StyledEditButton
+                  // fontSize="20px"
+                    margin={"0px 20px"}
+                    // padding={"0"}
+                    onClick={() => {
+                      // setModalConfirmIsOpen(true);
+                      // setTimeOffValues(t);
+                      // setSelectedId(t._id)
+                      deleteTimeOff(t._id)
+                      console.log("this is t", t);
+                    }}
+                  >
+                    ❌
+                  </StyledEditButton></div></td>
+                  
                 </tr>
               );
             })}
           </tbody>
         </StyledTable>
-      </StyledFormWrapper>
+      </StyledPage>
       <Modal
         onClose={() => {
           setModalConfirmIsOpen(false);

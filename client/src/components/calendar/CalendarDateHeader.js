@@ -1,5 +1,7 @@
 import React from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
+import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
+import StyledPageTitle from "../reusable/styled-page/StyledPageTitle";
 
 const headerStyle = {
   padding: "10px",
@@ -7,20 +9,75 @@ const headerStyle = {
   color: "var(--accentColorTitle)",
   fontSize: "20px",
   fontFamily: "sans-serif",
-  display: "flex",
-  justifyContent: "spaceBetween",
+  display: "grid",
+  marginBottom: "0px",
+  marginTop: "0px",
+  gridTemplateColumns: "25% 50% 25%",
+  justifyContent: "baseline",
 };
 
-const CalendarDateHeader = ({ onNext, onBack, dateDisplay }) => {
+const CalendarDateHeader = ({
+  onNext,
+  onBack,
+  dateDisplay,
+  currentTab,
+  setCurrentTab,
+}) => {
   return (
     <div id="header" style={headerStyle}>
-      <div id="monthDisplay">{dateDisplay}</div>
-      <div>
-        <StyledButton onClick={onBack} id="backButton">
-          Back
+      <div style={{ gridRow: "1", margin: "auto auto 0px 0px" }}>
+        <StyledScheduleButtonGroup
+          style={{
+            marginBottom: "0px",
+            marginTop: "0px",
+          }}
+          setCurrentTab={setCurrentTab}
+          currentTab={currentTab}
+        />
+      </div>
+      <div
+        style={{
+          gridRow: "1",
+          textAlign: "center",
+          justifyContent: "center",
+        }}
+      >
+        <StyledPageTitle
+          id="monthDisplay"
+          style={{
+            marginBottom: "auto",
+            paddingBottom: "5px",
+          }}
+        >
+          {dateDisplay}
+        </StyledPageTitle>
+      </div>
+      <div
+        style={{
+          margin: "auto 0px 0px auto",
+          float: "right",
+          gridRow: "1",
+        }}
+      >
+        <StyledButton
+          onClick={onBack}
+          id="backButton"
+          style={{
+            margin: "0px 0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+          }}
+        >
+          BACK
         </StyledButton>
-        <StyledButton onClick={onNext} id="nextButton">
-          Next
+        <StyledButton
+          onClick={onNext}
+          id="nextButton"
+          style={{
+            margin: "0px 0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+          }}
+        >
+          NEXT
         </StyledButton>
       </div>
     </div>

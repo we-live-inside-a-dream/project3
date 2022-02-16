@@ -82,14 +82,12 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       id="container"
       style={{ width: "95%", border: "1px solid white", margin: "auto" }}
     >
-      <StyledScheduleButtonGroup
-        setCurrentTab={setCurrentTab}
-        currentTab={currentTab}
-      />
       <CalendarDateHeader
         dateDisplay={dateDisplay}
         onNext={() => setNav(nav + 1)}
         onBack={() => setNav(nav - 1)}
+        setCurrentTab={setCurrentTab}
+        currentTab={currentTab}
       />
       <div
         id="weekdays"
@@ -113,6 +111,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
                 fontSize: "larger",
                 alignContent: "center",
                 margin: "auto",
+                textTransform: "uppercase",
               }}
             >
               {day}

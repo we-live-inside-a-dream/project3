@@ -8,24 +8,34 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
-  StyledError,
 } from "./StyledLogIn";
 import AuthenticationContext from "./AuthenticationContext";
+import { emailValidation, passwordValidation } from "./LoginValidation";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [emailMessageVal, setEmailMessageVal] = useState(null);
+  const [passMessageVal, setPassMessageVal] = useState(null);
+
+  let validation;
+  async function validateForm() {
+    if (emailMessageVal || passMessageVal) {
+      console.log("email:", emailMessageVal, "password:", passMessageVal);
+      validation = "please make sure that all fields are valid";
+      return validation;
+    } else console.log("email:", emailMessageVal, "password:", passMessageVal);
+    validation = null;
+    return validation;
+  }
+  validateForm();
+  console.log("validate form", validation);
 
   const authContext = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
   // console.log(authContext);
   const handleChange = (event, setter) => {
-    setEmailError("");
-    setPasswordError("");
     const value = event.target.value;
     setter(value);
   };
@@ -35,6 +45,7 @@ export default function LogIn() {
       email,
       password,
     });
+
     let user = response.data;
     console.log("LOG IN", response);
     authContext.logIn(user);
@@ -53,10 +64,22 @@ export default function LogIn() {
     <>
       <StyledLogIn />
       <StyledFormWrapper>
-        <StyledForm>
+        <StyledForm type="submit">
           <h1>Log In</h1>
           <div>
             <label>Email</label>
+            {!emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              ></p>
+            ) : null}
+            {emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              >
+                {emailMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               margin="normal"
               required
@@ -70,11 +93,22 @@ export default function LogIn() {
               placeholder="Email.."
               onChange={(event) => {
                 handleChange(event, setEmail);
+                setEmailMessageVal(emailValidation(email));
               }}
             />
-            {emailError && <StyledError>{emailError}</StyledError>}
-
             <label>Password</label>
+            {!passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              ></p>
+            ) : null}
+            {passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              >
+                {passMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               margin="normal"
               required
@@ -88,10 +122,10 @@ export default function LogIn() {
               placeholder="Password.."
               onChange={(event) => {
                 handleChange(event, setPassword);
+                setPassMessageVal(passwordValidation(password));
               }}
               onKeyPress={handleKeypress}
             />
-            {passwordError && <StyledError>{passwordError}</StyledError>}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

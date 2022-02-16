@@ -43,6 +43,7 @@ const EmployeeEditForm = ({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState(null);
   const [status, setStatus] = useState(null);
+  const [defaultStatus, setDefaultStatus] = useState(null);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -56,6 +57,12 @@ const EmployeeEditForm = ({
 
   // const [positionToAdd, setPositionToAdd] = useState("");
   // let navigate = useNavigate();
+
+  useEffect(() => {
+    const typeFilter = statusData?.filter((r) => r.value == status);
+    setDefaultStatus(typeFilter)
+    console.log("this is status", status);
+  }, [status]);
 
   useEffect(() => {
     if (existingValues) {
@@ -342,7 +349,7 @@ const EmployeeEditForm = ({
               </p>
             ) : null}
             <Select
-              value={status}
+              value={defaultStatus}
               options={statusData}
               onChange={handleStatusChange}
               required="true"

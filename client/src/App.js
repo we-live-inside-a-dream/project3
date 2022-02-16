@@ -94,9 +94,9 @@ function App() {
           <Route
             path="/timeOff/viewPage"
             element={
-              // <RequireAuth>
-              <EmployeeTimeOffViewPage />
-              // </RequireAuth>
+              <RequireAuth>
+                <EmployeeTimeOffViewPage />
+              </RequireAuth>
             }
           />
           <Route

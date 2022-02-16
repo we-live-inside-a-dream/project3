@@ -41,8 +41,9 @@ const EmployeeEditForm = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [positions, setPositions] = useState(null);
+  const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState(null);
+  const [defaultStatus, setDefaultStatus] = useState(null);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -56,6 +57,23 @@ const EmployeeEditForm = ({
 
   // const [positionToAdd, setPositionToAdd] = useState("");
   // let navigate = useNavigate();
+
+  useEffect(() => {
+    const typeFilter = statusData?.filter((r) => r.value == status);
+    setDefaultStatus(typeFilter);
+    console.log("this is status", status);
+  }, [status]);
+
+  // useEffect(() => {
+  //   if (positionsData) {
+  //     empNames.map((person) => {
+  //       return contactsData.push({
+  //         value: `${person._id}`,
+  //         label: `${person.firstName} ${person.lastName[0]}`,
+  //       });
+  //     });
+  //   }
+  // }, [empNames]);
 
   useEffect(() => {
     if (existingValues) {
@@ -73,10 +91,15 @@ const EmployeeEditForm = ({
     setter(newValue);
   }
 
-  const handlePositionChange = (newPosition) => {
-    setPositions(newPosition);
-    setPosMessageVal(positionValidation(newPosition));
-    console.log("Positions", newPosition);
+  const handlePositionChange = (newPositions) => {
+    // let array = []
+    // newPositions.map((x) => array.push(x.value));
+    // console.log("THIS IS OUR ARRAY", array);
+    // console.log("new positions", newPositions)
+    setPositions(newPositions);
+    console.log("this is positions", positions);
+    setPosMessageVal(positionValidation(newPositions));
+    console.log("Positions", newPositions);
   };
 
   const handleStatusChange = (newStatus) => {
@@ -159,7 +182,7 @@ const EmployeeEditForm = ({
       email,
       password,
       phoneNumber,
-      positions: [positions.value],
+      positions: positions.map((p) => p.value),
       status: status.value,
     };
     validateForm();
@@ -193,13 +216,14 @@ const EmployeeEditForm = ({
           <h2>Employee Description</h2>
           <div></div>
           <div>
-            <label style={{ marginBottom: "0px" }}>First Name<RedStar/></label>{" "}
+            <label style={{ marginBottom: "0px" }}>
+              First Name
+              <RedStar />
+            </label>{" "}
             {firstName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             <StyledInput
               value={firstName}
@@ -211,13 +235,14 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>Last Name<RedStar/></label>
+            <label>
+              Last Name
+              <RedStar />
+            </label>
             {lastName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             <StyledInput
               value={lastName}
@@ -228,12 +253,14 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>Email<RedStar/></label>
+            <label>
+              Email
+              <RedStar />
+            </label>
             {!emailMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-              </p>
+              ></p>
             ) : null}
             {emailMessageVal ? (
               <p
@@ -252,14 +279,15 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>password<RedStar/></label>
+            <label>
+              password
+              <RedStar />
+            </label>
 
             {!passMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             {passMessageVal ? (
               <p
@@ -278,13 +306,14 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-            <label>Phone Number<RedStar/></label>
+            <label>
+              Phone Number
+              <RedStar />
+            </label>
             {!phoneMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             {phoneMessageVal ? (
               <p
@@ -303,7 +332,8 @@ const EmployeeEditForm = ({
           </div>
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Positions<RedStar/>
+              Positions
+              <RedStar />
             </label>{" "}
             {!positions ? (
               <p
@@ -312,23 +342,31 @@ const EmployeeEditForm = ({
                   fontSize: "10px",
                   marginBottom: "0px",
                 }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             <Select
+              isMulti
+              name="employee position"
+              defaultValue={positions}
+              options={positionData}
+              onChange={handlePositionChange}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            ></Select>
+            {/* <Select
               value={positions}
               options={positionData}
               onChange={handlePositionChange}
               required="true"
-            />
+            /> */}
           </div>
           {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
 
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
-              Status<RedStar/>
+              Status
+              <RedStar />
             </label>
             {!status ? (
               <p
@@ -337,12 +375,10 @@ const EmployeeEditForm = ({
                   fontSize: "10px",
                   marginBottom: "0px",
                 }}
-              >
-                
-              </p>
+              ></p>
             ) : null}
             <Select
-              value={status}
+              defaultValue={defaultStatus}
               options={statusData}
               onChange={handleStatusChange}
               required="true"

@@ -53,7 +53,6 @@ const employeeProfileRouter = require("./routes/employeeProfileRoutes");
 const authRouter = require("./routes/authRoutes");
 const timeOffRouter = require("./routes/timeOffRoutes");
 const eventsRouter = require("./routes/eventsRoutes");
-const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 
@@ -67,7 +66,6 @@ app.use(passport.session());
 
 app.use("/api/conversations", conversationsRouter);
 app.use("/api/messages", messagesRouter);
-// app.use("/api/chat", chatRouter);
 app.use("/api/employeeProfile", employeeProfileRouter);
 app.use("/api/availability", availabilityRouter);
 app.use("/api/timeOff", timeOffRouter);

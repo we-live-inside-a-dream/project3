@@ -7,6 +7,8 @@ import HumanResourcesBox from "./HumanResourcesBox";
 import FilesBox from "./FilesBox";
 import UpcomingShiftsBox from "./UpcomingShiftsBox";
 import AuthenticationContext from "../login/AuthenticationContext";
+import TimeOffBox from "./TimeOffBox";
+import { useNavigate } from "react-router-dom";
 
 let dashGridStyle = {
   display: "flex",
@@ -22,6 +24,7 @@ let dashGridStyle = {
 
 const DashboardGridNav = function () {
   const authContext = useContext(AuthenticationContext);
+  const navigate = useNavigate();
   //repeat autofill 30%
   return (
     <div style={dashGridStyle}>
@@ -30,6 +33,7 @@ const DashboardGridNav = function () {
         <HumanResourcesBox />
       )}
       <UpcomingShiftsBox />
+      <TimeOffBox onClick={() => navigate("/timeOff/viewpage")} />
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />

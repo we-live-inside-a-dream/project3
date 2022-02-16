@@ -1,13 +1,20 @@
-import { createGlobalStyle } from "styled-components";
+import React from "react";
+const themes = { main: { green: "#00ff00" }, dark: { green: "44ff44" } };
 
-const GlobalStyle = createGlobalStyle`
+const ThemeProvider = ({ children }) => {
+  const authContext = useContext(AuthenticationContext);
+  const themeChoice = authContext.themeChoice;
+  const theme = themes[themeChoice];
+  import { createGlobalStyle } from "styled-components";
+
+  const GlobalStyle = createGlobalStyle`
 
 
 
 
 
   :root {
-  --mainHeader: #E37222;
+  --mainHeader: ${theme.green};
   --accentColorTitle: #07889B;
   --navColorTitle: #07889B;
   --lightTangerine: #eeaa78;
@@ -137,4 +144,12 @@ ${
  
 `;
 
-export default GlobalStyle;
+  return (
+    <>
+      <GlobalStyle />
+      {children}
+    </>
+  );
+};
+
+export default ThemeProvider;

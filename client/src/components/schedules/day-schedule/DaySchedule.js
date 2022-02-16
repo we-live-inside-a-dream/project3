@@ -17,7 +17,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   const [deleteShift, setDeleteShift] = useState(false);
 
   let today = new Date();
-  console.log("today is", today);
+  // console.log("today is", today);
   useEffect(() => {
     setDay(moment(today).format("yyyy-MM-DD"));
     if (shiftId) {
@@ -62,7 +62,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   }
   function onInputUpdate(value, setter) {
     let newValue = moment(value).format("yyyy-MM-DD");
-    console.log(newValue, "is the new formatted value for startDay");
+    // console.log(newValue, "is the new formatted value for startDay");
     setter(newValue);
   }
   // const deleteEmployeeShift
@@ -118,7 +118,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
             value={day}
             onChange={(value) => {
               onInputUpdate(value, setDay);
-              console.log(value, "is the newStartDay");
+              // console.log(value, "is the newStartDay");
             }}
           />
         </div>

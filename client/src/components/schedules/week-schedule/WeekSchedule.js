@@ -9,6 +9,7 @@ import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import WeekScheduleLegend from "./WeekScheduleLegend";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
+import TimeOffLegend from "./TimeOffLegend";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -23,8 +24,9 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
   const [theWholeWeek, setTheWholeWeek] = useState([]);
-  // const [employeeId, setEmployeeId] = useState()
+  const [timeoffs, setTimeOffs] = useState([]);
   const [empAvailibility, setEmpAvailibility] = useState([]);
+  const [empTimeOff, setEmpTimeOff] = useState();
   const [date, setDate] = useState();
   // const [availabilityColor, setAvailabilityColor] = useState();
   let availabilityColor = "";
@@ -44,6 +46,15 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
         setTheWholeWeek(fetchResult);
       }
       fetchWeek();
+    };
+    const fetchAlltheDaysOff = async function () {
+      let fetchResult = await fetch(
+        `/api/timeOff/by-start-date?startDay=${startDay}`
+      );
+      let theTimeOffList = await fetchResult.json();
+      console.log("fetching employee timeOff list", theTimeOffList);
+
+      setTimeOffs(theTimeOffList);
     };
 
     const empAvail = async () => {
@@ -77,10 +88,11 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       setTitleWeek(datesArray);
       setDataWeek(dateNumberArray);
       fetchAllTheDays();
+      fetchAlltheDaysOff();
     };
+    findDateRange();
     empAvail();
     getAllTheEmployees();
-    findDateRange();
   }, [startDay]);
 
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
@@ -94,17 +106,30 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     // dayOfweek is the index for days array monday=0, sunday=6
     const availableToday = currentEmployee?.days[dayOfWeek];
     if (!availableToday?.available) {
-      // console.log("employee not available");
       return "#FC4445";
     } else if (!availableToday?.allDay) {
-      // console.log(
-      //   `employee is available between ${availableToday?.start} and ${availableToday?.end}`
-      // );
       return "gold";
     } else {
-      // console.log("employee is free to suffer all day!!");
       return "#32cd32";
     }
+  }
+  function isEmployeeBookedOff(id, date) {
+    let empBookedTimeOff = timeoffs.find(
+      (timeOff) => timeOff.employeeProfileId === id
+    );
+    if (
+      empBookedTimeOff?.startDate <= date &&
+      empBookedTimeOff?.endDate >= date &&
+      empBookedTimeOff.allDay === true
+    ) {
+      return "full";
+    } else if (
+      empBookedTimeOff?.startDate === date &&
+      empBookedTimeOff?.endDate === date &&
+      empBookedTimeOff.allDay === false
+    ) {
+      return "part";
+    } else return null;
   }
 
   // useEffect(()=>{
@@ -133,7 +158,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: " 50% 15% 35%",
+          gridTemplateColumns: " 65%  35%",
           height: "auto",
         }}
       >
@@ -146,8 +171,9 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           <WeekScheduleLegend
             style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
+          <TimeOffLegend style={{ marginLeft: "15px", paddingBottom: "0px" }} />
         </div>
-        <div className="emptyDivForSpacing"> </div>
+        {/* <div className="emptyDivForSpacing"> </div> */}
         <div
           style={{
             gridTemplateRow: "1",
@@ -226,6 +252,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       <div
                         style={{
                           position: "absolute",
+
                           borderRadius: "50%",
                           height: "10px",
                           width: "10px",
@@ -237,6 +264,32 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                           ),
                         }}
                       />
+                      {isEmployeeBookedOff(employee._id, date) === "full" ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            borderRadius: "50%",
+                            height: "10px",
+                            width: "10px",
+                            alignSelf: "center",
+                            transform: "translate(1050%, -350%)",
+                            backgroundColor: "black",
+                          }}
+                        />
+                      ) : null}
+                      {isEmployeeBookedOff(employee._id, date) === "part" ? (
+                        <div
+                          style={{
+                            position: "absolute",
+                            border: "2px solid black",
+                            borderRadius: "50%",
+                            height: "6px",
+                            width: "6px",
+                            alignSelf: "center",
+                            transform: "translate(1050%, -350%)",
+                          }}
+                        />
+                      ) : null}
                     </td>
                   );
                 return (

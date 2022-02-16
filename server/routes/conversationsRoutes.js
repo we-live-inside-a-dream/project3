@@ -16,9 +16,8 @@ router.post("/", async (req, res) => {
 router.get("/:userId", async (req, res) => {
   let id = req.params.userId;
   console.log(id);
-  let userConversations = await Conversation.Conversation.find({
-    "members.value": id,
-  });
+  let userConversations =
+    await Conversation.getConversationsByEmployeeProfileId(id);
   res.json(userConversations);
 });
 

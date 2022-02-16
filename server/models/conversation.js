@@ -17,12 +17,17 @@ async function create(Data) {
 }
 
 const getConversationsByEmployeeProfileId = async (id) => {
-  const conversation = await Conversation.find({members:[id] });
+  const conversations = await Conversation.find({
+    "members.value": id,
+  });
+  console.log("conversations from model...", conversations);
+  // let newConversations = [];
+  // newConversations.map;
   // console.log("from model, employeeAvail", employeeAvail);
-  return employeeAvail;
+  return conversations;
 };
 
 module.exports = {
   create,
-  Conversation,
+  getConversationsByEmployeeProfileId,
 };

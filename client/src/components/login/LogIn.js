@@ -22,7 +22,7 @@ export default function LogIn() {
   async function validateForm() {
     if (emailMessageVal || passMessageVal) {
       console.log("email:", emailMessageVal, "password:", passMessageVal);
-      validation = "Please make sure all fields are filled.";
+      validation = "Please make sure all fields are filled in properly.";
       return validation;
     } else console.log("email:", emailMessageVal, "password:", passMessageVal);
     validation = null;

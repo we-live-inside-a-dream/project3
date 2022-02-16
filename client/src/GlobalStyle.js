@@ -5,8 +5,8 @@ const GlobalStyle = createGlobalStyle`
 
 
 
-${
-  "" /* :root {
+
+  :root {
   --mainHeader: #E37222;
   --accentColorTitle: #07889B;
   --navColorTitle: #07889B;
@@ -33,8 +33,7 @@ ${
   --transparent: rgba(255, 255, 255, 0);
   --tableBackground: #ffffff;
   --tableFont: #545454;
-} */
-}
+  }
 
 
 
@@ -77,7 +76,8 @@ ${
 // blue #5680e9
 // dark turquoise #12b8e6
 
-:root {
+${
+  "" /* :root {
   --mainHeader: #5680e9;
   --accentColorTitle: #12b8e6;
   --navColorTitle: white;
@@ -104,6 +104,7 @@ ${
   --transparent: rgba(255, 255, 255, 0);
   --tableBackground: #ffffff;
   --tableFont: #545454;
+} */
 }
 
 

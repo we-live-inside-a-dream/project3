@@ -13,23 +13,25 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 
 io.on("connection", (socket) => {
-  // console.log(`socketID`, socket.id);
+  console.log(`socketID`, socket.id);
   const id = socket.handshake.query.id;
-  // console.log("userId", id);
+  console.log("userId", id);
   socket.join(id); //this becomes users socket.id
-  // console.log("joined room", id);
+  console.log("joined room", id);
 
   //send and get message
   socket.on("sendMessage", ({ recipients, sender, text }) => {
-    //recipient currently holds sender ID aswell
-    // console.log("starts with", recipients);
-    // console.log(id);
+    // recipient currently holds sender ID aswell
+    console.log("starts with", recipients);
+    console.log(id);
     recipients.forEach((recipient) => {
-      const newRecipients = recipients.filter((r) => r !== recipient && r !==sender); // removes current recipient from list
+      const newRecipients = recipients.filter(
+        (r) => r !== recipient && r !== sender
+      ); // removes current recipient from list
       // console.log("old REc", newRecipients);
       // newRecipients.push(id);
       // console.log("new REC", newRecipients);
-      // console.log("broadcast to room", recipient);
+      console.log("broadcast to room", recipient);
 
       socket.broadcast.to(recipient).emit("getMessage", {
         recipients,

@@ -208,12 +208,12 @@ const EmployeeTimeOff = ({ existingValues, onSave }) => {
             <RedStar /> &nbsp;
             {!dateMessageVal ? (
               <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px" }}
               ></p>
             ) : null}
             {dateMessageVal ? (
               <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+                style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px" }}
               >
                 {dateMessageVal}
               </p>
@@ -228,7 +228,7 @@ const EmployeeTimeOff = ({ existingValues, onSave }) => {
                   fns.format(new Date(value), "yyyy-MM-dd").toString(),
                   setEndDate
                 );
-                setDateMessageVal(dateValidation(startDate, endDate));
+                setDateMessageVal(dateValidation(startDate, fns.format(new Date(value), "yyyy-MM-dd").toString()));
               }}
             />
           </label>

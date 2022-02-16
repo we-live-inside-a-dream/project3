@@ -1,55 +1,143 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Day from "./Day";
-import "./calendarscratch.css";
+import StyledTable from "../reusable/tables/StyledTable";
+import CalendarDateHeader from "./CalendarDateHeader";
 
-function CalendarScratch() {
-  let days = [];
-  for (let i = 0; i < 32; i++) {
-    days.push(i);
-  }
+const CalendarScratch = function () {
+  const [nav, setNav] = useState(0);
+  const [dateDisplay, setDateDisplay] = useState("");
+  const [days, setDays] = useState([]);
+  const [selectedDay, setSelectedDay] = useState();
+  const [weekdayHeaders, setWeekdayHeaders] = useState([]);
+
+  // const eventForDate = (date) => events.find((e) => e.date === date);
+
+  useEffect(() => {
+    const weekdays = [
+      "SUNDAY",
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY",
+    ];
+    setWeekdayHeaders(weekdays);
+    const theDate = new Date();
+    if (nav !== 0) {
+      theDate.setMonth(new Date().getMonth() + nav);
+    }
+    const day = theDate.getDate();
+    const month = theDate.getMonth();
+    const year = theDate.getFullYear();
+    const firstDayOfMonth = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const dateString = firstDayOfMonth.toLocaleDateString("en-us", {
+      weekday: "long",
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    });
+    setDateDisplay(
+      `${theDate.toLocaleDateString("en-us", { month: "long" })} ${year}`
+    );
+    const paddingDays = weekdays.indexOf(dateString.split(", ")[0]);
+    const daysArray = [];
+
+    for (let i = 1; i <= paddingDays + daysInMonth; i++) {
+      const dayString = `${month + 1}/${i - paddingDays}/${year}`;
+      if (i > paddingDays) {
+        daysArray.push({
+          value: i - paddingDays,
+          // event: eventForDate(dayString),
+          isCurrentDay: i - paddingDays === day && nav === 0,
+          date: dayString,
+        });
+      } else {
+        daysArray.push({
+          value: "padding",
+          // event: null,
+          isCurrentDay: false,
+          date: "",
+        });
+      }
+    }
+    setDays(daysArray);
+  }, [nav]);
+
+  let mainGridStyle = {
+    // width: "91%",
+    height: "auto",
+    width: "100%",
+    margin: "auto",
+    display: "flex",
+    flexWrap: "wrap",
+
+    border: "1px solid black",
+  };
 
   return (
-    <div className="main-page">
-      <div className="grid-container">
-        {days.map((day, index) => {
-          return <Day key={index} day={day} />;
+    <div
+      id="container"
+      style={{ width: "95%", border: "1px solid white", margin: "auto" }}
+    >
+      <CalendarDateHeader
+        dateDisplay={dateDisplay}
+        onNext={() => setNav(nav + 1)}
+        onBack={() => setNav(nav - 1)}
+      />
+      <div
+        id="weekdays"
+        style={{
+          backgroundColor: "var(--mainHeader)",
+          display: "flex",
+          width: "100%",
+          height: "60px",
+          color: "var(--headerWhiteFont)",
+        }}
+      >
+        {weekdayHeaders.map((day, index) => {
+          return (
+            <div
+              key={index}
+              style={{
+                width: "13%",
+                padding: ".6%",
+                textAlign: "center",
+                fontWeight: "500",
+                fontSize: "larger",
+                alignContent: "center",
+                margin: "auto",
+              }}
+            >
+              {day}
+            </div>
+          );
         })}
-        {/* <div className="grid-item"> */}
-
-        {/* <div class="grid-item grid-item-1">1</div>
-        <div class="grid-item grid-item-2">2</div>
-        <div class="grid-item grid-item-3">3</div>
-        <div class="grid-item grid-item-4">4</div>
-        <div class="grid-item grid-item-5">5</div>
-        <div class="grid-item grid-item-6">6</div>
-        <div class="grid-item grid-item-7">7</div>
-        <div class="grid-item grid-item-8">8</div>
-        <div class="grid-item grid-item-9">8</div>
-        <div class="grid-item grid-item-10">10</div>
-        <div class="grid-item grid-item-11">11</div>
-        <div class="grid-item grid-item-12">12</div>
-        <div class="grid-item grid-item-13">13</div>
-        <div class="grid-item grid-item-14">14</div>
-        <div class="grid-item grid-item-15">15</div>
-        <div class="grid-item grid-item-16">16</div>
-        <div class="grid-item grid-item-17">17</div>
-        <div class="grid-item grid-item-18">18</div>
-        <div class="grid-item grid-item-19">19</div>
-        <div class="grid-item grid-item-20">20</div>
-        <div class="grid-item grid-item-21">21</div>
-        <div class="grid-item grid-item-22">22</div>
-        <div class="grid-item grid-item-23">23</div>
-        <div class="grid-item grid-item-24">24</div>
-        <div class="grid-item grid-item-25">25</div>
-        <div class="grid-item grid-item-26">26</div>
-        <div class="grid-item grid-item-27">27</div>
-        <div class="grid-item grid-item-28">28</div>
-        <div class="grid-item grid-item-29">29</div>
-        <div class="grid-item grid-item-30">30</div>
-        <div class="grid-item grid-item-31">31</div> */}
+      </div>
+      <div style={{ mainGridStyle }}>
+        <div
+          id="calendar"
+          style={{
+            width: "100%",
+            margin: "auto",
+            display: "flex",
+            flexWrap: "wrap",
+          }}
+        >
+          {days.map((day, index) => (
+            <Day
+              key={index}
+              day={day}
+              onClick={() => {
+                setSelectedDay(day.date);
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default CalendarScratch;

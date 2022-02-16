@@ -28,11 +28,11 @@ export default function Messenger() {
   useEffect(() => {
     if (!user._id) return;
     let id = user._id;
-    console.log("room id", id);
     const origin = window.location.origin;
     const host = origin.replace("http", "ws");
     socket.current = io(host, { query: { id } });
 
+    console.log("conected to socket", id);
     // console.log(socket.current);
   }, [user._id]);
 
@@ -49,7 +49,6 @@ export default function Messenger() {
   }, [socket]);
 
   useEffect(() => {
-    console.log("got the message", arrivalMessage);
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
@@ -58,11 +57,10 @@ export default function Messenger() {
   useEffect(() => {
     if (user._id) {
       const getConversations = async () => {
-        console.log(user._id);
         let id = user._id;
         let fetchResult = await fetch(`api/conversations/${id}`);
         let fetchedConversation = await fetchResult.json();
-        console.log("fetched Convo", fetchedConversation);
+
         setConversations(fetchedConversation);
       };
 
@@ -90,13 +88,14 @@ export default function Messenger() {
       senderName: user.firstName + " " + user.lastName[0],
       text: newMessage,
       conversationId: currentChat._id,
+      read: "false",
     };
     //member is an array of Id's for members of convo
     const recipients = currentChat.members.map((r) => r.value);
-    console.log("socket...", socket.current);
-    console.log("user id", user._id);
-    console.log("currentChat", currentChat);
-    console.log("recipients", recipients);
+    // console.log("socket...", socket.current);
+    // console.log("user id", user._id);
+    // console.log("currentChat", currentChat);
+    // console.log("recipients", recipients);
     // let newRecipients = recipients.slice(user._id);
     // console.log("new Rec", newRecipients);
     socket.current.emit("sendMessage", {

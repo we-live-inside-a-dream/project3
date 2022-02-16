@@ -1,6 +1,5 @@
 const emailValidation = function (value) {
-  const regex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  const regex = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
   if (regex.test(value)) {
     return null;
     // alert("email is valid");
@@ -45,6 +44,7 @@ const positionValidation = function (value) {
   // alert("position is ok");
   else return null;
 };
+
 const statusValidation = function (value) {
   if (value.length === 0) {
     // alert("at status is required");
@@ -56,7 +56,7 @@ const statusValidation = function (value) {
 
 const passwordValidation = function (value) {
   // const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-  const regex = /^[A-Za-z]\w{7,15}$/;
+  const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   if (regex.test(value)) {
     return null;
@@ -66,10 +66,10 @@ const passwordValidation = function (value) {
 };
 
 const requiredValidation = function (value) {
-  if (value === ""){
-    return "This field is required"
- } else return null
-} 
+  if (value === "") {
+    return "This field is required";
+  } else return null;
+};
 
 const dateValidation = function (start, end) {
   if (start <= end) {
@@ -93,5 +93,5 @@ module.exports = {
   passwordValidation,
   dateValidation,
   timeValidation,
-  requiredValidation
+  requiredValidation,
 };

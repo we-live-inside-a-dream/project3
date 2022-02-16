@@ -11,11 +11,11 @@ function EmployeeAvailabilityList() {
   useEffect(() => {
     let isMounted = true;
     const fetchAvailabilityList = async () => {
-      console.log("from useEffect, trying to fetch endpoint");
+      // console.log("from useEffect, trying to fetch endpoint");
       let fetchResult = await fetch(`/api/availability/availability-all`);
-      console.log("fetch result", fetchResult);
+      // console.log("fetch result", fetchResult);
       let theAvailabilityList = await fetchResult.json();
-      console.log("fetching employee availability list", theAvailabilityList);
+      // console.log("fetching employee availability list", theAvailabilityList);
 
       setAvailabilityList(theAvailabilityList);
     };
@@ -50,12 +50,12 @@ function EmployeeAvailabilityList() {
 
   //selects the employee id to davigate to the pagee to edit that particular employee
   function selectAvailabilityId(id) {
-    console.log("FROM JUST BEFORE NAVIGATE");
+    // console.log("FROM JUST BEFORE NAVIGATE");
     navigate("/avail-detail/" + id);
   }
   //selects employee from dropdowm menu
   function selectAvailabilityById(id) {
-    console.log("selectAvailability called on id", id);
+    // console.log("selectAvailability called on id", id);
     selectAvailabilityId(id);
   }
 

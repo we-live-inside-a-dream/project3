@@ -1,4 +1,5 @@
 const mongoose = require("./mongooseDb");
+const moment = require("moment");
 
 const EmployeeTimeOff = mongoose.model("employeeTimeOff", {
   type: {
@@ -53,15 +54,49 @@ async function createEmployeeTimeOff(employeeTimeOffData) {
 
 // get Employee Profile by Profile id
 
-async function getEmployeeTimeOffByProfileId(employeeProfile_id) {
-  let approvedTimeoff = EmployeeTimeOff.find({
-    employeeProfileId: employeeProfile_id,
+async function getEmployeeTimeOffByProfileId(id) {
+  console.log("from time off model id", id);
+  let approvedTimeOff = EmployeeTimeOff.find({
+    employeeProfileId: id,
   });
-  console.log("timeoffs", approvedTimeoff);
-  return approvedTimeoff;
+  // console.log("timeOffs", approvedTimeOff);
+  return approvedTimeOff;
+}
+
+async function getWeeklyTimeOffs(start) {
+  console.log("from time off model, week starting", start);
+  let end = moment(start)
+    .add(6, "days")
+    .startOf("day")
+    .format("dddd, Do")
+    .toString();
+  let weekList = EmployeeTimeOff.find({
+    date: { $gte: start, $lte: end },
+  });
+  // console.log("from time off Model: ", weekList);
+  return weekList;
+}
+//get all timeOffs
+const listOfTimeOff = async () => {
+  return EmployeeTimeOff.find({});
+};
+//update timeOffs
+async function update(id, timeOffApproval) {
+  return EmployeeTimeOff.findByIdAndUpdate(id, timeOffApproval, {
+    returnDocument: "after",
+  });
+}
+
+async function deleteTimeOff(id) {
+  console.log("id from model", id)
+  return EmployeeTimeOff.deleteOne({"._id": "id"})
 }
 
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,
+  getWeeklyTimeOffs,
+  update,
+  listOfTimeOff,
+  deleteTimeOff
 };

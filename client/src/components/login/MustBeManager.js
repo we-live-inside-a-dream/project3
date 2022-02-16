@@ -8,8 +8,8 @@ const Manager = ({ children }) => {
   if (authContext?.user?.positions?.includes("manager")) {
     return children;
   } else if (!authContext.user) {
-    return <Navigate to="/unauthorized" />;
-  } else return <Navigate to="/" />;
+    return <Navigate to="/" />;
+  } else return null;
 };
 
 export default Manager;

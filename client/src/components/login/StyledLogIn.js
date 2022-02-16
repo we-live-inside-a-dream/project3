@@ -34,7 +34,7 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledForm = styled.div`
   width: 100%;
-  height: 50vh;
+  height: 55vh;
   min-width: 400px;
   max-width: 20vw;
   padding: 40px;
@@ -67,7 +67,8 @@ export const StyledButton = styled.button`
   border-radius: 5px;
   height: 40px;
   padding: 0px 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 10px;
   cursor: pointer;
   box-sizing: border-box;
 `;
@@ -107,32 +108,6 @@ export const Dropdown = styled.select`
     padding: 0px 2px 1px;
   }
 `;
-
-// export const DropdownContainer = styled.div`
-//   @media screen and (min-width: 961px) {
-//     position: relative;
-//   }
-// `;
-
-// export const EditFormDropdown = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 80px;
-//   background-color: #de2eff;
-//   border: none;
-//   border-radius: 5px;
-//   padding: 15px;
-//   font-size: 1.1rem;
-//   gap: 0.5rem;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: #8703a0;
-//     border: 1px solid #c2c2c2;
-//     transition: background 0.3s ease;
-//   }
-// `;
 
 export const StyledError = styled.div`
   color: red;

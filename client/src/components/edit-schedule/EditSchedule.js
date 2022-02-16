@@ -182,10 +182,6 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
       await createShift(newShift);
     } else setShown(true);
 
-    if (existingValues) {
-      await onClose(newShift);
-    }
-
     onClose();
     if (existingValues) {
       console.log("New Shift...", newShift);
@@ -219,6 +215,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
+        <h1>Schedule</h1>
         <div>
           <InputLabel>
             Employee Name

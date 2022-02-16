@@ -22,6 +22,8 @@ import RequireAuth from "./components/login/RequireAuth";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
+import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
+import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
@@ -39,6 +41,14 @@ function App() {
             element={
               <RequireAuth>
                 <HomeDashBoardPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <RequireAuth>
+                <EventsPage />
               </RequireAuth>
             }
           />
@@ -78,6 +88,14 @@ function App() {
             element={
               <RequireAuth>
                 <EmployeeTimeOff />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/timeOff/viewPage"
+            element={
+              <RequireAuth>
+                <EmployeeTimeOffViewPage />
               </RequireAuth>
             }
           />
@@ -135,6 +153,12 @@ function App() {
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
           ></Route>
+          <Route
+            path="/timeOff/approval"
+            element={<TimeOffApprovalPage />}
+          ></Route>
+
+          {/* last router */}
         </Routes>
         )
       </div>

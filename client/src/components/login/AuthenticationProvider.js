@@ -13,12 +13,14 @@ const AuthenticationProvider = ({ children }) => {
       const response = await fetch("/api/auth/loggedInUser");
       if (response.status === 200) {
         const loggedInUser = await response.json();
-        console.log(loggedInUser);
+        // console.log(loggedInUser);
         if (loggedInUser) {
           logIn(loggedInUser);
         } else {
           setUser(null);
         }
+      } else {
+        setUser(null);
       }
     };
     getLoggedInUser();

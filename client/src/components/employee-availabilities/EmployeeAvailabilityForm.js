@@ -8,6 +8,7 @@ import {
   // StyledTimeDate,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
+import { timeValidation } from "../validateForms";
 
 const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
@@ -17,8 +18,8 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [days, setDays] = useState([]); // will be a use context for managers settings
   const [day, setDay] = useState("");
   const [isError, setIsError] = useState(false);
-  const [globalError, setGlobalError] = useState(false);
-
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
   const [availability, setAvailability] = useState({});
 
   let navigate = useNavigate();
@@ -59,6 +60,16 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
       setDay(availability.day);
     }
   }, [availability]);
+
+  let validation;
+  async function validateForm() {
+    if (timeMessageVal) {
+      console.log(timeMessageVal, "day start Time");
+      validation = "start must be greater than or equal to end time";
+      return validation;
+    } else validation = null;
+    return validation;
+  }
 
   async function postData() {
     let updatedAvailability = {
@@ -107,6 +118,7 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
             return (
               <AvailabilityDay
                 key={index}
+                index={index}
                 day={day}
                 setAvailability={setAvailability}
                 availability={availability}
@@ -114,13 +126,10 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
               />
             );
           })}
-          {/* {globalError === false ? ( */}
+
           <StyledButton onClick={postData}>
             SAVE AVAILABILITY DETAILS
           </StyledButton>
-          {/* ) : (
-            <p>Errors</p>
-          )} */}
         </StyledForm>
       </StyledFormWrapper>
     </div>

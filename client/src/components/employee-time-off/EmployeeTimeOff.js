@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import Select from "react-select";
+// import { InputLabel, MenuItem, Select } from "@mui/material";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
@@ -25,44 +26,48 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = (onSave, existingValues) => {
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+const EmployeeTimeOff = ({ existingValues, onSave }) => {
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
+  const [defaultType, setDefaultType] = useState("");
   const [comment, setComment] = useState("");
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [dateMessageVal, setDateMessageVal] = useState(null);
   const [timeMessageVal, setTimeMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
-  const [timeOff, setTimeOff] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  // useEffect(() => {
-  //   if (existingValues) {
-  //     setStartTime(existingValues.startTime)
-  //     setEndTime(existingValues.endTime)
-  //     setStartDate(existingValues.startDate)
-  //     setEndDate(existingValues.endDate)
-  //     setType(existingValues.type)
-  //     setComment(existingValues.comment)
-  //     setAllDay(existingValues.allDay)
-  //   }
-  // },[existingValues])
   useEffect(() => {
-    // if (!user._Id) return;
-    const fetchTimeOff = async () => {
-      console.log("userrrrr", user._Id);
-      let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
-      let fetchedTimeOff = await fetchResult.json();
-      console.log("fetch time off", fetchedTimeOff);
-      setTimeOff(fetchedTimeOff);
-    };
-    fetchTimeOff();
-  }, [user._id]);
+    const typeFilter = typeData?.filter((r) => r.value == type);
+    setDefaultType(typeFilter)
+    console.log("this is type", type);
+  }, [type]);
+
+  useEffect(() => {
+    if (existingValues) {
+      setStartTime(
+        ` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setEndTime(
+        ` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setStartDate(existingValues.startDate);
+      setEndDate(existingValues.endDate);
+      setType(existingValues.type);
+      setComment(existingValues.comment);
+      setAllDay(existingValues.allDay);
+      console.log("these are the exisiting values", existingValues.type);
+    }
+  }, [existingValues]);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -123,8 +128,8 @@ const EmployeeTimeOff = (onSave, existingValues) => {
       employeeProfileId: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
-      startTime,
-      endTime,
+      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
       startDate,
       endDate,
       allDay: allDay,
@@ -134,12 +139,17 @@ const EmployeeTimeOff = (onSave, existingValues) => {
     console.log("end time", endTime);
 
     console.log("posting Time Off", newEmployeeTimeOff);
-    await createEmployeeTimeOff(newEmployeeTimeOff);
-    navigate("/");
+    // await createEmployeeTimeOff(newEmployeeTimeOff);
+    // navigate("/");
 
     validateForm();
     console.log("validate form", validation);
     console.log("saving new time off form", newEmployeeTimeOff);
+
+    if (existingValues && validation === null) {
+      await onSave(newEmployeeTimeOff);
+    }
+    console.log("this isss existingValues", existingValues);
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
@@ -172,7 +182,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
               Type:
               <RedStar />
             </label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select value={defaultType} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
 
@@ -199,15 +209,12 @@ const EmployeeTimeOff = (onSave, existingValues) => {
             {!dateMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {" "}
-              </p>
+              ></p>
             ) : null}
             {dateMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
               >
-                {" "}
                 {dateMessageVal}
               </p>
             ) : null}
@@ -256,10 +263,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onInputUpdate(
-                      fns.format(new Date(value), "HH:mm").toString(),
-                      setStartTime
-                    );
+                    onInputUpdate(value, setStartTime);
                   }}
                 />
               </label>
@@ -269,10 +273,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onInputUpdate(
-                      fns.format(new Date(value), "HH:mm").toString(),
-                      setEndTime
-                    );
+                    onInputUpdate(value, setEndTime);
                   }}
                 />
               </label>
@@ -296,7 +297,7 @@ const EmployeeTimeOff = (onSave, existingValues) => {
           >
             <div style={{ padding: "20px" }}>
               <h3>Confirm Time Off</h3>
-              <p>Type of time off:{type.label}</p>
+              <p>Type of time off:{type?.label}</p>
               <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
               <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
               {allDay === false && (

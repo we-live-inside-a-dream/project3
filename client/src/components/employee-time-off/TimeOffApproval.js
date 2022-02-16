@@ -1,4 +1,4 @@
-import { InputLabel, MenuItem, NativeSelect, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   StyledButton,
@@ -7,6 +7,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm";
 import moment from "moment";
 import Modal from "../reusable/Modal";
+import StyledTable from "../reusable/tables/StyledTable";
 
 //fetch timeoffs
 
@@ -75,28 +76,34 @@ const TimeOffApproval = () => {
               Pending Time Off
             </InputLabel>
           </h1>
-
-          {timeOff?.map((t) => {
-            return (
-              <div
-                key={t._id}
-                value={t}
-                onClick={() => {
-                  setModalConfirmIsOpen(true);
-                  setTimeOffValues(t);
-                  console.log(t);
-                }}
-                style={{
-                  padding: "10px",
-                  textAlign: "center",
-                  height: "auto",
-                }}
-              >
-                {`${t.firstName} ${t.lastName[0]}, ${t.status}`}
-              </div>
-            );
-          })}
-
+          <StyledTable padding={"5px"}>
+            <thead></thead>
+            <tbody>
+              {timeOff?.map((t) => {
+                return (
+                  <tr
+                    key={t._id}
+                    value={t}
+                    onClick={() => {
+                      setModalConfirmIsOpen(true);
+                      setTimeOffValues(t);
+                    }}
+                    style={{
+                      padding: "10px",
+                      textAlign: "center",
+                      height: "auto",
+                    }}
+                  >
+                    <td>{`${t.firstName} ${t.lastName[0]}`}</td>
+                    <td>{`${t.type}`}</td>
+                    <td>{`${t.startDate}`}</td>
+                    <td>{`${t.startDate}`}</td>
+                    <td>{`${t.status}`}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </StyledTable>
           <Modal
             onClose={() => {
               setModalConfirmIsOpen(false);

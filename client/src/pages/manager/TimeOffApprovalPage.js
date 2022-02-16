@@ -1,6 +1,6 @@
 import React from "react";
 import TimeOffApproval from "../../components/employee-time-off/TimeOffApproval";
-import StyledPage from "../../components/reusable/Inputs/styled-page/StyledPage";
+import StyledPage from "../../components/reusable/styled-page/StyledPage";
 
 const TimeOffApprovalPage = () => {
   return (

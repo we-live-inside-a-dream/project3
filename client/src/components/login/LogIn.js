@@ -31,7 +31,7 @@ export default function LogIn() {
   };
 
   const handleSubmit = async (e) => {
-    let response = await axios.post("/api/auth/login", {
+    let response = await axios.post(process.env.REACT_APP_ELECTRON_SERVER+"/api/auth/login", {
       email,
       password,
     });

@@ -26,12 +26,17 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = ({existingValues, onSave}) => {
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+const EmployeeTimeOff = ({ existingValues, onSave }) => {
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [type, setType] = useState();
+  const [type, setType] = useState("");
+  const [defaultType, setDefaultType] = useState("");
   const [comment, setComment] = useState("");
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
@@ -42,18 +47,27 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
   const user = authContext.user;
 
   useEffect(() => {
-    if (existingValues) {
-      setStartTime(` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`)
-      setEndTime(` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`)
-      setStartDate(existingValues.startDate)
-      setEndDate(existingValues.endDate)
-      setType(existingValues.type)
-      setComment(existingValues.comment)
-      setAllDay(existingValues.allDay)
-      console.log("these are the exisiting values", existingValues.type)
-    }
-  },[existingValues])
+    const typeFilter = typeData?.filter((r) => r.value == type);
+    setDefaultType(typeFilter)
+    console.log("this is type", type);
+  }, [type]);
 
+  useEffect(() => {
+    if (existingValues) {
+      setStartTime(
+        ` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setEndTime(
+        ` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setStartDate(existingValues.startDate);
+      setEndDate(existingValues.endDate);
+      setType(existingValues.type);
+      setComment(existingValues.comment);
+      setAllDay(existingValues.allDay);
+      console.log("these are the exisiting values", existingValues.type);
+    }
+  }, [existingValues]);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
@@ -128,13 +142,11 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
     // await createEmployeeTimeOff(newEmployeeTimeOff);
     // navigate("/");
 
-
-
     validateForm();
     console.log("validate form", validation);
     console.log("saving new time off form", newEmployeeTimeOff);
 
-    if(existingValues && validation === null) {
+    if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
     }
     console.log("this isss existingValues", existingValues);
@@ -170,7 +182,7 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
               Type:
               <RedStar />
             </label>
-            <Select defaultValue={type} options={typeData} onChange={typeHandler} />
+            <Select value={defaultType} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
 
@@ -197,8 +209,7 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
             {!dateMessageVal ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-              </p>
+              ></p>
             ) : null}
             {dateMessageVal ? (
               <p
@@ -252,8 +263,7 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
                   type="time"
                   value={startTime}
                   onChange={(value) => {
-                    onInputUpdate(value, setStartTime
-                    );
+                    onInputUpdate(value, setStartTime);
                   }}
                 />
               </label>
@@ -263,8 +273,7 @@ const EmployeeTimeOff = ({existingValues, onSave}) => {
                   type="time"
                   value={endTime}
                   onChange={(value) => {
-                    onInputUpdate(value, setEndTime,
-                    );
+                    onInputUpdate(value, setEndTime);
                   }}
                 />
               </label>

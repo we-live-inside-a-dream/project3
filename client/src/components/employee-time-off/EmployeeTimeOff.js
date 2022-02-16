@@ -73,10 +73,10 @@ const EmployeeTimeOff = ({ existingValues, onSave }) => {
     setModalConfirmIsOpen(true);
   }
 
-  // const typeHandler = (newType) => {
-  //   setType(newType);
-  //   console.log("Vacation type", newType);
-  // };
+  const typeHandler = (newType) => {
+    setType(newType);
+    console.log("Vacation type", newType);
+  };
 
   function onInputUpdate(value, setter) {
     setter(value);

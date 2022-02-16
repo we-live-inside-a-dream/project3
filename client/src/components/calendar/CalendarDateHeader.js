@@ -1,7 +1,7 @@
 import React from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
-import StyledPageTitle from "../reusable/styled-page/StyledPageTitle";
+import StyledPageTitle from "../reusable/Inputs/styled-page/StyledPageTitle";
 
 const headerStyle = {
   padding: "10px",

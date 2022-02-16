@@ -104,7 +104,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
             <div
               key={index}
               style={{
-                width: "13%",
+                width: "14.25%",
                 padding: ".6%",
                 textAlign: "center",
                 fontWeight: "500",

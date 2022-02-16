@@ -15,16 +15,16 @@ const Day = ({ day, onClick }) => {
       onClick={onClick}
       className={className}
       style={{
-        width: "11%",
-        padding: "10px",
+        width: "14%",
+        // padding: ".1%",
         height: "130px",
         cursor: "pointer",
         boxSizing: "borderBox",
         backgroundColor: "white",
-        margin: ".6%",
+        // margin: ".6%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "spaceBetween",
+        // justifyContent: "spaceBetween",
         border: borderColor(day.value),
       }}
     >

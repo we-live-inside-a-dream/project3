@@ -5,7 +5,7 @@ import AuthenticationContext from "./AuthenticationContext";
 const Manager = ({ children }) => {
   const authContext = useContext(AuthenticationContext);
   console.log(authContext);
-  if (authContext?.user?.positions?.includes("manager")) {
+  if (authContext?.user?.permissions?.includes("manager")) {
     return children;
   } else if (!authContext.user) {
     return <Navigate to="/" />;

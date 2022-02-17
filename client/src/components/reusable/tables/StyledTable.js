@@ -46,7 +46,7 @@ const StyledTable = styled.table`
     position: inline;
   }
   td:nth-child(even) {
-    background-color: #eee;
+    background-color: #f8f8f8;
   }
 
   tr {

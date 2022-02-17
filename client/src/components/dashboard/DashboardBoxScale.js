@@ -1,15 +1,17 @@
 import React from "react";
+import { withTheme } from "styled-components";
 import StyledScaledComponent from "./StyledScaledContent";
 
 let dashBoxStyle = {
   width: "30%",
   height: "0",
   paddingBottom: "30%",
-  border: "2px solid lightGrey",
+  border: "2px solid darkGrey",
   margin: "auto auto",
-  borderRadius: "5%",
+  borderRadius: "2%",
   overflow: "hidden",
-  background: "var(--dashGridBoxBackground)",
+  // background: "var(--dashGridBoxBackground)",
+  background: "white",
 
   //   justifyContent: "spaceAround",
 };
@@ -29,13 +31,16 @@ const DashboardBoxScale = function ({
       <div
         onClick={clickFunction}
         style={{
-          background: "var(--mainHeader)",
+          // background: "var(--mainHeader)",
           alignSelf: "flex-start",
           // margin: "0px auto 0px auto",
-          color: "var(--headerWhiteFont)",
+          // color: "var(--headerWhiteFont)",
+          // color: "grey",
+          color: "var(--accentColorTitle)",
           textAlign: "center",
-          border: "2px solid var(--mainHeader)",
+          // border: "2px solid var(--mainHeader)",
           cursor: "pointer",
+          borderBottom: "2px solid darkGrey",
         }}
       >
         <h3>{title}</h3>

@@ -6,7 +6,7 @@ let dashBoxStyle = {
   paddingBottom: "30%",
   border: "2px solid lightGrey",
   margin: "auto auto",
-  borderRadius: "5%",
+  // borderRadius: "5%",
   overflow: "hidden",
   background: "var(--dashGridBoxBackground)",
 

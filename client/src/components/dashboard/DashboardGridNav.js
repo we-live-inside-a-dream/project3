@@ -29,15 +29,19 @@ const DashboardGridNav = function () {
   return (
     <div style={dashGridStyle}>
       <ScheduleBox />
-      {authContext?.user?.positions?.includes("manager") && (
+      {authContext?.user?.positions?.includes("manager") ||
+      authContext?.user?.positions?.includes("admin") ? (
         <HumanResourcesBox />
-      )}
+      ) : null}
       <UpcomingShiftsBox />
       <TimeOffBox onClick={() => navigate("/timeOff/viewpage")} />
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />
-      <FilesBox />
+      {authContext?.user?.positions?.includes("manager") ||
+      authContext?.user?.positions?.includes("admin") ? (
+        <FilesBox />
+      ) : null}
     </div>
   );
 };

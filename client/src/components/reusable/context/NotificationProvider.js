@@ -1,56 +1,35 @@
-import React, { useContext,useEffect,useState } from 'react'
-import AuthenticationContext from "../../components/login/AuthenticationContext";
+import React, { useContext, useEffect, useState } from "react";
+import AuthenticationContext from "../../login/AuthenticationContext";
 
-const NotificationsContext = React.createContext()
+const NotificationsContext = React.createContext();
 
 export function useNotifications() {
-    return useContext(NotificationsContext)
+  return useContext(NotificationsContext);
+}
 
-export function NotificationProvider({childern}){
-    const authContext = useContext(AuthenticationContext);
-    const user = authContext.user;
-    const[unread,setUnread]= useState()
+export function NotificationProvider({ childern }) {
+  const authContext = useContext(AuthenticationContext);
+  const user = authContext.user;
+  const [unread, setUnread] = useState(0);
 
-// useEffect(()=>{
-//     function countUnreadMsg(){
-//       const unreadMsgs = messages.filter((m)=>(m.read))
-//       console.log('unread messages...',unreadMsgs)
-//     }
-//     const fetchMsgs = async () => {
-//         let fetchResult = await fetch(`/api/messages/unread?id=${user._id}`);
-//         let fetchedUnread = await fetchResult.json();
-  
-//         setUnread(fetchedUnread);
-//       };
-    
+  const fetchMsgs = async () => {
+    let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
+    let fetchedUnread = await fetchResult.json();
 
-// },[user._id])
-  return(
-  <Notification.Provider>
-      {childern}
-      </Notification.Provider>);
-};
+    setUnread(fetchedUnread);
+  };
 
-export default NotificationProvider;
+  useEffect(() => {
+    setUnread(0);
+  }, []);
 
-
-
-
-
-
-
-export function ContactsProvider({ children }) {
- 
-
-  function createContact(id, name) {
-    setContacts(prevContacts => {
-      return [...prevContacts, { id, name }]
-    })
-  }
+  const value = { unread, fetchMsgs };
 
   return (
-    <ContactsContext.Provider value={{ contacts, createContact }}>
-      {children}
-    </ContactsContext.Provider>
-  )
+    <NotificationsContext.Provider value={value}>
+      {childern}
+    </NotificationsContext.Provider>
+  );
 }
+
+export default NotificationProvider;

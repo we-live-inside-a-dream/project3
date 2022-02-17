@@ -24,11 +24,13 @@ import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
 import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
+import NotificationProvider from "./components/reusable/context/NotificationProvider";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
   return (
     <AuthenticationProvider>
+      {/* <NotificationProvider> */}
       <div
         style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
         className="App"
@@ -138,17 +140,17 @@ function App() {
             element={
               <RequireAuth>
               <ErrorUnauthorizedUser />
-               </RequireAuth> 
+              </RequireAuth> 
             }
           /> */}
-          {/* <Route
+          <Route
             path="/chat"
             element={
-              <RequireAuth>
+              // <RequireAuth>
               <MessangerPage2 />
-              </RequireAuth>
+              // </RequireAuth>
             }
-          /> */}
+          />
           <Route
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
@@ -162,6 +164,7 @@ function App() {
         </Routes>
         )
       </div>
+      {/* </NotificationProvider> */}
     </AuthenticationProvider>
   );
 }

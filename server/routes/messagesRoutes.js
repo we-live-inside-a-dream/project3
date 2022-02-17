@@ -23,16 +23,16 @@ router.post("/", async (req, res) => {
 //   return updatedProfile;
 // };
 
-router.post("/unread", async (req, res) => {
-  id = req.query.id; //message id
+// router.post("/unread", async (req, res) => {
+//   id = req.query.id; //message id
 
-  const updateMessage = await Message.findByIdAndUpdate(
-    id,
-    { read: true },
-    { returnDocument: "after" }
-  );
-  res.send(updateMessage);
-});
+//   const updateMessage = await Message.findByIdAndUpdate(
+//     id,
+//     { read: true },
+//     { returnDocument: "after" }
+//   );
+//   res.send(updateMessage);
+// });
 
 //get
 router.get("/unread", async (req, res) => {
@@ -44,18 +44,24 @@ router.get("/unread", async (req, res) => {
   console.log(convoIds);
 
   // find every message with conversationId and see if read = false
-  convoIds.forEach(async (cId) => {
-    const unread = await Message.find({
-      conversationId: cId,
-      read: false,
-    });
-    console.log("unread", unread);
-    // let filteredUnread = unread.filter((x) => {
-    //   x.values ? x : null;
-    // console.log("filteredUnread", filteredUnread);
-    // });
-  });
-  // res.status(200).json(unread);
+  let count = 0;
+  try {
+    for (let cId of convoIds) {
+      const unread = await Message.find({
+        conversationId: cId,
+        read: { $ne: id },
+      });
+      if (unread.length > 0) {
+        count++;
+        // array.push(count);
+        result = count;
+      }
+    }
+    console.log(result);
+    res.json(result);
+  } catch {
+    res.json(0);
+  }
 });
 
 router.get("/:conversationId", async (req, res) => {

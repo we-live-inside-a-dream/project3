@@ -69,26 +69,37 @@ async function updateEvent(id, updatedEvent) {
   console.log("from events model, updated event:", newEventData);
   return newEventData;
 }
-async function findEventsByPermission(permission) {
-  let eventsList;
-  if (permission === "employee") {
-    eventsList = Event.find({ visibility: "employee" });
-  } else if (permission === "supervisor") {
-    eventsList = Event.find({ visibility: ["supervisor", "employee"] });
-  } else if (permission === "manager") {
-    eventsList = Event.find({
-      visibility: ["employee", "supervisor", "manager"],
-    });
-  } else if (permission === "admin") {
-    eventsList = Event.find({
-      visibility: ["employee", "supervisor", "manager", "admin"],
-    });
-  } else return null;
-  return eventsList;
+// async function findEventsByPermission(permission) {
+//   let eventsList;
+//   if (permission === "employee") {
+//     eventsList = Event.find({ visibility: "employee" });
+//   } else if (permission === "supervisor") {
+//     eventsList = Event.find({ visibility: ["supervisor", "employee"] });
+//   } else if (permission === "manager") {
+//     eventsList = Event.find({
+//       visibility: ["employee", "supervisor", "manager"],
+//     });
+//   } else if (permission === "admin") {
+//     eventsList = Event.find({
+//       visibility: ["employee", "supervisor", "manager", "admin"],
+//     });
+//   } else return null;
+//   return eventsList;
+// }
+
+async function findEventsByMonth(start) {
+  let newMonthEvents = await Event.find({$gt: Date("2012-10-01"), $lt:Date("2012-10-02")})
+
 }
+
+// db.getCollection('events').find({ "startDate": "2022-02" }) //dereks idea
+// Post.find({Posted:{$gt: Date("2012-10-01"), $lt:Date("2012-10-02")}})
+// startDate: $gte start and $lte end
+
+
 module.exports = {
   createEvent,
   updateEvent,
   findEventsForEmployees,
-  findEventsByPermission,
+  // findEventsByPermission,
 };

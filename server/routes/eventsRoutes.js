@@ -12,7 +12,7 @@ router.post("/create-event", async (req, res) => {
 router.get("/event/get-for-user-type", async (req, res) => {
   let userPermissions = req.query.permissions;
   let eventsList = await eventModel.findEventsByPermission(userPermissions);
-  console.log(eventsList, "is the events list");
+  console.log("is the events list", eventsList);
   res.json(eventsList);
 });
 

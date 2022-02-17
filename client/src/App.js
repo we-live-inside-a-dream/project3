@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
 import EmployeeAvailabilityPage from "./pages/manager/EmployeeAvailabilityPage";
@@ -12,7 +12,7 @@ import CreateEmployeePage from "./pages/manager/CreateEmployeePage";
 import EmployeeEditPage from "./pages/manager/EmployeeEditPage";
 import GlobalStyle from "./GlobalStyle";
 import ScheduleMenuPage from "./pages/manager/ScheduleMenuPage";
-import EmployeeTimeOff from "./components/employee-time-off/EmployeeTimeOff";
+// import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 import EventsPage from "./pages/common/EventsPage";
 import HomeDashBoardPage from "./pages/common/HomeDashBoardPage";
 import EmployeeAvailabilityDetail from "./components/employee-availabilities/AvailabilityDetail";
@@ -24,8 +24,10 @@ import MessangerPage2 from "./pages/common/MessangerPage2";
 import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingShiftList";
 import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
-import NotificationProvider from "./components/reusable/context/NotificationProvider";
+// import NotificationProvider from "./components/reusable/context/NotificationProvider";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
+// import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+// import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
@@ -94,16 +96,16 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
+          {/* <Route
             path="/timeOff"
             element={
               <RequireAuth>
-                <EmployeeTimeOff />
+                <EmployeeTimeOffForm />
               </RequireAuth>
             }
-          />
+          /> */}
           <Route
-            path="/timeOff/viewPage"
+            path="/timeOff/page"
             element={
               <RequireAuth>
                 <EmployeeTimeOffViewPage />

@@ -182,7 +182,7 @@ const EmployeeTimeOff = ({ existingValues, onSave }) => {
               Type:
               <RedStar />
             </label>
-            <Select value={defaultType} options={typeData} onChange={typeHandler} />
+            <Select defaultValue={defaultType} options={typeData} onChange={typeHandler} />
           </div>
           <div></div>
 

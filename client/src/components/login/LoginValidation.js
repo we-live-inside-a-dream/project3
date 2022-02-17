@@ -16,7 +16,7 @@ const passwordValidation = function (value) {
   if (regex.test(value)) {
     return null;
   } else if (!regex.test(value) && value !== "") {
-    return "Please type password.";
+    return "Please type the password.";
   } else return "";
 };
 

@@ -34,7 +34,7 @@ const DashboardGridNav = function () {
         <HumanResourcesBox />
       ) : null}
       <UpcomingShiftsBox />
-      <TimeOffBox onClick={() => navigate("/timeOff/viewpage")} />
+      <TimeOffBox onClick={() => navigate("/timeOff/page")} />
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />

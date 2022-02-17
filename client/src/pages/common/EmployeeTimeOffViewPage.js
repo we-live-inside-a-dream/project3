@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import EmployeeTimeOff from "../../components/employee-time-off/EmployeeTimeOff";
+import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import {
   StyledButton,
@@ -15,24 +15,25 @@ import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton"
 
 import Modal from "../../components/reusable/Modal";
 
-
-const EmployeeTimeOffViewPage = () => {
+const EmployeeTimeOffViewPage = ({ setIsTimeOff, isTimeOff }) => {
   const [timeOff, setTimeOff] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+
   const [selectedId, setSelectedId] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
   useEffect(() => {
-    // if (!user._Id) return;
+    //  if (!user._Id) return;
     const fetchTimeOff = async () => {
-      console.log("userrrrr", user._Id);
+      console.log("userrrrr", user._id);
       let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
       let fetchedTimeOff = await fetchResult.json();
       console.log("fetch time off", fetchedTimeOff);
       setTimeOff(fetchedTimeOff);
     };
+
     fetchTimeOff();
   }, [user._id]);
 
@@ -62,80 +63,93 @@ const EmployeeTimeOffViewPage = () => {
 
   function statusConvert(status) {
     if (status === "confirm") {
-      return "Approved"
+      return "Approved";
     } else if (status === "reject") {
-      return "Denied"
-    } else return "Pending"
+      return "Denied";
+    } else return "Pending";
   }
- 
 
   return (
     <div>
       <StyledPage>
-        <StyledPageTitle style={{ marginBottom: "10px"}}>TIME OFF REQUESTS</StyledPageTitle>
-        <StyledTable padding={"5px"}>
-          <thead>
-            <tr>
-              <th>STATUS</th>
-              {/* <th>NAME</th> */}
-              <th>TYPE</th>
-              <th>START DATE</th>
-              <th>END DATE</th>
-              <th>COMMENTS</th>
-              <th>EDIT/DELETE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {timeOff?.map((t) => {
-              return (
-                <tr
-                  key={t._id}
-                  value={t}
-                  style={{
-                    padding: "10px",
-                    textAlign: "center",
-                    height: "auto",
-                  }}
-                >
-                  {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
-                 
-                  <td>{<ApprovalSymbol time={t}  />}{`${statusConvert(t.status)}`}</td>
-                  <td>{`${t.type}`}</td>
-                  <td>{`${t.startDate}`}</td>
-                  <td>{`${t.endDate}`}</td>
-                  {/* <td>{`${t.status}`}</td> */}
-                  <td>{`${t.comment}`}</td>
-                  <td><div><StyledEditButton
-                  fontSize="25px"
-                    // margin={"0"}
-                    // padding={"0"}
-                    onClick={() => {
-                      setModalConfirmIsOpen(true);
-                      setTimeOffValues(t);
-                      console.log("this is t", t);
+        <StyledPageTitle style={{ marginBottom: "10px" }}>
+          TIME OFF REQUESTS
+        </StyledPageTitle>
+
+        {timeOff?.length > 0 ? (
+          <StyledTable padding={"5px"}>
+            <thead>
+              <tr>
+                <th>STATUS</th>
+                {/* <th>NAME</th> */}
+                <th>TYPE</th>
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>COMMENTS</th>
+                <th>EDIT/DELETE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {timeOff?.map((t) => {
+                return (
+                  <tr
+                    key={t._id}
+                    value={t}
+                    style={{
+                      padding: "10px",
+                      textAlign: "center",
+                      height: "auto",
                     }}
                   >
-                    ✎
-                  </StyledEditButton><StyledEditButton
-                  // fontSize="20px"
-                    margin={"0px 20px"}
-                    // padding={"0"}
-                    onClick={() => {
-                      // setModalConfirmIsOpen(true);
-                      // setTimeOffValues(t);
-                      // setSelectedId(t._id)
-                      deleteTimeOff(t._id)
-                      console.log("this is t", t);
-                    }}
-                  >
-                    ❌
-                  </StyledEditButton></div></td>
-                  
-                </tr>
-              );
-            })}
-          </tbody>
-        </StyledTable>
+                    {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
+
+                    <td>
+                      {<ApprovalSymbol time={t} />}
+                      {`${statusConvert(t.status)}`}
+                    </td>
+                    <td>{`${t.type}`}</td>
+                    <td>{`${t.startDate}`}</td>
+                    <td>{`${t.endDate}`}</td>
+                    {/* <td>{`${t.status}`}</td> */}
+                    <td>{`${t.comment}`}</td>
+                    <td>
+                      <div>
+                        <StyledEditButton
+                          fontSize="25px"
+                          // margin={"0"}
+                          // padding={"0"}
+                          onClick={() => {
+                            setModalConfirmIsOpen(true);
+                            setTimeOffValues(t);
+                            console.log("this is t", t);
+                          }}
+                        >
+                          ✎
+                        </StyledEditButton>
+                        <StyledEditButton
+                          // fontSize="20px"
+                          margin={"0px 20px"}
+                          // padding={"0"}
+                          onClick={() => {
+                            // setModalConfirmIsOpen(true);
+                            // setTimeOffValues(t);
+                            // setSelectedId(t._id)
+                            deleteTimeOff(t._id);
+                            console.log("this is t", t);
+                          }}
+                        >
+                          ❌
+                        </StyledEditButton>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </StyledTable>
+        ) : (
+          <EmployeeTimeOffForm />
+        )}
       </StyledPage>
       <Modal
         onClose={() => {
@@ -143,7 +157,7 @@ const EmployeeTimeOffViewPage = () => {
         }}
         open={modalConfirmIsOpen}
       >
-        <EmployeeTimeOff
+        <EmployeeTimeOffForm
           existingValues={timeOffValues}
           onSave={updateTimeOff}
         />

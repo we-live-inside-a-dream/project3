@@ -13,7 +13,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
 import { useNavigate } from "react-router-dom";
-import AuthenticationContext from "../../components/login/AuthenticationContext";
+import AuthenticationContext from "../login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
 import { dateValidation } from "../validateForms";
@@ -26,7 +26,7 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = ({ existingValues, onSave }) => {
+const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
@@ -348,4 +348,4 @@ const EmployeeTimeOff = ({ existingValues, onSave }) => {
   );
 };
 
-export default EmployeeTimeOff;
+export default EmployeeTimeOffForm;

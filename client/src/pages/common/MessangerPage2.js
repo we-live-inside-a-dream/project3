@@ -71,10 +71,12 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("api/messages/" + currentChat?._id);
+        const res = await axios.get(
+          `/api/messages/${currentChat?._id}?user=${user._id}`
+        );
         setMessages(res.data);
       } catch (err) {
-        console.log(err);
+        console.log("api/messages/query", err);
       }
     };
     getMessages();
@@ -88,7 +90,7 @@ export default function Messenger() {
       senderName: user.firstName + " " + user.lastName[0],
       text: newMessage,
       conversationId: currentChat._id,
-      read: "false",
+      read: user._id,
     };
     //member is an array of Id's for members of convo
     const recipients = currentChat.members.map((r) => r.value);
@@ -105,12 +107,12 @@ export default function Messenger() {
     });
 
     try {
-      const res = await axios.post("api/messages", message);
+      const res = await axios.post("/api/messages", message);
       // console.log("messages...", messages);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
-      console.log(err);
+      console.log("api/messages", err);
     }
   };
 

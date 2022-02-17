@@ -141,14 +141,14 @@ function App() {
                </RequireAuth> 
             }
           /> */}
-          <Route
+          {/* <Route
             path="/chat"
             element={
-              // <RequireAuth>
+              <RequireAuth>
               <MessangerPage2 />
-              // </RequireAuth>
+              </RequireAuth>
             }
-          />
+          /> */}
           <Route
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}

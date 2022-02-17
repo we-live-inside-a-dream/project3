@@ -23,9 +23,10 @@ router.post("/", async (req, res) => {
 //   return updatedProfile;
 // };
 
-router.post("/unread", async (rq, res) => {
-  id = req.query.id; //convo id
-  const updateMessage = await Message.findbyIdandUpdate(
+router.post("/unread", async (req, res) => {
+  id = req.query.id; //message id
+
+  const updateMessage = await Message.findByIdAndUpdate(
     id,
     { read: true },
     { returnDocument: "after" }
@@ -58,10 +59,24 @@ router.get("/unread", async (req, res) => {
 });
 
 router.get("/:conversationId", async (req, res) => {
+  convoId = req.params.conversationId;
+  user = req.query.user.toString();
+  console.log("this is user id", user);
   try {
     const messages = await Message.find({
-      conversationId: req.params.conversationId,
+      conversationId: convoId,
     });
+
+    messages.forEach(async (m) => {
+      await Message.findByIdAndUpdate(
+        m._id,
+        { $addToSet: { read: user } },
+        { returnDocument: "after" }
+      );
+    });
+
+    console.log("messages", messages);
+
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).json(err);

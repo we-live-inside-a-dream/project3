@@ -11,20 +11,20 @@ export function NotificationProvider({childern}){
     const user = authContext.user;
     const[unread,setUnread]= useState()
 
-useEffect(()=>{
-    function countUnreadMsg(){
-      const unreadMsgs = messages.filter((m)=>(m.read))
-      console.log('unread messages...',unreadMsgs)
-    }
-    const fetchMsgs = async () => {
-        let fetchResult = await fetch(`/api/messages/unread?id=${user._id}`);
-        let fetchedUnread = await fetchResult.json();
+// useEffect(()=>{
+//     function countUnreadMsg(){
+//       const unreadMsgs = messages.filter((m)=>(m.read))
+//       console.log('unread messages...',unreadMsgs)
+//     }
+//     const fetchMsgs = async () => {
+//         let fetchResult = await fetch(`/api/messages/unread?id=${user._id}`);
+//         let fetchedUnread = await fetchResult.json();
   
-        setUnread(fetchedUnread);
-      };
+//         setUnread(fetchedUnread);
+//       };
     
 
-},[user._id])
+// },[user._id])
   return(
   <Notification.Provider>
       {childern}

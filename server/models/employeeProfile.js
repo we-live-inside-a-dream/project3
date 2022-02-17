@@ -36,9 +36,13 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     type: String,
     required: true,
   },
- 
+
   positions: {
     type: [String],
+    required: true,
+  },
+  permissions: {
+    type: String,
     required: true,
   },
   status: {
@@ -51,10 +55,20 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
 
 //create new Employee Profile
 const createEmployeeProfile = async (employeeProfileInfo) => {
+  let permission;
+  if (employeeProfileInfo.positions.includes("admin")) {
+    permission = "admin";
+  } else if (employeeProfileInfo.positions.includes("manager")) {
+    permission = "manager";
+  } else if (employeeProfileInfo.positions.includes("supervisor")) {
+    permission = "supervisor";
+  } else permission = "employee";
+
   let hashedpassword = bcrypt.hashSync(employeeProfileInfo.password, 8);
   let newEmployeeProfile = new EmployeeProfile({
     ...employeeProfileInfo,
     password: hashedpassword,
+    permissions: permission,
   });
   let createdProfile = await newEmployeeProfile.save();
   console.log("saving employee profile", createdProfile);

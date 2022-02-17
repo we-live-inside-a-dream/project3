@@ -25,6 +25,7 @@ import EmployeeUpcomingShiftList from "./components/dashboard/EmployeeUpcomingSh
 import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import NotificationProvider from "./components/reusable/context/NotificationProvider";
+import ViewEventsPage from "./pages/common/ViewEventsPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
@@ -51,6 +52,14 @@ function App() {
             element={
               <RequireAuth>
                 <EventsPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/viewevents"
+            element={
+              <RequireAuth>
+                <ViewEventsPage />
               </RequireAuth>
             }
           />

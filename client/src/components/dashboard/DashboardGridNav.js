@@ -29,8 +29,8 @@ const DashboardGridNav = function () {
   return (
     <div style={dashGridStyle}>
       <ScheduleBox />
-      {authContext?.user?.positions?.includes("manager") ||
-      authContext?.user?.positions?.includes("admin") ? (
+      {authContext?.user?.permissions?.includes("manager") ||
+      authContext?.user?.permissions?.includes("admin") ? (
         <HumanResourcesBox />
       ) : null}
       <UpcomingShiftsBox />
@@ -38,8 +38,8 @@ const DashboardGridNav = function () {
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />
-      {authContext?.user?.positions?.includes("manager") ||
-      authContext?.user?.positions?.includes("admin") ? (
+      {authContext?.user?.permissions?.includes("manager") ||
+      authContext?.user?.permissions?.includes("admin") ? (
         <FilesBox />
       ) : null}
     </div>

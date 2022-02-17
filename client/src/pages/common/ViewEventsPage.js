@@ -41,16 +41,17 @@ function ViewEventsPage() {
   //   }, [user._id]);
 
   useEffect(() => {
+    console.log("usertype", user.permissions);
     const getEventsAll = async function () {
       let allEventsList = await fetch(
-        `/api/events/event/get-for-user-type?type={user.type}`
+        `/api/events/event/get-for-user-type?permissions=${user.permissions}`
       );
       let eventsList = await allEventsList.json();
       console.log(eventsList);
       setAllEvents(eventsList);
     };
     getEventsAll();
-  }, [user._id]);
+  }, [user.permissions]);
 
   return (
     <div>

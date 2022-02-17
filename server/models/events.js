@@ -21,6 +21,7 @@ const Event = mongoose.model("events", {
     type: [String],
     required: true,
   },
+
   recurring: {
     type: Boolean,
   },
@@ -58,14 +59,36 @@ async function createEvent(eventData) {
   console.log("saving event info:", createdEvent);
   return createdEvent._id;
 }
+async function findEventsForEmployees() {
+  let eventsList = await Event.find({ visibility: "employees" });
+  return eventsList;
+}
 
 async function updateEvent(id, updatedEvent) {
   let newEventData = await Event.findByIdAndUpdate(id, updatedEvent);
   console.log("from events model, updated event:", newEventData);
   return newEventData;
 }
-
+async function findEventsByPermission(permission) {
+  let eventsList;
+  if (permission === "employee") {
+    eventsList = Event.find({ visibility: "employee" });
+  } else if (permission === "supervisor") {
+    eventsList = Event.find({ visibility: ["supervisor", "employee"] });
+  } else if (permission === "manager") {
+    eventsList = Event.find({
+      visibility: ["employee", "supervisor", "manager"],
+    });
+  } else if (permission === "admin") {
+    eventsList = Event.find({
+      visibility: ["employee", "supervisor", "manager", "admin"],
+    });
+  } else return null;
+  return eventsList;
+}
 module.exports = {
   createEvent,
   updateEvent,
+  findEventsForEmployees,
+  findEventsByPermission,
 };

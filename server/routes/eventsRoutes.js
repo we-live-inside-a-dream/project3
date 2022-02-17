@@ -9,11 +9,24 @@ router.post("/create-event", async (req, res) => {
   console.log("From API event route eventId:", createdEventId);
 });
 
-router.get('/event/:id', async (req, res) => { 
-  let id = req.params.id
-  let event = await eventModel.findById(id)
-  res.send(event)
-})
+router.get("/event/get-for-user-type", async (req, res) => {
+  let userPermissions = req.query.permissions;
+  let eventsList = await eventModel.findEventsByPermission(userPermissions);
+  console.log(eventsList, "is the events list");
+  res.json(eventsList);
+});
+
+router.get("/event/get-for-employees", async (req, res) => {
+  let eventsList = await eventModel.findEventsForEmployees();
+  console.log(eventsList, "is the events list");
+  res.json(eventsList);
+});
+
+router.get("/event/:id", async (req, res) => {
+  let id = req.params.id;
+  let event = await eventModel.findById(id);
+  res.send(event);
+});
 
 router.post("/:id", async (req, res) => {
   let id = req.params.id;

@@ -23,6 +23,7 @@ const positionData = [
   { value: "manager", label: "Manager" },
   { value: "supervisor", label: "Supervisor" },
   { value: "employee", label: "Employee" },
+  { value: "admin", label: "Administrator" },
 ];
 
 const statusData = [
@@ -52,6 +53,7 @@ const EmployeeEditForm = ({
   const [statusMessageVal, setStatusMessageVal] = useState(null);
   const [passMessageVal, setPassMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
+  // const [permissions, setPermissions] = useState("");
 
   // const [message, setMessage] = useState("");
 
@@ -59,7 +61,7 @@ const EmployeeEditForm = ({
   // let navigate = useNavigate();
 
   useEffect(() => {
-    const typeFilter = statusData?.filter((r) => r.value == status);
+    const typeFilter = statusData?.filter((r) => r.value === status);
     setDefaultStatus(typeFilter);
     console.log("this is status", status);
   }, [status]);
@@ -97,6 +99,7 @@ const EmployeeEditForm = ({
     // console.log("THIS IS OUR ARRAY", array);
     // console.log("new positions", newPositions)
     setPositions(newPositions);
+    // setPermissions("")
     console.log("this is positions", positions);
     setPosMessageVal(positionValidation(newPositions));
     console.log("Positions", newPositions);
@@ -184,6 +187,7 @@ const EmployeeEditForm = ({
       phoneNumber,
       positions: positions.map((p) => p.value),
       status: status.value,
+      permissions: "",
     };
     validateForm();
     console.log("validate form", validation);

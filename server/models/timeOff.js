@@ -87,9 +87,13 @@ async function update(id, timeOffApproval) {
   });
 }
 
+// async function deleteTimeOff(id) {
+//   console.log("id from model", id)
+//   return EmployeeTimeOff.deleteOne({"._id": "id"})
+// }
+
 async function deleteTimeOff(id) {
-  console.log("id from model", id)
-  return EmployeeTimeOff.deleteOne({"._id": "id"})
+  return EmployeeTimeOff.deleteOne(id)
 }
 
 module.exports = {

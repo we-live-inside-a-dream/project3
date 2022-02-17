@@ -48,4 +48,13 @@ router.delete("/deleteTimeOff", async function(req, res) {
   res.send("Deleted Time off", deletedTimeOff);
 })
 
+// router.delete("/deleteTimeOff", async function(req, res) {
+//   let id = req.params.id;
+//   console.log("this is the routs id", id)
+//   let deletedTimeOff = await employeeTimeOffModel.deleteTimeOff(id);
+//   console.log("this is the deleted time off from the routs", deletedTimeOff)
+//   res.send("Deleted Time off", deletedTimeOff);
+// })
+
+
 module.exports = router;

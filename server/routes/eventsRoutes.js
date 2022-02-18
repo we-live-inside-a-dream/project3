@@ -23,7 +23,8 @@ router.get("/event/get-for-employees", async (req, res) => {
 });
 router.get("/event/get-by-month", async (req, res) => {
   let start = req.query.start;
-  let end = req.query.month;
+  let end = req.query.end;
+  console.log("FROM THE ROUTES", start, end);
   let eventsList = await eventModel.findEventsByDates(start, end);
   console.log(eventsList, "is the events list");
   res.json(eventsList);

@@ -45,8 +45,8 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       month: "numeric",
       day: "numeric",
     });
-    setMonthEnd(moment(lastDayOfMonth).format("yyyy-MM-dd"));
-    setMonthStart(moment(firstDayOfMonth).format("yyyy-MM-dd"));
+    setMonthEnd(moment(lastDayOfMonth).format("yyyy-MM-DD"));
+    setMonthStart(moment(firstDayOfMonth).format("yyyy-MM-DD"));
     setDateDisplay(
       `${theDate.toLocaleDateString("en-us", { month: "long" })} ${year}`
     );
@@ -81,7 +81,18 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       }
     }
     setDays(daysArray);
-  }, [nav]);
+    console.log("MONTH start and end", monthStart, monthEnd);
+    const getEventsAll = async function () {
+      let allEventsList = await fetch(
+        `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
+      );
+      let eventsList = await allEventsList.json();
+      console.log(eventsList);
+      setAllEvents(eventsList);
+      console.log("THIs IS THE EVENTS LIST allEvents *****", allEvents);
+    };
+    getEventsAll();
+  }, [nav, monthEnd, monthStart]);
   console.log("first day of month", monthStart);
   console.log("last Day of the month", monthEnd);
 
@@ -94,19 +105,19 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     flexWrap: "wrap",
     border: "1px solid black",
   };
-  console.log(days);
+  // console.log(days);
 
-  useEffect(() => {
-    const getEventsAll = async function () {
-      let allEventsList = await fetch(
-        `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
-      );
-      let eventsList = await allEventsList.json();
-      console.log(eventsList);
-      setAllEvents(eventsList);
-    };
-    getEventsAll();
-  }, [monthStart, monthEnd]);
+  // useEffect(() => {
+  //   const getEventsAll = async function () {
+  //     let allEventsList = await fetch(
+  //       `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
+  //     );
+  //     let eventsList = await allEventsList.json();
+  //     console.log(eventsList);
+  //     setAllEvents(eventsList);
+  //   };
+  //   getEventsAll();
+  // }, [monthStart, monthEnd]);
 
   return (
     <div

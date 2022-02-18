@@ -21,6 +21,13 @@ router.get("/event/get-for-employees", async (req, res) => {
   console.log(eventsList, "is the events list");
   res.json(eventsList);
 });
+router.get("/event/get-by-month", async (req, res) => {
+  let start = req.query.start;
+  let end = req.query.month;
+  let eventsList = await eventModel.findEventsByDates(start, end);
+  console.log(eventsList, "is the events list");
+  res.json(eventsList);
+});
 
 router.get("/event/:id", async (req, res) => {
   let id = req.params.id;

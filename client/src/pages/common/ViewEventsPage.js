@@ -7,6 +7,8 @@ function ViewEventsPage() {
   const [managerEvents, setManagerEvents] = useState();
   const [adminEvents, setAdminEvents] = useState();
   const [myEvents, setMyEvents] = useState();
+  const [monthStart, setMonthStart] = useState();
+  const [monthEnd, setMonthEnd] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -44,7 +46,7 @@ function ViewEventsPage() {
     console.log("usertype", user.permissions);
     const getEventsAll = async function () {
       let allEventsList = await fetch(
-        `/api/events/event/get-for-user-type?permissions=${user.permissions}`
+        `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
       );
       let eventsList = await allEventsList.json();
       console.log(eventsList);

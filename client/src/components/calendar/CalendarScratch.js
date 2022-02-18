@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Day from "./Day";
 import CalendarDateHeader from "./CalendarDateHeader";
-import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
+import moment from "moment";
+// import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
 
 const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [nav, setNav] = useState(0);
   const [dateDisplay, setDateDisplay] = useState("");
   const [days, setDays] = useState([]);
   const [selectedDay, setSelectedDay] = useState();
-  const [weekdayHeaders, setWeekdayHeaders] = useState([]);
+  // const [weekdayHeaders, setWeekdayHeaders] = useState([]);
+  const [monthStart, setMonthStart] = useState();
+  const [monthEnd, setMonthEnd] = useState();
+  const [allEvents, setAllEvents] = useState([]);
 
+  // const authContext = useContext(AuthenticationContext);
+  // let user = authContext.user;
   // const eventForDate = (date) => events.find((e) => e.date === date);
 
+  const weekdayHeaders = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
   useEffect(() => {
-    const weekdays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    setWeekdayHeaders(weekdays);
     const theDate = new Date();
     if (nav !== 0) {
       theDate.setMonth(new Date().getMonth() + nav);
@@ -31,6 +37,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     const month = theDate.getMonth();
     const year = theDate.getFullYear();
     const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const dateString = firstDayOfMonth.toLocaleDateString("en-us", {
       weekday: "long",
@@ -38,12 +45,21 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       month: "numeric",
       day: "numeric",
     });
-
+    setMonthEnd(moment(lastDayOfMonth).format("yyyy-MM-dd"));
+    setMonthStart(moment(firstDayOfMonth).format("yyyy-MM-dd"));
     setDateDisplay(
       `${theDate.toLocaleDateString("en-us", { month: "long" })} ${year}`
     );
-
-    const paddingDays = weekdays.indexOf(dateString.split(", ")[0]);
+    const weekdayHeaders = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const paddingDays = weekdayHeaders.indexOf(dateString.split(", ")[0]);
     const daysArray = [];
 
     for (let i = 1; i <= paddingDays + daysInMonth; i++) {
@@ -66,6 +82,8 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     }
     setDays(daysArray);
   }, [nav]);
+  console.log("first day of month", monthStart);
+  console.log("last Day of the month", monthEnd);
 
   let mainGridStyle = {
     // width: "91%",
@@ -77,11 +95,27 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     border: "1px solid black",
   };
   console.log(days);
+
+  useEffect(() => {
+    const getEventsAll = async function () {
+      let allEventsList = await fetch(
+        `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
+      );
+      let eventsList = await allEventsList.json();
+      console.log(eventsList);
+      setAllEvents(eventsList);
+    };
+    getEventsAll();
+  }, [monthStart, monthEnd]);
+
   return (
     <div
       id="container"
       style={{ width: "95%", border: "1px solid white", margin: "auto" }}
     >
+      {allEvents?.map((e) => {
+        return <p>{e.title}</p>;
+      })}
       <CalendarDateHeader
         dateDisplay={dateDisplay}
         onNext={() => setNav(nav + 1)}

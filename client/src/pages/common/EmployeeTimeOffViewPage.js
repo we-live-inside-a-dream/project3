@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import {navigate} from 'react-router-dom' 
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import {
@@ -12,17 +13,17 @@ import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTit
 import StyledTable from "../../components/reusable/tables/StyledTable";
 import ApprovalSymbol from "../../components/dashboard/ApprovalSymbol";
 import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
-
 import Modal from "../../components/reusable/Modal";
 
 const EmployeeTimeOffViewPage = ({ setIsTimeOff, isTimeOff }) => {
   const [timeOff, setTimeOff] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
-
   const [selectedId, setSelectedId] = useState(null);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
+
+  // const navigation = useNavigate()
 
   useEffect(() => {
     //  if (!user._Id) return;
@@ -55,11 +56,17 @@ const EmployeeTimeOffViewPage = ({ setIsTimeOff, isTimeOff }) => {
   //   });
   //   console.log("this is the result", result)
   // }
-  const deleteTimeOff = async (id) => {
-    await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-      method: "DELETE",
-    });
-  };
+  // const deleteTimeOff = async (id) => {
+  //   await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
+  //     method: "DELETE",
+  //   });
+  // };
+
+  async function deleteTimeOff(id) {
+   await fetch('/api/timeOff/deleteTime/' + id, {
+     method: "DELETE",
+   })
+  }
 
   function statusConvert(status) {
     if (status === "confirm") {

@@ -21,7 +21,6 @@ const Event = mongoose.model("events", {
     type: [String],
     required: true,
   },
-
   recurring: {
     type: Boolean,
   },
@@ -60,7 +59,7 @@ async function createEvent(eventData) {
   return createdEvent._id;
 }
 async function findEventsForEmployees() {
-  let eventsList = await Event.find({ visibility: "employees" });
+  let eventsList = await Event.find({ visibility: "employee" });
   return eventsList;
 }
 

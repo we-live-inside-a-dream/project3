@@ -28,7 +28,7 @@ const visibilityData = [
   { value: "admin", label: "Admin Only" },
   { value: "manager", label: "Management" },
   { value: "supervisor", label: "Supervisory Staff" },
-  { value: "employees", label: "All Staff" },
+  { value: "employee", label: "All Staff" },
 ];
 
 const EventEditForm = ({ existingValues }) => {
@@ -118,10 +118,11 @@ const EventEditForm = ({ existingValues }) => {
       endDate: endDate,
       allDay: allDay,
       notes: notes,
-      visibility: [visibility.value],
+      visibility: visibility.map((p) => p.value),
       mandatory: mandatory,
     };
     console.log("posting newEvent", newEvent);
+
 
     await createEvent(newEvent);
   }
@@ -175,9 +176,13 @@ const EventEditForm = ({ existingValues }) => {
           <div>
             <label>Visibility:</label>
             <Select
-              value={visibility}
+              isMulti
+              name="visibility"
+              defaultValue={visibility}
               options={visibilityData}
               onChange={visibilityHandler}
+              // className="basic-multi-select"
+              // classNamePrefix="select"
             />
           </div>
 

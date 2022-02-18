@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Day from "./Day";
 import CalendarDateHeader from "./CalendarDateHeader";
 import moment from "moment";
+import AuthenticationContext from "../login/AuthenticationContext";
 // import StyledScheduleButtonGroup from "../schedules/StyledScheduleButtonGroup";
 
 const CalendarScratch = function ({ setCurrentTab, currentTab }) {
@@ -13,9 +14,13 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [monthStart, setMonthStart] = useState();
   const [monthEnd, setMonthEnd] = useState();
   const [allEvents, setAllEvents] = useState([]);
+  const [myEvents, setMyEvents] = useState([]);
 
-  // const authContext = useContext(AuthenticationContext);
-  // let user = authContext.user;
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
+  let permissions = user?.permissions;
+  console.log("this is permissions", permissions);
+
   // const eventForDate = (date) => events.find((e) => e.date === date);
 
   const weekdayHeaders = [
@@ -87,9 +92,18 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
         `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
       );
       let eventsList = await allEventsList.json();
-      console.log(eventsList);
-      setAllEvents(eventsList);
-      console.log("THIs IS THE EVENTS LIST allEvents *****", allEvents);
+
+      let filteredEvents = eventsList?.filter((e) =>
+        e?.visibility?.includes(permissions)
+      );
+      let myFilteredEvents = eventsList?.filter((e) => 
+        e?.visibility?.includes("user") &&
+          e?.employeeProfileId === user._id
+      );
+      console.log("this is filteredEvents", filteredEvents)
+      console.log("this is myEvents", myFilteredEvents)
+      setAllEvents(filteredEvents);
+      setMyEvents(myFilteredEvents);
     };
     getEventsAll();
   }, [nav, monthEnd, monthStart]);
@@ -105,27 +119,21 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     flexWrap: "wrap",
     border: "1px solid black",
   };
-  // console.log(days);
-
-  // useEffect(() => {
-  //   const getEventsAll = async function () {
-  //     let allEventsList = await fetch(
-  //       `/api/events/event/get-by-month?start=${monthStart}&end=${monthEnd}`
-  //     );
-  //     let eventsList = await allEventsList.json();
-  //     console.log(eventsList);
-  //     setAllEvents(eventsList);
-  //   };
-  //   getEventsAll();
-  // }, [monthStart, monthEnd]);
-
+  
+  useEffect(() => {
+  console.log("these are my events", myEvents)
+  console.log("THIs IS THE EVENTS LIST allEvents *****", allEvents);
+},[myEvents,allEvents])
   return (
     <div
       id="container"
       style={{ width: "95%", border: "1px solid white", margin: "auto" }}
     >
       {allEvents?.map((e) => {
-        return <p>{e.title}</p>;
+        return <p key={e._id}>{e.title}</p>;
+      })}
+      {myEvents?.map((e) => {
+        return <p key={e._id}>{e.title}</p>;
       })}
       <CalendarDateHeader
         dateDisplay={dateDisplay}

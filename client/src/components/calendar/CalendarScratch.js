@@ -4,6 +4,8 @@ import CalendarDateHeader from "./CalendarDateHeader";
 import moment from "moment";
 import AuthenticationContext from "../login/AuthenticationContext";
 import EventViewDiv from "./EventViewDiv";
+import EventEditForm from "../events/EventEditForm";
+import Modal from "../reusable/Modal";
 
 const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [revealEventDetails, setRevealEventDetails] = useState(false);
@@ -16,7 +18,10 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [allEvents, setAllEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [everyEventList, setEveryEventList] = useState([]);
+  const [existingValues, setExistingValues] = useState();
   const authContext = useContext(AuthenticationContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [eventId, setEventId] = useState("");
   let user = authContext.user;
   let permissions = user?.permissions;
 
@@ -131,7 +136,15 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       }}
     >
       {revealEventDetails === true && (
-        <EventViewDiv eventToReveal={eventToReveal} />
+        <EventViewDiv
+          eventToReveal={eventToReveal}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          setEventId={setEventId}
+          eventId={setEventId}
+          setExistingValues={setExistingValues}
+          onClose={() => setRevealEventDetails(false)}
+        />
       )}
 
       <CalendarDateHeader
@@ -190,10 +203,23 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
               revealEventDetails={revealEventDetails}
               eventToReveal={eventToReveal}
               setEventToReveal={setEventToReveal}
+              setEventId={setEventId}
+              eventId={setEventId}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
             />
           ))}
         </div>
       </div>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+        <EventEditForm
+          eventId={eventId}
+          existingValues={existingValues}
+          onClose={() => setIsOpen(false)}
+          // deleteEvent={() => setDeleteEvent(true)}
+        />
+        **edit**
+      </Modal>
     </div>
   );
 };

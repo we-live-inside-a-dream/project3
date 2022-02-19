@@ -7,15 +7,12 @@ const Day = ({
   setRevealEventDetails,
   revealEventDetails,
   setEventToReveal,
-  eventToReveal,
-  setXScreenCoord,
-  setYScreenCoord,
-  xScreenCoord,
-  yScreenCoord,
-  // setScreenCoordinates,
+  setEventId,
+  setExistingValues,
+  eventId,
+  setIsOpen,
+  isOpen,
 }) => {
-  // const [xScreenCoord, setXScreenCoord] = useState();
-  // const [yScreenCoord, setYScreenCoord] = useState();
   const className = `day ${day.value === "padding" ? "padding" : ""} ${
     day.isCurrentDay ? "currentDay" : ""
   }`;
@@ -70,7 +67,16 @@ const Day = ({
             onClick={() => {
               // setEventToReveal(e);
               showEvent(e);
+              setEventId = { setEventId };
+              eventId = { setEventId };
+              isOpen = { isOpen };
+              setIsOpen = { setIsOpen };
             }}
+            setEventId={setEventId}
+            eventId={setEventId}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            setExistingValues={setExistingValues}
           >
             <p
               style={{

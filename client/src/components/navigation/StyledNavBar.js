@@ -132,6 +132,9 @@ export const StyledAvatarButton = styled.div`
   width: 2.8rem;
   margin: 3px 10px;
   border-radius: 50%;
+  color: white;
+  font-size: 2.2rem;
+  text-align: center;
   border: 3px solid var(--nameIconBorder);
   &:hover {
     cursor: pointer;

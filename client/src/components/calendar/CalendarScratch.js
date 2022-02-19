@@ -15,6 +15,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [monthEnd, setMonthEnd] = useState();
   const [allEvents, setAllEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
+  const [everyEventList, setEveryEventList] = useState([]);
 
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
@@ -104,14 +105,16 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       console.log("this is myEvents", myFilteredEvents);
       setAllEvents(filteredEvents);
       setMyEvents(myFilteredEvents);
+      setEveryEventList([...filteredEvents, ...myFilteredEvents]);
     };
     getEventsAll();
-  }, [nav, monthEnd, monthStart]);
-  console.log("these are my events ****************", myEvents);
-  console.log("THIs IS THE EVENTS LIST allEvents **************", allEvents);
+  }, [nav, monthEnd, monthStart, permissions, user._id]);
+  // console.log("these are my events ****************", myEvents);
+  // console.log("THIs IS THE EVENTS LIST allEvents **************", allEvents);
 
-  console.log("first day of month", monthStart);
-  console.log("last Day of the month", monthEnd);
+  // console.log("first day of month", monthStart);
+  // console.log("last Day of the month", monthEnd);
+  // console.log("THISS IS EVERY EVENT ***********", everyEventList);
 
   let mainGridStyle = {
     // width: "91%",
@@ -122,18 +125,35 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     flexWrap: "wrap",
     border: "1px solid black",
   };
+  let renderEvents = function (day) {
+    if (day) {
+      console.log("INVALID DAY SEARCH", day);
+      let formattedDay = moment(new Date(day.date)).format("yyyy-MM-DD");
+      console.log("FORMATTED DAY", formattedDay);
+      let dayEvents = everyEventList?.filter((event) => {
+        // console.log("Event above return in rendered", event);
+        return event.startDate >= formattedDay && event.endDate <= formattedDay;
+      });
 
+      return dayEvents;
+    }
+  };
+  console.log("THESE ARE THE DAYS", days);
+  days?.forEach((d) => {
+    console.log("renderedEvents are:", renderEvents(d));
+  });
   return (
     <div
       id="container"
       style={{ width: "95%", border: "1px solid white", margin: "auto" }}
     >
-      {allEvents?.map((e) => {
+      {/* {allEvents?.map((e) => {
         return <p key={e._id}>{e.title}</p>;
       })}
       {myEvents?.map((e) => {
         return <p key={e._id}>{e.title}</p>;
-      })}
+      })} */}
+
       <CalendarDateHeader
         dateDisplay={dateDisplay}
         onNext={() => setNav(nav + 1)}
@@ -181,14 +201,8 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
             flexWrap: "wrap",
           }}
         >
-          {days.map((day, index) => (
-            <Day
-              key={index}
-              day={day}
-              // onClick={() => {
-              //   setSelectedDay(day.date);
-              // }}
-            />
+          {days?.map((day, index) => (
+            <Day key={index} day={day} events={renderEvents(day)} />
           ))}
         </div>
       </div>

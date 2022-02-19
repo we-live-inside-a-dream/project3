@@ -9,7 +9,6 @@ import {
   StyledTextArea,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledButton from "../reusable/Inputs/StyledButton";
-import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import * as fns from "date-fns";
@@ -122,7 +121,6 @@ const EventEditForm = ({ existingValues }) => {
       mandatory: mandatory,
     };
     console.log("posting newEvent", newEvent);
-
 
     await createEvent(newEvent);
   }

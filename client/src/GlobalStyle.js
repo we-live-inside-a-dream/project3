@@ -2,11 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
-
-
-
-
-  :root {
+   :root {
   --mainHeader: #E37222;
   --accentColorTitle: #07889B;
   --navColorTitle: #07889B;
@@ -33,14 +29,16 @@ const GlobalStyle = createGlobalStyle`
   --transparent: rgba(255, 255, 255, 0);
   --tableBackground: #ffffff;
   --tableFont: #545454;
-  }
+  } 
+  
 
 
 
 
 
 ${
-  "" /* :root {
+  "" /* 
+ :root {
   --mainHeader: #0e8bad;
   --accentColorTitle: #0e8bad;
   --navColorTitle: #43a5bf;
@@ -67,6 +65,7 @@ ${
   --transparent: rgba(255, 255, 255, 0);
   --tableBackground: #ffffff;
   --tableFont: #545454;
+} 
 } */
 }
 // purple #8860d0;
@@ -76,7 +75,7 @@ ${
 // blue #5680e9
 // dark turquoise #12b8e6
 
-${
+
   "" /* :root {
   --mainHeader: #5680e9;
   --accentColorTitle: #12b8e6;
@@ -104,7 +103,7 @@ ${
   --transparent: rgba(255, 255, 255, 0);
   --tableBackground: #ffffff;
   --tableFont: #545454;
-} */
+} */ */}
 }
 
 

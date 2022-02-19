@@ -1,6 +1,6 @@
 import React from "react";
 
-const Day = ({ day, onClick }) => {
+const Day = ({ day, onClick, events }) => {
   const className = `day ${day.value === "padding" ? "padding" : ""} ${
     day.isCurrentDay ? "currentDay" : ""
   }`;
@@ -30,7 +30,9 @@ const Day = ({ day, onClick }) => {
     >
       {day.value === "padding" ? "" : day.value}
 
-      {day.event && <div className="event">{day.event.title}</div>}
+      {events?.map((e, index) => {
+        return <p key={index}>{e.title}</p>;
+      })}
     </div>
   );
 };

@@ -10,10 +10,10 @@ function ScheduleBox() {
   return (
     <>
       <DashboardBoxScale
-        padding="20px"
+        padding="20px 35px"
         top={0}
         left={0}
-        transform={"Scale(.3)"}
+        transform={"Scale(.25)"}
         transformOrigin={"top left"}
         title="SCHEDULES"
         clickFunction={() => navigate("/schedules")}

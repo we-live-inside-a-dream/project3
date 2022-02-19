@@ -28,9 +28,14 @@ function NamePicTableData({
               margin: "auto",
               alignSelf: "center",
               borderRadius: "50%",
+              color: "white",
+              fontSize: "2.2rem",
+              textAlign: "center",
               border: "3px solid var(--nameIconBorder)",
             }}
-          ></div>
+          >
+            {firstName[0]}
+          </div>
         </div>
 
         <div

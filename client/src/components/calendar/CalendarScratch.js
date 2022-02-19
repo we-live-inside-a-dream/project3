@@ -96,17 +96,20 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       let filteredEvents = eventsList?.filter((e) =>
         e?.visibility?.includes(permissions)
       );
-      let myFilteredEvents = eventsList?.filter((e) => 
-        e?.visibility?.includes("user") &&
-          e?.employeeProfileId === user._id
+      let myFilteredEvents = eventsList?.filter(
+        (e) =>
+          e?.visibility?.includes("user") && e?.employeeProfileId === user._id
       );
-      console.log("this is filteredEvents", filteredEvents)
-      console.log("this is myEvents", myFilteredEvents)
+      console.log("this is filteredEvents", filteredEvents);
+      console.log("this is myEvents", myFilteredEvents);
       setAllEvents(filteredEvents);
       setMyEvents(myFilteredEvents);
     };
     getEventsAll();
   }, [nav, monthEnd, monthStart]);
+  console.log("these are my events ****************", myEvents);
+  console.log("THIs IS THE EVENTS LIST allEvents **************", allEvents);
+
   console.log("first day of month", monthStart);
   console.log("last Day of the month", monthEnd);
 
@@ -119,11 +122,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     flexWrap: "wrap",
     border: "1px solid black",
   };
-  
-  useEffect(() => {
-  console.log("these are my events", myEvents)
-  console.log("THIs IS THE EVENTS LIST allEvents *****", allEvents);
-},[myEvents,allEvents])
+
   return (
     <div
       id="container"

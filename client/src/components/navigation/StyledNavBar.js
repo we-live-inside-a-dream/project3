@@ -42,6 +42,17 @@ export const Logo = styled.img`
     cursor: pointer;
   }
 `;
+export const MessageLogo = styled.img`
+  display: flex;
+  padding: 0px 0px;
+  margin: 0px auto;
+  max-width: 65px;
+  height: auto;
+  /* background-color: */
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const NavbarExtendedContainer = styled.div`
   width: 100%;

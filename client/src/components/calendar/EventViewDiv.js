@@ -80,7 +80,20 @@ function EventViewDiv({
       <p>{`Time: ${theTime(theEvent?.startTime, theEvent?.endTime)}`}</p>
       <p>{`Notes:
       ${theEvent?.notes}`}</p>
-      <StyledEditButton onClick={onClose}>X</StyledEditButton>
+      <div style={{ position: "relative" }}>
+        <StyledEditButton
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            transformOrigin: "transformRight",
+            transform: "translate(80%, -770%)",
+            top: "0",
+            right: "0",
+          }}
+        >
+          X
+        </StyledEditButton>
+      </div>
     </div>
   );
 }

@@ -64,9 +64,15 @@ async function findEventsForEmployees() {
 }
 
 async function updateEvent(id, updatedEvent) {
-  let newEventData = await Event.findByIdAndUpdate(id, updatedEvent);
-  console.log("from events model, updated event:", newEventData);
-  return newEventData;
+  console.log("FROM THE MODEL", id, updatedEvent);
+  await Event.findByIdAndUpdate(id, updatedEvent, {
+    returnDocument: "after",
+  });
+  // return theUpdatedEvent;
+}
+
+async function deleteEvent(id) {
+  await Event.findByIdAndDelete(id);
 }
 // async function findEventsByPermission(permission) {
 //   let eventsList;
@@ -104,4 +110,5 @@ module.exports = {
   findEventsForEmployees,
   // findEventsByPermission,
   findEventsByDates,
+  deleteEvent,
 };

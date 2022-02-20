@@ -82,7 +82,6 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     }
     //setting all days oc current month
     setDays(daysArray);
-    console.log("MONTH start and end", monthStart, monthEnd);
     //gathering all event for current month
     const getEventsAll = async function () {
       let allEventsList = await fetch(
@@ -97,7 +96,6 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
         (e) =>
           e?.visibility?.includes("user") && e?.employeeProfileId === user._id
       );
-
       setAllEvents(filteredEvents);
       setMyEvents(myFilteredEvents);
       setEveryEventList([...filteredEvents, ...myFilteredEvents]);
@@ -132,7 +130,6 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
         width: "95%",
         border: "1px solid white",
         margin: "auto",
-        // position: "relative",
       }}
     >
       {revealEventDetails === true && (

@@ -135,16 +135,16 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
       allDay: allDay,
       comment: comment,
     };
-    console.log("start time", startTime);
-    console.log("end time", endTime);
+    // console.log("start time", startTime);
+    // console.log("end time", endTime);
 
-    console.log("posting Time Off", newEmployeeTimeOff);
+    // console.log("posting Time Off", newEmployeeTimeOff);
     // await createEmployeeTimeOff(newEmployeeTimeOff);
     // navigate("/");
 
     validateForm();
-    console.log("validate form", validation);
-    console.log("saving new time off form", newEmployeeTimeOff);
+    // console.log("validate form", validation);
+    // console.log("saving new time off form", newEmployeeTimeOff);
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);

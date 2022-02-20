@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import moment from "moment";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 import Modal from "../reusable/Modal";
+import AuthenticationContext from "../login/AuthenticationContext";
 
 let eventViewStyle = {
   position: "fixed",
@@ -31,6 +32,8 @@ function EventViewDiv({
   onClose,
 }) {
   const [theEvent, setTheEvent] = useState();
+  const authContext = useContext(AuthenticationContext);
+  const user = authContext.user;
 
   useEffect(() => {
     if (eventToReveal) {
@@ -59,23 +62,24 @@ function EventViewDiv({
     <div style={eventViewStyle}>
       <h3 style={{ color: "var(--accentColorTitle" }}>
         {theEvent?.title}
-        <StyledEditButton
-          onClick={() => {
-            console.log("the event from edit button", theEvent);
-            setEventId(theEvent?._id);
-            setExistingValues(eventToReveal);
-            setIsOpen(!isOpen);
-          }}
-        >
-          ✎
-        </StyledEditButton>
+        {theEvent?.employeeProfileId === user?._id && (
+          <StyledEditButton
+            onClick={() => {
+              console.log("the event from edit button", theEvent);
+              setEventId(theEvent?._id);
+              setExistingValues(eventToReveal);
+              setIsOpen(!isOpen);
+            }}
+          >
+            ✎
+          </StyledEditButton>
+        )}
       </h3>
       <p>{`Event type: ${theEvent?.type}`}</p>
       <p>{theDate(theEvent?.startDate, theEvent?.endDate)}</p>
       <p>{`Time: ${theTime(theEvent?.startTime, theEvent?.endTime)}`}</p>
       <p>{`Notes:
       ${theEvent?.notes}`}</p>
-
       <StyledEditButton onClick={onClose}>X</StyledEditButton>
     </div>
   );

@@ -26,6 +26,7 @@ import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 // import NotificationProvider from "./components/reusable/context/NotificationProvider";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
+import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 // import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
@@ -78,7 +79,10 @@ function App() {
             path="/availabilities"
             element={<EmployeeAvailabilityPage />}
           />
-          <Route path="/my-page" element={<EmployeeUpcomingShiftList />} />
+          {/* <RequireAuth> */}
+          <Route path="/my-page" element={<EmployeeShiftsViewPage />} />
+          {/* </RequireAuth> */}
+
           {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
           <Route
             path="/employeeDetail/edit/:id"

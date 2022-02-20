@@ -40,21 +40,21 @@ router.get("/listEmployee", async (req, res) => {
   res.json(employeeTimeOff);
 });
 
-router.delete("/deleteTimeOff", async function(req, res) {
-  let id = req.query.id;
-  console.log("this is the routs id", id)
-  let deletedTimeOff = await employeeTimeOffModel.deleteTimeOff(id);
-  console.log("this is the deleted time off from the routs", deletedTimeOff)
-  res.send("Deleted Time off", deletedTimeOff);
-})
-
 // router.delete("/deleteTimeOff", async function(req, res) {
-//   let id = req.params.id;
-//   console.log("this is the routs id", id)
+//   let id = req.query.id;
 //   let deletedTimeOff = await employeeTimeOffModel.deleteTimeOff(id);
 //   console.log("this is the deleted time off from the routs", deletedTimeOff)
-//   res.send("Deleted Time off", deletedTimeOff);
+//   res.send(deletedTimeOff);
 // })
+
+router.delete("/delete/:id", async function(req, res) {
+  let id = req.params.id;
+  console.log("deleting timeOff", id);
+  let deletedTimeOff = await employeeTimeOffModel.deleteTimeOff(id);
+  console.log("this is the deleted time off from the routs", deletedTimeOff)
+  res.send(deletedTimeOff);
+})
+
 
 
 module.exports = router;

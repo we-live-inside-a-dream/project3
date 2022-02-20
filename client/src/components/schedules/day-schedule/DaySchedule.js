@@ -215,7 +215,6 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           onClose={() => setIsOpen(false)}
           deleteShift={() => setDeleteShift(true)}
         />
-        **edit**
       </Modal>
     </div>
   );

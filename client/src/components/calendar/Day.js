@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
-const Day = ({ day, onClick }) => {
+const Day = ({
+  day,
+  onClick,
+  events,
+  setRevealEventDetails,
+  revealEventDetails,
+  setEventToReveal,
+  setEventId,
+  setExistingValues,
+  eventId,
+  setIsOpen,
+  isOpen,
+}) => {
   const className = `day ${day.value === "padding" ? "padding" : ""} ${
     day.isCurrentDay ? "currentDay" : ""
   }`;
@@ -9,28 +22,106 @@ const Day = ({ day, onClick }) => {
       return " 1px solid lightGrey";
     } else return " 1px solid white";
   };
+  // const eventTypeColor = function (event) {
+  //   if (event.visibility.includes("user")) {
+  //     return "var(--accentColorTitle)";
+  //   } else return "var(--styledButtonHoverBorder)";
+  // };
+  const eventDivStyle = {
+    backgroundColor: "var(--accentColorTitle)",
+    padding: "0px, 5px",
+    margin: "2px 5px",
+    borderRadius: "3px",
+    overflow: "hidden",
+    wrap: "none",
+    overflowWrap: "normal",
+    whiteSpace: "nowrap",
+    zIndex: "300",
+  };
+  const addEventButtonStyle = {
+    color: "lightGrey",
+    position: "absolute",
+    transformOrigin: "topRight",
+    top: "0",
+    right: "0",
+    marginTop: "0px",
+    marginRight: "4px",
+    fontSize: "20px",
+
+    // transform: ()
+  };
+  const showEvent = function (event) {
+    console.log("THE EVENT FROM SHOW EVERN", event);
+    setEventToReveal(event);
+    setRevealEventDetails(!revealEventDetails);
+  };
 
   return (
     <div
-      onClick={onClick}
+      // onClick={onClick}
       className={className}
       style={{
         width: "14%",
-        // padding: ".1%",
         height: "130px",
         cursor: "pointer",
         boxSizing: "borderBox",
         backgroundColor: "white",
-        // margin: ".6%",
         display: "flex",
         flexDirection: "column",
-        // justifyContent: "spaceBetween",
         border: borderColor(day.value),
+        zIndex: "100",
+        position: "relative",
       }}
     >
-      {day.value === "padding" ? "" : day.value}
+      {day.value !== "padding" ? (
+        <StyledEditButton
+          onClick={() => setIsOpen(!isOpen)}
+          style={addEventButtonStyle}
+          margin="0px"
+        >
+          +
+        </StyledEditButton>
+      ) : null}
+      {day.value !== "padding" ? (
+        <p style={{ margin: "2px 7px 0px 2px", fontSize: "20px" }}>
+          {day.value}
+        </p>
+      ) : null}
 
-      {day.event && <div className="event">{day.event.title}</div>}
+      {events?.map((e, index) => {
+        return (
+          <div
+            key={index}
+            style={eventDivStyle}
+            onClick={() => {
+              // setEventToReveal(e);
+              showEvent(e);
+              setEventId = { setEventId };
+              eventId = { setEventId };
+              isOpen = { isOpen };
+              setIsOpen = { setIsOpen };
+            }}
+            setEventId={setEventId}
+            eventId={setEventId}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            setExistingValues={setExistingValues}
+          >
+            <p
+              style={{
+                color: "white",
+                padding: "0px 3px",
+                marginTop: "2px",
+                marginBottom: "2px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+              }}
+            >
+              {e.title}
+            </p>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -2,43 +2,62 @@ import "./messenger.css";
 
 import Conversation from "../../components/messanger2/Conversation";
 import Message from "../../components/messanger2/Message";
-import ChatOnline from "../../components/messanger2/ChatOnline";
+// import ChatOnline from "../../components/messanger2/ChatOnline";
 import { useContext, useEffect, useRef, useState } from "react";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { ContactsList } from "../../components/messanger2/ContactsList";
+import { useSocket } from "../../components/reusable/context/SocketProvider";
 
 export default function Messenger() {
+  const socket = useSocket();
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const socket = useRef();
+  // const socket = useRef();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
+  const [unread, setUnread] = useState();
 
   const scrollRef = useRef();
 
   //socket.on will send data to ("String",(POST)=>{};
   //socket.emit will take data from ("String",FETCH);
 
-  useEffect(() => {
-    if (!user._id) return;
-    let id = user._id;
-    const origin = window.location.origin;
-    const host = origin.replace("http", "ws");
-    socket.current = io(host, { query: { id } });
+  // useEffect(() => {
+  //   if (!user._id) return;
+  //   let id = user._id;
+  //   const origin = window.location.origin;
+  //   const host = origin.replace("http", "ws");
+  //   socket.current = io(host, { query: { id } });
 
-    console.log("conected to socket", id);
-    // console.log(socket.current);
-  }, [user._id]);
+  //   console.log("conected to socket", id);
+  //   // console.log(socket.current);
+  // }, [user._id]);
 
   useEffect(() => {
-    if (socket.current == null) return;
-    socket.current.on("getMessage", (data) => {
+    if (!socket) return;
+    socket.on("getUnread", () => {
+      console.log("here");
+
+      const fetchMsgs = async () => {
+        let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
+        let fetchedUnread = await fetchResult.json();
+
+        setUnread(fetchedUnread);
+      };
+      fetchMsgs();
+    });
+  }, [socket, user._id]);
+
+  useEffect(() => {
+    console.log(socket);
+    if (socket == null) return;
+    socket.on("getMessage", (data) => {
       console.log("get message...", data);
       setArrivalMessage({
         sender: data.senderId,
@@ -63,8 +82,8 @@ export default function Messenger() {
 
         setConversations(fetchedConversation);
       };
-
       getConversations();
+      socket.emit("update");
     }
   }, [user._id]);
 
@@ -84,7 +103,7 @@ export default function Messenger() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("user", user);
+    console.log("user", socket);
     const message = {
       sender: user._id,
       senderName: user.firstName + " " + user.lastName[0],
@@ -94,13 +113,13 @@ export default function Messenger() {
     };
     //member is an array of Id's for members of convo
     const recipients = currentChat.members.map((r) => r.value);
-    // console.log("socket...", socket.current);
+    console.log("socket...", socket);
     // console.log("user id", user._id);
     // console.log("currentChat", currentChat);
     // console.log("recipients", recipients);
     // let newRecipients = recipients.slice(user._id);
     // console.log("new Rec", newRecipients);
-    socket.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       recipients,
       sender: user._id,
       text: newMessage,
@@ -119,6 +138,23 @@ export default function Messenger() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (!user?._id) return;
+    const fetchMsgs = async () => {
+      let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
+      let fetchedUnread = await fetchResult.json();
+
+      setUnread(fetchedUnread);
+    };
+    fetchMsgs();
+  }, [socket]);
+
+  useEffect(() => {
+    if (!unread) return;
+    function formatUnread() {}
+    formatUnread();
+  }, [socket]);
 
   return (
     <>

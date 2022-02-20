@@ -179,8 +179,9 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
               Type:
               <RedStar />
             </label>
+
             <Select
-              defaultValue={defaultType}
+              value={defaultType}
               options={typeData}
               onChange={typeHandler}
             />

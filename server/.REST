@@ -18,7 +18,18 @@ content-type: application/json
 "62040daea010efeac014d072"]
 
 }
-
-
+###
+get http://localhost:5001/api/timeoff/list
 
 ###
+
+get http://localhost:5001/api/messages/unread?id=620458f0c3f07c9cb010c768
+###
+
+post http://localhost:5001/api/messages/unread?id=620d6ac446d64d5a2103ef64
+###
+post http://localhost:5001/api/messages/620d5bae3fb00c752743f9a3
+###
+get http://localhost:5001/socket.io/?id=62040daea010efeac014d072&EIO=4&transport=polling&t=Ny4jZnO&sid=fUiyK8wfmCLtxv0KAAAK
+###
+get http://localhost:5001/socket.io/?id=620458f0c3f07c9cb010c768&EIO=4&transport=polling&t=Ny4jZmz&sid=ky7AbFgZXOhiINwJAAAB

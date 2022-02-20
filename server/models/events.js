@@ -58,14 +58,57 @@ async function createEvent(eventData) {
   console.log("saving event info:", createdEvent);
   return createdEvent._id;
 }
+async function findEventsForEmployees() {
+  let eventsList = await Event.find({ visibility: "employee" });
+  return eventsList;
+}
 
 async function updateEvent(id, updatedEvent) {
-  let newEventData = await Event.findByIdAndUpdate(id, updatedEvent);
-  console.log("from events model, updated event:", newEventData);
-  return newEventData;
+  console.log("FROM THE MODEL", id, updatedEvent);
+  await Event.findByIdAndUpdate(id, updatedEvent, {
+    returnDocument: "after",
+  });
+  // return theUpdatedEvent;
+}
+
+async function deleteEvent(id) {
+  await Event.findByIdAndDelete(id);
+}
+// async function findEventsByPermission(permission) {
+//   let eventsList;
+//   if (permission === "employee") {
+//     eventsList = Event.find({ visibility: "employee" });
+//   } else if (permission === "supervisor") {
+//     eventsList = Event.find({ visibility: ["supervisor", "employee"] });
+//   } else if (permission === "manager") {
+//     eventsList = Event.find({
+//       visibility: ["employee", "supervisor", "manager"],
+//     });
+//   } else if (permission === "admin") {
+//     eventsList = Event.find({
+//       visibility: ["employee", "supervisor", "manager", "admin"],
+//     });
+//   } else return null;
+//   return eventsList;
+// }
+
+async function findEventsByDates(start, end) {
+  let monthEventData = await Event.find({
+    $or: [
+      { startDate: { $gte: start, $lte: end } },
+      { endDate: { $gte: start, $lte: end } },
+    ],
+  });
+
+  console.log("list of events from  events.js");
+  return monthEventData;
 }
 
 module.exports = {
   createEvent,
   updateEvent,
+  findEventsForEmployees,
+  // findEventsByPermission,
+  findEventsByDates,
+  deleteEvent,
 };

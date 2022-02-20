@@ -27,7 +27,7 @@ export const ContactsList = () => {
       empNames.map((person) => {
         return contactsData.push({
           value: `${person._id}`,
-          label: `${person.firstName} ${person.lastName}`,
+          label: `${person.firstName} ${person.lastName[0]}`,
         });
       });
     }

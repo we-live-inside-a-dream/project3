@@ -6,7 +6,7 @@ function WeekScheduleLegend() {
       style={{
         display: "grid",
         alignContent: "baseline",
-        gridTemplateColumns: "1fr 12fr",
+        gridTemplateColumns: "1fr 6fr",
       }}
     >
       <div

@@ -7,11 +7,10 @@ const StyledEditButton = styled.button`
   padding: ${(props) => props.padding || "0.3rem"};
   margin: ${(props) => props.margin || ".1em"};
   text-align: center;
-  color: black;
-  background-color: white;
+  color: var(--accentColorTitle);
+  background-color: var(--transparent);
   border-radius: 3px;
-  border: white;
-  color: var(--primary-color);
+  border: var(--transparent);
   cursor: pointer;
 `;
 

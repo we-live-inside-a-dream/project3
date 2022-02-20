@@ -3,33 +3,8 @@ import { useEffect, useState } from "react";
 import "./conversation.css";
 import NameIcon from "./NameIcon";
 
-export default function Conversation({ conversation, currentUser }) {
-  // const [recipients, setRecipients] = useState(null);
+export default function Conversation({ conversation }) {
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
-  // useEffect(() => {
-  //   const friendId = conversation.members.find((m) => m !== currentUser._id);
-  //   const getRecipients = async () => {
-  //     try {
-  //       const res = await axios("api/employeeProfile/getByProfileId/" + friendId);
-  //       setRecipients(res.data);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getRecipients();
-  // }, [currentUser, conversation]);
-
-  // useEffect(() => {
-
-  //     const getConversations = async () => {
-  //       let fetchResult = await fetch("api/conversations/" + user._id);
-  //       let fetchedConversation = await fetchResult.json();
-  //       console.log("fetched Convo", fetchedConversation);
-  //       setConversations(fetchedConversation);
-  //     };
-  //     getConversations();
-  //   }
 
   return (
     <div style={{ border: "1px solid black" }}>

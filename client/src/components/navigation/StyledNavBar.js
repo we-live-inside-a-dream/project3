@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const NavbarContainer = styled.nav`
   height: ${(props) => (props.NavbarExtendNavbar ? "100vh" : "100%")};
-  background-color: whiteSmoke;
+  background-color: var(--navBackground);
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
@@ -61,7 +61,7 @@ export const LogoNavbarLink = styled(Link)`
 `;
 
 export const NavbarLink = styled(Link)`
-  color: #35a1b9;
+  color: var(--navColorTitle);
   font-size: large;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
@@ -75,7 +75,7 @@ export const NavbarLink = styled(Link)`
 `;
 
 export const NavbarLinkExtended = styled(Link)`
-  color: #35a1b9;
+  color: var(--navColorTitle);
   font-size: large;
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
@@ -110,15 +110,15 @@ export const NavbarInnerContainer = styled.div`
 export const StyledNavButton = styled.button`
   height: 35px;
   width: 70px;
-  background-color: #e37222;
-  border: 3px solid #e37222;
-  color: white;
+  background-color: var(--loginButtonMain);
+  border: 3px solid var(--loginButtonMain);
+  color: var(--headerWhiteFont);
   border-radius: 5px;
   margin: 10px 10px 0px 10px;
   &:hover {
     cursor: pointer;
-    background-color: #66b9bf;
-    border: 2px solid #eeaa78;
+    background-color: var(--loginButtonHoverBackground);
+    border: 2px solid var(--loginButtonHoverBorder);
   }
   &:active {
     /* background-color: #3e8e41; */
@@ -132,9 +132,12 @@ export const StyledAvatarButton = styled.div`
   width: 2.8rem;
   margin: 3px 10px;
   border-radius: 50%;
-  border: 3px solid #e37222;
+  color: white;
+  font-size: 2.2rem;
+  text-align: center;
+  border: 3px solid var(--nameIconBorder);
   &:hover {
     cursor: pointer;
-    border: 3px solid #eeaa78;
+    border: 3px solid var(--nameIconBorderHover);
   }
 `;

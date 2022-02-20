@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DaySchedule from "../schedules/day-schedule/DaySchedule";
+// import DaySchedule from "../schedules/day-schedule/DaySchedule";
+import WeekSchedule from "../schedules/week-schedule/WeekSchedule";
 import DashboardBoxScale from "./DashboardBoxScale";
 
 function ScheduleBox() {
@@ -9,14 +10,14 @@ function ScheduleBox() {
   return (
     <>
       <DashboardBoxScale
-        padding="20px"
+        padding="20px 35px"
         top={0}
         left={0}
-        transform={"Scale(.4)"}
+        transform={"Scale(.25)"}
         transformOrigin={"top left"}
         title="SCHEDULES"
         clickFunction={() => navigate("/schedules")}
-        content={<DaySchedule />}
+        content={<WeekSchedule />}
       />
     </>
   );

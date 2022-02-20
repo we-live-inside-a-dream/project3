@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ScheduleBox from "./ScheduleBox";
 import MessagesBox from "./MessagesBox";
 import AnnouncementsBox from "./AnnouncementsBox";
@@ -6,6 +6,9 @@ import { CalendarBox } from "./CalendarBox";
 import HumanResourcesBox from "./HumanResourcesBox";
 import FilesBox from "./FilesBox";
 import UpcomingShiftsBox from "./UpcomingShiftsBox";
+import AuthenticationContext from "../login/AuthenticationContext";
+import TimeOffBox from "./TimeOffBox";
+import { useNavigate } from "react-router-dom";
 
 let dashGridStyle = {
   display: "flex",
@@ -20,16 +23,25 @@ let dashGridStyle = {
 };
 
 const DashboardGridNav = function () {
+  const authContext = useContext(AuthenticationContext);
+  const navigate = useNavigate();
   //repeat autofill 30%
   return (
     <div style={dashGridStyle}>
       <ScheduleBox />
-      <HumanResourcesBox />
+      {authContext?.user?.permissions?.includes("manager") ||
+      authContext?.user?.permissions?.includes("admin") ? (
+        <HumanResourcesBox />
+      ) : null}
       <UpcomingShiftsBox />
+      <TimeOffBox onClick={() => navigate("/timeOff/page")} />
       <CalendarBox />
       <MessagesBox />
       <AnnouncementsBox />
-      <FilesBox />
+      {authContext?.user?.permissions?.includes("manager") ||
+      authContext?.user?.permissions?.includes("admin") ? (
+        <FilesBox />
+      ) : null}
     </div>
   );
 };

@@ -3,15 +3,15 @@ import React from "react";
 const ShiftComponent = ({ props }) => {
   let employee = props.employee;
   let index = props.index;
-  let setShiftId = props.setShiftId
-  let businessHours = props.businessHours
+  let setShiftId = props.setShiftId;
+  let businessHours = props.businessHours;
 
-  function convertTime(prop){
-    let timeString = (prop.slice(0,2)) + ((prop.slice(3)/60).toString().slice(1))
+  function convertTime(prop) {
+    let timeString =
+      prop.slice(0, 2) + (prop.slice(3) / 60).toString().slice(1);
     // console.log(timeString,"new String")
-    return(timeString)
-}
-   
+    return timeString;
+  }
 
   return (
     <>
@@ -30,7 +30,7 @@ const ShiftComponent = ({ props }) => {
             <div
               style={{
                 margin: "auto 10px auto 10px",
-                color: "#4488AB",
+                color: "var(--accentColorTitle)",
                 fontWeight: "600",
                 display: "block",
               }}
@@ -58,7 +58,7 @@ const ShiftComponent = ({ props }) => {
               <td key={index}>
                 <div
                   style={{
-                    backgroundColor: "#5AB9EA",
+                    backgroundColor: "var(--scheduleTimeBar)",
                     height: "45px",
                     padding: "0px",
                     border: "1px solid #5AB9EA",
@@ -72,7 +72,6 @@ const ShiftComponent = ({ props }) => {
           }
         })}
       </tr>
-      
     </>
   );
 };

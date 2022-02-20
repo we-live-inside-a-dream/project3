@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Checkbox, FormControlLabel, Grid } from "@mui/material";
 import {
   StyledLogIn,
   StyledFormWrapper,
@@ -9,10 +10,27 @@ import {
   StyledButton,
 } from "./StyledLogIn";
 import AuthenticationContext from "./AuthenticationContext";
+import { emailValidation, passwordValidation } from "./LoginValidation";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailMessageVal, setEmailMessageVal] = useState(null);
+  const [passMessageVal, setPassMessageVal] = useState(null);
+
+  let validation;
+  async function validateForm() {
+    if (emailMessageVal || passMessageVal) {
+      console.log("email:", emailMessageVal, "password:", passMessageVal);
+      validation = "Please make sure all fields are filled in properly.";
+      return validation;
+    } else console.log("email:", emailMessageVal, "password:", passMessageVal);
+    validation = null;
+    return validation;
+  }
+  validateForm();
+  console.log("validate form", validation);
+
   const authContext = useContext(AuthenticationContext);
 
   const navigate = useNavigate();
@@ -22,37 +40,46 @@ export default function LogIn() {
     setter(value);
   };
 
-  const handleSubmit = async (event) => {
-    if (event.keyCode === 13) {
-      console.log("enter was pressed");
-    }
-    event.preventDefault();
+  const handleSubmit = async (e) => {
     let response = await axios.post("/api/auth/login", {
       email,
       password,
     });
+
     let user = response.data;
     console.log("LOG IN", response);
     authContext.logIn(user);
     navigate("/");
   };
 
-  // const handleKeypress = (e) => {
-  //   //it triggers by pressing the enter key
-  // if (e.keyCode === 13) {
-  //   console.log("enter was pressed");
-  //     handleSubmit();
-  //   }
-  // };
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.charCode === 13) {
+      console.log("enter was pressed");
+      handleSubmit();
+    }
+  };
 
   return (
     <>
       <StyledLogIn />
       <StyledFormWrapper>
-        <StyledForm>
+        <StyledForm type="submit">
           <h1>Log In</h1>
           <div>
             <label>Email</label>
+            {!emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              ></p>
+            ) : null}
+            {emailMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              >
+                {emailMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               margin="normal"
               required
@@ -63,12 +90,25 @@ export default function LogIn() {
               autoComplete="email"
               autoFocus
               value={email}
+              placeholder="Email.."
               onChange={(event) => {
                 handleChange(event, setEmail);
+                setEmailMessageVal(emailValidation(email));
               }}
-              onKeyPress={handleSubmit}
             />
             <label>Password</label>
+            {!passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              ></p>
+            ) : null}
+            {passMessageVal ? (
+              <p
+                style={{ color: "red", fontSize: "12px", marginBottom: "0px" }}
+              >
+                {passMessageVal}
+              </p>
+            ) : null}
             <StyledInput
               margin="normal"
               required
@@ -79,19 +119,25 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
               value={password}
+              placeholder="Password.."
               onChange={(event) => {
                 handleChange(event, setPassword);
+                setPassMessageVal(passwordValidation(password));
               }}
-              onKeyPress={handleSubmit}
+              onKeyPress={handleKeypress}
             />
-            <StyledButton
-              id="submit"
-              type="submit"
-              onKeyPress={handleSubmit}
-              onClick={handleSubmit}
-            >
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <StyledButton id="submit" type="submit" onClick={handleSubmit}>
               Log In
             </StyledButton>
+            <Grid container>
+              <Grid item>
+                <Link to="#">Forgot Password</Link>
+              </Grid>
+            </Grid>
           </div>
         </StyledForm>
       </StyledFormWrapper>

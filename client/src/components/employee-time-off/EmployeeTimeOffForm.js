@@ -1,5 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Select from "react-select";
+// import { InputLabel, MenuItem, Select } from "@mui/material";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
@@ -8,12 +9,13 @@ import {
   StyledTextArea,
   StyledForm,
   StyledFormWrapper,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
-import { useNavigate } from "react-router-dom";
+import AuthenticationContext from "../login/AuthenticationContext";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
-import AuthenticationContext from "../../components/login/AuthenticationContext";
 import moment from "moment";
+import { dateValidation } from "../validateForms";
 
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
@@ -23,28 +25,57 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOff = () => {
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
+  const [defaultType, setDefaultType] = useState("");
   const [comment, setComment] = useState("");
   const [allDay, setAllDay] = useState(true);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [dateMessageVal, setDateMessageVal] = useState(null);
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [shown, setShown] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  console.log(startTime);
+  useEffect(() => {
+    const typeFilter = typeData?.filter((r) => r.value == type);
+    setDefaultType(typeFilter);
+    console.log("this is type", type);
+  }, [type]);
+
+  useEffect(() => {
+    if (existingValues) {
+      setStartTime(
+        ` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setEndTime(
+        ` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setStartDate(existingValues.startDate);
+      setEndDate(existingValues.endDate);
+      setType(existingValues.type);
+      setComment(existingValues.comment);
+      setAllDay(existingValues.allDay);
+      console.log("these are the exisiting values", existingValues.type);
+    }
+  }, [existingValues]);
 
   function confirmHandler() {
     setModalConfirmIsOpen(true);
   }
 
-  // const typeHandler = (newType) => {
-  //   setType(newType);
-  //   console.log("Vacation type", newType);
-  // };
+  const typeHandler = (newType) => {
+    setType(newType);
+    console.log("Vacation type", newType);
+  };
 
   function onInputUpdate(value, setter) {
     setter(value);
@@ -56,8 +87,6 @@ const EmployeeTimeOff = () => {
     setter(newValue);
   }
 
-  let navigate = useNavigate();
-
   async function createEmployeeTimeOff(newEmployeeTimeOff) {
     await fetch("/api/timeOff", {
       method: "POST",
@@ -66,6 +95,28 @@ const EmployeeTimeOff = () => {
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+  }
+
+  let validation;
+  async function validateForm() {
+    if (timeMessageVal || dateMessageVal) {
+      console.log(
+        "Time off time",
+        timeMessageVal,
+        "time off Date",
+        dateMessageVal
+      );
+      validation = "Please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "Time off time",
+        timeMessageVal,
+        "time off Date",
+        dateMessageVal
+      );
+    validation = null;
+    return validation;
   }
 
   async function postData() {
@@ -81,10 +132,40 @@ const EmployeeTimeOff = () => {
       allDay: allDay,
       comment: comment,
     };
-    console.log("posting Time Off", newEmployeeTimeOff);
-    await createEmployeeTimeOff(newEmployeeTimeOff);
-    navigate("/");
+    // console.log("start time", startTime);
+    // console.log("end time", endTime);
+
+    // console.log("posting Time Off", newEmployeeTimeOff);
+    // await createEmployeeTimeOff(newEmployeeTimeOff);
+    // navigate("/");
+
+    validateForm();
+    // console.log("validate form", validation);
+    // console.log("saving new time off form", newEmployeeTimeOff);
+
+    if (existingValues && validation === null) {
+      await onSave(newEmployeeTimeOff);
+    }
+    console.log("this isss existingValues", existingValues);
+
+    if (!existingValues && validation === null) {
+      await createEmployeeTimeOff(newEmployeeTimeOff);
+    } else setShown(true);
+
+    // if (existingValues) {
+    //   await onSave(newEmployeeTimeOff);
+    // }
+
+    // onSave();
+    if (existingValues) {
+      console.log("New Time off...", newEmployeeTimeOff);
+      // await updateShift(newEmployeeTimeOff);
+    } else {
+      console.log("New Time off...", newEmployeeTimeOff);
+      // await createTimeOff(newEmployeeTimeOff);
+    }
   }
+
   console.log("USER:", user?.firstName, user?.lastName);
 
   return (
@@ -94,13 +175,21 @@ const EmployeeTimeOff = () => {
           <h2>Time Off Request</h2>
           <div></div>
           <div>
-            <label>Type:</label>
-            <Select value={type} options={typeData} onChange={(value) => onInputUpdate(value, setType)} />
+            <label>
+              Type:
+              <RedStar />
+            </label>
+            <Select
+              defaultValue={defaultType}
+              options={typeData}
+              onChange={typeHandler}
+            />
           </div>
           <div></div>
 
           <label>
             Start Day:
+            <RedStar />
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -116,7 +205,30 @@ const EmployeeTimeOff = () => {
           </label>
 
           <label>
-            End Day: &nbsp;
+            End Day:
+            <RedStar /> &nbsp;
+            {!dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              ></p>
+            ) : null}
+            {dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              >
+                {dateMessageVal}
+              </p>
+            ) : null}
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -126,6 +238,12 @@ const EmployeeTimeOff = () => {
                 onInputUpdate(
                   fns.format(new Date(value), "yyyy-MM-dd").toString(),
                   setEndDate
+                );
+                setDateMessageVal(
+                  dateValidation(
+                    startDate,
+                    fns.format(new Date(value), "yyyy-MM-dd").toString()
+                  )
                 );
               }}
             />
@@ -195,7 +313,7 @@ const EmployeeTimeOff = () => {
           >
             <div style={{ padding: "20px" }}>
               <h3>Confirm Time Off</h3>
-              <p>Type of time off:{type.label}</p>
+              <p>Type of time off:{type?.label}</p>
               <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
               <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
               {allDay === false && (
@@ -227,4 +345,4 @@ const EmployeeTimeOff = () => {
   );
 };
 
-export default EmployeeTimeOff;
+export default EmployeeTimeOffForm;

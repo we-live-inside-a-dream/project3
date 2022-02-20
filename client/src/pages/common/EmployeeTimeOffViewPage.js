@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { navigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
+import ClockLoader from "react-spinners/ClockLoader";
 import {
   StyledButton,
   StyledForm,
@@ -24,6 +25,7 @@ const EmployeeTimeOffViewPage = ({
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -44,6 +46,13 @@ const EmployeeTimeOffViewPage = ({
     fetchTimeOff();
   }, [user._id]);
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+        setLoading(false);
+    }, 8000)
+  },[])
+
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
     await fetch(`/api/timeOff/update?id=${timeOffValues._id}`, {
@@ -53,6 +62,7 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
+    // setLoading(true);
   }
 
   // console.log("this is time off values", timeOffValues);
@@ -97,11 +107,23 @@ const EmployeeTimeOffViewPage = ({
 
   return (
     <div>
+      {
+        loading ?
+        <ClockLoader color={"#D0021B"} loading={loading}  size={150} />
+        : null
+      }
       <StyledPage>
         <StyledPageTitle style={{ marginBottom: "10px" }}>
           TIME OFF REQUESTS
         </StyledPageTitle>
-
+      
+        {/* {if (setTime === true) { 
+          <ClockLoader 
+          color={#F37A24} 
+          loading={loading}
+          size={30}
+          /> 
+        } else */}
         {timeOffRequests?.length > 0 ? (
           <StyledTable padding={"5px"}>
             <thead>
@@ -203,7 +225,7 @@ const EmployeeTimeOffViewPage = ({
           </StyledTable>
         ) : (
           <EmployeeTimeOffForm />
-        )}
+          )}
       </StyledPage>
       <Modal
         onClose={() => {
@@ -219,5 +241,14 @@ const EmployeeTimeOffViewPage = ({
     </div>
   );
 };
+
+// { loading ? (
+//   <ClockLoader 
+//   color={#F37A24} 
+//   loading={loading}
+//   size={30}
+//   /> ) : null
+//   }  
+  
 
 export default EmployeeTimeOffViewPage;

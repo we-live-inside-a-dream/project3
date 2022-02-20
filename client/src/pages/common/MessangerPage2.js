@@ -39,21 +39,20 @@ export default function Messenger() {
   //   // console.log(socket.current);
   // }, [user._id]);
 
-  useEffect(() => {
-    if (!socket) return;
-    socket.on("getUnread", () => {
-      console.log("here");
+  //   useEffect(() => {
+  //     if (!socket) return;
+  //     socket.on("getUnread", () => {
+  //       console.log("here");
 
-      const fetchMsgs = async () => {
-        let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
-        let fetchedUnread = await fetchResult.json();
+  //     };
+  //   });
+  // }, [socket, user._id]);
 
-        setUnread(fetchedUnread);
-      };
-      fetchMsgs();
-    });
-  }, [socket, user._id]);
-
+  const fetchMsgs = async () => {
+    let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
+    let fetchedUnread = await fetchResult.json();
+    setUnread(fetchedUnread);
+  };
   useEffect(() => {
     console.log(socket);
     if (socket == null) return;
@@ -64,6 +63,7 @@ export default function Messenger() {
         text: data.text,
         createdAt: Date.now(),
       });
+      fetchMsgs();
     });
   }, [socket]);
 
@@ -83,7 +83,7 @@ export default function Messenger() {
         setConversations(fetchedConversation);
       };
       getConversations();
-      socket.emit("update");
+      // socket.emit("update");
     }
   }, [user._id]);
 
@@ -140,17 +140,6 @@ export default function Messenger() {
   }, [messages]);
 
   useEffect(() => {
-    if (!user?._id) return;
-    const fetchMsgs = async () => {
-      let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
-      let fetchedUnread = await fetchResult.json();
-
-      setUnread(fetchedUnread);
-    };
-    fetchMsgs();
-  }, [socket]);
-
-  useEffect(() => {
     if (!unread) return;
     function formatUnread() {}
     formatUnread();
@@ -164,8 +153,19 @@ export default function Messenger() {
           <div className="chatMenuWrapper">
             <ContactsList />
             {conversations?.map((c) => (
-              <div key={c._id} onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />
+              <div
+                key={c._id}
+                onClick={() => {
+                  setCurrentChat(c);
+                  fetchMsgs();
+                }}
+              >
+                <Conversation
+                  unread={unread}
+                  conversation={c}
+                  currentUser={user}
+                />
+                <div></div>
               </div>
             ))}
           </div>

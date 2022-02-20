@@ -158,9 +158,9 @@ function App() {
             <Route
               path="/chat"
               element={
-                // <RequireAuth>
-                <MessangerPage2 />
-                // </RequireAuth>
+                <RequireAuth>
+                  <MessangerPage2 />
+                </RequireAuth>
               }
             />
             <Route

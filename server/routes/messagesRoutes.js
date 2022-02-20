@@ -41,8 +41,8 @@ router.get("/unread", async (req, res) => {
     id
   );
   const convoIds = conversations?.map((c) => c._id.toString());
-  // find every message with conversationId and see if read = false
-  let count = 0;
+  // find every message with conversationId
+  
   let array = [];
   try {
     for (let cId of convoIds) {
@@ -58,7 +58,7 @@ router.get("/unread", async (req, res) => {
         array.push(unread);
       }
     }
-    console.log("this is unread", array);
+    // console.log("this is unread", array);
     function getIds() {
       let result = array.map((a) => {
         return a[0].conversationId;

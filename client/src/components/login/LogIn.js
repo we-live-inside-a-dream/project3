@@ -135,7 +135,7 @@ export default function LogIn() {
             </StyledButton>
             <Grid container>
               <Grid item>
-                <Link to="#">Forgot Password</Link>
+                <Link to="/forgotpassword">Forgot Password</Link>
               </Grid>
             </Grid>
           </div>

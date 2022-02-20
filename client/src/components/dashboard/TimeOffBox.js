@@ -8,10 +8,10 @@ import ApprovalSymbol from "./ApprovalSymbol";
 let dashBoxStyle = {
   width: "30%",
   height: "0",
-  paddingBottom: "30%",
+  paddingBottom: "26%",
   border: "2px solid lightGrey",
   margin: "auto auto",
-  borderRadius: "5%",
+  borderRadius: "3%",
   overflow: "hidden",
   background: "var(--dashGridBoxBackground)",
 
@@ -61,7 +61,7 @@ const TimeOffBox = function ({ onClick }) {
       >
         <h3>TIME OFF</h3>
       </div>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", padding: " 5px 15px" }}>
         {/* <StyledScaledComponent
         //   padding={padding}
         //   top={top}

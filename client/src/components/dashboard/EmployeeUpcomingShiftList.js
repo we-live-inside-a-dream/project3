@@ -45,7 +45,7 @@ function EmployeeUpcomingShiftList() {
               width: "260px",
               fontSize: "medium",
               backgroundColor: "white",
-              color: "black",
+              // color: "black",
             }}
           >
             <p

@@ -36,9 +36,17 @@ router.get("/event/:id", async (req, res) => {
   res.send(event);
 });
 
-router.post("/:id", async (req, res) => {
+router.delete("/delete-event", async (req, res) => {
+  let id = req.query.id;
+  console.log("FROM API attempting to delete", id);
+  let event = await eventModel.deleteEvent(id);
+  res.status(200);
+});
+
+router.post("/update/:id", async (req, res) => {
   let id = req.params.id;
   let updatedEvent = req.body;
+  console.log("FROM API attempting to update", id, updatedEvent);
   let newUpdatedEvent = await eventModel.updateEvent(id, updatedEvent);
   res.json(newUpdatedEvent);
   console.log("From API event route eventId:", newUpdatedEvent);

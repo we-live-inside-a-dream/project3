@@ -42,6 +42,8 @@ const EventEditForm = ({ existingValues }) => {
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
+  const [defaultVisibility, setDefaultVisibility] = useState();
+  const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -62,6 +64,33 @@ const EventEditForm = ({ existingValues }) => {
       setMandatory(existingValues.mandatory);
     }
   }, [existingValues]);
+
+  useEffect(() => {
+    if (existingValues) {
+      let currentVisibility = [];
+      visibilityData.forEach((line) => {
+        if (existingValues?.visibility?.includes(line.value)) {
+          currentVisibility.push(line);
+        }
+      });
+      setDefaultVisibility(currentVisibility);
+    }
+  }, [existingValues]);
+
+  useEffect(() => {
+    if (existingValues) {
+      let currentType = [];
+      typeData.forEach((line) => {
+        if (existingValues?.type?.includes(line.value)) {
+          currentType.push(line);
+        }
+      });
+      setDefaultType(currentType);
+    }
+    console.log("FROM THE TYPE USEEFFECT", defaultType);
+  }, [existingValues]);
+
+  console.log(defaultVisibility, "IS THE DEFAULT VISIBILIT************");
 
   const typeHandler = (newType) => {
     setType(newType);
@@ -125,6 +154,12 @@ const EventEditForm = ({ existingValues }) => {
     await createEvent(newEvent);
   }
 
+  useEffect(() => {
+    console.log("IS THIS EVEN SHOWING UP??????");
+  }, []);
+
+  console.log("IS THIS EVEN SHOWING UP??????");
+
   return (
     <div>
       <StyledFormWrapper>
@@ -168,7 +203,11 @@ const EventEditForm = ({ existingValues }) => {
 
           <div style={{ margin: "0px" }}>
             <label>Type:</label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select
+              value={defaultType}
+              options={typeData}
+              onChange={typeHandler}
+            />
           </div>
 
           <div>
@@ -176,7 +215,7 @@ const EventEditForm = ({ existingValues }) => {
             <Select
               isMulti
               name="visibility"
-              defaultValue={visibility}
+              value={defaultVisibility}
               options={visibilityData}
               onChange={visibilityHandler}
               // className="basic-multi-select"

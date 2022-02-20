@@ -31,7 +31,7 @@ const visibilityData = [
 ];
 
 const EventEditForm = ({ existingValues }) => {
-  const [theEventId, setTheEventId] = useState(existingValues._id);
+  const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -59,10 +59,14 @@ const EventEditForm = ({ existingValues }) => {
       setEndTime(existingValues.endTime);
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
-      setType(existingValues.type);
+      setType({ value: existingValues.type[0] });
       setNotes(existingValues.notes);
       setAllDay(existingValues.allDay);
-      setVisibility(existingValues.visibility);
+      setVisibility(
+        existingValues.visibility.map((item) => {
+          return { value: item };
+        })
+      );
       setMandatory(existingValues.mandatory);
     }
   }, [existingValues]);
@@ -75,6 +79,7 @@ const EventEditForm = ({ existingValues }) => {
           currentVisibility.push(line);
         }
       });
+
       setDefaultVisibility(currentVisibility);
     }
   }, [existingValues]);

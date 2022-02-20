@@ -79,9 +79,9 @@ function App() {
             path="/availabilities"
             element={<EmployeeAvailabilityPage />}
           />
-          <RequireAuth>
-            <Route path="/my-page" element={<EmployeeShiftsViewPage />} />
-          </RequireAuth>
+          {/* <RequireAuth> */}
+          <Route path="/my-page" element={<EmployeeShiftsViewPage />} />
+          {/* </RequireAuth> */}
 
           {/* <Route path="/employeeDetail/:id" element={<EmployeeDetailPage />} /> */}
           <Route

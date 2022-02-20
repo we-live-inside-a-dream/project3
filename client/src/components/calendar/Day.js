@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 const Day = ({
   day,
@@ -35,6 +36,19 @@ const Day = ({
     wrap: "none",
     overflowWrap: "normal",
     whiteSpace: "nowrap",
+    zIndex: "300",
+  };
+  const addEventButtonStyle = {
+    color: "lightGrey",
+    position: "absolute",
+    transformOrigin: "topRight",
+    top: "0",
+    right: "0",
+    marginTop: "0px",
+    marginRight: "4px",
+    fontSize: "20px",
+
+    // transform: ()
   };
   const showEvent = function (event) {
     console.log("THE EVENT FROM SHOW EVERN", event);
@@ -44,7 +58,7 @@ const Day = ({
 
   return (
     <div
-      onClick={onClick}
+      // onClick={onClick}
       className={className}
       style={{
         width: "14%",
@@ -55,9 +69,24 @@ const Day = ({
         display: "flex",
         flexDirection: "column",
         border: borderColor(day.value),
+        zIndex: "100",
+        position: "relative",
       }}
     >
-      {day.value === "padding" ? "" : day.value}
+      {day.value !== "padding" ? (
+        <StyledEditButton
+          onClick={() => setIsOpen(!isOpen)}
+          style={addEventButtonStyle}
+          margin="0px"
+        >
+          +
+        </StyledEditButton>
+      ) : null}
+      {day.value !== "padding" ? (
+        <p style={{ margin: "2px 7px 0px 2px", fontSize: "20px" }}>
+          {day.value}
+        </p>
+      ) : null}
 
       {events?.map((e, index) => {
         return (

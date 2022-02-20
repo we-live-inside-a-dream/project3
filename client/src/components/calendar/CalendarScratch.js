@@ -195,6 +195,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
             <Day
               key={index}
               day={day}
+              // onClick={() => setIsOpen(!isOpen)}
               events={renderEvents(day)}
               setRevealEventDetails={setRevealEventDetails}
               revealEventDetails={revealEventDetails}

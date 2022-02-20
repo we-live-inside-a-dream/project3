@@ -3,10 +3,12 @@ import AuthenticationContext from "../../login/AuthenticationContext";
 import moment from "moment";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
+import UpcomingShiftView from "./UpcomingShiftView";
 
 function EmployeeUpcomingShiftList() {
   const [shifts, setShifts] = useState([]);
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
+  const [detailShift, setDetailShift] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
   let id = user?._id;
@@ -28,7 +30,7 @@ function EmployeeUpcomingShiftList() {
   // console.log("today is ", today);
 
   const formatTime = function (time) {
-    let newTime = moment(time, "hh:mm").format("h:mma");
+    let newTime = moment(time, "hh:mma").format("h:mma");
     return newTime;
   };
   const formatDate = function (date) {
@@ -56,7 +58,12 @@ function EmployeeUpcomingShiftList() {
           {shifts?.map((shift, index) => {
             return (
               <tr
-              // onClick={viewShiftDetails}
+                // onClick={viewShiftDetails}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setDetailShift(shift);
+                  setDetailModalIsOpen(true);
+                }}
               >
                 <td>{formatDate(shift.date)}</td>
                 <td>position</td>
@@ -69,6 +76,17 @@ function EmployeeUpcomingShiftList() {
           })}
         </tbody>
       </StyledTable>
+      {/* <Modal
+        open={detailModalIsOpen}
+        onClose={() => setDetailModalIsOpen(false)}
+      >
+        <UpcomingShiftView
+          shift={detailShift}
+          // employee={modalEmployee}
+          setDetailModalIsOpen={setDetailModalIsOpen}
+          // date={modalDate}
+        />
+      </Modal> */}
     </div>
   );
 }

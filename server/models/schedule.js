@@ -10,6 +10,12 @@ const Schedule = mongoose.model("schedule", {
   start: String,
   end: String,
   breaks: [{ name: String, start: String, end: String, paid: Boolean }],
+  swapStatus: String,
+  shiftBidIds: [String],
+  managerId: 
+  previousShiftOwnerId: String,
+  previousShiftOwnerFirstName: String,
+  previousShiftOwnerLastName: String,
 });
 
 async function createSchedule(ScheduleData) {

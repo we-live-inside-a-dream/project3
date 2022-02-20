@@ -4,11 +4,13 @@ import moment from "moment";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import UpcomingShiftView from "./UpcomingShiftView";
+import ShiftSwapConfirmModal from "./ShiftSwapConfirmModal";
 
 function EmployeeUpcomingShiftList() {
   const [shifts, setShifts] = useState([]);
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
   const [detailShift, setDetailShift] = useState();
+  const [swapConfirmModalIsOpen, setSwapConfirmModalIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
   let id = user?._id;
@@ -37,10 +39,8 @@ function EmployeeUpcomingShiftList() {
     let newDate = moment(date).format("ddd, MMM, Do");
     return newDate;
   };
-  const viewShiftDetatails = function () {
-    setDetailModalIsOpen(!detailModalIsOpen);
-  };
 
+  const putShiftUpForGrabs = async function () {};
   return (
     <div>
       <StyledTable>
@@ -60,23 +60,59 @@ function EmployeeUpcomingShiftList() {
               <tr
                 // onClick={viewShiftDetails}
                 style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setDetailShift(shift);
-                  setDetailModalIsOpen(true);
-                }}
+                // onClick={() => {
+                //   setDetailShift(shift);
+                //   setDetailModalIsOpen(true);
+                // }}
               >
-                <td>{formatDate(shift.date)}</td>
-                <td>position</td>
-                <td>{formatTime(shift.start)}</td>
-                <td>{formatTime(shift.end)}</td>
-                <td>ICON</td>
+                <td
+                  onClick={() => {
+                    setDetailShift(shift);
+                    setDetailModalIsOpen(true);
+                  }}
+                >
+                  {formatDate(shift.date)}
+                </td>
+                <td
+                  onClick={() => {
+                    setDetailShift(shift);
+                    setDetailModalIsOpen(true);
+                  }}
+                >
+                  position
+                </td>
+                <td
+                  onClick={() => {
+                    setDetailShift(shift);
+                    setDetailModalIsOpen(true);
+                  }}
+                >
+                  {formatTime(shift.start)}
+                </td>
+                <td
+                  onClick={() => {
+                    setDetailShift(shift);
+                    setDetailModalIsOpen(true);
+                  }}
+                >
+                  {formatTime(shift.end)}
+                </td>
+                <td
+                  style={{ color: "blue", fontSize: "30px", fontWeight: "800" }}
+                  onClick={() => {
+                    setSwapConfirmModalIsOpen(true);
+                    setDetailShift(shift);
+                  }}
+                >
+                  ⇄
+                </td>
                 <td>check or x</td>
               </tr>
             );
           })}
         </tbody>
       </StyledTable>
-      {/* <Modal
+      <Modal
         open={detailModalIsOpen}
         onClose={() => setDetailModalIsOpen(false)}
       >
@@ -86,7 +122,17 @@ function EmployeeUpcomingShiftList() {
           setDetailModalIsOpen={setDetailModalIsOpen}
           // date={modalDate}
         />
-      </Modal> */}
+      </Modal>
+      <Modal
+        open={swapConfirmModalIsOpen}
+        onClose={() => setSwapConfirmModalIsOpen(false)}
+      >
+        <ShiftSwapConfirmModal
+          shift={detailShift}
+          setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
+          putShiftUpForGrabs={putShiftUpForGrabs}
+        />
+      </Modal>
     </div>
   );
 }

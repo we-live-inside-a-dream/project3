@@ -42,16 +42,19 @@ const EmployeeTimeOffViewPage = ({
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
     };
-
+    setLoading(true)
     fetchTimeOff();
+    if (timeOffRequests.length > 0) {
+      setLoading(false);
+    }
   }, [user._id]);
-
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-        setLoading(false);
-    }, 8000)
-  },[])
+  
+  // useEffect(() => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //       setLoading(false);
+  //   }, 2000)
+  // },[])
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -107,24 +110,17 @@ const EmployeeTimeOffViewPage = ({
 
   return (
     <div>
+      <StyledPage styled={{position: "relative",}}>
       {
         loading ?
-        <ClockLoader color={"#D0021B"} loading={loading}  size={150} />
-        : null
-      }
-      <StyledPage>
+        <div style={{height:"320px", width: "320px", borderRadius: "50%", border: "3px solid var(--mainHeader)", position:"absolute", top: "0", left: "0", transformOrigin: "topLeft", transform: "translate(50%, 50%)", margin: "auto"}}>
+        <ClockLoader color={"var(--mainHeader)"} loading={loading}  size={300}  />
+        </div> 
+       :
+       <>
         <StyledPageTitle style={{ marginBottom: "10px" }}>
           TIME OFF REQUESTS
         </StyledPageTitle>
-      
-        {/* {if (setTime === true) { 
-          <ClockLoader 
-          color={#F37A24} 
-          loading={loading}
-          size={30}
-          /> 
-        } else */}
-        {timeOffRequests?.length > 0 ? (
           <StyledTable padding={"5px"}>
             <thead>
               <tr>
@@ -223,9 +219,11 @@ const EmployeeTimeOffViewPage = ({
               })}
             </tbody>
           </StyledTable>
-        ) : (
-          <EmployeeTimeOffForm />
-          )}
+        
+          {/* <EmployeeTimeOffForm />
+       */}
+          </>
+}
       </StyledPage>
       <Modal
         onClose={() => {
@@ -238,6 +236,7 @@ const EmployeeTimeOffViewPage = ({
           onSave={updateTimeOff}
         />
       </Modal>
+      
     </div>
   );
 };

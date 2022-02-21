@@ -5,31 +5,10 @@ import "./conversation.css";
 import NameIcon from "./NameIcon";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
 
-export default function Conversation({ unread, conversation }) {
+export default function Conversation({ conversation }) {
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  // const socket = useSocket();
-  // const [unread, setUnread] = useState();
-  // const authContext = useContext(AuthenticationContext);
-  // let user = authContext.user;
-
-  // useEffect(() => {
-  //   // if (!socket) return;
-  //   // socket.on("getUnread", () => {
-  //   console.log("here");
-
-  //   const fetchMsgs = async () => {
-  //     let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
-  //     let fetchedUnread = await fetchResult.json();
-
-  //     setUnread(fetchedUnread);
-  //   };
-  //   fetchMsgs();
-  //   // });
-  // }, [socket, user._id]);
-
-  useEffect(() => {
-    console.log("unread", unread);
-  }, [unread]);
+  const value = useSocket();
+  let read = value.unread;
 
   return (
     <>
@@ -38,7 +17,7 @@ export default function Conversation({ unread, conversation }) {
           return <NameIcon name={m.label} key={m.value} />;
         })}
 
-        {unread?.includes(conversation._id) ? (
+        {read?.includes(conversation._id) ? (
           <div
             style={{
               height: "10px",

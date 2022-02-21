@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
       // newRecipients.push(id);
       // console.log("new REC", newRecipients);
       // console.log("broadcast to room", recipient);
-      // socket.broadcast.to(recipient).emit("getunread", {});
+      socket.broadcast.to(recipient).emit("getUnread", { recipient });
       // socket.broadcast.to(recipient).emit("getNotification", {});
       socket.broadcast.to(recipient).emit("getMessage", {
         recipients,

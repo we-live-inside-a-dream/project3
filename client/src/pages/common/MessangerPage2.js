@@ -11,17 +11,20 @@ import { ContactsList } from "../../components/messanger2/ContactsList";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
 
 export default function Messenger() {
-  const socket = useSocket();
+  const value = useSocket();
+  const socket = value.socket;
+
+  const fetchUnread = value.fetchUnread;
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  // const [onlineUsers, setOnlineUsers] = useState([]);
+
   // const socket = useRef();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-  const [unread, setUnread] = useState();
 
   const scrollRef = useRef();
 
@@ -48,26 +51,26 @@ export default function Messenger() {
   //   });
   // }, [socket, user._id]);
 
-  const fetchMsgs = async () => {
-    let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
-    let fetchedUnread = await fetchResult.json();
-    setUnread(fetchedUnread);
-  };
+  // const fetchMsgs = async () => {
+  //   let fetchResult = await fetch(`/api/messages/unread?id=${user?._id}`);
+  //   let fetchedUnread = await fetchResult.json();
+  //   setUnread(fetchedUnread);
+  // };
   useEffect(() => {
-    console.log(socket);
     if (socket == null) return;
     socket.on("getMessage", (data) => {
       console.log("get message...", data);
       setArrivalMessage({
-        sender: data.senderId,
+        sender: data.sender,
         text: data.text,
         createdAt: Date.now(),
       });
-      fetchMsgs();
+      // fetchMsgs();
     });
   }, [socket]);
 
   useEffect(() => {
+    console.log(arrivalMessage?.sender);
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
@@ -139,11 +142,11 @@ export default function Messenger() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    if (!unread) return;
-    function formatUnread() {}
-    formatUnread();
-  }, [socket]);
+  // useEffect(() => {
+  //   if (!unread) return;
+  //   function formatUnread() {}
+  //   formatUnread();
+  // }, [socket]);
 
   return (
     <>
@@ -157,14 +160,10 @@ export default function Messenger() {
                 key={c._id}
                 onClick={() => {
                   setCurrentChat(c);
-                  fetchMsgs();
+                  fetchUnread();
                 }}
               >
-                <Conversation
-                  unread={unread}
-                  conversation={c}
-                  currentUser={user}
-                />
+                <Conversation conversation={c} user={user} />
                 <div></div>
               </div>
             ))}

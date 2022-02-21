@@ -7,7 +7,6 @@ import {
 import AuthenticationContext from "../../login/AuthenticationContext";
 
 function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
-  const [reasonForSwap, setReasonForSwap] = useState("");
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -19,13 +18,9 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
     let newDate = moment(date).format("dddd MMMM Do, yyyy");
     return newDate;
   };
-  const onSwapReasonInputUpdate = function (event, setter) {
-    let newValue = event.target.value;
-    setter(newValue);
-  };
 
   async function updateShift(newShiftSwapRequest) {
-    console.log("new user data", newShiftSwapRequest);
+    console.log("new shift swap request: ", newShiftSwapRequest);
     await fetch(`/api/schedule/schedule/update?id=${shift?._id}`, {
       method: "POST",
       headers: {
@@ -46,7 +41,7 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
       breaks: shift.breaks,
       swapRequestStatus: "pending",
       swapBidRequest: "pending",
-      reasonForSwap,
+      reasonForSwap: shift.reason,
       shiftBidId: user._id,
       approvingManagerId: null,
       previousShiftOwnerId: shift.employeeId,

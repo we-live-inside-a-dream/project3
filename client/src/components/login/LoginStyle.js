@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 //background
-//import background from "./../assets/(file name)"
+import background from "../assets/agenda.jpg";
 
 import { Link } from "react-router-dom";
 
@@ -18,14 +18,15 @@ export const colors = {
 
 export const StyledContainer = styled.div`
   margin: 0;
-  min-height: 100vh;
-  display: flex;
+  min-height: 90vh;
   justify-content: center;
   align-items: center;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
     url(${background});
   background-size: cover;
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: left;
 `;
 
 export const StyledTitle = styled.div`
@@ -60,4 +61,11 @@ export const StyledButton = styled(Link)`
     color: ${colors.theme};
     cursor: pointer;
   }
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-top: 25px;
 `;

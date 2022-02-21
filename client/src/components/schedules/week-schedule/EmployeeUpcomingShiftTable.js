@@ -39,8 +39,16 @@ function EmployeeUpcomingShiftList() {
     let newDate = moment(date).format("ddd, MMM, Do");
     return newDate;
   };
+  const findStatusSymbol = function (shift) {
+    if (shift.swapRequestStatus === "pending") {
+      return "⏳";
+    } else if (shift.swapRequestStatus === "declined") {
+      return "❌";
+    } else if (shift.swapRequestStatus === "approved") {
+      return "✅";
+    } else return null;
+  };
 
-  const putShiftUpForGrabs = async function () {};
   return (
     <div>
       <StyledTable>
@@ -106,7 +114,7 @@ function EmployeeUpcomingShiftList() {
                 >
                   ⇄
                 </td>
-                <td>check or x</td>
+                <td>{findStatusSymbol(shift)}</td>
               </tr>
             );
           })}
@@ -130,7 +138,6 @@ function EmployeeUpcomingShiftList() {
         <ShiftSwapConfirmModal
           shift={detailShift}
           setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
-          putShiftUpForGrabs={putShiftUpForGrabs}
         />
       </Modal>
     </div>

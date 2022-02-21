@@ -11,8 +11,8 @@ function UpcomingShiftView({ shift, employee }) {
     return newDate;
   };
   return (
-    <div style={{ padding: "30px" }}>
-      <h3>Shift Details</h3>
+    <div style={{ padding: "40px" }}>
+      <h3 style={{ color: "var(--accentColorTitle)" }}>SHIFT DETAILS</h3>
       <p>{`Date: ${formatDate(shift.date)}`}</p>
       <p>{`Time: ${formatTime(shift.start)} - ${formatTime(shift.end)}`}</p>
       <p>{`Position: ${shift.position}`}</p>

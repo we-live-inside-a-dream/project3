@@ -35,7 +35,7 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
       employeeId: shift.employeeId,
       lastName: shift.lastName,
       firstName: shift.firstName,
-      start: shift.start, //ISO date => HH:mm
+      start: shift.start,
       end: shift.end,
       date: shift.date,
       breaks: shift.breaks,

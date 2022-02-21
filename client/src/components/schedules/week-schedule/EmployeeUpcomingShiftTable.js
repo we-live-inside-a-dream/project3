@@ -5,12 +5,15 @@ import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import UpcomingShiftView from "./UpcomingShiftView";
 import ShiftSwapConfirmModal from "./ShiftSwapConfirmModal";
+import StyledButton from "../../reusable/Inputs/StyledButton";
+import ShiftsUpForGrabs from "./ShiftsUpForGrabs";
 
 function EmployeeUpcomingShiftList() {
   const [shifts, setShifts] = useState([]);
   const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
   const [detailShift, setDetailShift] = useState();
   const [swapConfirmModalIsOpen, setSwapConfirmModalIsOpen] = useState(false);
+  const [shiftsUpForGrabsIsOpen, setShiftsUpForGrabsIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
   let id = user?._id;
@@ -87,7 +90,7 @@ function EmployeeUpcomingShiftList() {
                     setDetailModalIsOpen(true);
                   }}
                 >
-                  position
+                  {shift.position}
                 </td>
                 <td
                   onClick={() => {
@@ -120,6 +123,11 @@ function EmployeeUpcomingShiftList() {
           })}
         </tbody>
       </StyledTable>
+      <StyledButton
+        onClick={() => setShiftsUpForGrabsIsOpen(!shiftsUpForGrabsIsOpen)}
+      >
+        VIEW AVAILABLE SHIFTS
+      </StyledButton>
       <Modal
         open={detailModalIsOpen}
         onClose={() => setDetailModalIsOpen(false)}
@@ -140,6 +148,7 @@ function EmployeeUpcomingShiftList() {
           setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
         />
       </Modal>
+      {shiftsUpForGrabsIsOpen ? <ShiftsUpForGrabs user={user} /> : null}
     </div>
   );
 }

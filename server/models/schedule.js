@@ -11,6 +11,7 @@ const Schedule = mongoose.model("schedule", {
   end: String,
   breaks: [{ name: String, start: String, end: String, paid: Boolean }],
   swapRequestStatus: String,
+  swapBidRequest: String,
   reasonForSwap: String,
   shiftBidId: String,
   approvingManagerId: String,

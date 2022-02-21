@@ -11,12 +11,8 @@ function EmployeeAvailabilityList() {
   useEffect(() => {
     let isMounted = true;
     const fetchAvailabilityList = async () => {
-      // console.log("from useEffect, trying to fetch endpoint");
       let fetchResult = await fetch(`/api/availability/availability-all`);
-      // console.log("fetch result", fetchResult);
       let theAvailabilityList = await fetchResult.json();
-      // console.log("fetching employee availability list", theAvailabilityList);
-
       setAvailabilityList(theAvailabilityList);
     };
     if (isMounted) {
@@ -24,7 +20,6 @@ function EmployeeAvailabilityList() {
     }
     return () => (isMounted = false);
   }, []);
-  console.log("AFTER USE EFFECT", availabilityList);
 
   let businessDays = [
     "Sunday",

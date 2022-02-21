@@ -9,10 +9,10 @@ function ScheduleBox() {
   return (
     <>
       <DashboardBoxScale
-        padding="5px"
+        padding="0px 34px"
         top={0}
         left={0}
-        transform={"Scale(.3)"}
+        transform={"Scale(.24)"}
         transformOrigin={"top left"}
         title="EMPLOYEES"
         clickFunction={() => navigate("/human-resources")}

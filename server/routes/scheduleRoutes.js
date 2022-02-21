@@ -43,6 +43,25 @@ router.get("/employee-id", async (req, res) => {
   res.json(shiftsList);
 });
 
+router.get("/shifts-up-for-grabs", async (req, res) => {
+  let userId = req.query.userId;
+  console.log(
+    "from API, looking for shifts up for grabs for employee with id",
+    userId
+  );
+
+  let employeePositions = await employeeProfileModel.findPositionsByEmployeeId(
+    userId
+  );
+  let availableShiftsList =
+    await scheduleModel.findAvailableShiftsByEmployeePositions(
+      userId,
+      employeePositions
+    );
+  console.log("from API: available shifts are", availableShiftsList);
+  res.json(availableShiftsList);
+});
+
 router.post("/schedule/new", async (req, res) => {
   // console.log("req.body", req.body);
   let newSchedule = req.body;

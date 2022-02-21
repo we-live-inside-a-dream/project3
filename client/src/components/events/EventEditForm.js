@@ -9,7 +9,6 @@ import {
   StyledTextArea,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledButton from "../reusable/Inputs/StyledButton";
-import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import * as fns from "date-fns";
@@ -28,10 +27,11 @@ const visibilityData = [
   { value: "admin", label: "Admin Only" },
   { value: "manager", label: "Management" },
   { value: "supervisor", label: "Supervisory Staff" },
-  { value: "employees", label: "All Staff" },
+  { value: "employee", label: "All Staff" },
 ];
 
 const EventEditForm = ({ existingValues }) => {
+  const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -43,6 +43,8 @@ const EventEditForm = ({ existingValues }) => {
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
+  const [defaultVisibility, setDefaultVisibility] = useState();
+  const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -51,26 +53,54 @@ const EventEditForm = ({ existingValues }) => {
 
   useEffect(() => {
     if (existingValues) {
+      setTheEventId(existingValues._id);
       setTitle(existingValues.title);
       setStartTime(existingValues.startTime);
       setEndTime(existingValues.endTime);
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
-      setType(existingValues.type);
+      setType({ value: existingValues.type[0] });
       setNotes(existingValues.notes);
       setAllDay(existingValues.allDay);
-      setVisibility(existingValues.visibility);
+      setVisibility(
+        existingValues.visibility.map((item) => {
+          return { value: item };
+        })
+      );
       setMandatory(existingValues.mandatory);
+    }
+  }, [existingValues]);
+
+  useEffect(() => {
+    if (existingValues) {
+      let currentVisibility = [];
+      visibilityData.forEach((line) => {
+        if (existingValues?.visibility?.includes(line.value)) {
+          currentVisibility.push(line);
+        }
+      });
+
+      setDefaultVisibility(currentVisibility);
+    }
+  }, [existingValues]);
+
+  useEffect(() => {
+    if (existingValues) {
+      let currentType = [];
+      typeData.forEach((line) => {
+        if (existingValues?.type?.includes(line.value)) {
+          currentType.push(line);
+        }
+      });
+      setDefaultType(currentType);
     }
   }, [existingValues]);
 
   const typeHandler = (newType) => {
     setType(newType);
-    console.log("eventType", newType);
   };
   const visibilityHandler = (newVisibility) => {
     setVisibility(newVisibility);
-    console.log("event visibility", newVisibility);
   };
 
   function onInputUpdate(event, setter) {
@@ -81,7 +111,6 @@ const EventEditForm = ({ existingValues }) => {
     setter(value);
   }
   function onDateInputUpdate(value, setter) {
-    // console.log(value);
     setter(value);
   }
   async function createEvent(newEvent) {
@@ -93,37 +122,62 @@ const EventEditForm = ({ existingValues }) => {
       body: JSON.stringify(newEvent),
     });
   }
-  // async function updateEvent(newEvent) {
-  //   await fetch("/api/events/" + eventId, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(newEvent),
-  //   });
-  // }
+  async function updateEvent(newEvent) {
+    await fetch("/api/events/update/" + theEventId, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newEvent),
+    });
+  }
+
+  async function deleteEventData(theEventId) {
+    console.log("FROM THE DELETE FUNCTION", theEventId);
+    await fetch(`/api/events/delete-event?id=${theEventId}`, {
+      method: "DELETE",
+    });
+  }
 
   async function postData() {
-    let newEvent = {
-      title: title,
-      employeeProfileId: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      type: [type.value],
-      // startTime: fns.format(new Date(startTime), "HH:mm").toString(),
-      // endTime: fns.format(new Date(endTime), "HH:mm").toString(),
-      startTime,
-      endTime,
-      startDate: startDate,
-      endDate: endDate,
-      allDay: allDay,
-      notes: notes,
-      visibility: [visibility.value],
-      mandatory: mandatory,
-    };
-    console.log("posting newEvent", newEvent);
-
-    await createEvent(newEvent);
+    if (!existingValues) {
+      let newEvent = {
+        title: title,
+        employeeProfileId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        type: [type.value],
+        startTime,
+        endTime,
+        startDate: startDate,
+        endDate: endDate,
+        allDay: allDay,
+        notes: notes,
+        visibility: visibility.map((p) => p.value),
+        mandatory: mandatory,
+      };
+      console.log("posting newEvent", newEvent);
+      await createEvent(newEvent);
+    }
+    if (existingValues) {
+      let newEvent = {
+        title: title,
+        employeeProfileId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        type: [type.value],
+        startTime,
+        endTime,
+        startDate: startDate,
+        endDate: endDate,
+        allDay: allDay,
+        notes: notes,
+        visibility: visibility.map((p) => p.value),
+        mandatory: mandatory,
+      };
+      await updateEvent(newEvent);
+      console.log("posting updated event", newEvent);
+    }
   }
 
   return (
@@ -169,13 +223,19 @@ const EventEditForm = ({ existingValues }) => {
 
           <div style={{ margin: "0px" }}>
             <label>Type:</label>
-            <Select value={type} options={typeData} onChange={typeHandler} />
+            <Select
+              value={defaultType}
+              options={typeData}
+              onChange={typeHandler}
+            />
           </div>
 
           <div>
             <label>Visibility:</label>
             <Select
-              value={visibility}
+              isMulti
+              name="visibility"
+              value={defaultVisibility}
               options={visibilityData}
               onChange={visibilityHandler}
             />
@@ -193,18 +253,8 @@ const EventEditForm = ({ existingValues }) => {
                   fns.format(new Date(value), "yyyy-MM-dd").toString(),
                   setStartDate
                 );
-                // setShiftDateMessageVal(requiredValidation(date));
               }}
             />
-            {/* <input
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDate}
-              onChange={(e) => {
-                setStartDate(e.target.value);
-              }}
-            /> */}
           </div>
           <div>
             <label>End Day:</label>
@@ -221,15 +271,6 @@ const EventEditForm = ({ existingValues }) => {
                 // setShiftDateMessageVal(requiredValidation(date));
               }}
             />
-            {/* <input
-              type="date"
-              id="single-day"
-              name="day"
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-              }}
-            /> */}
           </div>
 
           {startDate === endDate && (
@@ -259,7 +300,6 @@ const EventEditForm = ({ existingValues }) => {
               <label>
                 Start Time:
                 <BasicTimePicker
-                  // label=""
                   type="time"
                   value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
                   onChange={(value) => {
@@ -270,7 +310,6 @@ const EventEditForm = ({ existingValues }) => {
               <label>
                 End Time:
                 <BasicTimePicker
-                  // label="end time"
                   type="time"
                   value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
                   onChange={(value) => {
@@ -284,7 +323,13 @@ const EventEditForm = ({ existingValues }) => {
           <div></div>
           <div style={{ display: "flex" }}>
             <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
-              Confirm
+              CONFIRM
+            </StyledButton>
+            <StyledButton
+              onClick={() => deleteEventData(theEventId)}
+              style={{ alignSelf: "flex-end" }}
+            >
+              DELETE
             </StyledButton>
           </div>
           <div>

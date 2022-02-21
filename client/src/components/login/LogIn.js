@@ -93,7 +93,7 @@ export default function LogIn() {
               placeholder="Email.."
               onChange={(event) => {
                 handleChange(event, setEmail);
-                setEmailMessageVal(emailValidation(email));
+                setEmailMessageVal(emailValidation(event.target.value));
               }}
             />
             <label>Password</label>
@@ -122,7 +122,7 @@ export default function LogIn() {
               placeholder="Password.."
               onChange={(event) => {
                 handleChange(event, setPassword);
-                setPassMessageVal(passwordValidation(password));
+                setPassMessageVal(passwordValidation(event.target.value));
               }}
               onKeyPress={handleKeypress}
             />
@@ -135,7 +135,7 @@ export default function LogIn() {
             </StyledButton>
             <Grid container>
               <Grid item>
-                <Link to="#">Forgot Password</Link>
+                <Link to="/forgotpassword">Forgot Password</Link>
               </Grid>
             </Grid>
           </div>

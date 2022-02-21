@@ -21,7 +21,6 @@ const Event = mongoose.model("events", {
     type: [String],
     required: true,
   },
-
   recurring: {
     type: Boolean,
   },
@@ -60,14 +59,20 @@ async function createEvent(eventData) {
   return createdEvent._id;
 }
 async function findEventsForEmployees() {
-  let eventsList = await Event.find({ visibility: "employees" });
+  let eventsList = await Event.find({ visibility: "employee" });
   return eventsList;
 }
 
 async function updateEvent(id, updatedEvent) {
-  let newEventData = await Event.findByIdAndUpdate(id, updatedEvent);
-  console.log("from events model, updated event:", newEventData);
-  return newEventData;
+  console.log("FROM THE MODEL", id, updatedEvent);
+  await Event.findByIdAndUpdate(id, updatedEvent, {
+    returnDocument: "after",
+  });
+  // return theUpdatedEvent;
+}
+
+async function deleteEvent(id) {
+  await Event.findByIdAndDelete(id);
 }
 // async function findEventsByPermission(permission) {
 //   let eventsList;
@@ -87,19 +92,23 @@ async function updateEvent(id, updatedEvent) {
 //   return eventsList;
 // }
 
-async function findEventsByMonth(start) {
-  let newMonthEvents = await Event.find({$gt: Date("2012-10-01"), $lt:Date("2012-10-02")})
+async function findEventsByDates(start, end) {
+  let monthEventData = await Event.find({
+    $or: [
+      { startDate: { $gte: start, $lte: end } },
+      { endDate: { $gte: start, $lte: end } },
+    ],
+  });
 
+  console.log("list of events from  events.js");
+  return monthEventData;
 }
-
-// db.getCollection('events').find({ "startDate": "2022-02" }) //dereks idea
-// Post.find({Posted:{$gt: Date("2012-10-01"), $lt:Date("2012-10-02")}})
-// startDate: $gte start and $lte end
-
 
 module.exports = {
   createEvent,
   updateEvent,
   findEventsForEmployees,
   // findEventsByPermission,
+  findEventsByDates,
+  deleteEvent,
 };

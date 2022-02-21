@@ -48,14 +48,14 @@ const EmployeeTimeOff = mongoose.model("employeeTimeOff", {
 async function createEmployeeTimeOff(employeeTimeOffData) {
   let newEmployeeTimeOff = new EmployeeTimeOff(employeeTimeOffData);
   let createEmployeeTimeOff = await newEmployeeTimeOff.save();
-  console.log("saving Time OFF info", employeeTimeOffData);
+  // console.log("saving Time OFF info", employeeTimeOffData);
   return createEmployeeTimeOff.id;
 }
 
 // get Employee Profile by Profile id
 
 async function getEmployeeTimeOffByProfileId(id) {
-  console.log("from time off model id", id);
+  // console.log("from time off model id", id);
   let approvedTimeOff = EmployeeTimeOff.find({
     employeeProfileId: id,
   });
@@ -64,7 +64,7 @@ async function getEmployeeTimeOffByProfileId(id) {
 }
 
 async function getWeeklyTimeOffs(start) {
-  console.log("from time off model, week starting", start);
+  // console.log("from time off model, week starting", start);
   let end = moment(start)
     .add(6, "days")
     .startOf("day")
@@ -89,17 +89,18 @@ async function update(id, timeOffApproval) {
 
 // async function deleteTimeOff(id) {
 //   console.log("id from model", id)
-//   return EmployeeTimeOff.deleteOne({"._id": "id"})
+//   return EmployeeTimeOff.findByIdAndDelete({_id: id})
 // }
 
 async function deleteTimeOff(id) {
-  return EmployeeTimeOff.deleteOne(id)
+  console.log("from time off Model", id)
+  return EmployeeTimeOff.findByIdAndDelete(id)
 }
 
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,
-  getWeeklyTimeOffs,
+  getWeeklyTimeOffs, 
   update,
   listOfTimeOff,
   deleteTimeOff

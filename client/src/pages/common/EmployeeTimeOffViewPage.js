@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
@@ -45,6 +45,9 @@ const EmployeeTimeOffViewPage = ({
     };
     setLoading(true);
     fetchTimeOff();
+    // if (timeOffRequests) {
+    //   setLoading(false);
+    // }
   }, [user._id]);
 
   // useEffect(() => {
@@ -107,10 +110,17 @@ const EmployeeTimeOffViewPage = ({
     } else return "Pending";
   }
 
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/timeOff`; 
+    navigate(path);
+  }
+
+
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
-        {loading ? (
+        {!loading ? (
           <div
             style={{
               height: "320px",
@@ -126,6 +136,14 @@ const EmployeeTimeOffViewPage = ({
             }}
           >
             <ClockLoader
+              style={{
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "Center",
+                width: "100%",
+                height: "100vh",
+              }}
               color={"var(--mainHeader)"}
               loading={loading}
               size={300}
@@ -235,8 +253,13 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
-            {/* <EmployeeTimeOffForm />
-             */}
+            <div>
+              <StyledButton onClick={routeChange}>
+                Request Time off
+              </StyledButton>
+            </div>
+
+            {/* <EmployeeTimeOffForm /> */}
           </>
         )}
       </StyledPage>

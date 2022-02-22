@@ -28,7 +28,7 @@ import ViewEventsPage from "./pages/common/ViewEventsPage";
 import { SocketProvider } from "./components/reusable/context/SocketProvider";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
-// import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -98,14 +98,14 @@ function App() {
                 </RequireAuth>
               }
             />
-            {/* <Route
+            <Route
             path="/timeOff"
             element={
               <RequireAuth>
                 <EmployeeTimeOffForm />
               </RequireAuth>
             }
-          /> */}
+          />
             <Route
               path="/timeOff/page"
               element={

@@ -27,6 +27,7 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import { SocketProvider } from "./components/reusable/context/SocketProvider";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
+import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 // import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
@@ -114,6 +115,15 @@ function App() {
               }
             />
             <Route
+              path="/shiftSwapManagerPage"
+              element={
+                <RequireAuth>
+                  <ManagerViewOfShiftSwapRequests />
+                </RequireAuth>
+              }
+            />
+
+            <Route
               path="/human-resources"
               element={
                 <Manager>
@@ -171,7 +181,6 @@ function App() {
               path="/timeOff/approval"
               element={<TimeOffApprovalPage />}
             ></Route>
-
             {/* last router */}
           </Routes>
           )

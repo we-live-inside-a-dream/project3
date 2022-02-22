@@ -4,9 +4,9 @@ import moment from "moment";
 import StyledTable from "../../reusable/tables/StyledTable";
 import Modal from "../../reusable/Modal";
 import UpcomingShiftView from "./UpcomingShiftView";
-import ShiftSwapConfirmModal from "./ShiftSwapConfirmModal";
+import ShiftSwapConfirmModal from "../shift-swapping/ShiftSwapConfirmModal";
 import StyledButton from "../../reusable/Inputs/StyledButton";
-import ShiftsUpForGrabs from "./ShiftsUpForGrabs";
+import ShiftsUpForGrabs from "../shift-swapping/ShiftsUpForGrabs";
 
 function EmployeeUpcomingShiftList() {
   const [shifts, setShifts] = useState([]);

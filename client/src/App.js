@@ -27,7 +27,7 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 // import NotificationProvider from "./components/reusable/context/NotificationProvider";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
-// import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -100,14 +100,14 @@ function App() {
               </RequireAuth>
             }
           />
-          {/* <Route
+          <Route
             path="/timeOff"
             element={
               <RequireAuth>
                 <EmployeeTimeOffForm />
               </RequireAuth>
             }
-          /> */}
+          />
           <Route
             path="/timeOff/page"
             element={

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
@@ -42,13 +42,13 @@ const EmployeeTimeOffViewPage = ({
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
     };
-    setLoading(true)
+    setLoading(true);
     fetchTimeOff();
-    if (timeOffRequests.length > 0) {
-      setLoading(false);
-    }
+    // if (timeOffRequests) {
+    //   setLoading(false);
+    // }
   }, [user._id]);
-  
+
   // useEffect(() => {
   //   setLoading(true);
   //   setTimeout(() => {
@@ -108,122 +108,158 @@ const EmployeeTimeOffViewPage = ({
     } else return "Pending";
   }
 
+  let navigate = useNavigate(); 
+  const routeChange = () =>{ 
+    let path = `/timeOff`; 
+    navigate(path);
+  }
+
+
   return (
     <div>
-      <StyledPage styled={{position: "relative",}}>
-      {
-        loading ?
-        <div style={{height:"320px", width: "320px", borderRadius: "50%", border: "3px solid var(--mainHeader)", position:"absolute", top: "0", left: "0", transformOrigin: "topLeft", transform: "translate(50%, 50%)", margin: "auto"}}>
-        <ClockLoader color={"var(--mainHeader)"} loading={loading}  size={300}  />
-        </div> 
-       :
-       <>
-        <StyledPageTitle style={{ marginBottom: "10px" }}>
-          TIME OFF REQUESTS
-        </StyledPageTitle>
-          <StyledTable padding={"5px"}>
-            <thead>
-              <tr>
-                <th>STATUS</th>
-                {/* <th>NAME</th> */}
-                <th>TYPE</th>
-                <th>START DATE</th>
-                <th>END DATE</th>
-                <th>COMMENTS</th>
-                <th>EDIT/DELETE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {timeOffRequests?.map((t) => {
-                return (
-                  <tr
-                    key={t._id}
-                    value={t}
-                    style={{
-                      padding: "10px",
-                      textAlign: "center",
-                      height: "auto",
-                    }}
-                  >
-                    {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
+      <StyledPage styled={{ position: "relative" }}>
+        {!loading ? (
+          <div
+            style={{
+              height: "320px",
+              width: "320px",
+              borderRadius: "50%",
+              border: "3px solid var(--mainHeader)",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              transformOrigin: "topLeft",
+              transform: "translate(50%, 50%)",
+              margin: "auto",
+            }}
+          >
+            <ClockLoader
+              style={{
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "Center",
+                width: "100%",
+                height: "100vh",
+              }}
+              color={"var(--mainHeader)"}
+              loading={loading}
+              size={300}
+            />
+          </div>
+        ) : (
+          <>
+            <StyledPageTitle style={{ marginBottom: "10px" }}>
+              TIME OFF REQUESTS
+            </StyledPageTitle>
+            <StyledTable padding={"5px"}>
+              <thead>
+                <tr>
+                  <th>STATUS</th>
+                  {/* <th>NAME</th> */}
+                  <th>TYPE</th>
+                  <th>START DATE</th>
+                  <th>END DATE</th>
+                  <th>COMMENTS</th>
+                  <th>EDIT/DELETE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {timeOffRequests?.map((t) => {
+                  return (
+                    <tr
+                      key={t._id}
+                      value={t}
+                      style={{
+                        padding: "10px",
+                        textAlign: "center",
+                        height: "auto",
+                      }}
+                    >
+                      {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
 
-                    <td>
-                      {<ApprovalSymbol time={t} />}
-                      {`${statusConvert(t.status)}`}
-                    </td>
-                    <td>{`${t.type}`}</td>
-                    <td>{`${t.startDate}`}</td>
-                    <td>{`${t.endDate}`}</td>
-                    {/* <td>{`${t.status}`}</td> */}
-                    <td>{`${t.comment}`}</td>
-                    <td>
-                      <div>
-                        <StyledEditButton
-                          fontSize="25px"
-                          // margin={"0"}
-                          // padding={"0"}
-                          onClick={() => {
-                            setModalEditIsOpen(true);
-                            setTimeOffValues(t);
-                            console.log("this is t", t);
-                          }}
-                        >
-                          ✎
-                        </StyledEditButton>
-
-                        <Modal
-                          onClose={() => {
-                            setModalConfirmIsOpen(false);
-                          }}
-                          open={modalConfirmIsOpen}
-                        >
-                          <div>
-                            Are you sure you want to Delete your time off
-                            request?
-                          </div>
-                          <StyledButton
+                      <td>
+                        {<ApprovalSymbol time={t} />}
+                        {`${statusConvert(t.status)}`}
+                      </td>
+                      <td>{`${t.type}`}</td>
+                      <td>{`${t.startDate}`}</td>
+                      <td>{`${t.endDate}`}</td>
+                      {/* <td>{`${t.status}`}</td> */}
+                      <td>{`${t.comment}`}</td>
+                      <td>
+                        <div>
+                          <StyledEditButton
+                            fontSize="25px"
+                            // margin={"0"}
+                            // padding={"0"}
                             onClick={() => {
-                              deleteTimeOff(t._id);
-                              setModalConfirmIsOpen(false)
+                              setModalEditIsOpen(true);
+                              setTimeOffValues(t);
+                              console.log("this is t", t);
                             }}
                           >
-                            Delete
-                          </StyledButton>
-                          <StyledButton
-                            onClick={() => setModalConfirmIsOpen(false)}
+                            ✎
+                          </StyledEditButton>
+
+                          <Modal
+                            onClose={() => {
+                              setModalConfirmIsOpen(false);
+                            }}
+                            open={modalConfirmIsOpen}
                           >
-                            Cancel
-                          </StyledButton>
-                        </Modal>
-                        <StyledEditButton
-                          // fontSize="20px"
-                          margin={"0px 20px"}
-                          // padding={"0"}
-                          // onClick={() => {
-                          //   setModalConfirmIsOpen(true);
-                          //   setTimeOffValues(t);
-                          //   setSelectedId(t._id)
-                          //   deleteTimeOff(t._id);
-                          //   console.log("this is t", t);
-                          // }}
-                          onClick={() => {
-                            setModalConfirmIsOpen(true);
-                          }}
-                        >
-                          ❌
-                        </StyledEditButton>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </StyledTable>
-        
-          {/* <EmployeeTimeOffForm />
-       */}
+                            <div>
+                              Are you sure you want to Delete your time off
+                              request?
+                            </div>
+                            <StyledButton
+                              onClick={() => {
+                                deleteTimeOff(t._id);
+                                setModalConfirmIsOpen(false);
+                              }}
+                            >
+                              Delete
+                            </StyledButton>
+                            <StyledButton
+                              onClick={() => setModalConfirmIsOpen(false)}
+                            >
+                              Cancel
+                            </StyledButton>
+                          </Modal>
+                          <StyledEditButton
+                            // fontSize="20px"
+                            margin={"0px 20px"}
+                            // padding={"0"}
+                            // onClick={() => {
+                            //   setModalConfirmIsOpen(true);
+                            //   setTimeOffValues(t);
+                            //   setSelectedId(t._id)
+                            //   deleteTimeOff(t._id);
+                            //   console.log("this is t", t);
+                            // }}
+                            onClick={() => {
+                              setModalConfirmIsOpen(true);
+                            }}
+                          >
+                            ❌
+                          </StyledEditButton>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </StyledTable>
+
+            <div>
+              <StyledButton onClick={routeChange}>
+                Request Time off
+              </StyledButton>
+            </div>
+
+            {/* <EmployeeTimeOffForm /> */}
           </>
-}
+        )}
       </StyledPage>
       <Modal
         onClose={() => {
@@ -236,18 +272,16 @@ const EmployeeTimeOffViewPage = ({
           onSave={updateTimeOff}
         />
       </Modal>
-      
     </div>
   );
 };
 
 // { loading ? (
-//   <ClockLoader 
-//   color={#F37A24} 
+//   <ClockLoader
+//   color={#F37A24}
 //   loading={loading}
 //   size={30}
 //   /> ) : null
-//   }  
-  
+//   }
 
 export default EmployeeTimeOffViewPage;

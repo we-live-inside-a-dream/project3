@@ -19,7 +19,6 @@ import LogoImg from "./logo.png";
 import { Link } from "react-router-dom";
 import AuthenticationContext from "../login/AuthenticationContext";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
-import StyledTableData from "../reusable/tables/StyledTableData";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
@@ -56,10 +55,6 @@ function NavBar() {
         ) : null}
         <LeftContainer>
           <NavbarLinkContainer extendNavbar={extendNavbar}>
-            {/* <NavbarLink to="/employeeList">Employees</NavbarLink>
-            <NavbarLink to="/createEmployee">EmpForm</NavbarLink> */}
-            {/* <NavbarLink to="/availabilities">Availabilities</NavbarLink> */}
-
             <OpenLinksButton
               onClick={() => {
                 setExtendNavbar((curr) => !curr);

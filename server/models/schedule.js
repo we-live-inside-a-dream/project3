@@ -20,6 +20,8 @@ const Schedule = mongoose.model("schedule", {
   previousShiftOwnerId: String,
   previousShiftOwnerFirstName: String,
   previousShiftOwnerLastName: String,
+  bidderFirstName: String,
+  bidderLastName: String,
   managerMessage: String,
 });
 
@@ -113,7 +115,7 @@ async function findAllEmployeeSwapRequests() {
     date: { $gte: today },
     swapRequestStatus: "pending",
     swapBidRequest: "pending",
-  });
+  }).sort({ date: 1 });
   return shiftSwapList;
 }
 

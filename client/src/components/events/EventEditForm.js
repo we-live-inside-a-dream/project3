@@ -30,7 +30,12 @@ const visibilityData = [
   { value: "employee", label: "All Staff" },
 ];
 
-const EventEditForm = ({ existingValues }) => {
+const EventEditForm = ({
+  existingValues,
+  everyEventList,
+  setEveryEventList,
+  setTheNewEvent,
+}) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -43,6 +48,7 @@ const EventEditForm = ({ existingValues }) => {
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
+  // const [theNewEvent, setTheNewEvent] = useState();
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
@@ -158,6 +164,8 @@ const EventEditForm = ({ existingValues }) => {
       };
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
+      setTheNewEvent(newEvent);
+      // setExistingValues("");
     }
     if (existingValues) {
       let newEvent = {
@@ -177,6 +185,7 @@ const EventEditForm = ({ existingValues }) => {
       };
       await updateEvent(newEvent);
       console.log("posting updated event", newEvent);
+      setEveryEventList([...everyEventList]);
     }
   }
 
@@ -322,7 +331,12 @@ const EventEditForm = ({ existingValues }) => {
           <div></div>
           <div></div>
           <div style={{ display: "flex" }}>
-            <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
+            <StyledButton
+              onClick={() => {
+                postData();
+              }}
+              style={{ alignSelf: "flex-end" }}
+            >
               CONFIRM
             </StyledButton>
             <StyledButton

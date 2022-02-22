@@ -48,6 +48,7 @@ function ShiftSwapConformModal({ shift, setSwapConfirmModalIsOpen }) {
       previousShiftOwnerId: shift.employeeId,
       previousShiftOwnerFirstName: shift.firstName,
       previousShiftOwnerLastName: shift.firstName,
+   
     };
 
     console.log("New Shift...", newShiftSwapRequest);

@@ -18,6 +18,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [allEvents, setAllEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [everyEventList, setEveryEventList] = useState([]);
+  const [theNewEvent, setTheNewEvent] = useState();
   const [existingValues, setExistingValues] = useState();
   const authContext = useContext(AuthenticationContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -101,7 +102,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       setEveryEventList([...filteredEvents, ...myFilteredEvents]);
     };
     getEventsAll();
-  }, [nav, monthEnd, monthStart, permissions, user._id]);
+  }, [nav, monthEnd, monthStart, permissions, user._id, theNewEvent]);
 
   let mainGridStyle = {
     height: "auto",
@@ -211,9 +212,13 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       </div>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EventEditForm
+          setTheNewEvent={setTheNewEvent}
+          theNewEvent={theNewEvent}
           eventId={eventId}
           existingValues={existingValues}
           onClose={() => setIsOpen(false)}
+          setEveryEventList={setEveryEventList}
+          everyEventList={everyEventList}
           // deleteEvent={() => setDeleteEvent(true)}
         />
         **edit**

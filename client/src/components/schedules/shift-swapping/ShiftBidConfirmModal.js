@@ -44,11 +44,13 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
       swapBidRequest: "pending",
       reasonForSwap: shift.reason,
       shiftBidId: user._id,
+      bidderFirstName: user.firstName,
+      bidderLastName: user.lastName,
       bidRequestDate: new Date(),
       approvingManagerId: null,
       previousShiftOwnerId: shift.employeeId,
       previousShiftOwnerFirstName: shift.firstName,
-      previousShiftOwnerLastName: shift.firstName,
+      previousShiftOwnerLastName: shift.lastName,
     };
 
     console.log("New Shift...", newShiftSwapRequest);

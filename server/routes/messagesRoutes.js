@@ -41,26 +41,35 @@ router.get("/unread", async (req, res) => {
     id
   );
   const convoIds = conversations?.map((c) => c._id.toString());
-  console.log(convoIds);
-
-  // find every message with conversationId and see if read = false
-  let count = 0;
+  // find every message with conversationId
+  
+  let array = [];
   try {
     for (let cId of convoIds) {
-      const unread = await Message.find({
-        conversationId: cId,
-        read: { $ne: id },
-      });
+      const unread = await Message.find(
+        {
+          conversationId: cId, //user convos
+          read: { $ne: id },
+        },
+        { conversationId: 1, _id: 0 },
+        { limit: 1 }
+      );
       if (unread.length > 0) {
-        count++;
-        // array.push(count);
-        result = count;
+        array.push(unread);
       }
     }
-    console.log(result);
+    // console.log("this is unread", array);
+    function getIds() {
+      let result = array.map((a) => {
+        return a[0].conversationId;
+      });
+
+      return result;
+    }
+    let result = getIds();
     res.json(result);
   } catch {
-    res.json(0);
+    res.json("nope");
   }
 });
 
@@ -81,7 +90,7 @@ router.get("/:conversationId", async (req, res) => {
       );
     });
 
-    console.log("messages", messages);
+    // console.log("messages", messages);
 
     res.status(200).json(messages);
   } catch (err) {

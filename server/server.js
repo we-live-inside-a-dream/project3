@@ -13,11 +13,11 @@ const http = require("http").Server(app);
 const io = require("socket.io")(http);
 
 io.on("connection", (socket) => {
-  // console.log(`socketID`, socket.id);
+  // console.log(`user connected`, socket.id);
   const id = socket.handshake.query.id;
   // console.log("userId", id);
-  socket.join(id); //this becomes users socket.id
-  // console.log("joined room", id);
+  socket.join(id); //the user joins this "room"
+  console.log("user Connected", id);
 
   //send and get message
   socket.on("sendMessage", ({ recipients, sender, text }) => {
@@ -32,13 +32,19 @@ io.on("connection", (socket) => {
       // newRecipients.push(id);
       // console.log("new REC", newRecipients);
       // console.log("broadcast to room", recipient);
-
+      socket.broadcast.to(recipient).emit("getUnread", { recipient });
+      // socket.broadcast.to(recipient).emit("getNotification", {});
       socket.broadcast.to(recipient).emit("getMessage", {
         recipients,
         sender,
         text,
       });
     });
+  });
+
+  socket.on("update", () => {
+    socket.emit("getNotification", {});
+    socket.emit("getUnread");
   });
 
   //when disconnect

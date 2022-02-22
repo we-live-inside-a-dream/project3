@@ -99,6 +99,19 @@ const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return EmployeeProfile.findById(employeeProfile_id);
 };
 
+const findPositionsByEmployeeId = async function (id) {
+  console.log(
+    "from employee model, looking up positions for employee with id: ",
+    id
+  );
+  let employee = await EmployeeProfile.findById(id);
+  console.log(
+    "from employee profile model, employee positions are",
+    employee.positions
+  );
+  return employee.positions;
+};
+
 const findEmployeeByProfileEmail = async (email) => {
   let employeeProfile = await EmployeeProfile.findOne({ email });
   return employeeProfile;
@@ -122,5 +135,7 @@ module.exports = {
   findEmployeeByProfileEmail,
   updateEmployeeProfile,
   logIn,
+  findPositionsByEmployeeId,
+
   getActiveEmployeeNames,
 };

@@ -41,6 +41,7 @@ const EmployeeTimeOffViewPage = ({
       let fetchedTimeOff = await fetchResult.json();
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
+      setLoading(false);
     };
     setLoading(true);
     fetchTimeOff();
@@ -52,9 +53,10 @@ const EmployeeTimeOffViewPage = ({
   // useEffect(() => {
   //   setLoading(true);
   //   setTimeout(() => {
-  //       setLoading(false);
-  //   }, 2000)
-  // },[])
+  //     setLoading(false);
+  //   }, 2000);
+
+  // }, [timeOffRequests]);
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);

@@ -81,5 +81,31 @@ router.delete("/schedule/delete", async (req, res) => {
   console.log("delete route", id);
   res.send(deleteSchedule);
 });
+////////////////////////////////SCHEDULE ROUTES FOR SHIFT SWAPPING///////////////////////////////
+router.get("/shifts-up-for-grabs", async (req, res) => {
+  let userId = req.query.userId;
+  console.log(
+    "from API, looking for shifts up for grabs for employee with id",
+    userId
+  );
+
+  let employeePositions = await employeeProfileModel.findPositionsByEmployeeId(
+    userId
+  );
+  let availableShiftsList =
+    await scheduleModel.findAvailableShiftsByEmployeePositions(
+      userId,
+      employeePositions
+    );
+  console.log("from API: available shifts are", availableShiftsList);
+  res.json(availableShiftsList);
+});
+
+router.get("/find-pending-swap-requests", async (req, res) => {
+  console.log("FROM SCHEDULE API SWAP REQUESTS");
+  let swapRequests = await scheduleModel.findAllEmployeeSwapRequests();
+  console.log("FOM SCHEDULE API AFTER MODEL SWAP REQUESTS ARE:", swapRequests);
+  res.json(swapRequests);
+});
 
 module.exports = router;

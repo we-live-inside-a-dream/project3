@@ -11,12 +11,16 @@ const Schedule = mongoose.model("schedule", {
   end: String,
   breaks: [{ name: String, start: String, end: String, paid: Boolean }],
   swapRequestStatus: String,
+  swapRequestDate: Date,
+  swapBidRequest: String,
   reasonForSwap: String,
   shiftBidId: String,
+  bidRequestDate: Date,
   approvingManagerId: String,
   previousShiftOwnerId: String,
   previousShiftOwnerFirstName: String,
   previousShiftOwnerLastName: String,
+  managerMessage: String,
 });
 
 async function createSchedule(ScheduleData) {
@@ -77,6 +81,42 @@ async function updateWithName(id, newFirstName, newLastName) {
   );
 }
 
+async function deleteSchedule(id) {
+  // console.log(id, "id in the model...");
+  return Schedule.findByIdAndDelete(id);
+}
+
+////////////////////////////////SCHEDULE MODEL FUNCTIONS FOR SHIFT SWAPPING/////////////////////////
+async function findAvailableShiftsByEmployeePositions(positions) {
+  let today = moment().format("yyyy-MM-DD");
+  console.log(
+    "from schedule model, positions before search are",
+    positions,
+    "for employee with id"
+  );
+  let shiftArray = [];
+  for (p in positions) {
+    let shifts = await Schedule.find({
+      position: p,
+      swapRequestStatus: "pending",
+      date: { $gte: today },
+    });
+    shiftArray = [...shifts];
+  }
+
+  return shiftArray;
+}
+
+async function findAllEmployeeSwapRequests() {
+  let today = moment().format("yyyy-MM-DD");
+  let shiftSwapList = Schedule.find({
+    date: { $gte: today },
+    swapRequestStatus: "pending",
+    swapBidRequest: "pending",
+  });
+  return shiftSwapList;
+}
+
 // Item.update(
 //   { _id: id },
 //   {
@@ -94,11 +134,6 @@ async function updateWithName(id, newFirstName, newLastName) {
 //   }
 // );
 
-async function deleteSchedule(id) {
-  // console.log(id, "id in the model...");
-  return Schedule.findByIdAndDelete(id);
-}
-
 module.exports = {
   createSchedule,
   listScheduleByDay,
@@ -106,7 +141,9 @@ module.exports = {
   listScheduleByMonth,
   findById,
   findByEmployeeProfileId,
+  findAvailableShiftsByEmployeePositions,
   update,
   deleteSchedule,
   listByWeekDays,
+  findAllEmployeeSwapRequests,
 };

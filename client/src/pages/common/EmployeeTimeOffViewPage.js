@@ -67,31 +67,7 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
-    // setLoading(true);
   }
-
-  // console.log("this is time off values", timeOffValues);
-  // async function deleteTimeOff(id) {
-  //   console.log("This is the delete id", id)
-  //   let result = await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  //   console.log("this is the result", result)
-  // }
-  // const deleteTimeOff = async (id) => {
-  //   await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  // };
-
-  // async function deleteTimeOff(id) {
-  //   await fetch("/api/timeOff/delete/" + id, {
-  //     method: "DELETE",
-  //   });
-  //   let removedTimeOff = timeOff.filter((t) => t._id !== id);
-  //   setTimeOff(removedTimeOff);
-  //   //  navigate('/')
-  // }
 
   async function deleteTimeOff(id) {
     await fetch("/api/timeOff/delete/" + id, {
@@ -110,17 +86,16 @@ const EmployeeTimeOffViewPage = ({
     } else return "Pending";
   }
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/timeOff`; 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/timeOff`;
     navigate(path);
-  }
-
+  };
 
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
-        {!loading ? (
+        {loading ? (
           <div
             style={{
               height: "320px",
@@ -137,7 +112,6 @@ const EmployeeTimeOffViewPage = ({
           >
             <ClockLoader
               style={{
-                textAlign: "center",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "Center",
@@ -253,7 +227,7 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
-            <div>
+            <div styled={{padding: "40%"}}>
               <StyledButton onClick={routeChange}>
                 Request Time off
               </StyledButton>

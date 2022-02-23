@@ -2,15 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import * as fns from "date-fns";
-
 import { NativeSelect } from "@mui/material";
-// import MenuPopupState from "../UNUSED/MenuPopupState";
-
-// import StyledLabel from "../reusable/Inputs/StyledLabel";
-import CenterStyle from "../reusable/Inputs/CenterStyle";
-// import StyledInput from "../reusable/Inputs/StyledInput";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
+import { useSchedule } from "../reusable/context/ScheduleProvider";
 import {
   firstNameValidation,
   dateValidation,
@@ -35,7 +30,20 @@ import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 
-function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
+function EditSchedule({
+  onClose,
+  shiftId,
+  reload,
+  modalData,
+  // createShift,
+  // updateShift,
+  // existingValues,
+  clearValues,
+  // deleteShift,
+}) {
+  // const value = useSocket();
+  // const createShift = value.createShift;
+  // const updateShift = value.updateShift;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState("");
@@ -54,7 +62,9 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
   const [shiftTimeMessageVal, setShiftTimeMessageVal] = useState(null);
   const [shiftBrakeMessageVal, setShiftBrakeMessageVal] = useState(null);
   const [empAvailibility, setEmpAvailibility] = useState();
+  const [existingValues, setExistingValues] = useState();
   const [shown, setShown] = useState(false);
+  // const [deleteShift, setDeleteShift] = useState(false);
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -66,39 +76,39 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     fetchNames();
   }, []);
 
-  // useEffect(() => {
-  //   if (employeeId) {
-  //     console.log("the employee id is...", employeeId);
-  //     const firstName = empNames.find(findNames).firstName;
-  //     const lastName = empNames.find(findNames).lastName;
-  //     console.log("first name..", firstName);
-  //     console.log("last name..", lastName);
+  useEffect(() => {
+    if (shiftId) {
+      const fetchShift = async () => {
+        let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+        let fetchedShift = await fetchResult.json();
+        setExistingValues(fetchedShift);
+      };
 
-  //     function findNames(empName) {
-  //       return (empName._id = employeeId);
-  //     }
-  //   }
+      // if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
 
-  // console.log("the names...", empNames);
-
-  // setFirstName()
-  // setLastName()
-  // }, [employeeId]);
+      fetchShift();
+    }
+  }, [shiftId]);
 
   useEffect(() => {
-    if (existingValues) {
-      setFirstName(existingValues.firstName);
-      setEmployeeId(existingValues.employeeId);
-      setLastName(existingValues.lastName);
-      setStart(
-        ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
-      ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
-      setEnd(
-        ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
-      ); // its FINE
-      setDate(existingValues.date);
-      setBreaks(existingValues.breaks);
-    }
+    if (!modalData) return;
+    setExistingValues(modalData);
+  }, [modalData]);
+
+  useEffect(() => {
+    console.log("time to edit", existingValues);
+    if (!existingValues) return;
+    setFirstName(existingValues.firstName);
+    setEmployeeId(existingValues.employeeId);
+    setLastName(existingValues.lastName);
+    setStart(
+      ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
+    ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
+    setEnd(
+      ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
+    ); // its FINE
+    setDate(existingValues.date);
+    setBreaks(existingValues.breaks);
   }, [existingValues]);
 
   async function createShift(createdUser) {
@@ -122,9 +132,69 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     });
   }
 
+  const deleteShiftById = async () => {
+    await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+      method: "DELETE",
+    });
+    onClose();
+    reload();
+  };
+
   function onInputUpdate(value, setter) {
     // console.log(value);
     setter(value);
+  }
+
+  async function postData() {
+    let newShift = {
+      employeeId,
+      firstName,
+      lastName,
+      start: fns.format(new Date(start), "HH:mm").toString(), //ISO date => HH:mm
+      end: fns.format(new Date(end), "HH:mm").toString(),
+      date,
+      breaks,
+    };
+    validateForm();
+    console.log("validate form", validation);
+    console.log("saving new schedule form", newShift);
+
+    if (!existingValues && validation === null) {
+      await createShift(newShift);
+    } else {
+      setShown(true);
+    }
+
+    if (existingValues) {
+      console.log("Update Shift...", newShift);
+      await updateShift(newShift);
+      setExistingValues(null);
+    } else {
+      console.log("New Shift...", newShift);
+      await createShift(newShift);
+      setExistingValues(null);
+    }
+    onClose();
+    reload();
+  }
+
+  function onAddBreak() {
+    let breaky = {};
+    let newBreak = [...breaks];
+    breaky.name = breakName;
+    breaky.start = fns.format(new Date(breakStart), "HH:mm").toString(); //ISO date => HH:mm
+    breaky.end = fns.format(new Date(breakEnd), "HH:mm").toString();
+    breaky.paid = breakPaid;
+
+    newBreak.push(breaky);
+    setBreakToAdd("");
+    setBreaks(newBreak);
+  }
+
+  function onRemoveBreak(index) {
+    let newBreak = [...breaks];
+    newBreak.splice(index, 1);
+    setBreaks(newBreak);
   }
 
   let validation;
@@ -164,57 +234,16 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     return validation;
   }
 
-  async function postData() {
-    let newShift = {
-      employeeId,
-      firstName,
-      lastName,
-      start: fns.format(new Date(start), "HH:mm").toString(), //ISO date => HH:mm
-      end: fns.format(new Date(end), "HH:mm").toString(),
-      date,
-      breaks,
-    };
-    validateForm();
-    console.log("validate form", validation);
-    console.log("saving new schedule form", newShift);
-
-    if (!existingValues && validation === null) {
-      await createShift(newShift);
-    } else setShown(true);
-
-    onClose();
-    if (existingValues) {
-      console.log("New Shift...", newShift);
-      await updateShift(newShift);
-    } else {
-      console.log("New Shift...", newShift);
-      await createShift(newShift);
-    }
-  }
-
-  function onAddBreak() {
-    let breaky = {};
-    let newBreak = [...breaks];
-    breaky.name = breakName;
-    breaky.start = fns.format(new Date(breakStart), "HH:mm").toString(); //ISO date => HH:mm
-    breaky.end = fns.format(new Date(breakEnd), "HH:mm").toString();
-    breaky.paid = breakPaid;
-
-    newBreak.push(breaky);
-    setBreakToAdd("");
-    setBreaks(newBreak);
-  }
-
-  function onRemoveBreak(index) {
-    let newBreak = [...breaks];
-    newBreak.splice(index, 1);
-    setBreaks(newBreak);
-  }
-
   return (
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
+        <StyledButton
+          style={{ position: "fixed", top: "0px", right: "0px" }}
+          onClick={onClose}
+        >
+          x
+        </StyledButton>
         <h1>Schedule</h1>
         <div>
           <InputLabel>
@@ -360,7 +389,6 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
         <div styles={{ display: "flex", flexDirection: "row" }}>
           {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>SUBMIT</StyledButton>
-          <StyledButton onClick={onClose}>Cancle</StyledButton>
         </div>
 
         <div>
@@ -373,7 +401,7 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
             />
           ))}
           <div></div>
-          <StyledButton onClick={deleteShift}>Delete</StyledButton>
+          <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
         </div>
       </StyledModal>
       {/* </StyledFormWrapper> */}

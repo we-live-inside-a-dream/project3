@@ -10,6 +10,8 @@ import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import WeekScheduleLegend from "./WeekScheduleLegend";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 import TimeOffLegend from "./TimeOffLegend";
+import EditSchedule from "../../edit-schedule/EditSchedule";
+import Modal from "../../reusable/Modal";
 
 function WeekSchedule({ setCurrentTab, currentTab }) {
   moment().format();
@@ -18,8 +20,8 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   );
   const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [modalEmployee, setModalEmployee] = useState({});
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalShift, setModalShift] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [shiftId, setShiftId] = useState("");
   const [modalDate, setModalDate] = useState("");
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
@@ -28,9 +30,15 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   const [empAvailibility, setEmpAvailibility] = useState([]);
   const [empTimeOff, setEmpTimeOff] = useState();
   const [date, setDate] = useState();
+  const [renderPage, setRenderPage] = useState();
+  const [deleteShift, setDeleteShift] = useState(false);
+  const [modalData, setModalData] = useState();
   // const [availabilityColor, setAvailabilityColor] = useState();
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
+  useEffect(() => {
+    console.log("shift id is ...", shiftId);
+  }, [shiftId]);
   useEffect(() => {
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");
@@ -93,7 +101,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     findDateRange();
     empAvail();
     getAllTheEmployees();
-  }, [startDay]);
+  }, [startDay, renderPage]);
 
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
   function isEmployeeavailable(id, date) {
@@ -151,6 +159,14 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     let newValue = fns.format(new Date(value), "yyyy-MM-dd").toString();
     console.log(newValue, "is the new formatted value for startDay");
     setter(newValue);
+  }
+  function onClickHandler(shift, employee, date) {
+    setIsOpen(true);
+    setModalData({ employeeId: employee._id, date: date });
+    setShiftId(shift._id);
+
+    //need to send date,employeeId
+    console.log("FROM ONCLICK", employee._id, date, shift);
   }
 
   return (
@@ -241,10 +257,11 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                         borderRight: "lightGrey",
                       }}
                       onClick={() => {
-                        setModalOpen(true);
-                        setModalShift(shift);
-                        setModalEmployee(employee);
-                        setModalDate(date);
+                        onClickHandler(shift, employee, date);
+                        // setIsOpen(true);
+                        // setShiftId(shift);
+                        // setModalEmployee(employee);
+                        // setModalDate(date);
                         console.log("FROM ONCLICK", employee, date, shift);
                       }}
                     >
@@ -302,11 +319,13 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                     }}
                     key={shift._id}
                     onClick={() => {
-                      setModalOpen(true);
-                      setModalShift(shift);
-                      setModalEmployee(employee);
-                      setModalDate(date);
-                      console.log("FROM ONCLICK", employee, date, shift);
+                      onClickHandler(shift, employee, date);
+                      // setIsOpen(true);
+                      // setShiftId(shift._id);
+                      // setModalEmployee(employee._id);
+                      // setModalDate(date);
+                      //need to send date,employeeId
+                      console.log("FROM ONCLICK", employee._id, date, shift);
                     }}
                     backgroundColor={availabilityColor}
                   >
@@ -318,14 +337,29 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      {modalOpen && (
-        <WeekScheduleModal
-          shift={modalShift}
-          employee={modalEmployee}
-          setModalOpen={setModalOpen}
-          date={modalDate}
+      <Modal
+        open={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          // setShift(null);
+        }}
+      >
+        <EditSchedule
+          shiftId={shiftId}
+          modalData={modalData}
+          // existingValues={shift}
+          // clearValues={() => setShift(null)}
+          onClose={() => {
+            setIsOpen(false);
+            setShiftId(null);
+            setModalData(null);
+          }}
+          deleteShift={() => setDeleteShift(true)}
+          reload={() => setRenderPage(true)}
+          // createShift={createShift}
+          // updateShift={updateShift}
         />
-      )}
+      </Modal>
     </div>
   );
 }

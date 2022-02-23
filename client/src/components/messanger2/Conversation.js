@@ -4,6 +4,7 @@ import AuthenticationContext from "../login/AuthenticationContext";
 import "./conversation.css";
 import NameIcon from "./NameIcon";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
+import { StyledConverstion } from "./StyledMessangerPage";
 
 export default function Conversation({ conversation }) {
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,7 +13,8 @@ export default function Conversation({ conversation }) {
 
   return (
     <>
-      <div style={{ border: "1px solid black", position: "relative" }}>
+      <StyledConverstion>
+        {/* <div style={{ border: "1px solid black", position: "relative" }}> */}
         {conversation?.members?.map((m) => {
           return <NameIcon name={m.label} key={m.value} />;
         })}
@@ -21,7 +23,7 @@ export default function Conversation({ conversation }) {
           <div
             style={{
               height: "10px",
-              width: "10px",
+              // width: "10px",
               borderRadius: "50%",
               backgroundColor: "red",
               position: "absolute",
@@ -31,7 +33,8 @@ export default function Conversation({ conversation }) {
             }}
           />
         ) : null}
-      </div>
+      </StyledConverstion>
+      {/* </div> */}
     </>
     //   <div className="conversation">
     //     {conversation?.map((c) => {

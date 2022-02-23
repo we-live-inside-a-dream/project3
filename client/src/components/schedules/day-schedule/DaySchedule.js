@@ -7,40 +7,44 @@ import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
+import { StyledButton } from "../../reusable/Inputs/StyledEmployeeForm";
 
 function DaySchedule({ setCurrentTab, currentTab }) {
-  const [shift, setShift] = useState();
+  // const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState();
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
-  const [deleteShift, setDeleteShift] = useState(false);
+  // const [deleteShift, setDeleteShift] = useState(false);
+  const [renderPage, setRenderPage] = useState();
 
-  let today = new Date();
-  // console.log("today is", today);
   useEffect(() => {
+    let today = new Date();
     setDay(moment(today).format("yyyy-MM-DD"));
-    if (shiftId) {
-      const fetchShift = async () => {
-        let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
-        let fetchedShift = await fetchResult.json();
-        setShift(fetchedShift);
-      };
-      const deleteShiftById = async () => {
-        await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
-          method: "DELETE",
-        });
-      };
-      //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
-      if (deleteShift) {
-        deleteShiftById();
-        setDeleteShift(false);
-        setIsOpen(false);
-      } else {
-        fetchShift();
-      }
-    }
-  }, [shiftId, deleteShift]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (shiftId) {
+  //     const fetchShift = async () => {
+  //       let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+  //       let fetchedShift = await fetchResult.json();
+  //       setShift(fetchedShift);
+  //     };
+  //     const deleteShiftById = async () => {
+  //       await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+  //         method: "DELETE",
+  //       });
+  //     };
+  //     //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
+  //     if (deleteShift) {
+  //       deleteShiftById();
+  //       setDeleteShift(false);
+  //       setIsOpen(false);
+  //     } else {
+  //       fetchShift();
+  //     }
+  //   }
+  // }, [shiftId, deleteShift]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -49,7 +53,9 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       setSchedule(fetchedDay);
     };
     fetchSchedule();
-  }, [day, isOpen]);
+    setRenderPage(false);
+  }, [day, renderPage]);
+  // }, [day, createShift, updateShift, deleteShift]);
 
   //business hours should come from a db fetch
   let startTime = 8;
@@ -73,6 +79,27 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
+  // async function createShift(createdUser) {
+  //   await fetch("/api/schedule/schedule/new", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(createdUser),
+  //   });
+  // }
+
+  // async function updateShift(updatedUser) {
+  //   console.log("new user data", updatedUser);
+  //   await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(updatedUser),
+  //   });
+  // }
+
   return (
     <div className="container">
       <div
@@ -208,12 +235,21 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT2</StyledButton>
+      <Modal
+        open={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          // setShift(null);
+        }}
+      >
         <EditSchedule
           shiftId={shiftId}
-          existingValues={shift}
-          onClose={() => setIsOpen(false)}
-          deleteShift={() => setDeleteShift(true)}
+          onClose={() => {
+            setIsOpen(false);
+            setShiftId(null);
+          }}
+          reload={() => setRenderPage(true)}
         />
       </Modal>
     </div>

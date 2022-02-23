@@ -87,7 +87,7 @@ export const StyledModal = styled.div`
   gap: 1em;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: auto;
-
+  position: relative;
   width: 100%;
   height: min-content;
   max-width: 700px;

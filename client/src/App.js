@@ -26,6 +26,8 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 // import NotificationProvider from "./components/reusable/context/NotificationProvider";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import { SocketProvider } from "./components/reusable/context/SocketProvider";
+import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
+
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
@@ -40,6 +42,7 @@ function App() {
           style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
           className="App"
         >
+          <ChatPopupWindow />
           <GlobalStyle />
           <NavBar />
           <Routes>
@@ -99,13 +102,13 @@ function App() {
               }
             />
             <Route
-            path="/timeOff"
-            element={
-              <RequireAuth>
-                <EmployeeTimeOffForm />
-              </RequireAuth>
-            }
-          />
+              path="/timeOff"
+              element={
+                <RequireAuth>
+                  <EmployeeTimeOffForm />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/timeOff/page"
               element={

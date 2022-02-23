@@ -197,7 +197,7 @@ const EventEditForm = ({
 
   return (
     <div>
-      <StyledFormWrapper>
+      {/* <StyledFormWrapper> */}
         <StyledForm>
           <h2 style={{ margin: "0px" }}>Create Event</h2>
           <div></div>
@@ -361,7 +361,7 @@ const EventEditForm = ({
           </div>
           <div></div>
         </StyledForm>
-      </StyledFormWrapper>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

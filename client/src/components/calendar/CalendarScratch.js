@@ -216,7 +216,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
           theNewEvent={theNewEvent}
           eventId={eventId}
           existingValues={existingValues}
-          onClose={() => setIsOpen(false)}
+          setIsOpen={setIsOpen}
           setEveryEventList={setEveryEventList}
           everyEventList={everyEventList}
           // deleteEvent={() => setDeleteEvent(true)}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import StyledTable from "../../reusable/tables/StyledTable";
 import StyledEditButton from "../../reusable/Inputs/StyledEditButton";
 import Modal from "../../reusable/Modal";
-import AuthenticationContext from "../../login/AuthenticationContext";
+// import AuthenticationContext from "../../login/AuthenticationContext";
 import ManagerConfirmSwapModal from "./ManagerConfirmSwapModal";
 
 function ManagerViewOfShiftSwapRequests() {
@@ -12,8 +12,8 @@ function ManagerViewOfShiftSwapRequests() {
   const [shiftApprovalModalIsOpen, setShiftApprovalModalIsOpen] =
     useState(false);
 
-  const authContext = useContext(AuthenticationContext);
-  let user = authContext.user;
+  // const authContext = useContext(AuthenticationContext);
+  // let user = authContext.user;
 
   useEffect(() => {
     async function findShiftSwapRequests() {

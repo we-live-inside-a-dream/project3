@@ -10,39 +10,41 @@ import moment from "moment";
 import { StyledButton } from "../../reusable/Inputs/StyledEmployeeForm";
 
 function DaySchedule({ setCurrentTab, currentTab }) {
-  const [shift, setShift] = useState();
+  // const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState();
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
-  const [deleteShift, setDeleteShift] = useState(false);
+  // const [deleteShift, setDeleteShift] = useState(false);
   const [renderPage, setRenderPage] = useState();
 
-  let today = new Date();
-  // console.log("today is", today);
   useEffect(() => {
+    let today = new Date();
     setDay(moment(today).format("yyyy-MM-DD"));
-    if (shiftId) {
-      const fetchShift = async () => {
-        let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
-        let fetchedShift = await fetchResult.json();
-        setShift(fetchedShift);
-      };
-      const deleteShiftById = async () => {
-        await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
-          method: "DELETE",
-        });
-      };
-      //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
-      if (deleteShift) {
-        deleteShiftById();
-        setDeleteShift(false);
-        setIsOpen(false);
-      } else {
-        fetchShift();
-      }
-    }
-  }, [shiftId, deleteShift]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (shiftId) {
+  //     const fetchShift = async () => {
+  //       let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
+  //       let fetchedShift = await fetchResult.json();
+  //       setShift(fetchedShift);
+  //     };
+  //     const deleteShiftById = async () => {
+  //       await fetch(`/api/schedule/schedule/delete?id=${shiftId}`, {
+  //         method: "DELETE",
+  //       });
+  //     };
+  //     //if (deleteShift === true) delete shiftID else fetch shift when shiftId is called
+  //     if (deleteShift) {
+  //       deleteShiftById();
+  //       setDeleteShift(false);
+  //       setIsOpen(false);
+  //     } else {
+  //       fetchShift();
+  //     }
+  //   }
+  // }, [shiftId, deleteShift]);
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -238,21 +240,16 @@ function DaySchedule({ setCurrentTab, currentTab }) {
         open={isOpen}
         onClose={() => {
           setIsOpen(false);
-          setShift(null);
+          // setShift(null);
         }}
       >
         <EditSchedule
           shiftId={shiftId}
-          existingValues={shift}
-          clearValues={() => setShift(null)}
           onClose={() => {
             setIsOpen(false);
-            setShift(null);
+            setShiftId(null);
           }}
-          deleteShift={() => setDeleteShift(true)}
           reload={() => setRenderPage(true)}
-          // createShift={createShift}
-          // updateShift={updateShift}
         />
       </Modal>
     </div>

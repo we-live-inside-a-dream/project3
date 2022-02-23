@@ -92,9 +92,11 @@ const EmployeeTimeOffViewPage = ({
     navigate(path);
   };
 
+
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
+      
         {loading ? (
           <div
             style={{
@@ -226,6 +228,8 @@ const EmployeeTimeOffViewPage = ({
                 })}
               </tbody>
             </StyledTable>
+
+            {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
 
             <div styled={{padding: "40%"}}>
               <StyledButton onClick={routeChange}>

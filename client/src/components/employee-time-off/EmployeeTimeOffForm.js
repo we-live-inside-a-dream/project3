@@ -170,7 +170,7 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
 
   return (
     <div>
-      <StyledFormWrapper>
+      {/* <StyledFormWrapper> */}
         <StyledForm>
           <h2>Time Off Request</h2>
           <div></div>
@@ -341,7 +341,7 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
             </StyledButton>
           </div>
         </StyledForm>
-      </StyledFormWrapper>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

@@ -231,8 +231,8 @@ const EmployeeTimeOffViewPage = ({
 
             {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
 
-            <div styled={{padding: "40%"}}>
-              <StyledButton onClick={routeChange}>
+            <div styled={{width: "fixed"}}>
+              <StyledButton onClick={routeChange} >
                 Request Time off
               </StyledButton>
             </div>

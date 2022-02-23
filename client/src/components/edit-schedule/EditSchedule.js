@@ -2,15 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import * as fns from "date-fns";
-
 import { NativeSelect } from "@mui/material";
-// import MenuPopupState from "../UNUSED/MenuPopupState";
-
-// import StyledLabel from "../reusable/Inputs/StyledLabel";
-import CenterStyle from "../reusable/Inputs/CenterStyle";
-// import StyledInput from "../reusable/Inputs/StyledInput";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
+import { useSchedule } from "../reusable/context/ScheduleProvider";
 import {
   firstNameValidation,
   dateValidation,
@@ -35,7 +30,19 @@ import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 
-function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
+function EditSchedule({
+  onClose,
+  shiftId,
+  reload,
+  // createShift,
+  // updateShift,
+  existingValues,
+  clearValues,
+  deleteShift,
+}) {
+  // const value = useSocket();
+  // const createShift = value.createShift;
+  // const updateShift = value.updateShift;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState("");
@@ -182,16 +189,24 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
       await createShift(newShift);
     } else setShown(true);
 
-    onClose();
     if (existingValues) {
       console.log("New Shift...", newShift);
       await updateShift(newShift);
+      // clearValues();
+      // return;
     } else {
       console.log("New Shift...", newShift);
       await createShift(newShift);
+      // clearValues();
+      // return;
     }
+    onClose();
+    reload();
   }
 
+  // useEffect(() => {
+  //   clearValues();
+  // }, [onClose]);
   function onAddBreak() {
     let breaky = {};
     let newBreak = [...breaks];
@@ -215,6 +230,12 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
+        <StyledButton
+          style={{ position: "fixed", top: "0px", right: "0px" }}
+          onClick={onClose}
+        >
+          x
+        </StyledButton>
         <h1>Schedule</h1>
         <div>
           <InputLabel>
@@ -360,7 +381,6 @@ function EditSchedule({ onClose, shiftId, existingValues, deleteShift }) {
         <div styles={{ display: "flex", flexDirection: "row" }}>
           {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>SUBMIT</StyledButton>
-          <StyledButton onClick={onClose}>Cancle</StyledButton>
         </div>
 
         <div>

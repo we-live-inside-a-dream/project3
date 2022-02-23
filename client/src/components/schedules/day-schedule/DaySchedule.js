@@ -7,6 +7,7 @@ import NamePicTableData from "../../reusable/NamePicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
+import { StyledButton } from "../../reusable/Inputs/StyledEmployeeForm";
 
 function DaySchedule({ setCurrentTab, currentTab }) {
   const [shift, setShift] = useState();
@@ -15,6 +16,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   const [isOpen, setIsOpen] = useState();
   const [shiftId, setShiftId] = useState("");
   const [deleteShift, setDeleteShift] = useState(false);
+  const [renderPage, setRenderPage] = useState();
 
   let today = new Date();
   // console.log("today is", today);
@@ -49,7 +51,9 @@ function DaySchedule({ setCurrentTab, currentTab }) {
       setSchedule(fetchedDay);
     };
     fetchSchedule();
-  }, [day, isOpen]);
+    setRenderPage(false);
+  }, [day, renderPage]);
+  // }, [day, createShift, updateShift, deleteShift]);
 
   //business hours should come from a db fetch
   let startTime = 8;
@@ -73,6 +77,27 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
+  // async function createShift(createdUser) {
+  //   await fetch("/api/schedule/schedule/new", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(createdUser),
+  //   });
+  // }
+
+  // async function updateShift(updatedUser) {
+  //   console.log("new user data", updatedUser);
+  //   await fetch(`/api/schedule/schedule/update?id=${shiftId}`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(updatedUser),
+  //   });
+  // }
+
   return (
     <div className="container">
       <div
@@ -208,12 +233,26 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
+      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT2</StyledButton>
+      <Modal
+        open={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          setShift(null);
+        }}
+      >
         <EditSchedule
           shiftId={shiftId}
           existingValues={shift}
-          onClose={() => setIsOpen(false)}
+          clearValues={() => setShift(null)}
+          onClose={() => {
+            setIsOpen(false);
+            setShift(null);
+          }}
           deleteShift={() => setDeleteShift(true)}
+          reload={() => setRenderPage(true)}
+          // createShift={createShift}
+          // updateShift={updateShift}
         />
       </Modal>
     </div>

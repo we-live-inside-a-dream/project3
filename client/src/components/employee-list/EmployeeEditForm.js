@@ -282,33 +282,44 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          <div>
-            <label>
-              password
-              <RedStar />
-            </label>
+          {password && (
+            <div>
+              <label>
+                password
+                <RedStar />
+              </label>
 
-            {!passMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            {passMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {passMessageVal}
-              </p>
-            ) : null}
-            <StyledInput
-              value={password}
-              type="password"
-              onChange={(event) => {
-                onInputUpdate(event, setPassword);
-                setPassMessageVal(passwordValidation(password));
-              }}
-            />
-          </div>
+              {!passMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                ></p>
+              ) : null}
+              {passMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {passMessageVal}
+                </p>
+              ) : null}
+
+              <StyledInput
+                value={password}
+                type="password"
+                onChange={(event) => {
+                  onInputUpdate(event, setPassword);
+                  setPassMessageVal(passwordValidation(password));
+                }}
+              />
+            </div>
+          )}
           <div>
             <label>
               Phone Number

@@ -124,7 +124,7 @@ const EmployeeTimeOffViewPage = ({
             />
           </div>
         ) : (
-          <>
+          <div>
             <StyledPageTitle style={{ marginBottom: "10px" }}>
               TIME OFF REQUESTS
             </StyledPageTitle>
@@ -227,14 +227,14 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
-            <div styled={{padding: "40%"}}>
+            <div styled={{ padding: "40%" }}>
               <StyledButton onClick={routeChange}>
                 Request Time off
               </StyledButton>
             </div>
 
             {/* <EmployeeTimeOffForm /> */}
-          </>
+          </div>
         )}
       </StyledPage>
       <Modal

@@ -35,6 +35,8 @@ const EventEditForm = ({
   everyEventList,
   setEveryEventList,
   setTheNewEvent,
+  setIsOpen,
+  daySelectChoice,
 }) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
@@ -48,14 +50,10 @@ const EventEditForm = ({
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
-  // const [theNewEvent, setTheNewEvent] = useState();
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
-
-  let params = useParams();
-  // let eventId = params.eventId;
 
   useEffect(() => {
     if (existingValues) {
@@ -74,8 +72,9 @@ const EventEditForm = ({
         })
       );
       setMandatory(existingValues.mandatory);
-    }
-  }, [existingValues]);
+    } else setStartDate(daySelectChoice);
+    setEndDate(daySelectChoice);
+  }, [existingValues, daySelectChoice]);
 
   useEffect(() => {
     if (existingValues) {
@@ -88,6 +87,7 @@ const EventEditForm = ({
 
       setDefaultVisibility(currentVisibility);
     }
+    console.log("THE DAY SELECT CHOICE IS ", daySelectChoice);
   }, [existingValues]);
 
   useEffect(() => {
@@ -146,46 +146,52 @@ const EventEditForm = ({
   }
 
   async function postData() {
+    let resetValues = function () {
+      setTheEventId("");
+      setTitle("");
+      setStartTime("");
+      setEndTime("");
+      setStartDate("");
+      setEndDate("");
+      setType();
+      setNotes("");
+      setAllDay(true);
+      setVisibility();
+      setMandatory(false);
+      setRecurring(false);
+    };
+
+    let newEvent = {
+      title: title,
+      employeeProfileId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      type: [type.value],
+      startTime,
+      endTime,
+      startDate: startDate,
+      endDate: endDate,
+      allDay: allDay,
+      notes: notes,
+      visibility: visibility.map((p) => p.value),
+      mandatory: mandatory,
+      recurring: recurring,
+    };
     if (!existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
       setTheNewEvent(newEvent);
-      // setExistingValues("");
+      setEveryEventList([...everyEventList]);
+      resetValues();
+      setIsOpen(false);
     }
     if (existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
       await updateEvent(newEvent);
+      setTheNewEvent(newEvent);
       console.log("posting updated event", newEvent);
       setEveryEventList([...everyEventList]);
+      resetValues();
+      setIsOpen(false);
     }
   }
 

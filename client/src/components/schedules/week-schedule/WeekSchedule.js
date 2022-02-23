@@ -19,7 +19,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [modalEmployee, setModalEmployee] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalShift, setModalShift] = useState("");
+  const [shiftId, setShiftId] = useState("");
   const [modalDate, setModalDate] = useState("");
   const [titleWeek, setTitleWeek] = useState([]);
   const [dataWeek, setDataWeek] = useState([]);
@@ -242,7 +242,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       }}
                       onClick={() => {
                         setModalOpen(true);
-                        setModalShift(shift);
+                        setShiftId(shift);
                         setModalEmployee(employee);
                         setModalDate(date);
                         console.log("FROM ONCLICK", employee, date, shift);
@@ -303,7 +303,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                     key={shift._id}
                     onClick={() => {
                       setModalOpen(true);
-                      setModalShift(shift);
+                      setShiftId(shift);
                       setModalEmployee(employee);
                       setModalDate(date);
                       console.log("FROM ONCLICK", employee, date, shift);
@@ -318,14 +318,27 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      {modalOpen && (
-        <WeekScheduleModal
-          shift={modalShift}
-          employee={modalEmployee}
-          setModalOpen={setModalOpen}
-          date={modalDate}
+      <Modal
+        open={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          setShift(null);
+        }}
+      >
+        <EditSchedule
+          shiftId={shiftId}
+          existingValues={shift}
+          clearValues={() => setShift(null)}
+          onClose={() => {
+            setIsOpen(false);
+            setShift(null);
+          }}
+          deleteShift={() => setDeleteShift(true)}
+          reload={() => setRenderPage(true)}
+          // createShift={createShift}
+          // updateShift={updateShift}
         />
-      )}
+      </Modal>
     </div>
   );
 }

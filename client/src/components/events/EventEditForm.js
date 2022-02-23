@@ -36,6 +36,7 @@ const EventEditForm = ({
   setEveryEventList,
   setTheNewEvent,
   setIsOpen,
+  daySelectChoice,
 }) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
@@ -49,15 +50,10 @@ const EventEditForm = ({
   const [visibility, setVisibility] = useState("");
   const [mandatory, setMandatory] = useState(false);
   const [recurring, setRecurring] = useState(false);
-  // const [theNewEvent, setTheNewEvent] = useState();
-  let [currentEvent, setCurrentEvent] = useState();
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
-
-  let params = useParams();
-  // let eventId = params.eventId;
 
   useEffect(() => {
     if (existingValues) {
@@ -76,8 +72,9 @@ const EventEditForm = ({
         })
       );
       setMandatory(existingValues.mandatory);
-    }
-  }, [existingValues]);
+    } else setStartDate(daySelectChoice);
+    setEndDate(daySelectChoice);
+  }, [existingValues, daySelectChoice]);
 
   useEffect(() => {
     if (existingValues) {
@@ -90,6 +87,7 @@ const EventEditForm = ({
 
       setDefaultVisibility(currentVisibility);
     }
+    console.log("THE DAY SELECT CHOICE IS ", daySelectChoice);
   }, [existingValues]);
 
   useEffect(() => {

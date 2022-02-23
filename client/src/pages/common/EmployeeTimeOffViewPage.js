@@ -105,8 +105,8 @@ const EmployeeTimeOffViewPage = ({
               position: "absolute",
               top: "0",
               left: "0",
-              transformOrigin: "topLeft",
-              transform: "translate(50%, 50%)",
+              right: "0",
+              bottom: "0",
               margin: "auto",
             }}
           >
@@ -227,6 +227,8 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
+            {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
+
             <div styled={{ padding: "40%" }}>
               <StyledButton onClick={routeChange}>
                 Request Time off
@@ -246,6 +248,8 @@ const EmployeeTimeOffViewPage = ({
         <EmployeeTimeOffForm
           existingValues={timeOffValues}
           onSave={updateTimeOff}
+          setTimeOffRequests={setTimeOffRequests}
+          timeOffRequests={timeOffRequests}
         />
       </Modal>
     </div>

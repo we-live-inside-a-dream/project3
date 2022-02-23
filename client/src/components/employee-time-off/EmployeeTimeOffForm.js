@@ -25,7 +25,12 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
+const EmployeeTimeOffForm = ({
+  existingValues,
+  onSave,
+  setTimeOffRequests,
+  timeOffRequests,
+}) => {
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
@@ -46,7 +51,7 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
   const user = authContext.user;
 
   useEffect(() => {
-    const typeFilter = typeData?.filter((r) => r.value == type);
+    const typeFilter = typeData?.filter((r) => r.value === type);
     setDefaultType(typeFilter);
     console.log("this is type", type);
   }, [type]);
@@ -145,11 +150,13 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
+      setTimeOffRequests([newEmployeeTimeOff, ...timeOffRequests]);
     }
     console.log("this isss existingValues", existingValues);
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
+      setTimeOffRequests([newEmployeeTimeOff, ...timeOffRequests]);
     } else setShown(true);
 
     // if (existingValues) {
@@ -326,7 +333,14 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
               <p>Comments:{comment}</p>
               <div></div>
 
-              <StyledButton onClick={postData}>Confirm</StyledButton>
+              <StyledButton
+                onClick={() => {
+                  postData();
+                  setModalConfirmIsOpen(false);
+                }}
+              >
+                Confirm
+              </StyledButton>
               <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
                 Cancel
               </StyledButton>

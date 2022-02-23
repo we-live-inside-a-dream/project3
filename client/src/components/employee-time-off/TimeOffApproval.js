@@ -24,7 +24,7 @@ const TimeOffApproval = () => {
 
   useEffect(() => {
     function filterTimeOff(time) {
-      const timeOffFilter = time.filter((r) => r.status == "pending");
+      const timeOffFilter = time.filter((r) => r.status === "pending");
       console.log(timeOffFilter);
       setTimeOff(timeOffFilter);
     }

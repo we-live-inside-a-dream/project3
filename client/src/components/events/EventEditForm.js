@@ -30,7 +30,14 @@ const visibilityData = [
   { value: "employee", label: "All Staff" },
 ];
 
-const EventEditForm = ({ existingValues }) => {
+const EventEditForm = ({
+  existingValues,
+  everyEventList,
+  setEveryEventList,
+  setTheNewEvent,
+  setIsOpen,
+  daySelectChoice,
+}) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -47,9 +54,6 @@ const EventEditForm = ({ existingValues }) => {
   const [defaultType, setDefaultType] = useState();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
-
-  let params = useParams();
-  // let eventId = params.eventId;
 
   useEffect(() => {
     if (existingValues) {
@@ -68,8 +72,9 @@ const EventEditForm = ({ existingValues }) => {
         })
       );
       setMandatory(existingValues.mandatory);
-    }
-  }, [existingValues]);
+    } else setStartDate(daySelectChoice);
+    setEndDate(daySelectChoice);
+  }, [existingValues, daySelectChoice]);
 
   useEffect(() => {
     if (existingValues) {
@@ -82,6 +87,7 @@ const EventEditForm = ({ existingValues }) => {
 
       setDefaultVisibility(currentVisibility);
     }
+    console.log("THE DAY SELECT CHOICE IS ", daySelectChoice);
   }, [existingValues]);
 
   useEffect(() => {
@@ -140,49 +146,58 @@ const EventEditForm = ({ existingValues }) => {
   }
 
   async function postData() {
+    let resetValues = function () {
+      setTheEventId("");
+      setTitle("");
+      setStartTime("");
+      setEndTime("");
+      setStartDate("");
+      setEndDate("");
+      setType();
+      setNotes("");
+      setAllDay(true);
+      setVisibility();
+      setMandatory(false);
+      setRecurring(false);
+    };
+
+    let newEvent = {
+      title: title,
+      employeeProfileId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      type: [type.value],
+      startTime,
+      endTime,
+      startDate: startDate,
+      endDate: endDate,
+      allDay: allDay,
+      notes: notes,
+      visibility: visibility.map((p) => p.value),
+      mandatory: mandatory,
+      recurring: recurring,
+    };
     if (!existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
+      setTheNewEvent(newEvent);
+      setEveryEventList([...everyEventList]);
+      resetValues();
+      setIsOpen(false);
     }
     if (existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
       await updateEvent(newEvent);
+      setTheNewEvent(newEvent);
       console.log("posting updated event", newEvent);
+      setEveryEventList([...everyEventList]);
+      resetValues();
+      setIsOpen(false);
     }
   }
 
   return (
     <div>
-      <StyledFormWrapper>
+      {/* <StyledFormWrapper> */}
         <StyledForm>
           <h2 style={{ margin: "0px" }}>Create Event</h2>
           <div></div>
@@ -322,7 +337,12 @@ const EventEditForm = ({ existingValues }) => {
           <div></div>
           <div></div>
           <div style={{ display: "flex" }}>
-            <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
+            <StyledButton
+              onClick={() => {
+                postData();
+              }}
+              style={{ alignSelf: "flex-end" }}
+            >
               CONFIRM
             </StyledButton>
             <StyledButton
@@ -341,7 +361,7 @@ const EventEditForm = ({ existingValues }) => {
           </div>
           <div></div>
         </StyledForm>
-      </StyledFormWrapper>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

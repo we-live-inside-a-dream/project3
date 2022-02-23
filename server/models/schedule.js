@@ -11,13 +11,18 @@ const Schedule = mongoose.model("schedule", {
   end: String,
   breaks: [{ name: String, start: String, end: String, paid: Boolean }],
   swapRequestStatus: String,
+  swapRequestDate: Date,
   swapBidRequest: String,
   reasonForSwap: String,
   shiftBidId: String,
+  bidRequestDate: Date,
   approvingManagerId: String,
   previousShiftOwnerId: String,
   previousShiftOwnerFirstName: String,
   previousShiftOwnerLastName: String,
+  bidderFirstName: String,
+  bidderLastName: String,
+  managerMessage: String,
 });
 
 async function createSchedule(ScheduleData) {
@@ -78,6 +83,12 @@ async function updateWithName(id, newFirstName, newLastName) {
   );
 }
 
+async function deleteSchedule(id) {
+  // console.log(id, "id in the model...");
+  return Schedule.findByIdAndDelete(id);
+}
+
+////////////////////////////////SCHEDULE MODEL FUNCTIONS FOR SHIFT SWAPPING/////////////////////////
 async function findAvailableShiftsByEmployeePositions(positions) {
   let today = moment().format("yyyy-MM-DD");
   console.log(
@@ -98,6 +109,16 @@ async function findAvailableShiftsByEmployeePositions(positions) {
   return shiftArray;
 }
 
+async function findAllEmployeeSwapRequests() {
+  let today = moment().format("yyyy-MM-DD");
+  let shiftSwapList = Schedule.find({
+    date: { $gte: today },
+    swapRequestStatus: "pending",
+    swapBidRequest: "pending",
+  }).sort({ date: 1 });
+  return shiftSwapList;
+}
+
 // Item.update(
 //   { _id: id },
 //   {
@@ -115,11 +136,6 @@ async function findAvailableShiftsByEmployeePositions(positions) {
 //   }
 // );
 
-async function deleteSchedule(id) {
-  // console.log(id, "id in the model...");
-  return Schedule.findByIdAndDelete(id);
-}
-
 module.exports = {
   createSchedule,
   listScheduleByDay,
@@ -131,4 +147,5 @@ module.exports = {
   update,
   deleteSchedule,
   listByWeekDays,
+  findAllEmployeeSwapRequests,
 };

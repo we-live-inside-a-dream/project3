@@ -18,10 +18,12 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [allEvents, setAllEvents] = useState([]);
   const [myEvents, setMyEvents] = useState([]);
   const [everyEventList, setEveryEventList] = useState([]);
+  const [theNewEvent, setTheNewEvent] = useState();
   const [existingValues, setExistingValues] = useState();
   const authContext = useContext(AuthenticationContext);
   const [isOpen, setIsOpen] = useState(false);
   const [eventId, setEventId] = useState("");
+  const [daySelectChoice, setDaySelectChoice] = useState();
   let user = authContext.user;
   let permissions = user?.permissions;
 
@@ -101,7 +103,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       setEveryEventList([...filteredEvents, ...myFilteredEvents]);
     };
     getEventsAll();
-  }, [nav, monthEnd, monthStart, permissions, user._id]);
+  }, [nav, monthEnd, monthStart, permissions, user._id, theNewEvent]);
 
   let mainGridStyle = {
     height: "auto",
@@ -122,6 +124,14 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       return dayEvents;
     }
   };
+
+  // let findDatefromDay = function (day) {
+  //   const day = theDate.getDate();
+  //   const month = theDate.getMonth();
+  //   const year = theDate.getFullYear();
+  //   const dayString = `${month + 1}/${i - paddingDays}/${year}`;
+  //   setDaySelectChoice;
+  // };
 
   return (
     <div
@@ -195,7 +205,8 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
             <Day
               key={index}
               day={day}
-              // onClick={() => setIsOpen(!isOpen)}
+              setDaySelectChoice={setDaySelectChoice}
+              daySelectChoice={daySelectChoice}
               events={renderEvents(day)}
               setRevealEventDetails={setRevealEventDetails}
               revealEventDetails={revealEventDetails}
@@ -211,9 +222,15 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       </div>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <EventEditForm
+          setTheNewEvent={setTheNewEvent}
+          theNewEvent={theNewEvent}
           eventId={eventId}
           existingValues={existingValues}
-          onClose={() => setIsOpen(false)}
+          setIsOpen={setIsOpen}
+          setEveryEventList={setEveryEventList}
+          everyEventList={everyEventList}
+          daySelectChoice={daySelectChoice}
+
           // deleteEvent={() => setDeleteEvent(true)}
         />
         **edit**

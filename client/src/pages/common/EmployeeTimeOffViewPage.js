@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
@@ -45,6 +45,9 @@ const EmployeeTimeOffViewPage = ({
     };
     setLoading(true);
     fetchTimeOff();
+    // if (timeOffRequests) {
+    //   setLoading(false);
+    // }
   }, [user._id]);
 
   // useEffect(() => {
@@ -64,31 +67,7 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
-    // setLoading(true);
   }
-
-  // console.log("this is time off values", timeOffValues);
-  // async function deleteTimeOff(id) {
-  //   console.log("This is the delete id", id)
-  //   let result = await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  //   console.log("this is the result", result)
-  // }
-  // const deleteTimeOff = async (id) => {
-  //   await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  // };
-
-  // async function deleteTimeOff(id) {
-  //   await fetch("/api/timeOff/delete/" + id, {
-  //     method: "DELETE",
-  //   });
-  //   let removedTimeOff = timeOff.filter((t) => t._id !== id);
-  //   setTimeOff(removedTimeOff);
-  //   //  navigate('/')
-  // }
 
   async function deleteTimeOff(id) {
     await fetch("/api/timeOff/delete/" + id, {
@@ -107,6 +86,12 @@ const EmployeeTimeOffViewPage = ({
     } else return "Pending";
   }
 
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = `/timeOff`;
+    navigate(path);
+  };
+
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
@@ -120,19 +105,26 @@ const EmployeeTimeOffViewPage = ({
               position: "absolute",
               top: "0",
               left: "0",
-              transformOrigin: "topLeft",
-              transform: "translate(50%, 50%)",
+              right: "0",
+              bottom: "0",
               margin: "auto",
             }}
           >
             <ClockLoader
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "Center",
+                width: "100%",
+                height: "100vh",
+              }}
               color={"var(--mainHeader)"}
               loading={loading}
               size={300}
             />
           </div>
         ) : (
-          <>
+          <div>
             <StyledPageTitle style={{ marginBottom: "10px" }}>
               TIME OFF REQUESTS
             </StyledPageTitle>
@@ -235,9 +227,16 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
-            {/* <EmployeeTimeOffForm />
-             */}
-          </>
+            {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
+
+            <div styled={{ padding: "40%" }}>
+              <StyledButton onClick={routeChange}>
+                Request Time off
+              </StyledButton>
+            </div>
+
+            {/* <EmployeeTimeOffForm /> */}
+          </div>
         )}
       </StyledPage>
       <Modal
@@ -249,6 +248,8 @@ const EmployeeTimeOffViewPage = ({
         <EmployeeTimeOffForm
           existingValues={timeOffValues}
           onSave={updateTimeOff}
+          setTimeOffRequests={setTimeOffRequests}
+          timeOffRequests={timeOffRequests}
         />
       </Modal>
     </div>

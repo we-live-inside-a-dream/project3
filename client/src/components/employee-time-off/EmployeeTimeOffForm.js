@@ -28,10 +28,11 @@ const typeData = [
 const EmployeeTimeOffForm = ({
   existingValues,
   onSave,
+  reload,
   setTimeOffRequests,
   timeOffRequests,
   setModalEditIsOpen,
-  setModalApplyIsOpen
+  setModalApplyIsOpen,
 }) => {
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
@@ -137,6 +138,7 @@ const EmployeeTimeOffForm = ({
       startDate,
       endDate,
       allDay: allDay,
+      status: "pending",
       comment: comment,
     };
     // console.log("start time", startTime);
@@ -147,20 +149,21 @@ const EmployeeTimeOffForm = ({
     // navigate("/");
 
     validateForm();
+
     // console.log("validate form", validation);
     // console.log("saving new time off form", newEmployeeTimeOff);
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
-      setTimeOffRequests([newEmployeeTimeOff, ...timeOffRequests]);
+      reload();
       setModalEditIsOpen(false);
     }
-    
+
     console.log("this isss existingValues", existingValues);
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
-      // setTimeOffRequests([newEmployeeTimeOff, ...timeOffRequests]);
+      reload();
       setModalApplyIsOpen(false);
     } else setShown(true);
 

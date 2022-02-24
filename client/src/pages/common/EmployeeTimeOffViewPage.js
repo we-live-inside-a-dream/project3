@@ -26,6 +26,7 @@ const EmployeeTimeOffViewPage = ({
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalApplyIsOpen, setModalApplyIsOpen] = useState(false);
+  const [renderPage, setRenderPage] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -41,14 +42,14 @@ const EmployeeTimeOffViewPage = ({
       let fetchedTimeOff = await fetchResult.json();
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
-      setLoading(false);
+      setRenderPage(false);
     };
-    setLoading(true);
     fetchTimeOff();
+
     // if (timeOffRequests) {
     //   setLoading(false);
     // }
-  }, [user._id]);
+  }, [user._id, renderPage]);
 
   // useEffect(() => {
   //   setLoading(true);
@@ -234,7 +235,10 @@ const EmployeeTimeOffViewPage = ({
         )}
       </StyledPage>
       <Modal onClose={() => setModalApplyIsOpen(false)} open={modalApplyIsOpen}>
-        <EmployeeTimeOffForm setModalApplyIsOpen={setModalApplyIsOpen} />
+        <EmployeeTimeOffForm
+          setModalApplyIsOpen={setModalApplyIsOpen}
+          reload={() => setRenderPage(true)}
+        />
       </Modal>
 
       <Modal
@@ -249,6 +253,7 @@ const EmployeeTimeOffViewPage = ({
           setTimeOffRequests={setTimeOffRequests}
           timeOffRequests={timeOffRequests}
           setModalEditIsOpen={setModalEditIsOpen}
+          reload={() => setRenderPage(true)}
         />
       </Modal>
     </div>

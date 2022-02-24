@@ -31,6 +31,7 @@ import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+import { CustomSelect } from "./components/reusable/Inputs/CustomSelect";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -184,6 +185,7 @@ function App() {
               path="/timeOff/approval"
               element={<TimeOffApprovalPage />}
             ></Route>
+            <Route path="/custom" element={<CustomSelect />}></Route>
             {/* last router */}
           </Routes>
           )

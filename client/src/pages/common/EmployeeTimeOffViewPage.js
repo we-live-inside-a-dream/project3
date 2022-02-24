@@ -2,12 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
-import {
-  StyledButton,
-  StyledForm,
-  StyledForm2,
-  StyledFormWrapper,
-} from "../../components/reusable/Inputs/StyledEmployeeForm";
+import { StyledButton } from "../../components/reusable/Inputs/StyledEmployeeForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import StyledTable from "../../components/reusable/tables/StyledTable";
@@ -139,8 +134,6 @@ const EmployeeTimeOffViewPage = () => {
                         height: "auto",
                       }}
                     >
-                      {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
-
                       <td>
                         {<ApprovalSymbol time={t} />}
                         {`${statusConvert(t.status)}`}
@@ -154,8 +147,6 @@ const EmployeeTimeOffViewPage = () => {
                         <div>
                           <StyledEditButton
                             fontSize="25px"
-                            // margin={"0"}
-                            // padding={"0"}
                             onClick={() => {
                               setModalEditIsOpen(true);
                               setTimeOffValues(t);
@@ -166,16 +157,7 @@ const EmployeeTimeOffViewPage = () => {
                           </StyledEditButton>
 
                           <StyledEditButton
-                            // fontSize="20px"
                             margin={"0px 20px"}
-                            // padding={"0"}
-                            // onClick={() => {
-                            //   setModalConfirmIsOpen(true);
-                            //   setTimeOffValues(t);
-                            //   setSelectedId(t._id)
-                            //   deleteTimeOff(t._id);
-                            //   console.log("this is t", t);
-                            // }}
                             onClick={() => {
                               setTimeToDelete(t._id);
                               setModalConfirmIsOpen(true);
@@ -198,8 +180,6 @@ const EmployeeTimeOffViewPage = () => {
                 Request Time off
               </StyledButton>
             </div>
-
-            {/* <EmployeeTimeOffForm /> */}
           </div>
         )}
       </StyledPage>
@@ -248,13 +228,5 @@ const EmployeeTimeOffViewPage = () => {
     </div>
   );
 };
-
-// { loading ? (
-//   <ClockLoader
-//   color={#F37A24}
-//   loading={loading}
-//   size={30}
-//   /> ) : null
-//   }
 
 export default EmployeeTimeOffViewPage;

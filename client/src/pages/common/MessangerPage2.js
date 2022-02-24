@@ -16,6 +16,7 @@ import {
   ChatBoxWrapper,
   ChatMessageInput,
   StyledMessangerPage,
+  SendButton,
 } from "../../components/messanger2/StyledMessangerPage";
 import { StyledButton } from "../../components/reusable/Inputs/StyledEmployeeForm";
 
@@ -175,12 +176,15 @@ export default function Messenger() {
                     value={newMessage}
                   ></ChatMessageInput>
                   {/* ></textarea> */}
-                  <StyledButton
+
+                  {/* <StyledButton */}
+                  <SendButton
                     // className="chatSubmitButton"
                     onClick={handleSubmit}
                   >
                     Send
-                  </StyledButton>
+                  </SendButton>
+                  {/* </StyledButton> */}
                 </ChatBoxBottom>
                 {/* </div> */}
               </>

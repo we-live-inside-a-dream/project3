@@ -20,6 +20,9 @@ export const StyledContactList = styled.div`
   position: absolute;
   height: 70%;
   filter: drop-shadow(3px 3px 10px lightgrey);
+  :hover {
+    /* background-color: rgb(245, 243, 243); */
+  }
 `;
 
 export const ChatMenu = styled.div`
@@ -53,7 +56,7 @@ export const ChatBoxTop = styled.div`
   height: 65vh;
   position: relative;
   overflow-y: scroll;
-  padding-right: 10px;
+  margin-left: 10px;
 `;
 
 export const ChatBoxBottom = styled.div`
@@ -68,12 +71,14 @@ export const ChatMessageInput = styled.textarea`
   width: 80%;
   height: 90px;
   padding: 10px;
+  margin-left: 10px;
 `;
 export const Convo = styled.div`
   cursor: pointer;
   &:hover {
     opacity: 0.9;
     transform: scale(0.98);
+    background-color: rgb(245, 243, 243);
   }
 `;
 
@@ -114,4 +119,50 @@ export const ChatPopup = styled.div`
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   z-index: 1000;
+`;
+
+export const SendButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 14%;
+`;
+
+export const MessageStyles = styled.div`
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .messageTop {
+    display: flex;
+  }
+  .messageBottom {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .messageImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  .sendername {
+  }
+  .messageText {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #1877f2;
+    color: white;
+    max-width: 300px;
+  }
+  .message own {
+    align-items: flex-end;
+  }
+  .message.own .messageText {
+    background-color: rgb(245, 241, 241);
+    color: black;
+  }
 `;

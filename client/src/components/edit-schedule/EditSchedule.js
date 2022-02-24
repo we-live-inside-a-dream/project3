@@ -159,23 +159,18 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (!existingValues && validation === null) {
-      await createShift(newShift);
-    } else {
-      setShown(true);
-    }
-
-    if (existingValues) {
+    if (existingValues.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
+      reload();
     } else {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
+      reload();
     }
     onClose();
-    reload();
   }
 
   function onAddBreak() {

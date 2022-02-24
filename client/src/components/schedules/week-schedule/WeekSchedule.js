@@ -101,6 +101,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     findDateRange();
     empAvail();
     getAllTheEmployees();
+    setRenderPage(false);
   }, [startDay, renderPage]);
 
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
@@ -162,7 +163,12 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   }
   function onClickHandler(shift, employee, date) {
     setIsOpen(true);
-    setModalData({ employeeId: employee._id, date: date });
+    setModalData({
+      employeeId: employee._id,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      date: date,
+    });
     setShiftId(shift._id);
 
     //need to send date,employeeId

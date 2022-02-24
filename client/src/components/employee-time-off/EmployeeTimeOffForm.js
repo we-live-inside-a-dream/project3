@@ -146,12 +146,6 @@ const EmployeeTimeOffForm = ({
       status: "pending",
       comment: comment,
     };
-    // console.log("start time", startTime);
-    // console.log("end time", endTime);
-
-    // console.log("posting Time Off", newEmployeeTimeOff);
-    // await createEmployeeTimeOff(newEmployeeTimeOff);
-    // navigate("/");
 
     validateForm();
 
@@ -168,13 +162,8 @@ const EmployeeTimeOffForm = ({
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
-      // reload();
       setModalApplyIsOpen(false);
     } else setShown(true);
-
-    // if (existingValues) {
-    //   await onSave(newEmployeeTimeOff);
-    // }
 
     // onSave();
     if (existingValues) {

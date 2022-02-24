@@ -243,7 +243,7 @@ function EditSchedule({
       {/* <StyledFormWrapper> */}
       <StyledModal>
         <StyledButton
-          style={{ position: "fixed", top: "0px", right: "0px" }}
+          style={{ position: "fixed", top: "0px", right: "0px", marginTop: "0px", }}
           onClick={onClose}
         >
           x
@@ -256,7 +256,7 @@ function EditSchedule({
           </InputLabel>
           {employeeId === "" ? (
             <p
-              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px", }}
             ></p>
           ) : null}
           <NativeSelect
@@ -312,7 +312,7 @@ function EditSchedule({
           </InputLabel>
 
           {date === "" ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {"required"}
             </p>
           ) : null}
@@ -337,12 +337,12 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           {!shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
             </p>
           ) : null}
           {shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
               {shiftTimeMessageVal}
             </p>

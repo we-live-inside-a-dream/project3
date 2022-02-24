@@ -5,7 +5,7 @@ import * as fns from "date-fns";
 import StyledTable from "../../reusable/tables/StyledTable";
 import WeekScheduleModal from "./WeekScheduleModal";
 import StyledInput from "../../reusable/Inputs/StyledInput";
-import NamePicTableData from "../../reusable/NamePicTableData";
+import PositionPicTableData from "../../reusable/PositionPicTableData";
 import StyledScheduleButtonGroup from "../StyledScheduleButtonGroup";
 import WeekScheduleLegend from "./WeekScheduleLegend";
 import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
@@ -13,7 +13,15 @@ import TimeOffLegend from "./TimeOffLegend";
 import EditSchedule from "../../edit-schedule/EditSchedule";
 import Modal from "../../reusable/Modal";
 
-function WeekSchedule({ setCurrentTab, currentTab }) {
+const positionList = [
+  { name: "Supervisor" },
+  { name: "Waitress" },
+  { name: "Cashier" },
+  { name: "Dishwasher" },
+  { name: "The Rezza" },
+];
+
+function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   moment().format();
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
@@ -36,10 +44,9 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   // const [availabilityColor, setAvailabilityColor] = useState();
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
-
   useEffect(() => {
-    console.log("list of names??", activeEmployeeList);
-  }, [activeEmployeeList]);
+    console.log("shift id is ...", shiftId);
+  }, [shiftId]);
   useEffect(() => {
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");
@@ -62,7 +69,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
         `/api/timeOff/by-start-date?startDay=${startDay}`
       );
       let theTimeOffList = await fetchResult.json();
-      // console.log("fetching employee timeOff list", theTimeOffList);
+      console.log("fetching employee timeOff list", theTimeOffList);
 
       setTimeOffs(theTimeOffList);
     };
@@ -70,7 +77,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     const empAvail = async () => {
       let fetchResult = await fetch(`/api/availability/availability-all`);
       let theAvailabilityList = await fetchResult.json();
-      // console.log("fetching employee availability list", theAvailabilityList);
+      console.log("fetching employee availability list", theAvailabilityList);
 
       setEmpAvailibility(theAvailabilityList);
 
@@ -163,18 +170,17 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     console.log(newValue, "is the new formatted value for startDay");
     setter(newValue);
   }
-  function onClickHandler(shift, employee, date) {
+  function onClickHandler(shift, position, date) {
     setIsOpen(true);
     setModalData({
-      employeeId: employee._id,
-      firstName: employee.firstName,
-      lastName: employee.lastName,
+      position: position.name,
+
       date: date,
     });
     setShiftId(shift._id);
 
     //need to send date,employeeId
-    console.log("FROM ONCLICK", employee._id, date, shift);
+    console.log("FROM ONCLICK", position, date, shift);
   }
 
   return (
@@ -240,19 +246,13 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           </tr>
         </thead>
         <tbody>
-          {activeEmployeeList?.map((employee) => (
-            // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
-            <tr key={employee._id}>
-              {/* <tr key={index} onClick={() => setShiftId(employee._id)}>  */}
-              <NamePicTableData
-                firstName={employee.firstName}
-                lastName={employee.lastName}
-              />
-
+          {positionList?.map((position, index) => (
+            <tr key={index}>
+              <PositionPicTableData position={position.name} />
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (
-                    shift.employeeId === employee._id && shift.date === date
+                    shift.position === position.name && shift.date === date
                   );
                 });
 
@@ -265,52 +265,11 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                         borderRight: "lightGrey",
                       }}
                       onClick={() => {
-                        onClickHandler(shift, employee, date);
-                        console.log("FROM ONCLICK", employee, date, shift);
+                        onClickHandler(shift, position, date);
+                        console.log("FROM ONCLICK", position, date, shift);
                       }}
                     >
                       --
-                      <div
-                        style={{
-                          position: "absolute",
-
-                          borderRadius: "50%",
-                          height: "10px",
-                          width: "10px",
-                          alignSelf: "center",
-                          transform: "translate(1200%, -350%)",
-                          backgroundColor: isEmployeeavailable(
-                            employee._id,
-                            date
-                          ),
-                        }}
-                      />
-                      {isEmployeeBookedOff(employee._id, date) === "full" ? (
-                        <div
-                          style={{
-                            position: "absolute",
-                            borderRadius: "50%",
-                            height: "10px",
-                            width: "10px",
-                            alignSelf: "center",
-                            transform: "translate(1050%, -350%)",
-                            backgroundColor: "black",
-                          }}
-                        />
-                      ) : null}
-                      {isEmployeeBookedOff(employee._id, date) === "part" ? (
-                        <div
-                          style={{
-                            position: "absolute",
-                            border: "2px solid black",
-                            borderRadius: "50%",
-                            height: "6px",
-                            width: "6px",
-                            alignSelf: "center",
-                            transform: "translate(1050%, -350%)",
-                          }}
-                        />
-                      ) : null}
                     </td>
                   );
                 return (
@@ -323,19 +282,13 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                     }}
                     key={shift._id}
                     onClick={() => {
-                      onClickHandler(shift, employee, date);
-                      // setIsOpen(true);
-                      // setShiftId(shift._id);
-                      // setModalEmployee(employee._id);
-                      // setModalDate(date);
-                      //need to send date,employeeId
-                      console.log("FROM ONCLICK", employee._id, date, shift);
+                      onClickHandler(shift, position, date);
                     }}
                     backgroundColor={availabilityColor}
                   >
-                    {`${shift.start}-${shift.end} `}
+                    {`${shift.firstName} ${shift.lastName[0]}`}
                     <br />
-                    {`${shift.position}`}
+                    {`${shift.start}-${shift.end} `}
                   </td>
                 );
               })}
@@ -370,4 +323,4 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   );
 }
 
-export default WeekSchedule;
+export default WeekSchedulePosition;

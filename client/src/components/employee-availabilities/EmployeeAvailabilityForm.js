@@ -127,7 +127,12 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
             );
           })}
 
-          <StyledButton onClick={postData}>
+          <StyledButton
+            onClick={() => {
+              postData();
+              navigate("/human-resources");
+            }}
+          >
             SAVE AVAILABILITY DETAILS
           </StyledButton>
         </StyledForm>

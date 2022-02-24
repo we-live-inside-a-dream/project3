@@ -7,7 +7,13 @@ import {
   StyledFormWrapper,
   StyledCheck,
   StyledTextArea,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import {
+  requiredValidation,
+  timeValidation,
+  dateValidation,
+} from "../validateForms.js";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
@@ -30,11 +36,23 @@ const visibilityData = [
   { value: "employee", label: "All Staff" },
 ];
 
-const EventEditForm = ({ existingValues }) => {
+const EventEditForm = ({
+  existingValues,
+  everyEventList,
+  setEveryEventList,
+  setTheNewEvent,
+  theNewEvent,
+  setIsOpen,
+  daySelectChoice,
+}) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
@@ -45,18 +63,20 @@ const EventEditForm = ({ existingValues }) => {
   const [recurring, setRecurring] = useState(false);
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [dateMessageVal, setDateMessageVal] = useState(null);
+  const [typeMessageVal, setTypeMessageVal] = useState(null);
+  const [visibilityMessageVal, setVisibilityMessageVal] = useState(null);
+  const [eventNameMessageVal, setEventNameMessageVal] = useState(null);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
-
-  let params = useParams();
-  // let eventId = params.eventId;
 
   useEffect(() => {
     if (existingValues) {
       setTheEventId(existingValues._id);
       setTitle(existingValues.title);
-      setStartTime(existingValues.startTime);
-      setEndTime(existingValues.endTime);
+      setStartTime(` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`);
+      setEndTime(` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`);
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
       setType({ value: existingValues.type[0] });
@@ -68,8 +88,9 @@ const EventEditForm = ({ existingValues }) => {
         })
       );
       setMandatory(existingValues.mandatory);
-    }
-  }, [existingValues]);
+    } else setStartDate(daySelectChoice);
+    setEndDate(daySelectChoice);
+  }, [existingValues, daySelectChoice]);
 
   useEffect(() => {
     if (existingValues) {
@@ -82,6 +103,7 @@ const EventEditForm = ({ existingValues }) => {
 
       setDefaultVisibility(currentVisibility);
     }
+    console.log("THE DAY SELECT CHOICE IS ", daySelectChoice);
   }, [existingValues]);
 
   useEffect(() => {
@@ -139,125 +161,223 @@ const EventEditForm = ({ existingValues }) => {
     });
   }
 
+  let validation;
+  async function validateForm() {
+    if (
+      timeMessageVal ||
+      dateMessageVal ||
+      typeMessageVal ||
+      visibilityMessageVal ||
+      eventNameMessageVal
+    ) {
+      console.log(
+        "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+      );
+      validation = "please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+      );
+    validation = null;
+    return validation;
+  }
+
   async function postData() {
-    if (!existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
+    let resetValues = function () {
+      setTheEventId("");
+      setTitle("");
+      setStartTime("");
+      setEndTime("");
+      setStartDate("");
+      setEndDate("");
+      setType();
+      setNotes("");
+      setAllDay(true);
+      setVisibility();
+      setMandatory(false);
+      setRecurring(false);
+    };
+
+    let newEvent = {
+      title: title,
+      employeeProfileId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      type: [type.value],
+      startTime,
+      endTime,
+      startDate: fns.format(new Date(startTime), "HH:mm").toString(),
+      endDate: fns.format(new Date(endTime), "HH:mm").toString(),
+      allDay: allDay,
+      notes: notes,
+      visibility: visibility.map((p) => p.value),
+      mandatory: mandatory,
+      recurring: recurring,
+    };
+    validateForm();
+    if (!existingValues && validation === null) {
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
+      setTheNewEvent(newEvent);
+      setEveryEventList((curr) => [...curr, newEvent]);
+      resetValues();
+      setIsOpen(false);
     }
-    if (existingValues) {
-      let newEvent = {
-        title: title,
-        employeeProfileId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        type: [type.value],
-        startTime,
-        endTime,
-        startDate: startDate,
-        endDate: endDate,
-        allDay: allDay,
-        notes: notes,
-        visibility: visibility.map((p) => p.value),
-        mandatory: mandatory,
-      };
+    if (existingValues && validation === null) {
       await updateEvent(newEvent);
+      setTheNewEvent(newEvent);
       console.log("posting updated event", newEvent);
+      setEveryEventList([...everyEventList]);
+      resetValues();
+      setIsOpen(false);
     }
   }
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2 style={{ margin: "0px" }}>Create Event</h2>
-          <div></div>
-          <div>
-            <label>Event Name:</label>
-            <StyledInput
-              type="text"
-              value={title}
-              onChange={(event) => onInputUpdate(event, setTitle)}
-            />
-          </div>
-          <div>
-            <br />
-            <label>
-              Mandatory:
-              <StyledCheck
-                className="check"
-                name="mandatory"
-                type="checkbox"
-                value={mandatory}
-                checked={mandatory === true}
-                onChange={(e) => setMandatory(e.target.checked)}
-              />
-            </label>
-            <br />
-            <label>
-              Recurring:
-              <StyledCheck
-                className="check"
-                name="recurring"
-                type="checkbox"
-                value={recurring}
-                checked={recurring === true}
-                onChange={(e) => setRecurring(e.target.checked)}
-              />
-            </label>
-          </div>
-
-          <div style={{ margin: "0px" }}>
-            <label>Type:</label>
-            <Select
-              value={defaultType}
-              options={typeData}
-              onChange={typeHandler}
-            />
-          </div>
-
-          <div>
-            <label>Visibility:</label>
-            <Select
-              isMulti
-              name="visibility"
-              value={defaultVisibility}
-              options={visibilityData}
-              onChange={visibilityHandler}
-            />
-          </div>
-
-          <div>
-            <label>Start Day:</label>
-            <BasicDatePicker
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDate}
-              onChange={(value) => {
-                onDateInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                  setStartDate
-                );
+      {/* <StyledFormWrapper> */}
+      <StyledForm>
+        <h2 style={{ margin: "0px" }}>Create Event</h2>
+        <div></div>
+        <div>
+          <label style={{ marginBottom: "0px" }}>
+            Event Name:
+            <RedStar />
+          </label>
+          {/* {title === "" ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
               }}
+            >
+              {"required"}
+            </p>
+          ) : null} */}
+          <StyledInput
+            type="text"
+            value={title}
+            onChange={(event) => {
+              onInputUpdate(event, setTitle);
+              setEventNameMessageVal(requiredValidation(title));
+            }}
+          />
+        </div>
+        <div>
+          <br />
+          <label>
+            Mandatory:
+            <StyledCheck
+              className="check"
+              name="mandatory"
+              type="checkbox"
+              value={mandatory}
+              checked={mandatory === true}
+              onChange={(e) => setMandatory(e.target.checked)}
             />
-          </div>
-          <div>
-            <label>End Day:</label>
+          </label>
+          <br />
+          <label>
+            Recurring:
+            <StyledCheck
+              className="check"
+              name="recurring"
+              type="checkbox"
+              value={recurring}
+              checked={recurring === true}
+              onChange={(e) => setRecurring(e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <div style={{ margin: "0px" }}>
+          <label>
+            Type:
+            <RedStar />
+          </label>
+          <Select
+            value={defaultType}
+            options={typeData}
+            onChange={typeHandler}
+          />
+        </div>
+
+        <div>
+          <label>Visibility:</label>
+          <Select
+            isMulti
+            name="visibility"
+            value={defaultVisibility}
+            options={visibilityData}
+            onChange={visibilityHandler}
+          />
+        </div>
+
+        <div>
+          <label>
+            Start Day:
+            <RedStar />
+          </label>
+          <BasicDatePicker
+            type="date"
+            id="single-day"
+            name="day"
+            value={startDate}
+            onChange={(value) => {
+              onDateInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setStartDate
+              );
+            }}
+          />
+        </div>
+        <div>
+          <label>
+            End Day:
+            <RedStar />
+            {!dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              ></p>
+            ) : null}
+            {dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              >
+                {dateMessageVal}
+              </p>
+            ) : null}
             <BasicDatePicker
               type="date"
               id="single-day"
@@ -268,80 +388,114 @@ const EventEditForm = ({ existingValues }) => {
                   fns.format(new Date(value), "yyyy-MM-dd").toString(),
                   setEndDate
                 );
-                // setShiftDateMessageVal(requiredValidation(date));
+                setDateMessageVal(
+                  dateValidation(
+                    startDate,
+                    fns.format(new Date(value), "yyyy-MM-dd").toString()
+                  )
+                );
               }}
             />
-          </div>
+          </label>
+        </div>
 
-          {startDate === endDate && (
-            <>
-              <label>
-                All Day
-                <StyledCheck
-                  className="check"
-                  name="all-day"
-                  type="checkbox"
-                  value={allDay}
-                  checked={allDay === true}
-                  onChange={(e) => {
-                    setAllDay(e.target.checked);
-                    if (e.target.checked) {
-                      setStartTime("");
-                      setEndTime("");
-                    }
-                  }}
-                />
-              </label>
-              <div></div>
-            </>
-          )}
-          {allDay === false && (
-            <>
-              <label>
-                Start Time:
-                <BasicTimePicker
-                  type="time"
-                  value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
-                  onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
-                  }}
-                />
-              </label>
-              <label>
-                End Time:
-                <BasicTimePicker
-                  type="time"
-                  value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
-                  onChange={(value) => {
-                    onTimeInputUpdate(value, setEndTime);
-                  }}
-                />
-              </label>
-            </>
-          )}
-          <div></div>
-          <div></div>
-          <div style={{ display: "flex" }}>
-            <StyledButton onClick={postData} style={{ alignSelf: "flex-end" }}>
-              CONFIRM
-            </StyledButton>
-            <StyledButton
-              onClick={() => deleteEventData(theEventId)}
-              style={{ alignSelf: "flex-end" }}
+        {startDate === endDate && (
+          <>
+            <label>
+              All Day
+              <StyledCheck
+                className="check"
+                name="all-day"
+                type="checkbox"
+                value={allDay}
+                checked={allDay === true}
+                onChange={(e) => {
+                  setAllDay(e.target.checked);
+                  if (e.target.checked) {
+                    setStartTime("");
+                    setEndTime("");
+                  }
+                }}
+              />
+            </label>
+            <div></div>
+          </>
+        )}
+        {allDay === false && (
+          <>
+            <label>
+              Start Time:
+              <BasicTimePicker
+                type="time"
+                value={startTime}
+                onChange={(value) => {
+                  onTimeInputUpdate(value, setStartTime);
+                }}
+              />
+            </label>
+            <label>
+              End Time:
+              {!timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            ></p>
+          ) : null}
+          {timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
             >
-              DELETE
-            </StyledButton>
-          </div>
-          <div>
-            <label>Notes:</label>
-            <StyledTextArea
-              value={notes}
-              onChange={(event) => onInputUpdate(event, setNotes)}
-            />
-          </div>
-          <div></div>
-        </StyledForm>
-      </StyledFormWrapper>
+              {timeMessageVal}
+            </p>
+          ) : null}
+              <BasicTimePicker
+                type="time"
+                value={endTime}
+                onChange={(value) => {
+                  onTimeInputUpdate(value, setEndTime);
+                  setTimeMessageVal(timeValidation(startTime, value))
+                }}
+              />
+            </label>
+          </>
+        )}
+        <div></div>
+        <div></div>
+        <div style={{ display: "flex" }}>
+          <StyledButton
+            onClick={() => {
+              postData();
+            }}
+            style={{ alignSelf: "flex-end" }}
+          >
+            CONFIRM
+          </StyledButton>
+          <StyledButton
+            onClick={() => deleteEventData(theEventId)}
+            style={{ alignSelf: "flex-end" }}
+          >
+            DELETE
+          </StyledButton>
+        </div>
+        <div>
+          <label>Notes:</label>
+          <StyledTextArea
+            value={notes}
+            onChange={(event) => onInputUpdate(event, setNotes)}
+          />
+        </div>
+        <div></div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

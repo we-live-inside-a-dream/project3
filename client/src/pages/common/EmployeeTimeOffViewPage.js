@@ -1,14 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { navigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
-import {
-  StyledButton,
-  StyledForm,
-  StyledForm2,
-  StyledFormWrapper,
-} from "../../components/reusable/Inputs/StyledEmployeeForm";
+import { StyledButton } from "../../components/reusable/Inputs/StyledEmployeeForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import StyledTable from "../../components/reusable/tables/StyledTable";
@@ -16,44 +10,32 @@ import ApprovalSymbol from "../../components/dashboard/ApprovalSymbol";
 import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import Modal from "../../components/reusable/Modal";
 
-const EmployeeTimeOffViewPage = ({
-  setIsTimeOff,
-  isTimeOff,
-  deleteTimeOff,
-}) => {
+const EmployeeTimeOffViewPage = () => {
   const [timeOffRequests, setTimeOffRequests] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalApplyIsOpen, setModalApplyIsOpen] = useState(false);
+  const [timeToDelete, setTimeToDelete] = useState();
+  const [renderPage, setRenderPage] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-
-  // const navigate = useNavigate()
 
   console.log("this is time off", timeOffRequests);
 
   useEffect(() => {
-    //  if (!user._Id) return;
     const fetchTimeOff = async () => {
       console.log("userrrrr", user._id);
       let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
       let fetchedTimeOff = await fetchResult.json();
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
-      setLoading(false);
+      setRenderPage(false);
+      setLoading(true);
     };
-    setLoading(true);
     fetchTimeOff();
-  }, [user._id]);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-
-  // }, [timeOffRequests]);
+  }, [user._id, renderPage, setTimeOffRequests]);
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -64,39 +46,25 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
-    // setLoading(true);
+    let updatedTimeOffList = timeOffRequests.map((timeOff) => {
+      if (timeOff._id === timeOffValues._id) {
+        return updatedTimeOff;
+      } else {
+        return timeOff;
+      }
+    });
+    setTimeOffRequests(updatedTimeOffList);
   }
 
-  // console.log("this is time off values", timeOffValues);
-  // async function deleteTimeOff(id) {
-  //   console.log("This is the delete id", id)
-  //   let result = await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  //   console.log("this is the result", result)
-  // }
-  // const deleteTimeOff = async (id) => {
-  //   await fetch(`/api/timeOff/deleteTimeOff?id=${id}`, {
-  //     method: "DELETE",
-  //   });
-  // };
-
-  // async function deleteTimeOff(id) {
-  //   await fetch("/api/timeOff/delete/" + id, {
-  //     method: "DELETE",
-  //   });
-  //   let removedTimeOff = timeOff.filter((t) => t._id !== id);
-  //   setTimeOff(removedTimeOff);
-  //   //  navigate('/')
-  // }
-
-  async function deleteTimeOff(id) {
-    await fetch("/api/timeOff/delete/" + id, {
+  async function deleteTimeOff() {
+    console.log("FROM THE DELETE", timeToDelete);
+    await fetch("/api/timeOff/delete/" + timeToDelete, {
       method: "DELETE",
     });
-    let removedTimeOff = timeOffRequests.filter((t) => t._id !== id);
+    let removedTimeOff = await timeOffRequests.filter(
+      (t) => t._id !== timeToDelete
+    );
     setTimeOffRequests(removedTimeOff);
-    //  navigate('/')
   }
 
   function statusConvert(status) {
@@ -110,7 +78,7 @@ const EmployeeTimeOffViewPage = ({
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
-        {loading ? (
+        {!loading ? (
           <div
             style={{
               height: "320px",
@@ -120,19 +88,26 @@ const EmployeeTimeOffViewPage = ({
               position: "absolute",
               top: "0",
               left: "0",
-              transformOrigin: "topLeft",
-              transform: "translate(50%, 50%)",
+              right: "0",
+              bottom: "0",
               margin: "auto",
             }}
           >
             <ClockLoader
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "Center",
+                width: "100%",
+                height: "100vh",
+              }}
               color={"var(--mainHeader)"}
-              loading={loading}
+              // loading={loading}
               size={300}
             />
           </div>
         ) : (
-          <>
+          <div>
             <StyledPageTitle style={{ marginBottom: "10px" }}>
               TIME OFF REQUESTS
             </StyledPageTitle>
@@ -160,8 +135,6 @@ const EmployeeTimeOffViewPage = ({
                         height: "auto",
                       }}
                     >
-                      {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
-
                       <td>
                         {<ApprovalSymbol time={t} />}
                         {`${statusConvert(t.status)}`}
@@ -175,8 +148,6 @@ const EmployeeTimeOffViewPage = ({
                         <div>
                           <StyledEditButton
                             fontSize="25px"
-                            // margin={"0"}
-                            // padding={"0"}
                             onClick={() => {
                               setModalEditIsOpen(true);
                               setTimeOffValues(t);
@@ -186,42 +157,10 @@ const EmployeeTimeOffViewPage = ({
                             ✎
                           </StyledEditButton>
 
-                          <Modal
-                            onClose={() => {
-                              setModalConfirmIsOpen(false);
-                            }}
-                            open={modalConfirmIsOpen}
-                          >
-                            <div>
-                              Are you sure you want to Delete your time off
-                              request?
-                            </div>
-                            <StyledButton
-                              onClick={() => {
-                                deleteTimeOff(t._id);
-                                setModalConfirmIsOpen(false);
-                              }}
-                            >
-                              Delete
-                            </StyledButton>
-                            <StyledButton
-                              onClick={() => setModalConfirmIsOpen(false)}
-                            >
-                              Cancel
-                            </StyledButton>
-                          </Modal>
                           <StyledEditButton
-                            // fontSize="20px"
                             margin={"0px 20px"}
-                            // padding={"0"}
-                            // onClick={() => {
-                            //   setModalConfirmIsOpen(true);
-                            //   setTimeOffValues(t);
-                            //   setSelectedId(t._id)
-                            //   deleteTimeOff(t._id);
-                            //   console.log("this is t", t);
-                            // }}
                             onClick={() => {
+                              setTimeToDelete(t._id);
                               setModalConfirmIsOpen(true);
                             }}
                           >
@@ -235,11 +174,24 @@ const EmployeeTimeOffViewPage = ({
               </tbody>
             </StyledTable>
 
-            {/* <EmployeeTimeOffForm />
-             */}
-          </>
+            {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
+
+            <div styled={{ padding: "40%" }}>
+              <StyledButton onClick={() => setModalApplyIsOpen(true)}>
+                Request Time off
+              </StyledButton>
+            </div>
+          </div>
         )}
       </StyledPage>
+      <Modal onClose={() => setModalApplyIsOpen(false)} open={modalApplyIsOpen}>
+        <EmployeeTimeOffForm
+          setModalApplyIsOpen={setModalApplyIsOpen}
+          setTimeOffRequests={setTimeOffRequests}
+          reload={() => setRenderPage(true)}
+        />
+      </Modal>
+
       <Modal
         onClose={() => {
           setModalEditIsOpen(false);
@@ -249,18 +201,33 @@ const EmployeeTimeOffViewPage = ({
         <EmployeeTimeOffForm
           existingValues={timeOffValues}
           onSave={updateTimeOff}
+          setTimeOffRequests={setTimeOffRequests}
+          timeOffRequests={timeOffRequests}
+          setModalEditIsOpen={setModalEditIsOpen}
+          reload={() => setRenderPage(true)}
         />
+      </Modal>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <div>Are you sure you want to Delete your time off request?</div>
+        <StyledButton
+          onClick={() => {
+            deleteTimeOff();
+            setModalConfirmIsOpen(false);
+          }}
+        >
+          Delete
+        </StyledButton>
+        <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+          Cancel
+        </StyledButton>
       </Modal>
     </div>
   );
 };
-
-// { loading ? (
-//   <ClockLoader
-//   color={#F37A24}
-//   loading={loading}
-//   size={30}
-//   /> ) : null
-//   }
 
 export default EmployeeTimeOffViewPage;

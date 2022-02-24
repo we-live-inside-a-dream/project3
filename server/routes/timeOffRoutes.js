@@ -20,7 +20,7 @@ router.get("/by-start-date", async (req, res) => {
 
 router.post("/update", async (req, res) => {
   let id = req.query.id;
-  console.log("id for approval", id);
+  // console.log("id for approval", id);
   let timeOffApproval = req.body;
   newTimeOff = await employeeTimeOffModel.update(id, timeOffApproval);
   res.json(newTimeOff);

@@ -69,7 +69,7 @@ function EmployeeProfileList() {
         <tbody>
           {employees?.map((employee, index) => {
             return (
-              <StyledTableRow key={index}>
+              <StyledTableRow key={employee._id}>
                 <NamePicTableData
                   onClick={() => selectProfile(employee._id)}
                   firstName={employee.firstName}

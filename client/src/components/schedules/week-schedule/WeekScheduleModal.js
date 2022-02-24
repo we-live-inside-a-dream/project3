@@ -1,7 +1,6 @@
 // import React, { useState } from "react";
 import EditSchedule from "../../edit-schedule/EditSchedule";
 import Modal from "../../reusable/Modal";
-import EditScheduleSelectInfo from "./EditScheduleSetInfo";
 
 function WeekScheduleModal({ date, setModalOpen, shift, employee }) {
   let existingValues = {

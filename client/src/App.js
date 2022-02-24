@@ -26,8 +26,13 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 // import NotificationProvider from "./components/reusable/context/NotificationProvider";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import { SocketProvider } from "./components/reusable/context/SocketProvider";
+import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
+
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
-// import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
+import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
+import { CustomSelect } from "./components/reusable/Inputs/CustomSelect";
+import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -39,6 +44,7 @@ function App() {
           style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
           className="App"
         >
+          <ChatPopupWindow />
           <GlobalStyle />
           <NavBar />
           <Routes>
@@ -97,14 +103,14 @@ function App() {
                 </RequireAuth>
               }
             />
-            {/* <Route
-            path="/timeOff"
-            element={
-              <RequireAuth>
-                <EmployeeTimeOffForm />
-              </RequireAuth>
-            }
-          /> */}
+            <Route
+              path="/timeOff"
+              element={
+                <RequireAuth>
+                  <EmployeeTimeOffForm />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/timeOff/page"
               element={
@@ -113,6 +119,15 @@ function App() {
                 </RequireAuth>
               }
             />
+            <Route
+              path="/shiftSwapManagerPage"
+              element={
+                <RequireAuth>
+                  <ManagerViewOfShiftSwapRequests />
+                </RequireAuth>
+              }
+            />
+
             <Route
               path="/human-resources"
               element={
@@ -171,6 +186,7 @@ function App() {
               path="/timeOff/approval"
               element={<TimeOffApprovalPage />}
             ></Route>
+            <Route path="/custom" element={<WeekSchedulePosition />}></Route>
             {/* last router */}
           </Routes>
           )

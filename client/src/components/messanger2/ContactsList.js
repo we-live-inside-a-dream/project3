@@ -1,16 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
 import Select from "react-select";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
-
+import Conversation from "../../components/messanger2/Conversation";
+import { useSocket } from "../../components/reusable/context/SocketProvider";
 import { StyledButton } from "../reusable/Inputs/StyledEmployeeForm";
+import {
+  ChatMenu,
+  ChatMenuWrapper,
+  Convo,
+  StyledContactList,
+} from "./StyledMessangerPage";
 
-export const ContactsList = () => {
+export const ContactsList = ({ setCurrentChat }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [empNames, setEmpNames] = useState();
   const [recipients, setRecipients] = useState();
   const [contactsData, setContactsData] = useState([]);
+  const [conversations, setConversations] = useState([]);
+
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
+
+  const value = useSocket();
+  const socket = value.socket;
+  const fetchUnread = value.fetchUnread;
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -32,6 +45,20 @@ export const ContactsList = () => {
       });
     }
   }, [empNames]);
+
+  useEffect(() => {
+    if (user._id) {
+      const getConversations = async () => {
+        let id = user._id;
+        let fetchResult = await fetch(`api/conversations/${id}`);
+        let fetchedConversation = await fetchResult.json();
+
+        setConversations(fetchedConversation);
+      };
+      getConversations();
+      // socket.emit("update");
+    }
+  }, [user?._id]);
 
   //   let recipientIds = [];
   async function postData() {
@@ -65,16 +92,33 @@ export const ContactsList = () => {
 
   return (
     <>
-      <Select
-        isMulti
-        name="empNames"
-        value={recipients}
-        options={contactsData}
-        onChange={recipientHandler}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      ></Select>
-      <StyledButton onClick={postData}>SELECT FRIENDS</StyledButton>
+      <ChatMenu>
+        <ChatMenuWrapper>
+          <Select
+            isMulti
+            name="empNames"
+            value={recipients}
+            options={contactsData}
+            onChange={recipientHandler}
+            className="basic-multi-select"
+            classNamePrefix="select"
+          ></Select>
+          <StyledButton onClick={postData}>SELECT FRIENDS</StyledButton>
+          <StyledContactList>
+            {conversations?.map((c) => (
+              <Convo
+                key={c._id}
+                onClick={() => {
+                  setCurrentChat(c);
+                  fetchUnread();
+                }}
+              >
+                <Conversation conversation={c} />
+              </Convo>
+            ))}
+          </StyledContactList>
+        </ChatMenuWrapper>
+      </ChatMenu>
     </>
   );
 };

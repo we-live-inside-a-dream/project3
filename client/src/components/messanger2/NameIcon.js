@@ -7,7 +7,8 @@ function NameIcon({ name }) {
       style={{
         display: "grid",
         height: "4em",
-        width: "12rem",
+        minWidth: "10rem",
+        // width: "7rem",
         gridTemplateColumns: "5% 25% 70%",
       }}
     >

@@ -281,33 +281,44 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          <div>
-            <label>
-              password
-              <RedStar />
-            </label>
+          {password && (
+            <div>
+              <label>
+                password
+                <RedStar />
+              </label>
 
-            {!passMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            {passMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {passMessageVal}
-              </p>
-            ) : null}
-            <StyledInput
-              value={password}
-              type="password"
-              onChange={(event) => {
-                onInputUpdate(event, setPassword);
-                setPassMessageVal(passwordValidation(password));
-              }}
-            />
-          </div>
+              {!passMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                ></p>
+              ) : null}
+              {passMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {passMessageVal}
+                </p>
+              ) : null}
+
+              <StyledInput
+                value={password}
+                type="password"
+                onChange={(event) => {
+                  onInputUpdate(event, setPassword);
+                  setPassMessageVal(passwordValidation(password));
+                }}
+              />
+            </div>
+          )}
           <div>
             <label>
               Phone Number
@@ -363,14 +374,15 @@ const EmployeeEditForm = ({
               required="true"
             /> */}
           </div>
-          {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
+          
 
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
               Status
               <RedStar />
             </label>
+            
             {!status ? (
               <p
                 style={{
@@ -386,6 +398,13 @@ const EmployeeEditForm = ({
               onChange={handleStatusChange}
               required="true"
             />
+          </div>
+          <div>
+          {shown === true ? <p style={{
+                  color: "red",
+                  fontSize: "20px",
+                  marginBottom: "0px",
+                }}>form is invalid</p> : null}
           </div>
         </StyledForm>
       </StyledFormWrapper>

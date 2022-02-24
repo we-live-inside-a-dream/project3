@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
+import moment from "moment";
 
 const Day = ({
   day,
@@ -12,6 +13,8 @@ const Day = ({
   setExistingValues,
   eventId,
   setIsOpen,
+  daySelectChoice,
+  setDaySelectChoice,
   isOpen,
 }) => {
   const className = `day ${day.value === "padding" ? "padding" : ""} ${
@@ -75,7 +78,14 @@ const Day = ({
     >
       {day.value !== "padding" ? (
         <StyledEditButton
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            setDaySelectChoice(moment(day.date).format("yyyy-MM-DD"));
+            console.log(
+              daySelectChoice,
+              "is the day select choice!!!!!!!!!!!!!!!!!!!!!!!"
+            );
+            setIsOpen(!isOpen);
+          }}
           style={addEventButtonStyle}
           margin="0px"
         >

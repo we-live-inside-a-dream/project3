@@ -8,7 +8,7 @@ import {
   StyledCheck,
   StyledTextArea,
   StyledForm,
-  StyledFormWrapper,
+  // StyledFormWrapper,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
@@ -25,7 +25,15 @@ const typeData = [
   { value: "dead", label: "Im Dead" },
 ];
 
-const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
+const EmployeeTimeOffForm = ({
+  existingValues,
+  onSave,
+  reload,
+  setTimeOffRequests,
+  timeOffRequests,
+  setModalEditIsOpen,
+  setModalApplyIsOpen,
+}) => {
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
@@ -46,9 +54,13 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
   const user = authContext.user;
 
   useEffect(() => {
-    const typeFilter = typeData?.filter((r) => r.value == type);
-    setDefaultType(typeFilter);
-    console.log("this is type", type);
+    let isMounted = true;
+    if (isMounted) {
+      const typeFilter = typeData?.filter((r) => r.value === type);
+      setDefaultType(typeFilter);
+      console.log("this is type", type);
+    }
+    isMounted = false;
   }, [type]);
 
   useEffect(() => {
@@ -64,7 +76,7 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
       setType(existingValues.type);
       setComment(existingValues.comment);
       setAllDay(existingValues.allDay);
-      console.log("these are the exisiting values", existingValues.type);
+      console.log("these are the existing values", existingValues.type);
     }
   }, [existingValues]);
 
@@ -95,6 +107,7 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+    setTimeOffRequests((curr) => [...curr, newEmployeeTimeOff]);
   }
 
   let validation;
@@ -130,31 +143,24 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
       startDate,
       endDate,
       allDay: allDay,
+      status: "pending",
       comment: comment,
     };
-    // console.log("start time", startTime);
-    // console.log("end time", endTime);
-
-    // console.log("posting Time Off", newEmployeeTimeOff);
-    // await createEmployeeTimeOff(newEmployeeTimeOff);
-    // navigate("/");
 
     validateForm();
-    // console.log("validate form", validation);
-    // console.log("saving new time off form", newEmployeeTimeOff);
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
+      // reload();
+      setModalEditIsOpen(false);
     }
+
     console.log("this isss existingValues", existingValues);
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
+      setModalApplyIsOpen(false);
     } else setShown(true);
-
-    // if (existingValues) {
-    //   await onSave(newEmployeeTimeOff);
-    // }
 
     // onSave();
     if (existingValues) {
@@ -170,178 +176,186 @@ const EmployeeTimeOffForm = ({ existingValues, onSave }) => {
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2>Time Off Request</h2>
-          <div></div>
-          <div>
-            <label>
-              Type:
-              <RedStar />
-            </label>
-
-            <Select
-              value={defaultType}
-              options={typeData}
-              onChange={typeHandler}
-            />
-          </div>
-          <div></div>
-
+      {/* <StyledFormWrapper> */}
+      <StyledForm>
+        <h2>Time Off Request</h2>
+        <div></div>
+        <div>
           <label>
-            Start Day:
+            Type:
             <RedStar />
-            <BasicDatePicker
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDate}
-              onChange={(value) => {
-                onInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                  setStartDate
-                );
-              }}
-            />
           </label>
 
-          <label>
-            End Day:
-            <RedStar /> &nbsp;
-            {!dateMessageVal ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                  marginTop: "0px",
-                }}
-              ></p>
-            ) : null}
-            {dateMessageVal ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                  marginTop: "0px",
-                }}
-              >
-                {dateMessageVal}
-              </p>
-            ) : null}
-            <BasicDatePicker
-              type="date"
-              id="single-day"
-              name="day"
-              value={endDate}
-              onChange={(value) => {
-                onInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                  setEndDate
-                );
-                setDateMessageVal(
-                  dateValidation(
-                    startDate,
-                    fns.format(new Date(value), "yyyy-MM-dd").toString()
-                  )
-                );
-              }}
-            />
-          </label>
+          <Select
+            defaultValue={defaultType}
+            options={typeData}
+            onChange={typeHandler}
+          />
+        </div>
+        <div></div>
 
-          {startDate === endDate && (
-            <>
-              <label>
-                All Day
-                <StyledCheck
-                  className="check"
-                  name="all-day"
-                  type="checkbox"
-                  value={allDay}
-                  checked={allDay === true}
-                  onChange={(e) => {
-                    setAllDay(e.target.checked);
-                    if (e.target.checked) {
-                      setStartTime("");
-                      setEndTime("");
-                    }
-                  }}
-                />
-              </label>
-              <div></div>
-            </>
-          )}
-          {allDay === false && (
-            <>
-              <label>
-                Start Time:
-                <BasicTimePicker
-                  type="time"
-                  value={startTime}
-                  onChange={(value) => {
-                    onInputUpdate(value, setStartTime);
-                  }}
-                />
-              </label>
-              <label>
-                End Time:
-                <BasicTimePicker
-                  type="time"
-                  value={endTime}
-                  onChange={(value) => {
-                    onInputUpdate(value, setEndTime);
-                  }}
-                />
-              </label>
-            </>
-          )}
-          <div></div>
-          <div></div>
-          <div>
-            <label>Comments:</label>
-            <StyledTextArea
-              value={comment}
-              onChange={(event) => onCommentInputUpdate(event, setComment)}
-            />
-          </div>
-          <div></div>
-          <Modal
-            onClose={() => {
-              setModalConfirmIsOpen(false);
+        <label>
+          Start Day:
+          <RedStar />
+          <BasicDatePicker
+            type="date"
+            id="single-day"
+            name="day"
+            value={startDate}
+            onChange={(value) => {
+              onInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setStartDate
+              );
             }}
-            open={modalConfirmIsOpen}
-          >
-            <div style={{ padding: "20px" }}>
-              <h3>Confirm Time Off</h3>
-              <p>Type of time off:{type?.label}</p>
-              <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
-              <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
-              {allDay === false && (
-                <>
-                  <p>Start Time: {moment(startTime).format("h:mm a")}</p>
-                  <p>End Time: {moment(endTime).format("h:mm a")}</p>
-                </>
-              )}
-              <p>Comments:{comment}</p>
-              <div></div>
+          />
+        </label>
 
-              <StyledButton onClick={postData}>Confirm</StyledButton>
-              <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
-                Cancel
-              </StyledButton>
-            </div>
-          </Modal>
-          <div>
-            <StyledButton
-              style={{ marginLeft: "1px" }}
-              onClick={confirmHandler}
+        <label>
+          End Day:
+          <RedStar /> &nbsp;
+          {!dateMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            ></p>
+          ) : null}
+          {dateMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
             >
-              Apply Time Off
+              {dateMessageVal}
+            </p>
+          ) : null}
+          <BasicDatePicker
+            type="date"
+            id="single-day"
+            name="day"
+            value={endDate}
+            onChange={(value) => {
+              onInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setEndDate
+              );
+              setDateMessageVal(
+                dateValidation(
+                  startDate,
+                  fns.format(new Date(value), "yyyy-MM-dd").toString()
+                )
+              );
+            }}
+          />
+        </label>
+
+        {startDate === endDate && (
+          <>
+            <label>
+              All Day
+              <StyledCheck
+                className="check"
+                name="all-day"
+                type="checkbox"
+                value={allDay}
+                checked={allDay === true}
+                onChange={(e) => {
+                  setAllDay(e.target.checked);
+                  if (e.target.checked) {
+                    setStartTime("");
+                    setEndTime("");
+                  }
+                }}
+              />
+            </label>
+            <div></div>
+          </>
+        )}
+        {allDay === false && (
+          <>
+            <label>
+              Start Time:
+              <BasicTimePicker
+                type="time"
+                value={startTime}
+                onChange={(value) => {
+                  onInputUpdate(value, setStartTime);
+                }}
+              />
+            </label>
+            <label>
+              End Time:
+              <BasicTimePicker
+                type="time"
+                value={endTime}
+                onChange={(value) => {
+                  onInputUpdate(value, setEndTime);
+                }}
+              />
+            </label>
+          </>
+        )}
+        <div></div>
+        <div></div>
+        <div>
+          <label>Comments:</label>
+          <StyledTextArea
+            value={comment}
+            onChange={(event) => onCommentInputUpdate(event, setComment)}
+          />
+        </div>
+        <div></div>
+        <Modal
+          onClose={() => {
+            setModalConfirmIsOpen(false);
+          }}
+          open={modalConfirmIsOpen}
+        >
+          <div style={{ padding: "20px" }}>
+            <h3>Confirm Time Off</h3>
+            <p>Type of time off:{type?.label}</p>
+            <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
+            <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
+            {allDay === false && (
+              <>
+                <p>Start Time: {moment(startTime).format("h:mm a")}</p>
+                <p>End Time: {moment(endTime).format("h:mm a")}</p>
+              </>
+            )}
+            <p>Comments:{comment}</p>
+            <div></div>
+
+            <StyledButton
+              onClick={() => {
+                postData();
+                setModalConfirmIsOpen(false);
+              }}
+            >
+              Confirm
+            </StyledButton>
+            <StyledButton
+              onClick={() => {
+                setModalConfirmIsOpen(false);
+              }}
+            >
+              Cancel
             </StyledButton>
           </div>
-        </StyledForm>
-      </StyledFormWrapper>
+        </Modal>
+        <div>
+          <StyledButton style={{ marginLeft: "1px" }} onClick={confirmHandler}>
+            Apply Time Off
+          </StyledButton>
+        </div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

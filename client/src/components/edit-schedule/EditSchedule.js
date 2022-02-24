@@ -29,6 +29,13 @@ import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 // import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
+const positionList = [
+  { name: "Supervisor" },
+  { name: "Waitress" },
+  { name: "Cashier" },
+  { name: "Dishwasher" },
+  { name: "The Rezza" },
+];
 
 function EditSchedule({
   onClose,
@@ -56,6 +63,7 @@ function EditSchedule({
   const [breakPaid, setBreakPaid] = useState();
   const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
+  const [position, setPosition] = useState([]);
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
@@ -154,6 +162,7 @@ function EditSchedule({
       end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
+      position,
     };
     validateForm();
     console.log("validate form", validation);
@@ -266,6 +275,30 @@ function EditSchedule({
               return (
                 <option key={event._id} value={event._id}>
                   {event.firstName + " " + event.lastName}
+                </option>
+              );
+            })}
+          </NativeSelect>
+          <InputLabel>
+            Positions
+            <RedStar />
+          </InputLabel>
+          <NativeSelect
+            label="name"
+            value={breakName}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setPosition);
+            }}
+            style={{
+              width: "100%",
+            }}
+          >
+            {/* {name} */}
+            <option></option>
+            {positionList?.map((event, index) => {
+              return (
+                <option key={index} value={event.name}>
+                  {event.name}
                 </option>
               );
             })}
@@ -396,6 +429,7 @@ function EditSchedule({
             />
           ))}
           <div></div>
+
           <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
         </div>
       </StyledModal>

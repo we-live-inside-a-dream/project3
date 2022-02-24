@@ -9,6 +9,7 @@ const Schedule = mongoose.model("schedule", {
   date: String,
   start: String,
   end: String,
+  position: String,
   breaks: [{ name: String, start: String, end: String, paid: Boolean }],
   swapRequestStatus: String,
   swapRequestDate: Date,

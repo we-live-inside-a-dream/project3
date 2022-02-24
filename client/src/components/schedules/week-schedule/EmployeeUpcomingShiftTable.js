@@ -134,6 +134,8 @@ function EmployeeUpcomingShiftList() {
       >
         <UpcomingShiftView
           shift={detailShift}
+          setShifts={setShifts}
+          shifts={shifts}
           // employee={modalEmployee}
           setDetailModalIsOpen={setDetailModalIsOpen}
           // date={modalDate}
@@ -144,6 +146,8 @@ function EmployeeUpcomingShiftList() {
         onClose={() => setSwapConfirmModalIsOpen(false)}
       >
         <ShiftSwapConfirmModal
+          shifts={shifts}
+          setShifts={setShifts}
           shift={detailShift}
           setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
         />

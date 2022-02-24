@@ -117,6 +117,7 @@ function EditSchedule({
     ); // its FINE
     setDate(existingValues.date);
     setBreaks(existingValues.breaks);
+    setPosition(existingValues.position);
   }, [existingValues]);
 
   async function createShift(createdUser) {
@@ -256,7 +257,7 @@ function EditSchedule({
           </InputLabel>
           {employeeId === "" ? (
             <p
-              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px", }}
             ></p>
           ) : null}
           <NativeSelect
@@ -285,7 +286,7 @@ function EditSchedule({
           </InputLabel>
           <NativeSelect
             label="name"
-            value={breakName}
+            value={position}
             onChange={(event) => {
               onInputUpdate(event.target.value, setPosition);
             }}
@@ -312,7 +313,7 @@ function EditSchedule({
           </InputLabel>
 
           {date === "" ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {"required"}
             </p>
           ) : null}
@@ -337,12 +338,12 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           {!shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
             </p>
           ) : null}
           {shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
               {shiftTimeMessageVal}
             </p>

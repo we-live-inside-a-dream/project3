@@ -49,8 +49,8 @@ const ScheduleAvailability = ({ date, id }) => {
           } //multiple days off
           // setRenderTimeoff("Time off true");
         } else {
-          return "im here";
           setRenderTimeoff(null);
+          return "im here";
         }
       });
     }

@@ -32,6 +32,7 @@ import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 import { CustomSelect } from "./components/reusable/Inputs/CustomSelect";
+import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -185,7 +186,7 @@ function App() {
               path="/timeOff/approval"
               element={<TimeOffApprovalPage />}
             ></Route>
-            <Route path="/custom" element={<CustomSelect />}></Route>
+            <Route path="/custom" element={<WeekSchedulePosition />}></Route>
             {/* last router */}
           </Routes>
           )

@@ -45,19 +45,7 @@ const EmployeeTimeOffViewPage = ({
       setRenderPage(false);
     };
     fetchTimeOff();
-
-    // if (timeOffRequests) {
-    //   setLoading(false);
-    // }
   }, [user._id, renderPage]);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-
-  // }, [timeOffRequests]);
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -76,7 +64,6 @@ const EmployeeTimeOffViewPage = ({
     });
     let removedTimeOff = timeOffRequests.filter((t) => t._id !== id);
     setTimeOffRequests(removedTimeOff);
-    //  navigate('/')
   }
 
   function statusConvert(status) {

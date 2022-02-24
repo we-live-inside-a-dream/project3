@@ -435,7 +435,7 @@ const EventEditForm = ({
             </label>
             <label>
               End Time:
-              {/* {!timeMessageVal ? (
+              {!timeMessageVal ? (
             <p
               style={{
                 color: "red",
@@ -456,12 +456,13 @@ const EventEditForm = ({
             >
               {timeMessageVal}
             </p>
-          ) : null} */}
+          ) : null}
               <BasicTimePicker
                 type="time"
                 value={endTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setEndTime);
+                  setTimeMessageVal(timeValidation(startTime, value))
                 }}
               />
             </label>

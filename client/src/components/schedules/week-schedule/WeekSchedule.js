@@ -264,10 +264,6 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       }}
                       onClick={() => {
                         onClickHandler(shift, employee, date);
-                        // setIsOpen(true);
-                        // setShiftId(shift);
-                        // setModalEmployee(employee);
-                        // setModalDate(date);
                         console.log("FROM ONCLICK", employee, date, shift);
                       }}
                     >
@@ -336,6 +332,8 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                     backgroundColor={availabilityColor}
                   >
                     {`${shift.start}-${shift.end} `}
+                    <br />
+                    {`${shift.position}`}
                   </td>
                 );
               })}

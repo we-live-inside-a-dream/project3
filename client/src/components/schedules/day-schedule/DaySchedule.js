@@ -192,12 +192,15 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           {schedule?.map((employee) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={employee._id} onClick={() => setShiftId(employee._id)}>
-              <NamePicTableData
-                firstName={employee.firstName}
-                lastName={employee.lastName}
-                edit="edit"
-                onClick={() => setIsOpen(true)}
-              />
+              <div>
+                <NamePicTableData
+                  firstName={employee.firstName}
+                  lastName={employee.lastName}
+                  edit="edit"
+                  onClick={() => setIsOpen(true)}
+                />
+                <div>{employee.position}</div>
+              </div>
 
               {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
                 DO you want to delete this shift?
@@ -235,7 +238,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT2</StyledButton>
+      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT</StyledButton>
       <Modal
         open={isOpen}
         onClose={() => {

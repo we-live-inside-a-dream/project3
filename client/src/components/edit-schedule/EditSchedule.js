@@ -117,6 +117,7 @@ function EditSchedule({
     ); // its FINE
     setDate(existingValues.date);
     setBreaks(existingValues.breaks);
+    setPosition(existingValues.position);
   }, [existingValues]);
 
   async function createShift(createdUser) {
@@ -285,7 +286,7 @@ function EditSchedule({
           </InputLabel>
           <NativeSelect
             label="name"
-            value={breakName}
+            value={position}
             onChange={(event) => {
               onInputUpdate(event.target.value, setPosition);
             }}

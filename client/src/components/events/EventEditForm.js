@@ -7,7 +7,13 @@ import {
   StyledFormWrapper,
   StyledCheck,
   StyledTextArea,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import { 
+  requiredValidation,
+  timeValidation,
+  dateValidation
+}from "../validateForms.js"
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
@@ -35,6 +41,7 @@ const EventEditForm = ({
   everyEventList,
   setEveryEventList,
   setTheNewEvent,
+  theNewEvent,
   setIsOpen,
   daySelectChoice,
 }) => {
@@ -52,6 +59,11 @@ const EventEditForm = ({
   const [recurring, setRecurring] = useState(false);
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [dateMessageVal, setDateMessageVal] = useState(null);
+  const [typeMessageVal, setTypeMessageVal] = useState(null);
+  const [visibilityMessageVal, setVisibilityMessageVal] = useState(null);
+  const [eventNameMessageVal, setEventNameMessageVal] = useState(null);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -145,6 +157,46 @@ const EventEditForm = ({
     });
   }
 
+  let validation;
+  async function validateForm() {
+    if (
+      timeMessageVal ||
+      dateMessageVal ||
+      typeMessageVal ||
+      visibilityMessageVal ||
+      eventNameMessageVal
+    ) {
+      console.log(
+        "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+      )
+      validation = "please make sure that all fields are valid";
+      return validation;
+    } else 
+    console.log(
+      "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+    )
+    validation = null;
+    return validation;
+  }
+
   async function postData() {
     let resetValues = function () {
       setTheEventId("");
@@ -177,15 +229,16 @@ const EventEditForm = ({
       mandatory: mandatory,
       recurring: recurring,
     };
-    if (!existingValues) {
+    validateForm();
+    if (!existingValues && validation === null) {
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
       setTheNewEvent(newEvent);
-      setEveryEventList([...everyEventList]);
+      setEveryEventList((curr) => [...curr, newEvent]);
       resetValues();
       setIsOpen(false);
     }
-    if (existingValues) {
+    if (existingValues && validation === null) {
       await updateEvent(newEvent);
       setTheNewEvent(newEvent);
       console.log("posting updated event", newEvent);
@@ -202,11 +255,28 @@ const EventEditForm = ({
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
         <div>
-          <label>Event Name:</label>
+          <label style={{ marginBottom: "0px" }}>
+            Event Name:
+            <RedStar />
+          </label>
+          {/* {title === "" ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
+              {"required"}
+            </p>
+          ) : null} */}
           <StyledInput
             type="text"
             value={title}
-            onChange={(event) => onInputUpdate(event, setTitle)}
+            onChange={(event) => { onInputUpdate(event, setTitle)
+             setEventNameMessageVal(requiredValidation(title))
+            }}
           />
         </div>
         <div>

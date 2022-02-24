@@ -375,14 +375,15 @@ const EmployeeEditForm = ({
               required="true"
             /> */}
           </div>
-          {shown === true ? <p>form needs a lotta work</p> : null}
           <StyledButton onClick={postData}>Save Details</StyledButton>
+          
 
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
               Status
               <RedStar />
             </label>
+            
             {!status ? (
               <p
                 style={{
@@ -398,6 +399,13 @@ const EmployeeEditForm = ({
               onChange={handleStatusChange}
               required="true"
             />
+          </div>
+          <div>
+          {shown === true ? <p style={{
+                  color: "red",
+                  fontSize: "20px",
+                  marginBottom: "0px",
+                }}>form is invalid</p> : null}
           </div>
         </StyledForm>
       </StyledFormWrapper>

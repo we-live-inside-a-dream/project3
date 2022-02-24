@@ -25,7 +25,7 @@ const EmployeeTimeOffViewPage = ({
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalApplyIsOpen ,setModalApplyIsOpen] = useState(false);
+  const [modalApplyIsOpen, setModalApplyIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -85,7 +85,6 @@ const EmployeeTimeOffViewPage = ({
       return "Denied";
     } else return "Pending";
   }
-
 
   return (
     <div>
@@ -234,13 +233,8 @@ const EmployeeTimeOffViewPage = ({
           </div>
         )}
       </StyledPage>
-      <Modal
-        onClose={() => {
-          setModalApplyIsOpen(false);
-        }}
-        open={modalApplyIsOpen}
-      >
-        <EmployeeTimeOffForm/>
+      <Modal onClose={() => setModalApplyIsOpen(false)} open={modalApplyIsOpen}>
+        <EmployeeTimeOffForm setModalApplyIsOpen={setModalApplyIsOpen} />
       </Modal>
 
       <Modal

@@ -18,7 +18,7 @@ import Modal from "../../components/reusable/Modal";
 const EmployeeTimeOffViewPage = ({
   setIsTimeOff,
   isTimeOff,
-  deleteTimeOff,
+  // deleteTimeOff,
 }) => {
   const [timeOffRequests, setTimeOffRequests] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
@@ -26,6 +26,7 @@ const EmployeeTimeOffViewPage = ({
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalApplyIsOpen, setModalApplyIsOpen] = useState(false);
+  const [timeToDelete, setTimeToDelete] = useState();
   const [renderPage, setRenderPage] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
@@ -35,7 +36,6 @@ const EmployeeTimeOffViewPage = ({
   console.log("this is time off", timeOffRequests);
 
   useEffect(() => {
-    //  if (!user._Id) return;
     const fetchTimeOff = async () => {
       console.log("userrrrr", user._id);
       let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
@@ -45,7 +45,7 @@ const EmployeeTimeOffViewPage = ({
       setRenderPage(false);
     };
     fetchTimeOff();
-  }, [user._id, renderPage]);
+  }, [user._id, renderPage, setTimeOffRequests]);
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -56,14 +56,26 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
+    let updatedTimeOffList = timeOffRequests.map((timeOff) => {
+      if (timeOff._id === timeOffValues._id) {
+        return updatedTimeOff;
+      } else {
+        return timeOff;
+      }
+    });
+    setTimeOffRequests(updatedTimeOffList);
   }
 
-  async function deleteTimeOff(id) {
-    await fetch("/api/timeOff/delete/" + id, {
+  async function deleteTimeOff() {
+    console.log("FROM THE DELETE", timeToDelete);
+    await fetch("/api/timeOff/delete/" + timeToDelete, {
       method: "DELETE",
     });
-    let removedTimeOff = timeOffRequests.filter((t) => t._id !== id);
+    let removedTimeOff = await timeOffRequests.filter(
+      (t) => t._id !== timeToDelete
+    );
     setTimeOffRequests(removedTimeOff);
+    // setRenderPage(true);
   }
 
   function statusConvert(status) {
@@ -160,30 +172,6 @@ const EmployeeTimeOffViewPage = ({
                             ✎
                           </StyledEditButton>
 
-                          <Modal
-                            onClose={() => {
-                              setModalConfirmIsOpen(false);
-                            }}
-                            open={modalConfirmIsOpen}
-                          >
-                            <div>
-                              Are you sure you want to Delete your time off
-                              request?
-                            </div>
-                            <StyledButton
-                              onClick={() => {
-                                deleteTimeOff(t._id);
-                                setModalConfirmIsOpen(false);
-                              }}
-                            >
-                              Delete
-                            </StyledButton>
-                            <StyledButton
-                              onClick={() => setModalConfirmIsOpen(false)}
-                            >
-                              Cancel
-                            </StyledButton>
-                          </Modal>
                           <StyledEditButton
                             // fontSize="20px"
                             margin={"0px 20px"}
@@ -196,6 +184,7 @@ const EmployeeTimeOffViewPage = ({
                             //   console.log("this is t", t);
                             // }}
                             onClick={() => {
+                              setTimeToDelete(t._id);
                               setModalConfirmIsOpen(true);
                             }}
                           >
@@ -224,6 +213,7 @@ const EmployeeTimeOffViewPage = ({
       <Modal onClose={() => setModalApplyIsOpen(false)} open={modalApplyIsOpen}>
         <EmployeeTimeOffForm
           setModalApplyIsOpen={setModalApplyIsOpen}
+          setTimeOffRequests={setTimeOffRequests}
           reload={() => setRenderPage(true)}
         />
       </Modal>
@@ -242,6 +232,25 @@ const EmployeeTimeOffViewPage = ({
           setModalEditIsOpen={setModalEditIsOpen}
           reload={() => setRenderPage(true)}
         />
+      </Modal>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <div>Are you sure you want to Delete your time off request?</div>
+        <StyledButton
+          onClick={() => {
+            deleteTimeOff();
+            setModalConfirmIsOpen(false);
+          }}
+        >
+          Delete
+        </StyledButton>
+        <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+          Cancel
+        </StyledButton>
       </Modal>
     </div>
   );

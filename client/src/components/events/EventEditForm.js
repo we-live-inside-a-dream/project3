@@ -198,169 +198,169 @@ const EventEditForm = ({
   return (
     <div>
       {/* <StyledFormWrapper> */}
-        <StyledForm>
-          <h2 style={{ margin: "0px" }}>Create Event</h2>
-          <div></div>
-          <div>
-            <label>Event Name:</label>
-            <StyledInput
-              type="text"
-              value={title}
-              onChange={(event) => onInputUpdate(event, setTitle)}
+      <StyledForm>
+        <h2 style={{ margin: "0px" }}>Create Event</h2>
+        <div></div>
+        <div>
+          <label>Event Name:</label>
+          <StyledInput
+            type="text"
+            value={title}
+            onChange={(event) => onInputUpdate(event, setTitle)}
+          />
+        </div>
+        <div>
+          <br />
+          <label>
+            Mandatory:
+            <StyledCheck
+              className="check"
+              name="mandatory"
+              type="checkbox"
+              value={mandatory}
+              checked={mandatory === true}
+              onChange={(e) => setMandatory(e.target.checked)}
             />
-          </div>
-          <div>
-            <br />
+          </label>
+          <br />
+          <label>
+            Recurring:
+            <StyledCheck
+              className="check"
+              name="recurring"
+              type="checkbox"
+              value={recurring}
+              checked={recurring === true}
+              onChange={(e) => setRecurring(e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <div style={{ margin: "0px" }}>
+          <label>Type:</label>
+          <Select
+            value={defaultType}
+            options={typeData}
+            onChange={typeHandler}
+          />
+        </div>
+
+        <div>
+          <label>Visibility:</label>
+          <Select
+            isMulti
+            name="visibility"
+            value={defaultVisibility}
+            options={visibilityData}
+            onChange={visibilityHandler}
+          />
+        </div>
+
+        <div>
+          <label>Start Day:</label>
+          <BasicDatePicker
+            type="date"
+            id="single-day"
+            name="day"
+            value={startDate}
+            onChange={(value) => {
+              onDateInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setStartDate
+              );
+            }}
+          />
+        </div>
+        <div>
+          <label>End Day:</label>
+          <BasicDatePicker
+            type="date"
+            id="single-day"
+            name="day"
+            value={endDate}
+            onChange={(value) => {
+              onDateInputUpdate(
+                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                setEndDate
+              );
+              // setShiftDateMessageVal(requiredValidation(date));
+            }}
+          />
+        </div>
+
+        {startDate === endDate && (
+          <>
             <label>
-              Mandatory:
+              All Day
               <StyledCheck
                 className="check"
-                name="mandatory"
+                name="all-day"
                 type="checkbox"
-                value={mandatory}
-                checked={mandatory === true}
-                onChange={(e) => setMandatory(e.target.checked)}
+                value={allDay}
+                checked={allDay === true}
+                onChange={(e) => {
+                  setAllDay(e.target.checked);
+                  if (e.target.checked) {
+                    setStartTime("");
+                    setEndTime("");
+                  }
+                }}
               />
             </label>
-            <br />
+            <div></div>
+          </>
+        )}
+        {allDay === false && (
+          <>
             <label>
-              Recurring:
-              <StyledCheck
-                className="check"
-                name="recurring"
-                type="checkbox"
-                value={recurring}
-                checked={recurring === true}
-                onChange={(e) => setRecurring(e.target.checked)}
+              Start Time:
+              <BasicTimePicker
+                type="time"
+                value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
+                onChange={(value) => {
+                  onTimeInputUpdate(value, setStartTime);
+                }}
               />
             </label>
-          </div>
-
-          <div style={{ margin: "0px" }}>
-            <label>Type:</label>
-            <Select
-              value={defaultType}
-              options={typeData}
-              onChange={typeHandler}
-            />
-          </div>
-
-          <div>
-            <label>Visibility:</label>
-            <Select
-              isMulti
-              name="visibility"
-              value={defaultVisibility}
-              options={visibilityData}
-              onChange={visibilityHandler}
-            />
-          </div>
-
-          <div>
-            <label>Start Day:</label>
-            <BasicDatePicker
-              type="date"
-              id="single-day"
-              name="day"
-              value={startDate}
-              onChange={(value) => {
-                onDateInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                  setStartDate
-                );
-              }}
-            />
-          </div>
-          <div>
-            <label>End Day:</label>
-            <BasicDatePicker
-              type="date"
-              id="single-day"
-              name="day"
-              value={endDate}
-              onChange={(value) => {
-                onDateInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                  setEndDate
-                );
-                // setShiftDateMessageVal(requiredValidation(date));
-              }}
-            />
-          </div>
-
-          {startDate === endDate && (
-            <>
-              <label>
-                All Day
-                <StyledCheck
-                  className="check"
-                  name="all-day"
-                  type="checkbox"
-                  value={allDay}
-                  checked={allDay === true}
-                  onChange={(e) => {
-                    setAllDay(e.target.checked);
-                    if (e.target.checked) {
-                      setStartTime("");
-                      setEndTime("");
-                    }
-                  }}
-                />
-              </label>
-              <div></div>
-            </>
-          )}
-          {allDay === false && (
-            <>
-              <label>
-                Start Time:
-                <BasicTimePicker
-                  type="time"
-                  value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
-                  onChange={(value) => {
-                    onTimeInputUpdate(value, setStartTime);
-                  }}
-                />
-              </label>
-              <label>
-                End Time:
-                <BasicTimePicker
-                  type="time"
-                  value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
-                  onChange={(value) => {
-                    onTimeInputUpdate(value, setEndTime);
-                  }}
-                />
-              </label>
-            </>
-          )}
-          <div></div>
-          <div></div>
-          <div style={{ display: "flex" }}>
-            <StyledButton
-              onClick={() => {
-                postData();
-              }}
-              style={{ alignSelf: "flex-end" }}
-            >
-              CONFIRM
-            </StyledButton>
-            <StyledButton
-              onClick={() => deleteEventData(theEventId)}
-              style={{ alignSelf: "flex-end" }}
-            >
-              DELETE
-            </StyledButton>
-          </div>
-          <div>
-            <label>Notes:</label>
-            <StyledTextArea
-              value={notes}
-              onChange={(event) => onInputUpdate(event, setNotes)}
-            />
-          </div>
-          <div></div>
-        </StyledForm>
+            <label>
+              End Time:
+              <BasicTimePicker
+                type="time"
+                value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
+                onChange={(value) => {
+                  onTimeInputUpdate(value, setEndTime);
+                }}
+              />
+            </label>
+          </>
+        )}
+        <div></div>
+        <div></div>
+        <div style={{ display: "flex" }}>
+          <StyledButton
+            onClick={() => {
+              postData();
+            }}
+            style={{ alignSelf: "flex-end" }}
+          >
+            CONFIRM
+          </StyledButton>
+          <StyledButton
+            onClick={() => deleteEventData(theEventId)}
+            style={{ alignSelf: "flex-end" }}
+          >
+            DELETE
+          </StyledButton>
+        </div>
+        <div>
+          <label>Notes:</label>
+          <StyledTextArea
+            value={notes}
+            onChange={(event) => onInputUpdate(event, setNotes)}
+          />
+        </div>
+        <div></div>
+      </StyledForm>
       {/* </StyledFormWrapper> */}
     </div>
   );

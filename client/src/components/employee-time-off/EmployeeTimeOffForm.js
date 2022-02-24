@@ -54,9 +54,13 @@ const EmployeeTimeOffForm = ({
   const user = authContext.user;
 
   useEffect(() => {
-    const typeFilter = typeData?.filter((r) => r.value === type);
-    setDefaultType(typeFilter);
-    console.log("this is type", type);
+    let isMounted = true;
+    if (isMounted) {
+      const typeFilter = typeData?.filter((r) => r.value === type);
+      setDefaultType(typeFilter);
+      console.log("this is type", type);
+    }
+    isMounted = false;
   }, [type]);
 
   useEffect(() => {
@@ -103,6 +107,7 @@ const EmployeeTimeOffForm = ({
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+    setTimeOffRequests((curr) => [...curr, newEmployeeTimeOff]);
   }
 
   let validation;
@@ -155,7 +160,7 @@ const EmployeeTimeOffForm = ({
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
-      reload();
+      // reload();
       setModalEditIsOpen(false);
     }
 
@@ -163,7 +168,7 @@ const EmployeeTimeOffForm = ({
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
-      reload();
+      // reload();
       setModalApplyIsOpen(false);
     } else setShown(true);
 

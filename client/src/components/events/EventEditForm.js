@@ -9,11 +9,11 @@ import {
   StyledTextArea,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
-import { 
+import {
   requiredValidation,
   timeValidation,
-  dateValidation
-}from "../validateForms.js"
+  dateValidation,
+} from "../validateForms.js";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
@@ -177,12 +177,12 @@ const EventEditForm = ({
         visibilityMessageVal,
         "event Name",
         eventNameMessageVal
-      )
+      );
       validation = "please make sure that all fields are valid";
       return validation;
-    } else 
-    console.log(
-      "Event time",
+    } else
+      console.log(
+        "Event time",
         timeMessageVal,
         "Event date",
         dateMessageVal,
@@ -192,7 +192,7 @@ const EventEditForm = ({
         visibilityMessageVal,
         "event Name",
         eventNameMessageVal
-    )
+      );
     validation = null;
     return validation;
   }
@@ -274,8 +274,9 @@ const EventEditForm = ({
           <StyledInput
             type="text"
             value={title}
-            onChange={(event) => { onInputUpdate(event, setTitle)
-             setEventNameMessageVal(requiredValidation(title))
+            onChange={(event) => {
+              onInputUpdate(event, setTitle);
+              setEventNameMessageVal(requiredValidation(title));
             }}
           />
         </div>
@@ -307,7 +308,10 @@ const EventEditForm = ({
         </div>
 
         <div style={{ margin: "0px" }}>
-          <label>Type:</label>
+          <label>
+            Type:
+            <RedStar />
+          </label>
           <Select
             value={defaultType}
             options={typeData}
@@ -327,7 +331,10 @@ const EventEditForm = ({
         </div>
 
         <div>
-          <label>Start Day:</label>
+          <label>
+            Start Day:
+            <RedStar />
+          </label>
           <BasicDatePicker
             type="date"
             id="single-day"
@@ -342,20 +349,50 @@ const EventEditForm = ({
           />
         </div>
         <div>
-          <label>End Day:</label>
-          <BasicDatePicker
-            type="date"
-            id="single-day"
-            name="day"
-            value={endDate}
-            onChange={(value) => {
-              onDateInputUpdate(
-                fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                setEndDate
-              );
-              // setShiftDateMessageVal(requiredValidation(date));
-            }}
-          />
+          <label>
+            End Day:
+            <RedStar />
+            {!dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              ></p>
+            ) : null}
+            {dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              >
+                {dateMessageVal}
+              </p>
+            ) : null}
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(value) => {
+                onDateInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setEndDate
+                );
+                setDateMessageVal(
+                  dateValidation(
+                    startDate,
+                    fns.format(new Date(value), "yyyy-MM-dd").toString()
+                  )
+                );
+              }}
+            />
+          </label>
         </div>
 
         {startDate === endDate && (

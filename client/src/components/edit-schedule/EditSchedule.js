@@ -243,7 +243,7 @@ function EditSchedule({
       {/* <StyledFormWrapper> */}
       <StyledModal>
         <StyledButton
-          style={{ position: "fixed", top: "0px", right: "0px", marginTop: "0px", }}
+          style={{ position: "fixed", top: "0px", right: "0px" }}
           onClick={onClose}
         >
           x

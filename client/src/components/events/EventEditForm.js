@@ -47,8 +47,12 @@ const EventEditForm = ({
 }) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
@@ -71,8 +75,8 @@ const EventEditForm = ({
     if (existingValues) {
       setTheEventId(existingValues._id);
       setTitle(existingValues.title);
-      setStartTime(existingValues.startTime);
-      setEndTime(existingValues.endTime);
+      setStartTime(` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`);
+      setEndTime(` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`);
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
       setType({ value: existingValues.type[0] });
@@ -221,8 +225,8 @@ const EventEditForm = ({
       type: [type.value],
       startTime,
       endTime,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: fns.format(new Date(startTime), "HH:mm").toString(),
+      endDate: fns.format(new Date(endTime), "HH:mm").toString(),
       allDay: allDay,
       notes: notes,
       visibility: visibility.map((p) => p.value),
@@ -423,7 +427,7 @@ const EventEditForm = ({
               Start Time:
               <BasicTimePicker
                 type="time"
-                value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
+                value={startTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setStartTime);
                 }}
@@ -431,9 +435,31 @@ const EventEditForm = ({
             </label>
             <label>
               End Time:
+              {/* {!timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            ></p>
+          ) : null}
+          {timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
+              {timeMessageVal}
+            </p>
+          ) : null} */}
               <BasicTimePicker
                 type="time"
-                value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
+                value={endTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setEndTime);
                 }}

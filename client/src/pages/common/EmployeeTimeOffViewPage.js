@@ -250,6 +250,7 @@ const EmployeeTimeOffViewPage = ({
           onSave={updateTimeOff}
           setTimeOffRequests={setTimeOffRequests}
           timeOffRequests={timeOffRequests}
+          setModalEditIsOpen={setModalEditIsOpen}
         />
       </Modal>
     </div>

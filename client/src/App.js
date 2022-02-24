@@ -171,7 +171,6 @@ function App() {
               path="/timeOff/approval"
               element={<TimeOffApprovalPage />}
             ></Route>
-
             {/* last router */}
           </Routes>
           )

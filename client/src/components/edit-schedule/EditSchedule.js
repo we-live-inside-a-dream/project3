@@ -257,7 +257,7 @@ function EditSchedule({
           </InputLabel>
           {employeeId === "" ? (
             <p
-              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px", }}
             ></p>
           ) : null}
           <NativeSelect
@@ -313,7 +313,7 @@ function EditSchedule({
           </InputLabel>
 
           {date === "" ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {"required"}
             </p>
           ) : null}
@@ -338,12 +338,12 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           {!shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
             </p>
           ) : null}
           {shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
               {" "}
               {shiftTimeMessageVal}
             </p>

@@ -64,6 +64,7 @@ const eventsRouter = require("./routes/eventsRoutes");
 const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
+const positionsRouter = require("./routes/positionRoutes");
 
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(express.json());
@@ -82,6 +83,7 @@ app.use("/api/timeOff", timeOffRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/events", eventsRouter);
 app.use("/api/schedule", scheduleRouter);
+app.use("/api/positions", positionsRouter);
 app.use("/", express.static("../client/build"));
 
 app.use("*", (req, res) => {

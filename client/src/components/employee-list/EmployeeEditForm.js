@@ -187,7 +187,6 @@ const EmployeeEditForm = ({
       phoneNumber,
       positions: positions.map((p) => p.value),
       status: status.value,
-      permissions: "",
     };
     validateForm();
     console.log("validate form", validation);

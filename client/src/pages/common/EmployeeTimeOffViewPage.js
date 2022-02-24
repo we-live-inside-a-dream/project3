@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
@@ -26,6 +25,7 @@ const EmployeeTimeOffViewPage = ({
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalApplyIsOpen ,setModalApplyIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
@@ -86,11 +86,6 @@ const EmployeeTimeOffViewPage = ({
     } else return "Pending";
   }
 
-  let navigate = useNavigate();
-  const routeChange = () => {
-    let path = `/timeOff`;
-    navigate(path);
-  };
 
   return (
     <div>
@@ -230,7 +225,7 @@ const EmployeeTimeOffViewPage = ({
             {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
 
             <div styled={{ padding: "40%" }}>
-              <StyledButton onClick={routeChange}>
+              <StyledButton onClick={() => setModalApplyIsOpen(true)}>
                 Request Time off
               </StyledButton>
             </div>
@@ -239,6 +234,15 @@ const EmployeeTimeOffViewPage = ({
           </div>
         )}
       </StyledPage>
+      <Modal
+        onClose={() => {
+          setModalApplyIsOpen(false);
+        }}
+        open={modalApplyIsOpen}
+      >
+        <EmployeeTimeOffForm/>
+      </Modal>
+
       <Modal
         onClose={() => {
           setModalEditIsOpen(false);

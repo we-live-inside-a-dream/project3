@@ -5,7 +5,12 @@ import {
   StyledTextArea,
 } from "../../reusable/Inputs/StyledEmployeeForm";
 
-function ShiftSwapConformModal({ shift, setSwapConfirmModalIsOpen }) {
+function ShiftSwapConformModal({
+  shift,
+  setSwapConfirmModalIsOpen,
+  setShifts,
+  shifts,
+}) {
   const [reasonForSwap, setReasonForSwap] = useState("");
   const formatTime = function (time) {
     let newTime = moment(time, "hh:mma").format("h:mma");
@@ -29,6 +34,14 @@ function ShiftSwapConformModal({ shift, setSwapConfirmModalIsOpen }) {
       },
       body: JSON.stringify(newShiftSwapRequest),
     });
+    let updatedShiftList = shifts.map((shift) => {
+      if (shift._id === newShiftSwapRequest._id) {
+        return newShiftSwapRequest;
+      } else {
+        return shift;
+      }
+    });
+    setShifts(updatedShiftList);
   }
   async function postSwapRequest() {
     let newShiftSwapRequest = {
@@ -48,7 +61,6 @@ function ShiftSwapConformModal({ shift, setSwapConfirmModalIsOpen }) {
       previousShiftOwnerId: shift.employeeId,
       previousShiftOwnerFirstName: shift.firstName,
       previousShiftOwnerLastName: shift.firstName,
-   
     };
 
     console.log("New Shift...", newShiftSwapRequest);

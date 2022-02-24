@@ -76,7 +76,7 @@ const EmployeeTimeOffForm = ({
       setType(existingValues.type);
       setComment(existingValues.comment);
       setAllDay(existingValues.allDay);
-      console.log("these are the exisiting values", existingValues.type);
+      console.log("these are the existing values", existingValues.type);
     }
   }, [existingValues]);
 

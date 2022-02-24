@@ -7,7 +7,13 @@ import {
   StyledFormWrapper,
   StyledCheck,
   StyledTextArea,
+  RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
+import {
+  requiredValidation,
+  timeValidation,
+  dateValidation,
+} from "../validateForms.js";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
@@ -35,13 +41,18 @@ const EventEditForm = ({
   everyEventList,
   setEveryEventList,
   setTheNewEvent,
+  theNewEvent,
   setIsOpen,
   daySelectChoice,
 }) => {
   const [theEventId, setTheEventId] = useState("");
   const [title, setTitle] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [endTime, setEndTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [type, setType] = useState("");
@@ -52,6 +63,11 @@ const EventEditForm = ({
   const [recurring, setRecurring] = useState(false);
   const [defaultVisibility, setDefaultVisibility] = useState();
   const [defaultType, setDefaultType] = useState();
+  const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [dateMessageVal, setDateMessageVal] = useState(null);
+  const [typeMessageVal, setTypeMessageVal] = useState(null);
+  const [visibilityMessageVal, setVisibilityMessageVal] = useState(null);
+  const [eventNameMessageVal, setEventNameMessageVal] = useState(null);
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -59,8 +75,8 @@ const EventEditForm = ({
     if (existingValues) {
       setTheEventId(existingValues._id);
       setTitle(existingValues.title);
-      setStartTime(existingValues.startTime);
-      setEndTime(existingValues.endTime);
+      setStartTime(` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`);
+      setEndTime(` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`);
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
       setType({ value: existingValues.type[0] });
@@ -145,6 +161,46 @@ const EventEditForm = ({
     });
   }
 
+  let validation;
+  async function validateForm() {
+    if (
+      timeMessageVal ||
+      dateMessageVal ||
+      typeMessageVal ||
+      visibilityMessageVal ||
+      eventNameMessageVal
+    ) {
+      console.log(
+        "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+      );
+      validation = "please make sure that all fields are valid";
+      return validation;
+    } else
+      console.log(
+        "Event time",
+        timeMessageVal,
+        "Event date",
+        dateMessageVal,
+        "Event type",
+        typeMessageVal,
+        "Event Visibility",
+        visibilityMessageVal,
+        "event Name",
+        eventNameMessageVal
+      );
+    validation = null;
+    return validation;
+  }
+
   async function postData() {
     let resetValues = function () {
       setTheEventId("");
@@ -169,23 +225,24 @@ const EventEditForm = ({
       type: [type.value],
       startTime,
       endTime,
-      startDate: startDate,
-      endDate: endDate,
+      startDate: fns.format(new Date(startTime), "HH:mm").toString(),
+      endDate: fns.format(new Date(endTime), "HH:mm").toString(),
       allDay: allDay,
       notes: notes,
       visibility: visibility.map((p) => p.value),
       mandatory: mandatory,
       recurring: recurring,
     };
-    if (!existingValues) {
+    validateForm();
+    if (!existingValues && validation === null) {
       console.log("posting newEvent", newEvent);
       await createEvent(newEvent);
       setTheNewEvent(newEvent);
-      setEveryEventList([...everyEventList]);
+      setEveryEventList((curr) => [...curr, newEvent]);
       resetValues();
       setIsOpen(false);
     }
-    if (existingValues) {
+    if (existingValues && validation === null) {
       await updateEvent(newEvent);
       setTheNewEvent(newEvent);
       console.log("posting updated event", newEvent);
@@ -202,11 +259,29 @@ const EventEditForm = ({
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
         <div>
-          <label>Event Name:</label>
+          <label style={{ marginBottom: "0px" }}>
+            Event Name:
+            <RedStar />
+          </label>
+          {/* {title === "" ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
+              {"required"}
+            </p>
+          ) : null} */}
           <StyledInput
             type="text"
             value={title}
-            onChange={(event) => onInputUpdate(event, setTitle)}
+            onChange={(event) => {
+              onInputUpdate(event, setTitle);
+              setEventNameMessageVal(requiredValidation(title));
+            }}
           />
         </div>
         <div>
@@ -237,7 +312,10 @@ const EventEditForm = ({
         </div>
 
         <div style={{ margin: "0px" }}>
-          <label>Type:</label>
+          <label>
+            Type:
+            <RedStar />
+          </label>
           <Select
             value={defaultType}
             options={typeData}
@@ -257,7 +335,10 @@ const EventEditForm = ({
         </div>
 
         <div>
-          <label>Start Day:</label>
+          <label>
+            Start Day:
+            <RedStar />
+          </label>
           <BasicDatePicker
             type="date"
             id="single-day"
@@ -272,20 +353,50 @@ const EventEditForm = ({
           />
         </div>
         <div>
-          <label>End Day:</label>
-          <BasicDatePicker
-            type="date"
-            id="single-day"
-            name="day"
-            value={endDate}
-            onChange={(value) => {
-              onDateInputUpdate(
-                fns.format(new Date(value), "yyyy-MM-dd").toString(),
-                setEndDate
-              );
-              // setShiftDateMessageVal(requiredValidation(date));
-            }}
-          />
+          <label>
+            End Day:
+            <RedStar />
+            {!dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              ></p>
+            ) : null}
+            {dateMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              >
+                {dateMessageVal}
+              </p>
+            ) : null}
+            <BasicDatePicker
+              type="date"
+              id="single-day"
+              name="day"
+              value={endDate}
+              onChange={(value) => {
+                onDateInputUpdate(
+                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  setEndDate
+                );
+                setDateMessageVal(
+                  dateValidation(
+                    startDate,
+                    fns.format(new Date(value), "yyyy-MM-dd").toString()
+                  )
+                );
+              }}
+            />
+          </label>
         </div>
 
         {startDate === endDate && (
@@ -316,7 +427,7 @@ const EventEditForm = ({
               Start Time:
               <BasicTimePicker
                 type="time"
-                value={` Wed Feb 02 2022 ${startTime}:00 GMT-0700 (Mountain Standard Time)`}
+                value={startTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setStartTime);
                 }}
@@ -324,11 +435,34 @@ const EventEditForm = ({
             </label>
             <label>
               End Time:
+              {!timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            ></p>
+          ) : null}
+          {timeMessageVal ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
+              {timeMessageVal}
+            </p>
+          ) : null}
               <BasicTimePicker
                 type="time"
-                value={` Wed Feb 02 2022 ${endTime}:00 GMT-0700 (Mountain Standard Time)`}
+                value={endTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setEndTime);
+                  setTimeMessageVal(timeValidation(startTime, value))
                 }}
               />
             </label>

@@ -32,6 +32,7 @@ const EmployeeTimeOffViewPage = () => {
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
       setRenderPage(false);
+      setLoading(true);
     };
     fetchTimeOff();
   }, [user._id, renderPage, setTimeOffRequests]);
@@ -77,7 +78,7 @@ const EmployeeTimeOffViewPage = () => {
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
-        {loading ? (
+        {!loading ? (
           <div
             style={{
               height: "320px",
@@ -101,7 +102,7 @@ const EmployeeTimeOffViewPage = () => {
                 height: "100vh",
               }}
               color={"var(--mainHeader)"}
-              loading={loading}
+              // loading={loading}
               size={300}
             />
           </div>

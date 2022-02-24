@@ -15,11 +15,7 @@ import ApprovalSymbol from "../../components/dashboard/ApprovalSymbol";
 import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import Modal from "../../components/reusable/Modal";
 
-const EmployeeTimeOffViewPage = ({
-  setIsTimeOff,
-  isTimeOff,
-  // deleteTimeOff,
-}) => {
+const EmployeeTimeOffViewPage = () => {
   const [timeOffRequests, setTimeOffRequests] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
@@ -30,8 +26,6 @@ const EmployeeTimeOffViewPage = ({
   const [renderPage, setRenderPage] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-
-  // const navigate = useNavigate()
 
   console.log("this is time off", timeOffRequests);
 
@@ -75,7 +69,6 @@ const EmployeeTimeOffViewPage = ({
       (t) => t._id !== timeToDelete
     );
     setTimeOffRequests(removedTimeOff);
-    // setRenderPage(true);
   }
 
   function statusConvert(status) {

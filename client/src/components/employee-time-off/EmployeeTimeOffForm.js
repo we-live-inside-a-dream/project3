@@ -8,7 +8,7 @@ import {
   StyledCheck,
   StyledTextArea,
   StyledForm,
-  StyledFormWrapper,
+  // StyledFormWrapper,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
@@ -148,9 +148,6 @@ const EmployeeTimeOffForm = ({
     };
 
     validateForm();
-
-    // console.log("validate form", validation);
-    // console.log("saving new time off form", newEmployeeTimeOff);
 
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);

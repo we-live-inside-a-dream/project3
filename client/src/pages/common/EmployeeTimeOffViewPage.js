@@ -4,9 +4,6 @@ import AuthenticationContext from "../../components/login/AuthenticationContext"
 import ClockLoader from "react-spinners/ClockLoader";
 import {
   StyledButton,
-  StyledForm,
-  StyledForm2,
-  StyledFormWrapper,
 } from "../../components/reusable/Inputs/StyledEmployeeForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
@@ -16,8 +13,6 @@ import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton"
 import Modal from "../../components/reusable/Modal";
 
 const EmployeeTimeOffViewPage = ({
-  setIsTimeOff,
-  isTimeOff,
   deleteTimeOff,
 }) => {
   const [timeOffRequests, setTimeOffRequests] = useState(null);
@@ -30,12 +25,10 @@ const EmployeeTimeOffViewPage = ({
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
-  // const navigate = useNavigate()
 
   console.log("this is time off", timeOffRequests);
 
   useEffect(() => {
-    //  if (!user._Id) return;
     const fetchTimeOff = async () => {
       console.log("userrrrr", user._id);
       let fetchResult = await fetch(`/api/timeOff/listEmployee?id=${user._id}`);
@@ -46,18 +39,7 @@ const EmployeeTimeOffViewPage = ({
     };
     fetchTimeOff();
 
-    // if (timeOffRequests) {
-    //   setLoading(false);
-    // }
-  }, [user._id, renderPage]);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-
-  // }, [timeOffRequests]);
+  }, [user._id, renderPage]); 
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -76,7 +58,6 @@ const EmployeeTimeOffViewPage = ({
     });
     let removedTimeOff = timeOffRequests.filter((t) => t._id !== id);
     setTimeOffRequests(removedTimeOff);
-    //  navigate('/')
   }
 
   function statusConvert(status) {
@@ -147,7 +128,6 @@ const EmployeeTimeOffViewPage = ({
                         height: "auto",
                       }}
                     >
-                      {/* <td>{`${t.firstName} ${t.lastName[0]}`}</td> */}
 
                       <td>
                         {<ApprovalSymbol time={t} />}
@@ -162,8 +142,6 @@ const EmployeeTimeOffViewPage = ({
                         <div>
                           <StyledEditButton
                             fontSize="25px"
-                            // margin={"0"}
-                            // padding={"0"}
                             onClick={() => {
                               setModalEditIsOpen(true);
                               setTimeOffValues(t);
@@ -198,16 +176,7 @@ const EmployeeTimeOffViewPage = ({
                             </StyledButton>
                           </Modal>
                           <StyledEditButton
-                            // fontSize="20px"
                             margin={"0px 20px"}
-                            // padding={"0"}
-                            // onClick={() => {
-                            //   setModalConfirmIsOpen(true);
-                            //   setTimeOffValues(t);
-                            //   setSelectedId(t._id)
-                            //   deleteTimeOff(t._id);
-                            //   console.log("this is t", t);
-                            // }}
                             onClick={() => {
                               setModalConfirmIsOpen(true);
                             }}
@@ -229,8 +198,6 @@ const EmployeeTimeOffViewPage = ({
                 Request Time off
               </StyledButton>
             </div>
-
-            {/* <EmployeeTimeOffForm /> */}
           </div>
         )}
       </StyledPage>
@@ -259,13 +226,5 @@ const EmployeeTimeOffViewPage = ({
     </div>
   );
 };
-
-// { loading ? (
-//   <ClockLoader
-//   color={#F37A24}
-//   loading={loading}
-//   size={30}
-//   /> ) : null
-//   }
 
 export default EmployeeTimeOffViewPage;

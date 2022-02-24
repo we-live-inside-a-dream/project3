@@ -8,7 +8,7 @@ import {
   StyledCheck,
   StyledTextArea,
   StyledForm,
-  StyledFormWrapper,
+  // StyledFormWrapper,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import * as fns from "date-fns";
@@ -54,9 +54,13 @@ const EmployeeTimeOffForm = ({
   const user = authContext.user;
 
   useEffect(() => {
-    const typeFilter = typeData?.filter((r) => r.value === type);
-    setDefaultType(typeFilter);
-    console.log("this is type", type);
+    let isMounted = true;
+    if (isMounted) {
+      const typeFilter = typeData?.filter((r) => r.value === type);
+      setDefaultType(typeFilter);
+      console.log("this is type", type);
+    }
+    isMounted = false;
   }, [type]);
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const EmployeeTimeOffForm = ({
       setType(existingValues.type);
       setComment(existingValues.comment);
       setAllDay(existingValues.allDay);
-      console.log("these are the exisiting values", existingValues.type);
+      console.log("these are the existing values", existingValues.type);
     }
   }, [existingValues]);
 
@@ -103,6 +107,7 @@ const EmployeeTimeOffForm = ({
       },
       body: JSON.stringify(newEmployeeTimeOff),
     });
+    setTimeOffRequests((curr) => [...curr, newEmployeeTimeOff]);
   }
 
   let validation;
@@ -141,21 +146,12 @@ const EmployeeTimeOffForm = ({
       status: "pending",
       comment: comment,
     };
-    // console.log("start time", startTime);
-    // console.log("end time", endTime);
-
-    // console.log("posting Time Off", newEmployeeTimeOff);
-    // await createEmployeeTimeOff(newEmployeeTimeOff);
-    // navigate("/");
 
     validateForm();
 
-    // console.log("validate form", validation);
-    // console.log("saving new time off form", newEmployeeTimeOff);
-
     if (existingValues && validation === null) {
       await onSave(newEmployeeTimeOff);
-      reload();
+      // reload();
       setModalEditIsOpen(false);
     }
 
@@ -163,13 +159,8 @@ const EmployeeTimeOffForm = ({
 
     if (!existingValues && validation === null) {
       await createEmployeeTimeOff(newEmployeeTimeOff);
-      reload();
       setModalApplyIsOpen(false);
     } else setShown(true);
-
-    // if (existingValues) {
-    //   await onSave(newEmployeeTimeOff);
-    // }
 
     // onSave();
     if (existingValues) {

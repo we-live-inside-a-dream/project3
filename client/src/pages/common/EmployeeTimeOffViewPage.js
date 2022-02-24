@@ -2,9 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import EmployeeTimeOffForm from "../../components/employee-time-off/EmployeeTimeOffForm";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 import ClockLoader from "react-spinners/ClockLoader";
-import {
-  StyledButton,
-} from "../../components/reusable/Inputs/StyledEmployeeForm";
+import { StyledButton } from "../../components/reusable/Inputs/StyledEmployeeForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import StyledTable from "../../components/reusable/tables/StyledTable";
@@ -12,19 +10,17 @@ import ApprovalSymbol from "../../components/dashboard/ApprovalSymbol";
 import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import Modal from "../../components/reusable/Modal";
 
-const EmployeeTimeOffViewPage = ({
-  deleteTimeOff,
-}) => {
+const EmployeeTimeOffViewPage = () => {
   const [timeOffRequests, setTimeOffRequests] = useState(null);
   const [timeOffValues, setTimeOffValues] = useState(null);
   const [modalEditIsOpen, setModalEditIsOpen] = useState(false);
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalApplyIsOpen, setModalApplyIsOpen] = useState(false);
+  const [timeToDelete, setTimeToDelete] = useState();
   const [renderPage, setRenderPage] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
-
 
   console.log("this is time off", timeOffRequests);
 
@@ -36,10 +32,10 @@ const EmployeeTimeOffViewPage = ({
       console.log("fetch time off", fetchedTimeOff);
       setTimeOffRequests(fetchedTimeOff);
       setRenderPage(false);
+      setLoading(true);
     };
     fetchTimeOff();
-
-  }, [user._id, renderPage]); 
+  }, [user._id, renderPage, setTimeOffRequests]);
 
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
@@ -50,13 +46,24 @@ const EmployeeTimeOffViewPage = ({
       },
       body: JSON.stringify(updatedTimeOff),
     });
+    let updatedTimeOffList = timeOffRequests.map((timeOff) => {
+      if (timeOff._id === timeOffValues._id) {
+        return updatedTimeOff;
+      } else {
+        return timeOff;
+      }
+    });
+    setTimeOffRequests(updatedTimeOffList);
   }
 
-  async function deleteTimeOff(id) {
-    await fetch("/api/timeOff/delete/" + id, {
+  async function deleteTimeOff() {
+    console.log("FROM THE DELETE", timeToDelete);
+    await fetch("/api/timeOff/delete/" + timeToDelete, {
       method: "DELETE",
     });
-    let removedTimeOff = timeOffRequests.filter((t) => t._id !== id);
+    let removedTimeOff = await timeOffRequests.filter(
+      (t) => t._id !== timeToDelete
+    );
     setTimeOffRequests(removedTimeOff);
   }
 
@@ -71,7 +78,7 @@ const EmployeeTimeOffViewPage = ({
   return (
     <div>
       <StyledPage styled={{ position: "relative" }}>
-        {loading ? (
+        {!loading ? (
           <div
             style={{
               height: "320px",
@@ -95,7 +102,7 @@ const EmployeeTimeOffViewPage = ({
                 height: "100vh",
               }}
               color={"var(--mainHeader)"}
-              loading={loading}
+              // loading={loading}
               size={300}
             />
           </div>
@@ -128,7 +135,6 @@ const EmployeeTimeOffViewPage = ({
                         height: "auto",
                       }}
                     >
-
                       <td>
                         {<ApprovalSymbol time={t} />}
                         {`${statusConvert(t.status)}`}
@@ -151,33 +157,10 @@ const EmployeeTimeOffViewPage = ({
                             ✎
                           </StyledEditButton>
 
-                          <Modal
-                            onClose={() => {
-                              setModalConfirmIsOpen(false);
-                            }}
-                            open={modalConfirmIsOpen}
-                          >
-                            <div>
-                              Are you sure you want to Delete your time off
-                              request?
-                            </div>
-                            <StyledButton
-                              onClick={() => {
-                                deleteTimeOff(t._id);
-                                setModalConfirmIsOpen(false);
-                              }}
-                            >
-                              Delete
-                            </StyledButton>
-                            <StyledButton
-                              onClick={() => setModalConfirmIsOpen(false)}
-                            >
-                              Cancel
-                            </StyledButton>
-                          </Modal>
                           <StyledEditButton
                             margin={"0px 20px"}
                             onClick={() => {
+                              setTimeToDelete(t._id);
                               setModalConfirmIsOpen(true);
                             }}
                           >
@@ -204,6 +187,7 @@ const EmployeeTimeOffViewPage = ({
       <Modal onClose={() => setModalApplyIsOpen(false)} open={modalApplyIsOpen}>
         <EmployeeTimeOffForm
           setModalApplyIsOpen={setModalApplyIsOpen}
+          setTimeOffRequests={setTimeOffRequests}
           reload={() => setRenderPage(true)}
         />
       </Modal>
@@ -222,6 +206,25 @@ const EmployeeTimeOffViewPage = ({
           setModalEditIsOpen={setModalEditIsOpen}
           reload={() => setRenderPage(true)}
         />
+      </Modal>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <div>Are you sure you want to Delete your time off request?</div>
+        <StyledButton
+          onClick={() => {
+            deleteTimeOff();
+            setModalConfirmIsOpen(false);
+          }}
+        >
+          Delete
+        </StyledButton>
+        <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+          Cancel
+        </StyledButton>
       </Modal>
     </div>
   );

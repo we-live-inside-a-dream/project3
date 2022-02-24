@@ -169,16 +169,18 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (existingValues.start && validation === null) {
+    if (existingValues && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
       reload();
-    } else {
+    } else if (!existingValues && validation === null) {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
       reload();
+    } else {
+      setShown(true);
     }
     onClose();
   }
@@ -257,7 +259,12 @@ function EditSchedule({
           </InputLabel>
           {employeeId === "" ? (
             <p
-              style={{ color: "red", fontSize: "10px", marginBottom: "0px", marginTop: "0px", }}
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
             ></p>
           ) : null}
           <NativeSelect
@@ -313,7 +320,14 @@ function EditSchedule({
           </InputLabel>
 
           {date === "" ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
               {"required"}
             </p>
           ) : null}
@@ -338,12 +352,26 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           {!shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
               {" "}
             </p>
           ) : null}
           {shiftTimeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px",marginTop: "0px", }}>
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            >
               {" "}
               {shiftTimeMessageVal}
             </p>
@@ -415,11 +443,6 @@ function EditSchedule({
           </StyledButton>
         </div>
 
-        <div styles={{ display: "flex", flexDirection: "row" }}>
-          {shown === true ? <p>form needs a lotta work</p> : null}
-          <StyledButton onClick={postData}>SUBMIT</StyledButton>
-        </div>
-
         <div>
           {breaks?.map((breakys, index) => (
             <BreaksComponent
@@ -432,6 +455,10 @@ function EditSchedule({
           <div></div>
 
           <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
+          <div styles={{ display: "flex", flexDirection: "row" }}>
+            {shown === true ? <p>form needs a lotta work</p> : null}
+            <StyledButton onClick={postData}>SUBMIT</StyledButton>
+          </div>
         </div>
       </StyledModal>
       {/* </StyledFormWrapper> */}

@@ -4,10 +4,12 @@ import {
   StyledButton,
   StyledForm2,
   StyledFormWrapper,
+  StyledTextArea,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import moment from "moment";
 import Modal from "../reusable/Modal";
 import StyledTable from "../reusable/tables/StyledTable";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 //fetch timeoffs
 
@@ -19,8 +21,10 @@ import StyledTable from "../reusable/tables/StyledTable";
 const TimeOffApproval = () => {
   const [timeOff, setTimeOff] = useState();
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState(false);
+  const [decision, setDecision] = useState("");
   const [timeOffValues, setTimeOffValues] = useState();
   const [status, setStatus] = useState();
+  const [managerComment, setManagerComment] = useState();
 
   useEffect(() => {
     function filterTimeOff(time) {
@@ -58,6 +62,7 @@ const TimeOffApproval = () => {
   function postData() {
     let newValue = {
       status,
+      managerComment,
     };
     setModalConfirmIsOpen(false);
     updateTimeOff(newValue);
@@ -69,90 +74,126 @@ const TimeOffApproval = () => {
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm2>
-          <h1>
-            <InputLabel style={{ fontSize: "30px" }}>
-              Pending Time Off
-            </InputLabel>
-          </h1>
-          <StyledTable padding={"5px"}>
-            <thead></thead>
-            <tbody>
-              {timeOff?.map((t) => {
-                return (
-                  <tr
-                    key={t._id}
-                    value={t}
-                    onClick={() => {
-                      setModalConfirmIsOpen(true);
-                      setTimeOffValues(t);
-                    }}
-                    style={{
-                      padding: "10px",
-                      textAlign: "center",
-                      height: "auto",
-                    }}
-                  >
-                    <td>{`${t.firstName} ${t.lastName[0]}`}</td>
-                    <td>{`${t.type}`}</td>
-                    <td>{`${t.startDate}`}</td>
-                    <td>{`${t.startDate}`}</td>
-                    <td>{`${t.status}`}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </StyledTable>
-          <Modal
-            onClose={() => {
-              setModalConfirmIsOpen(false);
-            }}
-            open={modalConfirmIsOpen}
-          >
-            <div style={{ padding: "20px" }}>
-              <h3>Confirm Time Off</h3>
-              <p>Employee:{timeOffValues?.firstName}</p>
-              <p>Type of time off:{timeOffValues?.type}</p>
-              <p>
-                Start Day: {moment(timeOffValues?.startDate).format("yy-MM-DD")}
-              </p>
-              <p>
-                End Day: {moment(timeOffValues?.endDate).format("YYYY-MM-DD")}
-              </p>
-              {timeOffValues?.allDay === false && (
-                <>
-                  <p>Start Time: {timeOffValues?.startTime}</p>
-                  <p>End Time: {timeOffValues?.endTime}</p>
-                </>
-              )}
-              <p>Comments:{timeOffValues?.comment}</p>
-              <InputLabel>Status</InputLabel>
-              <Select
-                id="name-input"
-                defaultValue={timeOffValues?.status}
-                onChange={(event) => {
-                  onInputUpdate(event.target.value, setStatus);
-                  console.log(event.target.value);
-                }}
-                style={{
-                  width: "100%",
-                }}
+      {/* <h1>
+        <InputLabel style={{ fontSize: "30px" }}>Pending Time Off</InputLabel>
+      </h1> */}
+      <StyledTable padding={"5px"}>
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>TYPE</th>
+            <th>START</th>
+            <th>END</th>
+            <th>REASON</th>
+            <th>APPROVE/DECLINE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {timeOff?.map((t) => {
+            return (
+              <tr
+                key={t._id}
+                value={t}
+                // onClick={() => {
+                //   setModalConfirmIsOpen(true);
+                //   setTimeOffValues(t);
+                // }}
+                // style={{
+                //   padding: "10px",
+                //   textAlign: "center",
+                //   height: "auto",
+                // }}
               >
-                <MenuItem value={"pending"}>Pending</MenuItem>
-                <MenuItem value={"confirm"}>Confirm</MenuItem>
-                <MenuItem value={"reject"}>Reject</MenuItem>
-              </Select>
-              <div></div>
+                <td>{`${t.firstName} ${t.lastName[0]}`}</td>
+                <td>{`${t.type}`}</td>
+                <td>{`${t.startDate}`}</td>
+                <td>{`${t.startDate}`}</td>
+                <td>{`${t.comment}`}</td>
+                <td>
+                  <div>
+                    <StyledEditButton
+                      style={{ margin: "5px 10px" }}
+                      onClick={() => {
+                        setDecision("approve");
+                        setModalConfirmIsOpen(true);
+                        setTimeOffValues(t);
+                      }}
+                    >
+                      ✅
+                    </StyledEditButton>
+                    <StyledEditButton
+                      style={{ margin: "5px 10px" }}
+                      onClick={() => {
+                        setStatus("reject");
+                        setDecision("deny");
+                        setModalConfirmIsOpen(true);
+                        setTimeOffValues(t);
+                      }}
+                    >
+                      ❌
+                    </StyledEditButton>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </StyledTable>
+      <Modal
+        onClose={() => {
+          setModalConfirmIsOpen(false);
+        }}
+        open={modalConfirmIsOpen}
+      >
+        <div style={{ padding: "20px" }}>
+          <h3>
+            {`Are you sure you would like to ${decision} 
+             the following time off?`}
+          </h3>
+          <p>Employee:{timeOffValues?.firstName}</p>
+          <p>Type of time off:{timeOffValues?.type}</p>
+          <p>
+            Start Day: {moment(timeOffValues?.startDate).format("yy-MM-DD")}
+          </p>
+          <p>End Day: {moment(timeOffValues?.endDate).format("YYYY-MM-DD")}</p>
+          {timeOffValues?.allDay === false && (
+            <>
+              <p>Start Time: {timeOffValues?.startTime}</p>
+              <p>End Time: {timeOffValues?.endTime}</p>
+            </>
+          )}
+          <p>Comments:{timeOffValues?.comment}</p>
+          <br />
+          <label>Manger Comment:</label>
+          <StyledTextArea
+            value={managerComment}
+            onChange={(e) => setManagerComment(e.target.value)}
+          />
 
-              <StyledButton onClick={postData}>Confirm</StyledButton>
-              <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
-                Cancel
-              </StyledButton>
-            </div>
-          </Modal>
-        </StyledForm2>
-      </StyledFormWrapper>
+          {/* <InputLabel>Status</InputLabel>
+          <Select
+            id="name-input"
+            defaultValue={timeOffValues?.status}
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setStatus);
+              console.log(event.target.value);
+            }}
+            style={{
+              width: "100%",
+            }}
+          >
+            <MenuItem value={"pending"}>Pending</MenuItem>
+            <MenuItem value={"confirm"}>Confirm</MenuItem>
+            <MenuItem value={"reject"}>Reject</MenuItem>
+          </Select> */}
+          <div></div>
+
+          <StyledButton onClick={postData}>Confirm</StyledButton>
+          <StyledButton onClick={() => setModalConfirmIsOpen(false)}>
+            Cancel
+          </StyledButton>
+        </div>
+      </Modal>
     </div>
   );
 };

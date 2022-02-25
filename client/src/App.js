@@ -24,7 +24,7 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
-import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
+// import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 import ManagerSettingsPage from "./pages/manager/ManagerSettingsPage";
 import DaySchedulePosition from "./components/schedules/day-schedule/DaySchedulePosition";
@@ -119,7 +119,7 @@ function App() {
             path="/shiftSwapManagerPage"
             element={
               <RequireAuth>
-                <ManagerViewOfShiftSwapRequests />
+                <TimeOffApprovalPage />
               </RequireAuth>
             }
           />

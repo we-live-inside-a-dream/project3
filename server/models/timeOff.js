@@ -43,6 +43,7 @@ const EmployeeTimeOff = mongoose.model("employeeTimeOff", {
     type: String,
     default: "pending",
   },
+  managerComment: String,
 });
 
 async function createEmployeeTimeOff(employeeTimeOffData) {
@@ -93,15 +94,15 @@ async function update(id, timeOffApproval) {
 // }
 
 async function deleteTimeOff(id) {
-  console.log("from time off Model", id)
-  return EmployeeTimeOff.findByIdAndDelete(id)
+  console.log("from time off Model", id);
+  return EmployeeTimeOff.findByIdAndDelete(id);
 }
 
 module.exports = {
   createEmployeeTimeOff,
   getEmployeeTimeOffByProfileId,
-  getWeeklyTimeOffs, 
+  getWeeklyTimeOffs,
   update,
   listOfTimeOff,
-  deleteTimeOff
+  deleteTimeOff,
 };

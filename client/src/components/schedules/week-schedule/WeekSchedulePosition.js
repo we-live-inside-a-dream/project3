@@ -12,6 +12,7 @@ import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 import TimeOffLegend from "./TimeOffLegend";
 import EditSchedule from "../../edit-schedule/EditSchedule";
 import Modal from "../../reusable/Modal";
+import { useManagerSettings } from "../../reusable/context/ManagerSettingsProvider";
 
 const positionList = [
   { name: "Supervisor" },
@@ -26,6 +27,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
   );
+  const value = useManagerSettings();
   const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [modalEmployee, setModalEmployee] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -45,8 +47,8 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
   useEffect(() => {
-    console.log("shift id is ...", shiftId);
-  }, [shiftId]);
+    console.log("shift id is ...", value());
+  }, []);
   useEffect(() => {
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");

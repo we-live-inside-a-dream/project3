@@ -5,6 +5,8 @@ import PositionSettings from "../../components/management-settings/PositionSetti
 
 function ManagerSettingsPage() {
   const [positionsView, setPositionsView] = useState(false);
+  const [daysHoursView, setDaysHoursView] = useState(false);
+  const [permissionsView, setPermissionsView] = useState(false);
 
   return (
     <div>
@@ -19,6 +21,24 @@ function ManagerSettingsPage() {
           Position Settings {positionsView === false ? "▾" : "▴"}
         </h3>
         {positionsView === true && <PositionSettings />}
+        <h3
+          style={{ color: "var(--accentColorTitle)", cursor: "pointer" }}
+          onClick={() => setDaysHoursView(!daysHoursView)}
+        >
+          Business Days & Times Settings {daysHoursView === false ? "▾" : "▴"}
+        </h3>
+        {daysHoursView === true && (
+          <h3>HERE IS WHERE SOME CONTENT WILL BE!!!</h3>
+        )}
+        <h3
+          style={{ color: "var(--accentColorTitle)", cursor: "pointer" }}
+          onClick={() => setPermissionsView(!permissionsView)}
+        >
+          Employee Permissions Settings {permissionsView === false ? "▾" : "▴"}
+        </h3>
+        {permissionsView === true && (
+          <h3>HERE IS WHERE SOME CONTENT WILL BE!!!</h3>
+        )}
       </StyledPage>
     </div>
   );

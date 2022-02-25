@@ -7,12 +7,14 @@ const {
   logIn,
   findEmployeeByProfileEmail,
   getEmployeeProfileByProfileId,
+  EmployeeProfile,
 } = require("../models/employeeProfile");
 
 router.post("/login", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
   // console.log("Log in successful!");
+  
   return res.json(req.user);
 });
 

@@ -46,7 +46,7 @@ export default function LogIn() {
       email,
       password,
     });
-
+    
     let user = response.data;
     console.log("LOG IN", response);
     authContext.logIn(user);
@@ -62,102 +62,102 @@ export default function LogIn() {
   };
 
   return (
-      <StyledContainer>
-        <StyledLogIn />
-        <StyledFormWrapper>
-          <StyledForm type="submit">
-            <h1>Log In</h1>
-            <div>
-              <label>Email</label>
-              {!emailMessageVal ? (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "12px",
-                    marginBottom: "0px",
-                  }}
-                ></p>
-              ) : null}
-              {emailMessageVal ? (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "12px",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {emailMessageVal}
-                </p>
-              ) : null}
-              <StyledInput
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                placeholder="Email.."
-                onChange={(event) => {
-                  handleChange(event, setEmail);
-                  setEmailMessageVal(emailValidation(event.target.value));
+    <StyledContainer>
+      <StyledLogIn />
+      <StyledFormWrapper>
+        <StyledForm type="submit">
+          <h1>Log In</h1>
+          <div>
+            <label>Email</label>
+            {!emailMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginBottom: "0px",
                 }}
-              />
-              <label>Password</label>
-              {!passMessageVal ? (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "12px",
-                    marginBottom: "0px",
-                  }}
-                ></p>
-              ) : null}
-              {passMessageVal ? (
-                <p
-                  style={{
-                    color: "red",
-                    fontSize: "12px",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {passMessageVal}
-                </p>
-              ) : null}
-              <StyledInput
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                placeholder="Password.."
-                onChange={(event) => {
-                  handleChange(event, setPassword);
-                  setPassMessageVal(passwordValidation(event.target.value));
+              ></p>
+            ) : null}
+            {emailMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginBottom: "0px",
                 }}
-                onKeyPress={handleKeypress}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <StyledButton id="submit" type="submit" onClick={handleSubmit}>
-                Log In
-              </StyledButton>
-              <Grid container>
-                <Grid item>
-                  <Link to="/forgotpassword">Forgot Password</Link>
-                </Grid>
+              >
+                {emailMessageVal}
+              </p>
+            ) : null}
+            <StyledInput
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              placeholder="Email.."
+              onChange={(event) => {
+                handleChange(event, setEmail);
+                setEmailMessageVal(emailValidation(event.target.value));
+              }}
+            />
+            <label>Password</label>
+            {!passMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginBottom: "0px",
+                }}
+              ></p>
+            ) : null}
+            {passMessageVal ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginBottom: "0px",
+                }}
+              >
+                {passMessageVal}
+              </p>
+            ) : null}
+            <StyledInput
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              placeholder="Password.."
+              onChange={(event) => {
+                handleChange(event, setPassword);
+                setPassMessageVal(passwordValidation(event.target.value));
+              }}
+              onKeyPress={handleKeypress}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <StyledButton id="submit" type="submit" onClick={handleSubmit}>
+              Log In
+            </StyledButton>
+            <Grid container>
+              <Grid item>
+                <Link to="/forgotpassword">Forgot Password</Link>
               </Grid>
-            </div>
-          </StyledForm>
-        </StyledFormWrapper>
-      </StyledContainer>
+            </Grid>
+          </div>
+        </StyledForm>
+      </StyledFormWrapper>
+    </StyledContainer>
   );
 }

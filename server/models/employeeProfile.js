@@ -2,6 +2,7 @@
 // const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const mongoose = require("./mongooseDb");
+
 /*
 -employeeProfile_ID
 -Profile Pic
@@ -29,7 +30,6 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
   },
   password: {
     type: String,
-    unique: true,
     required: true,
   },
   phoneNumber: {
@@ -49,6 +49,7 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     type: String,
     required: true,
   },
+  verified: { type: Boolean, default: false },
 });
 
 // const employeeProfileModel = mongoose.model("EmployeeProfile", employeeProfile);
@@ -64,7 +65,7 @@ const createEmployeeProfile = async (employeeProfileInfo) => {
     permission = "supervisor";
   } else permission = "employee";
 
-  let hashedpassword = bcrypt.hashSync(employeeProfileInfo.password, 8);
+  let hashedpassword = bcrypt.hashSync(employeeProfileInfo.password, 10);
   let newEmployeeProfile = new EmployeeProfile({
     ...employeeProfileInfo,
     password: hashedpassword,
@@ -136,6 +137,6 @@ module.exports = {
   updateEmployeeProfile,
   logIn,
   findPositionsByEmployeeId,
-
+  EmployeeProfile,
   getActiveEmployeeNames,
 };

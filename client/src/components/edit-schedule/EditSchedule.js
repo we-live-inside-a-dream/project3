@@ -26,6 +26,7 @@ import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import ScheduleAvailability from "./ScheduleAvailability";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
+import PositionsForm from "../management-settings/PositionsForm";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 const positionList = [
@@ -101,7 +102,7 @@ function EditSchedule({
     }
   }, [shiftId]);
 
-  console.log("POSITIONS");
+  console.log("POSITIONS", positions);
 
   useEffect(() => {
     if (!modalData) return;
@@ -193,12 +194,12 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (existingValues && validation === null) {
+    if (existingValues.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
       reload();
-    } else if (!existingValues && validation === null) {
+    } else if (!existingValues.start && validation === null) {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
@@ -294,10 +295,11 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           <NativeSelect
-            label="name"
+            label={position}
             value={position}
             onChange={(event) => {
               onInputUpdate(event.target.value, setPosition);
+              console.log("position", event.target.value);
             }}
             style={{
               width: "100%",

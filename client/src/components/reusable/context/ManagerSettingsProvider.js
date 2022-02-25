@@ -9,6 +9,7 @@ export function useManagerSettings() {
 
 export function ManagerSettingsProvider({ children }) {
   //ADD CONTENT BELOW
+  const [render, setRender] = useState(false);
   const [positions, setPositions] = useState();
   const [breaks, setBreaks] = useState();
   const [businessHours, setBusinessHours] = useState();
@@ -25,8 +26,12 @@ export function ManagerSettingsProvider({ children }) {
       }
       getPositionList();
     }
-  }, [user?._id]);
+  }, [user?._id, render]);
   console.log("from the managerSettingsProvider, positions are", positions);
+
+  function reload() {
+    setRender((prevCheck) => !prevCheck);
+  }
 
   let value = { positions, breaks, businessHours };
 

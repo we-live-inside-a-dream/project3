@@ -105,20 +105,25 @@ export const MessageText = styled.div`
 `;
 
 export const ChatPopup = styled.div`
-  display: none;
-  font-size: 10px;
-  position: fixed;
-  bottom: 30em;
-  right: 1em;
-  height: 60vh;
-  width: 60%;
-  /* display: flex; */
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.75rem;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  z-index: 1000;
+  .popup {
+    display: none;
+    font-size: 10px;
+    position: fixed;
+    bottom: 6rem;
+    right: 7rem;
+    height: 60vh;
+    width: 50%;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.75rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    z-index: 1000;
+  }
+  .popup.show {
+    display: flex;
+  }
 `;
 
 export const SendButton = styled.button`
@@ -158,11 +163,27 @@ export const MessageStyles = styled.div`
     color: white;
     max-width: 300px;
   }
-  .message own {
+  .message.own {
     align-items: flex-end;
   }
   .message.own .messageText {
     background-color: rgb(245, 241, 241);
     color: black;
+  }
+`;
+export const ChatButton = styled.button`
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  z-index: 100;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s;
+  :hover {
+    opacity: 1;
   }
 `;

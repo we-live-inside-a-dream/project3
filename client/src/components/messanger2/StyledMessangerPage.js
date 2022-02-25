@@ -123,7 +123,7 @@ export const ChatPopup = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding: 0.75rem;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+    /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4); */
     border-radius: 10px;
     z-index: 1000;
   }

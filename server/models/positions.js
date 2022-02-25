@@ -9,7 +9,7 @@ async function createPosition(Data) {
   let newPosition = new Position(Data);
   let createdPosition = await newPosition.save();
   console.log("FROM MODEL, new Position created", createdPosition);
-  return createdPosition._id;
+  return createdPosition;
 }
 
 async function getPositions() {

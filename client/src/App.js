@@ -32,6 +32,7 @@ import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
 import { CustomSelect } from "./components/reusable/Inputs/CustomSelect";
+import ManagerSettingsPage from "./pages/manager/ManagerSettingsPage";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 import DaySchedulePosition from "./components/schedules/day-schedule/DaySchedulePosition";
 // import TimeOffPage from "./pages/common/TimeOffPage";
@@ -128,7 +129,14 @@ function App() {
                 </RequireAuth>
               }
             />
-
+            <Route
+              path="/managerSettingsPage"
+              element={
+                <RequireAuth>
+                  <ManagerSettingsPage />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/human-resources"
               element={

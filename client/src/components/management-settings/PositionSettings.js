@@ -6,11 +6,18 @@ import {
   StyledForm,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledTable from "../reusable/tables/StyledTable";
+import Modal from "../reusable/Modal";
+import DeletePositionConfirm from "./DeletePositionConfirm";
+import PositionsForm from "./PositionsForm";
 
 function PositionSettings() {
-  const [position, setPosition] = useState();
-  const [positionValue, setPositionValue] = useState();
+  const [value, setValue] = useState();
+  const [label, setLabel] = useState();
+  const [positionToEdit, setPositionToEdit] = useState();
   const [positionList, setPositionList] = useState([]);
+  const [method, setMethod] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [idToEdit, setIdToEdit] = useState();
 
   useEffect(() => {
     async function getPositionList() {
@@ -21,37 +28,17 @@ function PositionSettings() {
     getPositionList();
   }, []);
 
-  async function createNewPosition(positionData) {
-    let response = await fetch("/api/positions/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(positionData),
+  const deletePositionById = async () => {
+    console.log(" FROM DELETE FUNCTION", idToEdit);
+    await fetch(`/api/positions/delete?id=${idToEdit}`, {
+      method: "DELETE",
     });
-    let newPosition = await response.json();
-    console.log("the new position is,", newPosition);
-    setPositionList((curr) => [...curr, newPosition]);
-  }
-
-  function formatPositionValue(string) {
-    return string.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-      if (+match === 0) return "";
-      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    let filteredPositions = positionList.filter((position) => {
+      return position._id !== idToEdit;
     });
-  }
-
-  async function postData() {
-    let camelCaseValue = await formatPositionValue(position);
-
-    let positionData = {
-      label: position,
-      value: camelCaseValue,
-    };
-    console.log("creating newPosition: ", positionData);
-    await createNewPosition(positionData);
-    setPosition("");
-  }
+    setPositionList(filteredPositions);
+    setModalOpen(!modalOpen);
+  };
 
   return (
     <div>
@@ -70,10 +57,25 @@ function PositionSettings() {
                   <td>{position.label}</td>
                   <td>
                     <div>
-                      <StyledEditButton style={{ margin: "0px 15px" }}>
+                      <StyledEditButton
+                        onClick={() => {
+                          setPositionToEdit(position);
+                          setIdToEdit(position._id);
+                          setMethod("edit");
+                          setModalOpen(!modalOpen);
+                        }}
+                        style={{ margin: "0px 15px" }}
+                      >
                         E
                       </StyledEditButton>
-                      <StyledEditButton style={{ margin: "0px 15px" }}>
+                      <StyledEditButton
+                        onClick={() => {
+                          setIdToEdit(position._id);
+                          setMethod("delete");
+                          setModalOpen(!modalOpen);
+                        }}
+                        style={{ margin: "0px 15px" }}
+                      >
                         X
                       </StyledEditButton>
                     </div>
@@ -83,28 +85,31 @@ function PositionSettings() {
             })}
           </tbody>
         </StyledTable>
+        <StyledButton onClick={() => setModalOpen(!modalOpen)}>
+          Add Position
+        </StyledButton>
       </div>
-      <div style={{ width: "300px", margin: "auto" }}>
-        <label style={{ margin: "0px" }}>
-          Position to Add:
-          <StyledInput
-            type="text"
-            value={position}
-            onChange={(e) => {
-              setPosition(e.target.value);
-            }}
-            style={{ width: "200px", margin: "0px" }}
+
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        {method === "delete" ? (
+          <DeletePositionConfirm
+            deletePosition={() => deletePositionById(idToEdit)}
+            onClose={() => setModalOpen(!modalOpen)}
           />
-          <StyledButton
-            onClick={() => {
-              postData();
-            }}
-            style={{ height: "40px", margin: "0px 10px" }}
-          >
-            +
-          </StyledButton>
-        </label>
-      </div>
+        ) : (
+          <PositionsForm
+            existingValues={positionToEdit}
+            setPositionList={setPositionList}
+            positionList={positionList}
+            setIdToEdit={setIdToEdit}
+            idToEdit={idToEdit}
+            value={value}
+            setValue={setValue}
+            label={label}
+            setLabel={setLabel}
+          />
+        )}
+      </Modal>
     </div>
   );
 }

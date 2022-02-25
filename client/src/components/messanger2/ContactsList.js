@@ -38,7 +38,7 @@ export const ContactsList = ({ setCurrentChat }) => {
   useEffect(() => {
     if (empNames) {
       empNames.map((person) => {
-        if (person._id !== user._id)
+        if (person._id !== user?._id)
           return contactsData.push({
             value: `${person._id}`,
             label: `${person.firstName} ${person.lastName[0]}`,

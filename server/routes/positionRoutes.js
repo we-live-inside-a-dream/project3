@@ -24,9 +24,10 @@ router.post("/update", async (req, res) => {
   res.json(updatedPosition);
 });
 
-router.delete("/delete ", async (req, res) => {
+router.delete("/delete", async (req, res) => {
   let id = req.query.id;
-  let deletedPosition = await positionModel.deletePosition();
+  console.log("REACHED THE API with id", id);
+  let deletedPosition = await positionModel.deletePosition(id);
   console.log("from API POSITION, id to delete is ", id);
   res.send(deletedPosition);
 });

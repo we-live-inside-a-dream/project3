@@ -20,7 +20,7 @@ async function getPositions() {
 
 async function updatePosition(id, newData) {
   let updatedPosition = await Position.findByIdAndUpdate(id, newData, {
-    returnDocument: after,
+    returnDocument: "after",
   });
   console.log("UPDATED POSITON from the model", updatedPosition);
   return updatedPosition;

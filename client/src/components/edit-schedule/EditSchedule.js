@@ -86,6 +86,7 @@ function EditSchedule({
 
   useEffect(() => {
     if (shiftId) {
+      console.log("THIS IS THE SHIFT ID");
       const fetchShift = async () => {
         let fetchResult = await fetch(`/api/schedule/id?id=${shiftId}`);
         let fetchedShift = await fetchResult.json();
@@ -154,7 +155,26 @@ function EditSchedule({
     setter(value);
   }
 
+  async function validateForm() {
+    if (
+      empNameMessageVal ||
+      shiftDateMessageVal ||
+      shiftTimeMessageVal ||
+      shiftBrakeMessageVal
+    ) {
+      validation = "Please make sure that all fields are valid";
+      setShown(true);
+      return validation;
+    } else validation = null;
+    setShown(false);
+    postData();
+
+    return validation;
+  }
+
   async function postData() {
+    // validateForm();
+
     let newShift = {
       employeeId,
       firstName,
@@ -165,7 +185,7 @@ function EditSchedule({
       breaks,
       position,
     };
-    validateForm();
+    // validateForm();
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
@@ -205,41 +225,19 @@ function EditSchedule({
   }
 
   let validation;
-  async function validateForm() {
-    if (
-      empNameMessageVal ||
-      shiftDateMessageVal ||
-      shiftTimeMessageVal ||
-      shiftBrakeMessageVal
-    ) {
-      console.log(
-        "Employee Name",
-        empNameMessageVal,
-        "Employee Shift Date",
-        shiftDateMessageVal,
-        "Employee Shift Time",
-        shiftTimeMessageVal,
-        "Employee Brake Time",
-        shiftBrakeMessageVal
-      );
-      validation = "Please make sure that all fields are valid";
-      return validation;
-    } else
-      console.log(
-        "employeeId",
-        empNameMessageVal,
-        "Employee Name",
-        empNameMessageVal,
-        "Employee Shift Date",
-        shiftDateMessageVal,
-        "Employee Shift Time",
-        shiftTimeMessageVal,
-        "Employee Brake Time",
-        shiftBrakeMessageVal
-      );
-    validation = null;
-    return validation;
-  }
+  // async function validateForm() {
+  //   if (
+  //     empNameMessageVal ||
+  //     shiftDateMessageVal ||
+  //     shiftTimeMessageVal ||
+  //     shiftBrakeMessageVal
+  //   ) {
+  //     validation = "Please make sure that all fields are valid";
+  //     return validation;
+  //   } else validation = null;
+
+  //   return validation;
+  // }
 
   return (
     <>
@@ -457,7 +455,7 @@ function EditSchedule({
           <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
           <div styles={{ display: "flex", flexDirection: "row" }}>
             {shown === true ? <p>form needs a lotta work</p> : null}
-            <StyledButton onClick={postData}>SUBMIT</StyledButton>
+            <StyledButton onClick={validateForm}>SUBMIT</StyledButton>
           </div>
         </div>
       </StyledModal>

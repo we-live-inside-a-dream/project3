@@ -28,3 +28,5 @@ router. delete("/delete/:id", async (req, res) => {
   let deletedBusinessDays = await businessDaysModel.deletedBusinessDays(id);
   res.send(deletedBusinessDays);
 })
+
+module.exports = router;

@@ -51,7 +51,6 @@ async function getBusinessDaysById(id) {
     return businessDaysId
 }
 
-
 async function update(id,) {
 return BusinessDays.findByIdAndUpdate(id)
 }

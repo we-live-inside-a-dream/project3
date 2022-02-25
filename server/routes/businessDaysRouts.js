@@ -8,22 +8,23 @@ router.post("/", async (req, res) => {
   res.send(createdId);
 });
 
-router.post("/businessDays/:id", async (req, res) => { 
+router.post("/update/:id", async (req, res) => { 
 let id = req.params.id;
-let updatedBusinessDay = req.body;
+let updatedBusinessDays = req.body;
 let businessDays = await businessDays.Model.updateBusinessDaysById(
   id,
-  updatedBusinessDay
+  updatedBusinessDays
 );
-res.json(updatedBusinessDay);
+res.json(updatedBusinessDays);
 });
 
-router.get("/listBusinessDays", (req, res) => {
+router.get("/list", async (req, res) => {
   businessDaysList = await businessDaysModel.listOfBusinessDays();
   res.json(businessDaysList);
 });
 
-// router.post("/updateBusinessDays", (req, res) => {
-//     let id = req.query.id;
-//     let updatedBusinessDay 
-// })
+router. delete("/delete/:id", async (req, res) => {
+  let id = req.params.id;
+  let deletedBusinessDays = await businessDaysModel.deletedBusinessDays(id);
+  res.send(deletedBusinessDays);
+})

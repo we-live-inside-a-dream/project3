@@ -48,7 +48,7 @@ export const ContactsList = ({ setCurrentChat }) => {
   }, [empNames]);
 
   useEffect(() => {
-    if (user._id) {
+    if (user?._id) {
       const getConversations = async () => {
         let id = user._id;
         let fetchResult = await fetch(`api/conversations/${id}`);
@@ -118,7 +118,7 @@ export const ContactsList = ({ setCurrentChat }) => {
                   fetchUnread();
                 }}
               >
-                <Conversation id={user._id} conversation={c} />
+                <Conversation id={user?._id} conversation={c} />
               </div>
             ))}
           </StyledContactList>

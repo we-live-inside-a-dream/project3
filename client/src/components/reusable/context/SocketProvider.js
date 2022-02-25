@@ -41,6 +41,7 @@ export function SocketProvider({ children }) {
   // }, [socket]);
 
   async function fetchUnread() {
+    if (!user?._id) return;
     let fetchResult = await fetch(`/api/messages/unread?id=${user._id}`);
     let fetchedUnread = await fetchResult.json();
     console.log(fetchedUnread);

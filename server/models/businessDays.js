@@ -46,9 +46,19 @@ async function createBusinessDay(businessDaysData) {
   return createBusinessDay.id;
 }
 
-async function update(id,)
-return BusinessDays.findByIdAndUpdate(id)
+async function getBusinessDaysById(id) {
+    let businessDaysId = await BusinessDays.findOne(id)
+    return businessDaysId
+}
 
+
+async function update(id,) {
+return BusinessDays.findByIdAndUpdate(id)
+}
+
+const listOfBusinessDays = async () => {
+    return BusinessDays.find({});
+  };
 
 async function deleteBusinessDay(id)
 return BusinessDays.findByIdAndDelete(id)
@@ -57,5 +67,7 @@ return BusinessDays.findByIdAndDelete(id)
 module.exports = {
     createBusinessDay,
     update,
-    deleteBusinessDay
+    deleteBusinessDay,
+    listOfBusinessDays,
+    getBusinessDaysById
 }

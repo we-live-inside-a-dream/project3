@@ -9,6 +9,7 @@ import StyledTable from "../reusable/tables/StyledTable";
 
 function PositionSettings() {
   const [position, setPosition] = useState();
+  const [positionValue, setPositionValue] = useState();
   const [positionList, setPositionList] = useState([]);
 
   useEffect(() => {
@@ -33,10 +34,19 @@ function PositionSettings() {
     setPositionList((curr) => [...curr, newPosition]);
   }
 
+  function formatPositionValue(string) {
+    return string.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+      if (+match === 0) return "";
+      return index === 0 ? match.toLowerCase() : match.toUpperCase();
+    });
+  }
+
   async function postData() {
+    let camelCaseValue = await formatPositionValue(position);
+
     let positionData = {
       label: position,
-      value: position,
+      value: camelCaseValue,
     };
     console.log("creating newPosition: ", positionData);
     await createNewPosition(positionData);
@@ -80,11 +90,15 @@ function PositionSettings() {
           <StyledInput
             type="text"
             value={position}
-            onChange={(e) => setPosition(e.target.value)}
+            onChange={(e) => {
+              setPosition(e.target.value);
+            }}
             style={{ width: "200px", margin: "0px" }}
           />
           <StyledButton
-            onClick={postData}
+            onClick={() => {
+              postData();
+            }}
             style={{ height: "40px", margin: "0px 10px" }}
           >
             +

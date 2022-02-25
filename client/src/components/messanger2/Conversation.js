@@ -6,7 +6,7 @@ import NameIcon from "./NameIcon";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
 import { StyledConverstion } from "./StyledMessangerPage";
 
-export default function Conversation({ conversation }) {
+export default function Conversation({ id, conversation }) {
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const value = useSocket();
   let read = value.unread;
@@ -16,20 +16,21 @@ export default function Conversation({ conversation }) {
       <StyledConverstion>
         {/* <div style={{ border: "1px solid black", position: "relative" }}> */}
         {conversation?.members?.map((m) => {
-          return <NameIcon name={m.label} key={m.value} />;
+          if (m.value !== id) return <NameIcon name={m.label} key={m.value} />;
         })}
 
         {read?.includes(conversation._id) ? (
           <div
             style={{
               height: "10px",
-              // width: "10px",
+              width: "10px",
               borderRadius: "50%",
               backgroundColor: "red",
               position: "absolute",
-              transformOrigin: "topRight",
+              // transformOrigin: "topRight",
               top: "1em",
               right: "1em",
+              zIndex: 1001,
             }}
           />
         ) : null}

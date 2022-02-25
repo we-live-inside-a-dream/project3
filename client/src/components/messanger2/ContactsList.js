@@ -38,10 +38,11 @@ export const ContactsList = ({ setCurrentChat }) => {
   useEffect(() => {
     if (empNames) {
       empNames.map((person) => {
-        return contactsData.push({
-          value: `${person._id}`,
-          label: `${person.firstName} ${person.lastName[0]}`,
-        });
+        if (person._id !== user._id)
+          return contactsData.push({
+            value: `${person._id}`,
+            label: `${person.firstName} ${person.lastName[0]}`,
+          });
       });
     }
   }, [empNames]);
@@ -58,7 +59,7 @@ export const ContactsList = ({ setCurrentChat }) => {
       getConversations();
       // socket.emit("update");
     }
-  }, [user?._id]);
+  }, [user?._id, recipients]);
 
   //   let recipientIds = [];
   async function postData() {
@@ -67,8 +68,12 @@ export const ContactsList = ({ setCurrentChat }) => {
     //     });
 
     let newConversation = {
-      members: [...recipients],
+      members: [
+        { value: user._id, label: `${user.firstName} ${user.lastName[0]}` },
+        ...recipients,
+      ],
     };
+    console.log("newConversation", newConversation);
     updateConversation(newConversation);
     // recipientIds = [];
     setRecipients("");
@@ -106,15 +111,15 @@ export const ContactsList = ({ setCurrentChat }) => {
           <StyledButton onClick={postData}>SELECT FRIENDS</StyledButton>
           <StyledContactList>
             {conversations?.map((c) => (
-              <Convo
+              <div
                 key={c._id}
                 onClick={() => {
                   setCurrentChat(c);
                   fetchUnread();
                 }}
               >
-                <Conversation conversation={c} />
-              </Convo>
+                <Conversation id={user._id} conversation={c} />
+              </div>
             ))}
           </StyledContactList>
         </ChatMenuWrapper>

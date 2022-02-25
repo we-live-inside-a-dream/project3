@@ -4,12 +4,9 @@ const positionModel = require("../models/positions");
 
 router.post("/create", async (req, res) => {
   let newPosition = req.body;
-  let createdPositionId = await positionModel.createPosition(newPosition);
-  console.log(
-    "From API position route created position Id:",
-    createdPositionId
-  );
-  res.send(createdPositionId);
+  let createdPosition = await positionModel.createPosition(newPosition);
+  console.log("From API position route created position Id:", createdPosition);
+  res.json(createdPosition);
 });
 
 router.get("/get-all", async (req, res) => {

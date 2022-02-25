@@ -7,16 +7,32 @@ export function useManagerSettings() {
   return useContext(ManagerSettingsContext);
 }
 
-export function ManagerSettingsProvider({ childern }) {
+export function ManagerSettingsProvider({ children }) {
   //ADD CONTENT BELOW
+  const [positions, setPositions] = useState();
+  const [breaks, setBreaks] = useState();
+  const [businessHours, setBusinessHours] = useState();
 
-  const [positions, setPositions] = useState("THE REZZA");
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
-  let value = { positions };
+  useEffect(() => {
+    if (user?._id) {
+      async function getPositionList() {
+        let fetchedResult = await fetch("/api/positions/get-all");
+        let fetchedPositions = await fetchedResult.json();
+        setPositions(fetchedPositions);
+      }
+      getPositionList();
+    }
+  }, [user?._id]);
+  console.log("from the managerSettingsProvider, positions are", positions);
+
+  let value = { positions, breaks, businessHours };
 
   return (
     <ManagerSettingsContext.Provider value={value}>
-      {childern}
+      {children}
     </ManagerSettingsContext.Provider>
   );
 }

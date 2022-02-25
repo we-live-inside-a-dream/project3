@@ -25,8 +25,7 @@ import {
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import ScheduleAvailability from "./ScheduleAvailability";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
-
-// import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
+import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 const positionList = [
@@ -74,6 +73,9 @@ function EditSchedule({
   const [shown, setShown] = useState(false);
   // const [deleteShift, setDeleteShift] = useState(false);
 
+  const value = useManagerSettings();
+  const positions = value.positions;
+
   useEffect(() => {
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
@@ -98,6 +100,8 @@ function EditSchedule({
       fetchShift();
     }
   }, [shiftId]);
+
+  console.log("POSITIONS");
 
   useEffect(() => {
     if (!modalData) return;
@@ -301,10 +305,10 @@ function EditSchedule({
           >
             {/* {name} */}
             <option></option>
-            {positionList?.map((event, index) => {
+            {positions?.map((event) => {
               return (
-                <option key={index} value={event.name}>
-                  {event.name}
+                <option key={event._id} value={event.label}>
+                  {event.label}
                 </option>
               );
             })}

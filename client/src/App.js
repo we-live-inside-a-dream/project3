@@ -49,9 +49,9 @@ function App() {
           style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
           className="App"
         >
-          <ChatPopupWindow />
           <GlobalStyle />
           <NavBar />
+          <ChatPopupWindow />
           <Routes>
             <Route
               path="/"

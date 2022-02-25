@@ -35,6 +35,7 @@ function PositionPicTableData({
             }}
           >
             {position[0] + position[1]}
+            {edit && <StyledEditButton onClick={onClick}>✎</StyledEditButton>}
           </div>
         </div>
 

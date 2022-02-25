@@ -5,7 +5,7 @@ import * as fns from "date-fns";
 import { NativeSelect } from "@mui/material";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
-import { useSchedule } from "../reusable/context/ScheduleProvider";
+
 import {
   firstNameValidation,
   dateValidation,

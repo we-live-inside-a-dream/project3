@@ -35,6 +35,7 @@ import { CustomSelect } from "./components/reusable/Inputs/CustomSelect";
 import ManagerSettingsPage from "./pages/manager/ManagerSettingsPage";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 import DaySchedulePosition from "./components/schedules/day-schedule/DaySchedulePosition";
+import { ManagerSettingsProvider } from "./components/reusable/context/ManagerSettingsProvider";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -42,13 +43,15 @@ function App() {
   return (
     <AuthenticationProvider>
       <SocketProvider>
+        {/* <ManagerSettingsProvider> */}
+        {console.log("after providers")}
         <div
           style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
           className="App"
         >
-          <ChatPopupWindow />
           <GlobalStyle />
           <NavBar />
+          <ChatPopupWindow />
           <Routes>
             <Route
               path="/"
@@ -200,6 +203,7 @@ function App() {
           </Routes>
           )
         </div>
+        {/* </ManagerSettingsProvider> */}
       </SocketProvider>
     </AuthenticationProvider>
   );

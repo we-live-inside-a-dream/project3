@@ -14,15 +14,15 @@ export const StyledMessangerPage = styled.div`
 export const StyledContactList = styled.div`
   background-color: var(--styledPage);
   padding: 1em;
-  /* min-width: 10em; */
+  /* width: 100em; */
   /* margin: auto; */
   overflow-y: auto;
   position: absolute;
   height: 70%;
   filter: drop-shadow(3px 3px 10px lightgrey);
-  :hover {
-    /* background-color: rgb(245, 243, 243); */
-  }
+  /* :hover {
+    background-color: rgb(245, 243, 243);
+  } */
 `;
 
 export const ChatMenu = styled.div`
@@ -73,18 +73,24 @@ export const ChatMessageInput = styled.textarea`
   padding: 10px;
   margin-left: 10px;
 `;
-export const Convo = styled.div`
+// export const Convo = styled.div`
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.9;
+//     transform: scale(0.98);
+//     background-color: rgb(245, 243, 243);
+//   }
+// `;
+
+export const StyledConverstion = styled.div`
+  border: 1px solid black;
+  position: "relative";
   cursor: pointer;
   &:hover {
     opacity: 0.9;
     transform: scale(0.98);
     background-color: rgb(245, 243, 243);
   }
-`;
-
-export const StyledConverstion = styled.div`
-  border: 1px solid black;
-  position: "relative";
 `;
 
 export const StyledMessage = styled.div`
@@ -105,20 +111,25 @@ export const MessageText = styled.div`
 `;
 
 export const ChatPopup = styled.div`
-  display: none;
-  font-size: 10px;
-  position: fixed;
-  bottom: 30em;
-  right: 1em;
-  height: 60vh;
-  width: 60%;
-  /* display: flex; */
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0.75rem;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  z-index: 1000;
+  .popup {
+    display: none;
+    font-size: 10px;
+    position: fixed;
+    bottom: 6rem;
+    right: 7rem;
+    height: 60vh;
+    width: 50%;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.75rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    z-index: 1000;
+  }
+  .popup.show {
+    display: flex;
+  }
 `;
 
 export const SendButton = styled.button`
@@ -158,11 +169,28 @@ export const MessageStyles = styled.div`
     color: white;
     max-width: 300px;
   }
-  .message own {
+  .message.own {
     align-items: flex-end;
   }
   .message.own .messageText {
     background-color: rgb(245, 241, 241);
     color: black;
+  }
+`;
+export const ChatButton = styled.button`
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  z-index: 100;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s;
+
+  :hover {
+    opacity: 1;
   }
 `;

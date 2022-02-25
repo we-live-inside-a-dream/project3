@@ -7,7 +7,7 @@ export function useNotifications() {
   return useContext(NotificationsContext);
 }
 
-export function NotificationProvider({ childern }) {
+export function NotificationProvider({ children }) {
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
   const [unread, setUnread] = useState(0);
@@ -27,7 +27,7 @@ export function NotificationProvider({ childern }) {
 
   return (
     <NotificationsContext.Provider value={value}>
-      {childern}
+      {children}
     </NotificationsContext.Provider>
   );
 }

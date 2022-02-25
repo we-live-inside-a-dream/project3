@@ -25,8 +25,8 @@ import {
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import ScheduleAvailability from "./ScheduleAvailability";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
-
-// import StyledDropDownInput from "../reusable/Inputs/StyledDropDownInput";
+import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
+import PositionsForm from "../management-settings/PositionsForm";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 const positionList = [
@@ -74,6 +74,9 @@ function EditSchedule({
   const [shown, setShown] = useState(false);
   // const [deleteShift, setDeleteShift] = useState(false);
 
+  const value = useManagerSettings();
+  const positions = value.positions;
+
   useEffect(() => {
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
@@ -98,6 +101,8 @@ function EditSchedule({
       fetchShift();
     }
   }, [shiftId]);
+
+  console.log("POSITIONS", positions);
 
   useEffect(() => {
     if (!modalData) return;
@@ -189,12 +194,12 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (existingValues && validation === null) {
+    if (existingValues.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
       reload();
-    } else if (!existingValues && validation === null) {
+    } else if (!existingValues.start && validation === null) {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
@@ -290,10 +295,11 @@ function EditSchedule({
             <RedStar />
           </InputLabel>
           <NativeSelect
-            label="name"
+            label={position}
             value={position}
             onChange={(event) => {
               onInputUpdate(event.target.value, setPosition);
+              console.log("position", event.target.value);
             }}
             style={{
               width: "100%",
@@ -301,10 +307,10 @@ function EditSchedule({
           >
             {/* {name} */}
             <option></option>
-            {positionList?.map((event, index) => {
+            {positions?.map((event) => {
               return (
-                <option key={index} value={event.name}>
-                  {event.name}
+                <option key={event._id} value={event.label}>
+                  {event.label}
                 </option>
               );
             })}

@@ -35,6 +35,7 @@ const CalendarDateHeader = ({
           currentTab={currentTab}
         />
       </div>
+
       <div
         style={{
           gridRow: "1",
@@ -63,21 +64,25 @@ const CalendarDateHeader = ({
           onClick={onBack}
           id="backButton"
           style={{
+            fontSize: "2em",
+            padding: "0px 20px",
             margin: "0px 0px",
             border: "2px solid var(--styledButtonGroupBorder)",
           }}
         >
-          BACK
+          ⇦
         </StyledButton>
         <StyledButton
           onClick={onNext}
           id="nextButton"
           style={{
+            padding: "0px 20px",
+            fontSize: "2em",
             margin: "0px 0px",
             border: "2px solid var(--styledButtonGroupBorder)",
           }}
         >
-          NEXT
+          ⇨
         </StyledButton>
       </div>
     </div>

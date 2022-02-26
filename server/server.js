@@ -65,7 +65,7 @@ const chatRouter = require("./routes/chatRoutes");
 const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 const positionsRouter = require("./routes/positionRoutes");
-const businessDaysRouter = require("./routes/businessDaysRoutes")
+const businessDaysRouter = require("./routes/businessDaysRouts");
 
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(express.json());

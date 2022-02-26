@@ -59,8 +59,9 @@ const listOfBusinessDays = async () => {
     return BusinessDays.find({});
   };
 
-async function deleteBusinessDay(id)
+async function deleteBusinessDay(id) {
 return BusinessDays.findByIdAndDelete(id)
+}
 
 
 module.exports = {

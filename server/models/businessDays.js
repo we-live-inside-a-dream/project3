@@ -60,6 +60,7 @@ const listOfBusinessDays = async () => {
   };
 
 async function deleteBusinessDay(id) {
+  console.log("this is the Id coming from model", id)
 return BusinessDays.findByIdAndDelete(id)
 }
 

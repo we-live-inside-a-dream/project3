@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   res.send(createdId);
 });
 
-router.post("/update/:id", async (req, res) => { 
+router.post("/update/:id", async (req, res) => {
 let id = req.params.id;
 let updatedBusinessDays = req.body;
 let businessDays = await businessDays.Model.updateBusinessDaysById(

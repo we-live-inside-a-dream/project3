@@ -33,3 +33,33 @@ post http://localhost:5001/api/messages/620d5bae3fb00c752743f9a3
 get http://localhost:5001/socket.io/?id=62040daea010efeac014d072&EIO=4&transport=polling&t=Ny4jZnO&sid=fUiyK8wfmCLtxv0KAAAK
 ###
 get http://localhost:5001/socket.io/?id=620458f0c3f07c9cb010c768&EIO=4&transport=polling&t=Ny4jZmz&sid=ky7AbFgZXOhiINwJAAAB
+
+###
+post http://localhost:5001/api/businessDays HTTP/1.1
+content-type: application/json
+
+{
+"dayOfTheWeek":"tuesday",
+
+"start": "10:00",
+"end": "06:00"
+
+}
+
+###
+post http://localhost:5001/api/businessDays/update/wednesday HTTP/1.1
+content-type: application/json
+
+{
+
+"start": "11:00",
+"end": "07:00"
+
+}
+
+###
+get http://localhost:5001/api/businessDays/list
+
+###
+delete http://localhost:5001/api/businessDays/delete/friday
+

@@ -1,42 +1,41 @@
 const mongoose = require("./mongooseDb");
 
 const BusinessDays = mongoose.model("BusinessDays", {
-
-  monday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  tuesday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  wednesday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  thursday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  friday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  saturday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
-  sunday: {
-    openForBusiness: Boolean,
-    start: { type: String },
-    end: { type: String },
-  },
+  // monday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
+  dayOfTheWeek: { type: String, unique: true },
+  start: { type: String },
+  end: { type: String },
+  openForBusiness: Boolean,
+  // },
+  // wednesday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
+  // thursday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
+  // friday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
+  // saturday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
+  // sunday: {
+  //   openForBusiness: Boolean,
+  //   start: { type: String },
+  //   end: { type: String },
+  // },
 });
 
 async function createBusinessDay(businessDaysData) {
@@ -46,28 +45,23 @@ async function createBusinessDay(businessDaysData) {
   return createBusinessDay.id;
 }
 
-async function getBusinessDaysById(id) {
-    let businessDaysId = await BusinessDays.findOne(id)
-    return businessDaysId
-}
-
-
-async function update(id,) {
-return BusinessDays.findByIdAndUpdate(id)
+async function updateBusinessDaysByDay(dayOfWeek, dayData) {
+  let businessDay = await BusinessDays.findOneAndUpdate(dayOfWeek, dayData);
+  return businessDay;
 }
 
 const listOfBusinessDays = async () => {
-    return BusinessDays.find({});
-  };
+  return BusinessDays.find({});
+};
 
-async function deleteBusinessDay(id)
-return BusinessDays.findByIdAndDelete(id)
-
+async function deleteBusinessDay(dayOfWeek) {
+  console.log("this is the Id coming from model", dayOfWeek);
+  return BusinessDays.findOneAndDelete(dayOfWeek);
+}
 
 module.exports = {
-    createBusinessDay,
-    update,
-    deleteBusinessDay,
-    listOfBusinessDays,
-    getBusinessDaysById
-}
+  createBusinessDay,
+  updateBusinessDaysByDay,
+  deleteBusinessDay,
+  listOfBusinessDays,
+};

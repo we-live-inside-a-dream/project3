@@ -8,18 +8,34 @@ import StyledApprovalsButtonGroup from "../../components/employee-time-off/Style
 const ApprovalPage = () => {
   const [currentTab, setCurrentTab] = useState(1);
   return (
-    <div>
-      <StyledPage>
+    <div style={{ position: "relative" }}>
+      <StyledPage
+        style={
+          {
+            // alignContent: "center",
+          }
+        }
+      >
         <StyledPageTitle style={{ marginBottom: "40px" }}>
           APPROVALS PAGE
         </StyledPageTitle>
-        <div>
+        <div
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            // alignContent: "center",
+          }}
+        >
           <StyledApprovalsButtonGroup
             currentTab={currentTab}
             setCurrentTab={setCurrentTab}
+            style={{ position: "absolute" }}
           />
-          {currentTab === 1 && <TimeOffApproval />}
-          {currentTab === 2 && <ManagerViewOfShiftSwapRequests />}
+          <div style={{ position: "absolute" }}>
+            {currentTab === 1 && <TimeOffApproval />}
+            {currentTab === 2 && <ManagerViewOfShiftSwapRequests />}
+          </div>
         </div>
       </StyledPage>
     </div>

@@ -55,10 +55,6 @@ const TimeOffApproval = () => {
     console.log(timeOff);
   }, [timeOff]);
 
-  function onInputUpdate(value, setter) {
-    // console.log(value);
-    setter(value);
-  }
   function postData() {
     let newValue = {
       status,
@@ -74,9 +70,6 @@ const TimeOffApproval = () => {
 
   return (
     <div>
-      {/* <h1>
-        <InputLabel style={{ fontSize: "30px" }}>Pending Time Off</InputLabel>
-      </h1> */}
       <StyledTable padding={"5px"}>
         <thead>
           <tr>
@@ -91,19 +84,7 @@ const TimeOffApproval = () => {
         <tbody>
           {timeOff?.map((t) => {
             return (
-              <tr
-                key={t._id}
-                value={t}
-                // onClick={() => {
-                //   setModalConfirmIsOpen(true);
-                //   setTimeOffValues(t);
-                // }}
-                // style={{
-                //   padding: "10px",
-                //   textAlign: "center",
-                //   height: "auto",
-                // }}
-              >
+              <tr key={t._id} value={t}>
                 <td>{`${t.firstName} ${t.lastName[0]}`}</td>
                 <td>{`${t.type}`}</td>
                 <td>{`${t.startDate}`}</td>

@@ -19,7 +19,7 @@ import Manager from "./components/login/MustBeManager";
 import RequireAuth from "./components/login/RequireAuth";
 import EmployeesMenuPage from "./pages/manager/EmployeesMenuPage";
 import MessangerPage2 from "./pages/common/MessangerPage2";
-import TimeOffApprovalPage from "./pages/manager/TimeOffApprovalPage";
+import ApprovalPage from "./pages/manager/ManagerApprovalsPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
@@ -116,10 +116,10 @@ function App() {
             }
           />
           <Route
-            path="/shiftSwapManagerPage"
+            path="/ManagerApprovalsPage"
             element={
               <RequireAuth>
-                <TimeOffApprovalPage />
+                <ApprovalPage />
               </RequireAuth>
             }
           />
@@ -185,10 +185,7 @@ function App() {
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
           ></Route>
-          <Route
-            path="/timeOff/approval"
-            element={<TimeOffApprovalPage />}
-          ></Route>
+
           <Route path="/custom" element={<DaySchedulePosition />}></Route>
           {/* last router */}
         </Routes>

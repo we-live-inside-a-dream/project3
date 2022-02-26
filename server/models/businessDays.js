@@ -51,7 +51,6 @@ async function getBusinessDaysById(id) {
     return businessDaysId
 }
 
-
 async function update(id,) {
 return BusinessDays.findByIdAndUpdate(id)
 }
@@ -60,8 +59,10 @@ const listOfBusinessDays = async () => {
     return BusinessDays.find({});
   };
 
-async function deleteBusinessDay(id)
+async function deleteBusinessDay(id) {
+  console.log("this is the Id coming from model", id)
 return BusinessDays.findByIdAndDelete(id)
+}
 
 
 module.exports = {

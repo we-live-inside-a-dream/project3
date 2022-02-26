@@ -84,7 +84,7 @@ export const ChatMessageInput = styled.textarea`
 
 export const StyledConverstion = styled.div`
   border: 1px solid black;
-  position: "relative";
+  position: relative;
   cursor: pointer;
   &:hover {
     opacity: 0.9;
@@ -181,11 +181,11 @@ export const ChatButton = styled.button`
   position: fixed;
   bottom: 3rem;
   right: 3rem;
-  background-color: dodgerblue;
+  /* background-color: dodgerblue; */
   color: white;
   border-radius: 50%;
-  height: 3rem;
-  width: 3rem;
+  height: 4rem;
+  width: 4rem;
   z-index: 100;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
   transition: opacity 0.3s;
@@ -193,4 +193,12 @@ export const ChatButton = styled.button`
   :hover {
     opacity: 1;
   }
+`;
+
+export const MessageLogo = styled.img`
+  display: fixed;
+  /* padding: 0px 0px; */
+  /* margin: 0px auto; */
+  max-width: 65px;
+  height: auto;
 `;

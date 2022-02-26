@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const employeeTimeOffModel = require("../models/businessDays");
+const businessDaysModel = require("../models/businessDays");
 
 router.post("/", async (req, res) => {
   let newBusinessDay = req.body;
@@ -8,14 +8,14 @@ router.post("/", async (req, res) => {
   res.send(createdId);
 });
 
-router.post("/update/:id", async (req, res) => {
-let id = req.params.id;
+router.post("/update/:dayOfWeek", async (req, res) => {
+let dayOfWeek = req.params.dayOfWeek;
 let updatedBusinessDays = req.body;
-let businessDays = await businessDays.Model.updateBusinessDaysById(
-  id,
+let newBusinessDays = await businessDaysModel.updateBusinessDaysByDay(
+  {dayOfTheWeek: dayOfWeek},
   updatedBusinessDays
 );
-res.json(updatedBusinessDays);
+res.json(newBusinessDays);
 });
 
 router.get("/list", async (req, res) => {
@@ -23,9 +23,9 @@ router.get("/list", async (req, res) => {
   res.json(businessDaysList);
 });
 
-router. delete("/delete/:id", async (req, res) => {
-  let id = req.params.id;
-  let deletedBusinessDays = await businessDaysModel.deletedBusinessDays(id);
+router. delete("/delete/:dayOfWeek", async (req, res) => {
+  let dayOfWeek = req.params.dayOfWeek;
+  let deletedBusinessDays = await businessDaysModel.deleteBusinessDay({dayOfTheWeek: dayOfWeek});
   res.send(deletedBusinessDays);
 })
 

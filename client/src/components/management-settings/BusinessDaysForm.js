@@ -1,54 +1,91 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Select from "react-select";
-
-
+import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
+import StyledButton from "../reusable/Inputs/StyledButton";
+import * as fns from "date-fns";
 
 const weekDaysData = [
-    {value: "monday", label: "Monday"},
-    {value: "tuesday", label: "Tuesday"},
-    {value: "wednesday", label: "Wednesday"},
-    {value: "thursday", label: "Thursday"},
-    {value: "friday", label: "Friday"},
-    {value: "saturday", label: "Saturday"},
-    {value: "sunday", label: "Sunday"}
-]
-function BusinessDaysSettings() {
-    const [createWeekDays, setCreateWeekDays] = useState()
+  { value: "monday", label: "Monday" },
+  { value: "tuesday", label: "Tuesday" },
+  { value: "wednesday", label: "Wednesday" },
+  { value: "thursday", label: "Thursday" },
+  { value: "friday", label: "Friday" },
+  { value: "saturday", label: "Saturday" },
+  { value: "sunday", label: "Sunday" },
+];
+function BusinessDaysForm() {
+  const [createWeekDays, setCreateWeekDays] = useState(null);
+  const [openTime, setOpenTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [closeTime, setCloseTime] = useState(
+    "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
+  );
+  const [add, setAdd] = useState(null);
+  const [remove, setRemove] = useState(null);
 
-    const createWeekDayHandler = (newWeekDay) => {
-        setCreateWeekDays(newWeekDay);
-        console.log("created weekday", newWeekDay);
-      };
+  const createWeekDayHandler = (newWeekDay) => {
+    setCreateWeekDays(newWeekDay);
+    console.log("created weekday", newWeekDay);
+  };
 
-    // async function crateBusinessDays(newBusinessDays) {
-    //     await fetch("/api/businessDays", {
-    //         method: "POST",
-    //         headers: { 
-    //             "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(newBusinessDays)
-    //     })
-    //     setCreateWeekDays(newBusinessDays)
-    // }
+  async function createBusinessDays(newBusinessDays) {
+    await fetch("/api/businessDays", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBusinessDays),
+    });
+    setCreateWeekDays(newBusinessDays);
+  }
 
-    // async function postData() {
-    //     let newBusinessDays = {
-    //         createWeekDays: createWeekDays.value
-    //     }
-    // }
-    
-    return (
-        <div>
-            <input>Week Day</input>
-            <input>Open Time</input>
-            <input>Close Time</input>
-            <Select 
-            defaultValue={createWeekDays}
-            options={weekDaysData}
-            onChange={createWeekDayHandler}
-            />
-        </div>
-    )
+  function onInputUpdate(value, setter) {
+    setter(value);
+  }
+
+  async function postData() {
+    let newBusinessDaysInfo = {
+      createWeekDays: createWeekDays.value,
+      openTime: fns.format(new Date(openTime), "HH:mm").toString(),
+      closeTime: fns.format(new Date(closeTime), "HH:mm").toString(),
+      add,
+      remove,
+    };
+    createBusinessDays(newBusinessDaysInfo);
+  }
+
+  return (
+    <div>
+      <label>Weekday</label>
+      <Select
+        defaultValue={createWeekDays}
+        options={weekDaysData}
+        onChange={createWeekDayHandler}
+      />
+      <BasicTimePicker
+        type="time"
+        value={openTime}
+        onChange={(value) => {
+          onInputUpdate(value, setOpenTime);
+        }}
+      />
+      <BasicTimePicker
+        type="time"
+        value={closeTime}
+        onChange={(value) => {
+          onInputUpdate(value, setCloseTime);
+        }}
+      />
+      <StyledButton
+        onClick={() => {
+          postData();
+        }}
+      >
+        Submit
+      </StyledButton>
+    </div>
+  );
 }
 
-export default BusinessDaysSettings
+export default BusinessDaysForm;

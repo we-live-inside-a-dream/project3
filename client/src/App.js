@@ -29,7 +29,7 @@ import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffF
 import ManagerSettingsPage from "./pages/manager/ManagerSettingsPage";
 import DaySchedulePosition from "./components/schedules/day-schedule/DaySchedulePosition";
 import Providers from "./components/reusable/context/Providers";
-import BusinessDaysSettings from "./components/management-settings/BusinessDaysForm";
+import BusinessDaysForm from "./components/management-settings/BusinessDaysForm";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -132,12 +132,12 @@ function App() {
               </RequireAuth>
             }
           />
-
           //this route is temporary for now
-          <Route 
+          <Route
             path="/businessDays"
-            element={<BusinessDaysSettings />}
-            />
+            element={<BusinessDaysForm />
+            }
+          />
           <Route
             path="/human-resources"
             element={
@@ -192,7 +192,6 @@ function App() {
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
           ></Route>
-
           <Route path="/custom" element={<DaySchedulePosition />}></Route>
           {/* last router */}
         </Routes>

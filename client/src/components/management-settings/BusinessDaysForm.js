@@ -3,10 +3,8 @@ import Select from "react-select";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import {
-  // StyledEmployeeForm,
   StyledFormWrapper,
   StyledForm,
-  StyledInput,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import * as fns from "date-fns";

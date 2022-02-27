@@ -62,6 +62,12 @@ function BusinessDaysForm() {
   return (
     <div>
       <label>First Day of week</label>
+      <Select
+        defaultValue={createWeekDays}
+        options={weekDaysData}
+        onChange={createWeekDayHandler}
+      />
+      <br />
       <label>Weekday</label>
       <Select
         defaultValue={createWeekDays}

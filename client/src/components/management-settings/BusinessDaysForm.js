@@ -19,22 +19,22 @@ function BusinessDaysSettings() {
         console.log("created weekday", newWeekDay);
       };
 
-    async function crateBusinessDays(newBusinessDays) {
-        await fetch("/api/businessDays", {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newBusinessDays)
-        })
-        setCreateWeekDays(newBusinessDays)
-    }
+    // async function crateBusinessDays(newBusinessDays) {
+    //     await fetch("/api/businessDays", {
+    //         method: "POST",
+    //         headers: { 
+    //             "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(newBusinessDays)
+    //     })
+    //     setCreateWeekDays(newBusinessDays)
+    // }
 
-    async function postData() {
-        let newBusinessDays = {
-            createWeekDays: newBusinessDays.value
-        }
-    }
+    // async function postData() {
+    //     let newBusinessDays = {
+    //         createWeekDays: createWeekDays.value
+    //     }
+    // }
     
     return (
         <div>

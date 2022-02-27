@@ -43,9 +43,9 @@ function BusinessDaysForm() {
 
   async function postData() {
     let newBusinessDays = {
-      createWeekDays: createWeekDays.value,
-      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
-      endTime: fns.format(new Date(endTime), "HH:mm").toString()
+      dayOfTheWeek: createWeekDays.value,
+      start: fns.format(new Date(startTime), "HH:mm").toString(),
+      end: fns.format(new Date(endTime), "HH:mm").toString()
     };
     // async function createBusinessDays(newBusinessDays) {
       await fetch("/api/businessDays", {
@@ -63,7 +63,7 @@ function BusinessDaysForm() {
     <StyledFormWrapper>
       <StyledForm>
         <div>
-          <label>
+          {/* <label>
             First Day of week
             <RedStar />
             </label>
@@ -71,7 +71,7 @@ function BusinessDaysForm() {
             defaultValue={createWeekDays}
             options={weekDaysData}
             onChange={createWeekDayHandler}
-          />
+          /> */}
           <br />
           <label>Weekday</label>
           <Select
@@ -107,3 +107,6 @@ function BusinessDaysForm() {
 }
 
 export default BusinessDaysForm;
+
+
+//add seven dives 

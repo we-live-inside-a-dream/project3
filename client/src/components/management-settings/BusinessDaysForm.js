@@ -36,16 +36,7 @@ function BusinessDaysForm() {
     console.log("created weekday", newWeekDay);
   };
 
-  async function createBusinessDays(newBusinessDays) {
-    await fetch("/api/businessDays", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newBusinessDays),
-    });
-    // setBusinessDayCreated(newBusinessDays);
-  }
+  
   console.log("this is setBusinessDayCreated", setBusinessDayCreated);
 
   function onInputUpdate(value, setter) {
@@ -53,13 +44,21 @@ function BusinessDaysForm() {
   }
 
   async function postData() {
-    let newBusinessDaysInfo = {
+    let newBusinessDays = {
       createWeekDays: createWeekDays.value,
       startTime: fns.format(new Date(startTime), "HH:mm").toString(),
       endTime: fns.format(new Date(endTime), "HH:mm").toString()
     };
-    console.log("data posted", postData);
-    createBusinessDays(newBusinessDaysInfo);
+    // async function createBusinessDays(newBusinessDays) {
+      await fetch("/api/businessDays", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newBusinessDays),
+      });
+      // setBusinessDayCreated(newBusinessDays);
+    // }
   }
 
   return (

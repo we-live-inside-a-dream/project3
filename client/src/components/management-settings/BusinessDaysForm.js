@@ -15,14 +15,15 @@ const weekDaysData = [
 ];
 function BusinessDaysForm() {
   const [createWeekDays, setCreateWeekDays] = useState(null);
-  const [openTime, setOpenTime] = useState(
+  const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
-  const [closeTime, setCloseTime] = useState(
+  const [endTime, setEndTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
   const [add, setAdd] = useState(null);
   const [remove, setRemove] = useState(null);
+  const [businessDayCreated, setBusinessDayCreated] = useState(null);
 
   const createWeekDayHandler = (newWeekDay) => {
     setCreateWeekDays(newWeekDay);
@@ -37,8 +38,9 @@ function BusinessDaysForm() {
       },
       body: JSON.stringify(newBusinessDays),
     });
-    setCreateWeekDays(newBusinessDays);
+    setBusinessDayCreated(newBusinessDays);
   }
+  console.log("this is setBusinessDayCreated", setBusinessDayCreated)
 
   function onInputUpdate(value, setter) {
     setter(value);
@@ -47,16 +49,19 @@ function BusinessDaysForm() {
   async function postData() {
     let newBusinessDaysInfo = {
       createWeekDays: createWeekDays.value,
-      openTime: fns.format(new Date(openTime), "HH:mm").toString(),
-      closeTime: fns.format(new Date(closeTime), "HH:mm").toString(),
+      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
       add,
       remove,
     };
+    console.log("data posted", postData)
     createBusinessDays(newBusinessDaysInfo);
   }
 
+
   return (
     <div>
+      <label>First Day of week</label>
       <label>Weekday</label>
       <Select
         defaultValue={createWeekDays}
@@ -65,16 +70,16 @@ function BusinessDaysForm() {
       />
       <BasicTimePicker
         type="time"
-        value={openTime}
+        value={startTime}
         onChange={(value) => {
-          onInputUpdate(value, setOpenTime);
+          onInputUpdate(value, setStartTime);
         }}
       />
       <BasicTimePicker
         type="time"
-        value={closeTime}
+        value={endTime}
         onChange={(value) => {
-          onInputUpdate(value, setCloseTime);
+          onInputUpdate(value, setEndTime);
         }}
       />
       <StyledButton

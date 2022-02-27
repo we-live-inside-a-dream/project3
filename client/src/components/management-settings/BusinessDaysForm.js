@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import Select from "react-select";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import StyledButton from "../reusable/Inputs/StyledButton";
+import {
+  // StyledEmployeeForm,
+  StyledFormWrapper,
+  StyledForm,
+  StyledInput,
+  RedStar,
+} from "../reusable/Inputs/StyledEmployeeForm.js";
 import * as fns from "date-fns";
 
 const weekDaysData = [
@@ -21,9 +28,8 @@ function BusinessDaysForm() {
   const [endTime, setEndTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
-  const [add, setAdd] = useState(null);
-  const [remove, setRemove] = useState(null);
   const [businessDayCreated, setBusinessDayCreated] = useState(null);
+
 
   const createWeekDayHandler = (newWeekDay) => {
     setCreateWeekDays(newWeekDay);
@@ -38,9 +44,9 @@ function BusinessDaysForm() {
       },
       body: JSON.stringify(newBusinessDays),
     });
-    setBusinessDayCreated(newBusinessDays);
+    // setBusinessDayCreated(newBusinessDays);
   }
-  console.log("this is setBusinessDayCreated", setBusinessDayCreated)
+  console.log("this is setBusinessDayCreated", setBusinessDayCreated);
 
   function onInputUpdate(value, setter) {
     setter(value);
@@ -50,52 +56,56 @@ function BusinessDaysForm() {
     let newBusinessDaysInfo = {
       createWeekDays: createWeekDays.value,
       startTime: fns.format(new Date(startTime), "HH:mm").toString(),
-      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
-      add,
-      remove,
+      endTime: fns.format(new Date(endTime), "HH:mm").toString()
     };
-    console.log("data posted", postData)
+    console.log("data posted", postData);
     createBusinessDays(newBusinessDaysInfo);
   }
 
-
   return (
-    <div>
-      <label>First Day of week</label>
-      <Select
-        defaultValue={createWeekDays}
-        options={weekDaysData}
-        onChange={createWeekDayHandler}
-      />
-      <br />
-      <label>Weekday</label>
-      <Select
-        defaultValue={createWeekDays}
-        options={weekDaysData}
-        onChange={createWeekDayHandler}
-      />
-      <BasicTimePicker
-        type="time"
-        value={startTime}
-        onChange={(value) => {
-          onInputUpdate(value, setStartTime);
-        }}
-      />
-      <BasicTimePicker
-        type="time"
-        value={endTime}
-        onChange={(value) => {
-          onInputUpdate(value, setEndTime);
-        }}
-      />
-      <StyledButton
-        onClick={() => {
-          postData();
-        }}
-      >
-        Submit
-      </StyledButton>
-    </div>
+    <StyledFormWrapper>
+      <StyledForm>
+        <div>
+          <label>
+            First Day of week
+            <RedStar />
+            </label>
+          <Select
+            defaultValue={createWeekDays}
+            options={weekDaysData}
+            onChange={createWeekDayHandler}
+          />
+          <br />
+          <label>Weekday</label>
+          <Select
+            defaultValue={createWeekDays}
+            options={weekDaysData}
+            onChange={createWeekDayHandler}
+          />
+          <BasicTimePicker
+            type="time"
+            value={startTime}
+            onChange={(value) => {
+              onInputUpdate(value, setStartTime);
+            }}
+          />
+          <BasicTimePicker
+            type="time"
+            value={endTime}
+            onChange={(value) => {
+              onInputUpdate(value, setEndTime);
+            }}
+          />
+          <StyledButton
+            onClick={() => {
+              postData();
+            }}
+          >
+            Submit
+          </StyledButton>
+        </div>
+      </StyledForm>
+    </StyledFormWrapper>
   );
 }
 

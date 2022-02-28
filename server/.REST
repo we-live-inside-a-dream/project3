@@ -63,3 +63,7 @@ get http://localhost:5001/api/businessDays/list
 ###
 delete http://localhost:5001/api/businessDays/delete/friday
 
+
+###
+get http://localhost:5001/api/businessDays/list
+

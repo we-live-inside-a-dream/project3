@@ -75,8 +75,12 @@ const EventEditForm = ({
     if (existingValues) {
       setTheEventId(existingValues._id);
       setTitle(existingValues.title);
-      setStartTime(` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`);
-      setEndTime(` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`);
+      setStartTime(
+        ` Wed Feb 02 2022 ${existingValues.startTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
+      setEndTime(
+        ` Wed Feb 02 2022 ${existingValues.endTime}:00 GMT-0700 (Mountain Standard Time)`
+      );
       setStartDate(existingValues.startDate);
       setEndDate(existingValues.endDate);
       setType({ value: existingValues.type[0] });
@@ -223,10 +227,10 @@ const EventEditForm = ({
       firstName: user.firstName,
       lastName: user.lastName,
       type: [type.value],
-      startTime,
-      endTime,
-      startDate: fns.format(new Date(startTime), "HH:mm").toString(),
-      endDate: fns.format(new Date(endTime), "HH:mm").toString(),
+      startTime: fns.format(new Date(startTime), "HH:mm").toString(),
+      endTime: fns.format(new Date(endTime), "HH:mm").toString(),
+      startDate,
+      endDate,
       allDay: allDay,
       notes: notes,
       visibility: visibility.map((p) => p.value),
@@ -436,33 +440,33 @@ const EventEditForm = ({
             <label>
               End Time:
               {!timeMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "10px",
-                marginBottom: "0px",
-                marginTop: "0px",
-              }}
-            ></p>
-          ) : null}
-          {timeMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "10px",
-                marginBottom: "0px",
-                marginTop: "0px",
-              }}
-            >
-              {timeMessageVal}
-            </p>
-          ) : null}
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                    marginTop: "0px",
+                  }}
+                ></p>
+              ) : null}
+              {timeMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                    marginTop: "0px",
+                  }}
+                >
+                  {timeMessageVal}
+                </p>
+              ) : null}
               <BasicTimePicker
                 type="time"
                 value={endTime}
                 onChange={(value) => {
                   onTimeInputUpdate(value, setEndTime);
-                  setTimeMessageVal(timeValidation(startTime, value))
+                  setTimeMessageVal(timeValidation(startTime, value));
                 }}
               />
             </label>

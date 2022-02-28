@@ -34,13 +34,13 @@ import PasswordResetPending from "./components/login/PasswordResetPending";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 import Providers from "./components/reusable/context/Providers";
 import BusinessDaysForm from "./components/management-settings/BusinessDaysForm";
+import ResetPassword from "./components/login/ResetPassword";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
   return (
     <Providers>
-      
       {console.log("after providers")}
       <div
         style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
@@ -138,11 +138,7 @@ function App() {
             }
           />
           //this route is temporary for now
-          <Route
-            path="/businessDays"
-            element={<BusinessDaysForm />
-            }
-          />
+          <Route path="/businessDays" element={<BusinessDaysForm />} />
           <Route
             path="/human-resources"
             element={
@@ -161,6 +157,15 @@ function App() {
             }
           />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route
+            path="/passwordResetPending"
+            element={<PasswordResetPending />}
+          />
+          <Route
+            path="/resetPassword/:userId/:resetString"
+            element={<ResetPassword />}
+          />
           <Route
             path="/logout"
             element={

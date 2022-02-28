@@ -128,6 +128,7 @@ function BusinessDaysForm() {
             options={weekDaysData}
             onChange={createWeekDayHandler}
           />
+          <label>Open Time</label>
           <BasicTimePicker
             type="time"
             value={startTime}
@@ -135,6 +136,7 @@ function BusinessDaysForm() {
               onInputUpdate(value, setStartTime);
             }}
           />
+          <label>Close Time</label>
           <BasicTimePicker
             type="time"
             value={endTime}

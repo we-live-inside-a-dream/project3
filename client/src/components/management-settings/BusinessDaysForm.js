@@ -45,12 +45,11 @@ function BusinessDaysForm() {
     const getBusinessDays = async () => {
       let fetchResult = await fetch("/api/businessDays/list/")
       let fetchedBusinessDays = await fetchResult.json()
+      console.log("these are the fetched business days",fetchedBusinessDays )
       setBusinessDayCreated(fetchedBusinessDays)
     }
     getBusinessDays()
   },[])
-  console.log("this is business days we fetched", setBusinessDayCreated)
-
   async function postData() {
     let newBusinessDays = {
       dayOfTheWeek: createWeekDays.value,
@@ -88,7 +87,10 @@ function BusinessDaysForm() {
             </thead>
             <tbody>
               {businessDayCreated?.map((day) => {
+                console.log("this is the mapped day", day)
+                return (
                 <tr
+                key={day.created}
                 value={day}
                 style={{
                   padding: "10px",
@@ -97,15 +99,19 @@ function BusinessDaysForm() {
                 }}
                 >
                   <td>
-                    {`${day.startTime}`}
-                    {day.endTime}
+                  <td>{`${day.createWeekDays}`}</td>
+                    <td>{`${day.startTime}`}</td>
+                    <td>{`${day.endTime}`}</td>
                   </td>
 
                 </tr>
+                )
               })}
             </tbody>
+              
 
           </StyledTable>
+          
           {/* <label>
             First Day of week
             <RedStar />

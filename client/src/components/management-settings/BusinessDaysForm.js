@@ -99,9 +99,9 @@ function BusinessDaysForm() {
                 }}
                 >
                   <td>
-                  <td>{`${day.createWeekDays}`}</td>
-                    <td>{`${day.startTime}`}</td>
-                    <td>{`${day.endTime}`}</td>
+                  <td>{`${day.dayOfTheWeek}`}</td>
+                    <td>{`${day.start}`}</td>
+                    <td>{`${day.end}`}</td>
                   </td>
 
                 </tr>

@@ -102,8 +102,6 @@ function EditSchedule({
     }
   }, [shiftId]);
 
-  console.log("POSITIONS", positions);
-
   useEffect(() => {
     if (!modalData) return;
     setExistingValues(modalData);

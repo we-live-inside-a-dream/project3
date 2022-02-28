@@ -8,10 +8,10 @@ import {
   StyledForm,
   StyledInput,
   StyledButton,
+  StyledContainer
 } from "./StyledLogIn";
 import AuthenticationContext from "./AuthenticationContext";
 import { emailValidation, passwordValidation } from "./LoginValidation";
-import { StyledContainer } from "./LoginStyle";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");

@@ -1,5 +1,16 @@
 import styled, { createGlobalStyle, css } from "styled-components";
 
+//background
+import background from "../assets/agenda.jpg";
+
+export const colors = {
+  dark1: "#000000",
+  darkTeal: "#4488AB",
+  darkPurple: "indigo",
+  darkCharcoal: "#282c34",
+  darkTeal2: "#07889b",
+};
+
 export const StyledLogIn = createGlobalStyle`
   html {
     height: 100%
@@ -12,6 +23,36 @@ export const StyledLogIn = createGlobalStyle`
     margin: 0;
     color: #555;
   }
+`;
+
+export const StyledContainer = styled.div`
+  margin: 0;
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(${background});
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: left;
+`;
+
+export const StyledTitle = styled.div`
+  font-size: ${(props) => props.size}px;
+  text-align: center;
+  color: ${(props) => (props.color ? props.color : colors.dark1)};
+  padding: 5px;
+  margin-bottom: 20px;
+`;
+
+export const StyledSubtitle = styled.p`
+  font-size: ${(props) => props.size}px;
+  text-align: center;
+  color: ${(props) => (props.color ? props.color : colors.primary)};
+  padding: 5px;
+  margin-bottom: 25px;
 `;
 
 export const sharedStyles = css`
@@ -58,19 +99,25 @@ export const StyledTextArea = styled.textarea`
   ${sharedStyles}
 `;
 export const StyledButton = styled.button`
-  display: block;
   /* background-color: #f7797d; */
   background-color: #35a1b9;
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 16px;
   border: 0;
   border-radius: 5px;
   height: 40px;
   padding: 0px 20px;
   margin-bottom: 20px;
   margin-top: 10px;
-  cursor: pointer;
   box-sizing: border-box;
+  transition: ease-in-out 0.2s;
+
+  &:hover {
+    background-color: ${colors.darkCharcoal};
+    color: ${colors.theme};
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 export const StyledFieldset = styled.fieldset`
@@ -113,4 +160,55 @@ export const StyledError = styled.div`
   color: red;
   font-weight: 800;
   margin: 0 0 40px 0;
+`;
+
+export const StyledForgotPassword = styled.div`
+  width: 100%;
+  height: 35vh;
+  min-width: 400px;
+  max-width: 20vw;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+`;
+
+export const StyledFormButton = styled.button`
+  padding: 10px;
+  width: 150px;
+  background-color: transparent;
+  font-size: 16px;
+  border: 2px solid;
+  border-radius: 25px;
+  transition: ease-in-out 0.2s;
+  outline: 0;
+
+  &:hover {
+    background-color: ${colors.primary};
+    font-weight: bold;
+    cursor: pointer;
+  }
+`;
+
+export const StyledWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+  width: 30vw;
+  padding: 0 10px;
+  background-color: #ffffff;
+`;
+
+export const StyledBox = styled.div`
+  width: 100%;
+  height: 30vh;
+  min-width: 400px;
+  max-width: 50vw;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
 `;

@@ -27,7 +27,7 @@ import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
 import { SocketProvider } from "./components/reusable/context/SocketProvider";
 import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
-
+import ForgotPassword from "./components/login/ForgotPassword";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
 import EmployeeTimeOffForm from "./components/employee-time-off/EmployeeTimeOffForm";
@@ -36,6 +36,7 @@ import ManagerSettingsPage from "./pages/manager/ManagerSettingsPage";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 import DaySchedulePosition from "./components/schedules/day-schedule/DaySchedulePosition";
 import { ManagerSettingsProvider } from "./components/reusable/context/ManagerSettingsProvider";
+import PasswordResetPending from "./components/login/PasswordResetPending";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -158,6 +159,11 @@ function App() {
               }
             />
             <Route path="/login" element={<LogIn />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route
+              path="/passwordResetPending"
+              element={<PasswordResetPending />}
+            />
             <Route
               path="/logout"
               element={
@@ -174,14 +180,6 @@ function App() {
                 </RequireAuth>
               }
             />
-            {/* <Route
-            path="/unauthorized"
-            element={
-              <RequireAuth>
-              <ErrorUnauthorizedUser />
-              </RequireAuth> 
-            }
-          /> */}
             <Route
               path="/chat"
               element={

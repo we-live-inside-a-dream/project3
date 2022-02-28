@@ -112,7 +112,6 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
     findDateRange();
     empAvail();
     getAllTheEmployees();
-    setRenderPage(false);
   }, [startDay, renderPage]);
 
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
@@ -316,7 +315,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
             setModalData(null);
           }}
           deleteShift={() => setDeleteShift(true)}
-          reload={() => setRenderPage(true)}
+          reload={() => setRenderPage((prevCheck) => !prevCheck)}
           // createShift={createShift}
           // updateShift={updateShift}
         />

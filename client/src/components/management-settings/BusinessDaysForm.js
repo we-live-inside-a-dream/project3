@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import StyledButton from "../reusable/Inputs/StyledButton";
@@ -34,13 +34,22 @@ function BusinessDaysForm() {
     setCreateWeekDays(newWeekDay);
     console.log("created weekday", newWeekDay);
   };
-
-  
   console.log("this is setBusinessDayCreated", setBusinessDayCreated);
 
   function onInputUpdate(value, setter) {
     setter(value);
   }
+
+
+  useEffect(() => {
+    const getBusinessDays = async () => {
+      let fetchResult = await fetch("/api/businessDays/list/")
+      let fetchedBusinessDays = await fetchResult.json()
+      setBusinessDayCreated(fetchedBusinessDays)
+    }
+    getBusinessDays()
+  },[])
+  console.log("this is business days we fetched", setBusinessDayCreated)
 
   async function postData() {
     let newBusinessDays = {
@@ -56,9 +65,14 @@ function BusinessDaysForm() {
         },
         body: JSON.stringify(newBusinessDays),
       });
-      // setBusinessDayCreated(newBusinessDays);
-    // }
+      setBusinessDayCreated(newBusinessDays);
   }
+
+
+
+  // async function updateBusinessDay(updatedBusinessDay) {
+  //   await fetch()
+  // }
 
   return (
     <StyledFormWrapper>
@@ -72,9 +86,27 @@ function BusinessDaysForm() {
                 <th>Close Time</th>
               </tr>
             </thead>
+            <tbody>
+              {businessDayCreated?.map((day) => {
+                <tr
+                value={day}
+                style={{
+                  padding: "10px",
+                  textAlign: "center",
+                  height: "auto",
+                }}
+                >
+                  <td>
+                    {`${day.startTime}`}
+                    {day.endTime}
+                  </td>
+
+                </tr>
+              })}
+            </tbody>
 
           </StyledTable>
-          <label>
+          {/* <label>
             First Day of week
             <RedStar />
             </label>
@@ -82,7 +114,7 @@ function BusinessDaysForm() {
             defaultValue={createWeekDays}
             options={weekDaysData}
             onChange={createWeekDayHandler}
-          />
+          /> */}
           <br />
           <label>Weekday</label>
           <Select

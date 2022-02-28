@@ -8,6 +8,7 @@ import {
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import * as fns from "date-fns";
+import StyledTable from "../reusable/tables/StyledTable";
 
 const weekDaysData = [
   { value: "monday", label: "Monday" },
@@ -63,7 +64,17 @@ function BusinessDaysForm() {
     <StyledFormWrapper>
       <StyledForm>
         <div>
-          {/* <label>
+          <StyledTable padding={"5px"}>
+            <thead>
+              <tr>
+                <th>Weekday</th>
+                <th>Open Time</th>
+                <th>Close Time</th>
+              </tr>
+            </thead>
+
+          </StyledTable>
+          <label>
             First Day of week
             <RedStar />
             </label>
@@ -71,7 +82,7 @@ function BusinessDaysForm() {
             defaultValue={createWeekDays}
             options={weekDaysData}
             onChange={createWeekDayHandler}
-          /> */}
+          />
           <br />
           <label>Weekday</label>
           <Select
@@ -93,6 +104,10 @@ function BusinessDaysForm() {
               onInputUpdate(value, setEndTime);
             }}
           />
+
+          
+
+
           <StyledButton
             onClick={() => {
               postData();

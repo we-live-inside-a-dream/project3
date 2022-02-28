@@ -14,18 +14,19 @@ export const StyledMessangerPage = styled.div`
 export const StyledContactList = styled.div`
   background-color: var(--styledPage);
   padding: 1em;
-  /* width: 100em; */
+  font-size: 0.625rem;
+  /* width: 100%; */
   /* margin: auto; */
   overflow-y: auto;
   position: absolute;
-  height: 70%;
+  height: 65vh;
   filter: drop-shadow(3px 3px 10px lightgrey);
   /* :hover {
     background-color: rgb(245, 243, 243);
   } */
 `;
 
-export const ChatMenu = styled.div`
+export const ContactsBox = styled.div`
   flex: 3.5;
 `;
 
@@ -38,7 +39,7 @@ export const ChatMenuInput = styled.div`
 
 export const ChatMenuWrapper = styled.div`
   padding: 10px;
-  height: 100%;
+  /* height: 100%; */
 `;
 
 export const ChatBox = styled.div`
@@ -72,6 +73,7 @@ export const ChatMessageInput = styled.textarea`
   height: 90px;
   padding: 10px;
   margin-left: 10px;
+  /* position: fixed; */
 `;
 // export const Convo = styled.div`
 //   cursor: pointer;

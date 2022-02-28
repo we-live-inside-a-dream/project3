@@ -135,19 +135,18 @@ export default function Messenger() {
         {/* <div className="messenger"> */}
         {/* <div className="chatMenu"> */}
         {/* <div className="chatMenuWrapper"> */}
-        <ContactsList setCurrentChat={setCurrentChat} />
         {/* {conversations?.map((c) => (
-                <div
-                  key={c._id}
-                  onClick={() => {
-                    setCurrentChat(c);
-                    fetchUnread();
-                  }}
-                >
-                  <Conversation conversation={c}/>
-                  <div></div>
-                </div>
-              ))} */}
+          <div
+          key={c._id}
+          onClick={() => {
+            setCurrentChat(c);
+            fetchUnread();
+          }}
+          >
+          <Conversation conversation={c}/>
+          <div></div>
+          </div>
+        ))} */}
         {/* </div> */}
         {/* </div> */}
         <ChatBox>
@@ -196,6 +195,7 @@ export default function Messenger() {
           </ChatBoxWrapper>
           {/* </div> */}
         </ChatBox>
+        <ContactsList setCurrentChat={setCurrentChat} />
         {/* </div> */}
         {/* </div> */}
       </StyledMessangerPage>

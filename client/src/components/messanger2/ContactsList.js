@@ -7,6 +7,7 @@ import { StyledButton } from "../reusable/Inputs/StyledEmployeeForm";
 import {
   ChatMenu,
   ChatMenuWrapper,
+  ContactsBox,
   Convo,
   StyledContactList,
 } from "./StyledMessangerPage";
@@ -97,7 +98,8 @@ export const ContactsList = ({ setCurrentChat }) => {
 
   return (
     <>
-      <ChatMenu>
+      <ContactsBox>
+        {/* <div className={contactsbox} */}
         <ChatMenuWrapper>
           <Select
             isMulti
@@ -123,7 +125,7 @@ export const ContactsList = ({ setCurrentChat }) => {
             ))}
           </StyledContactList>
         </ChatMenuWrapper>
-      </ChatMenu>
+      </ContactsBox>
     </>
   );
 };

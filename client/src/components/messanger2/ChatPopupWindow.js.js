@@ -1,7 +1,9 @@
 import React from "react";
-import { ChatButton, ChatPopup } from "./StyledMessangerPage";
+import { ChatButton, ChatPopup, MessageLogo } from "./StyledMessangerPage";
 import MessangerPage2 from "../../pages/common/MessangerPage2";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
+import msgIcon from "./messageIcon.png";
+
 const ChatPopupWindow = () => {
   const [show, setShow] = React.useState(false);
   const value = useSocket();
@@ -9,7 +11,7 @@ const ChatPopupWindow = () => {
   return (
     <>
       <ChatButton onClick={() => setShow((prevCheck) => !prevCheck)}>
-        x
+        <MessageLogo src={msgIcon} />x
       </ChatButton>
       {unread?.length > 0 ? (
         <div

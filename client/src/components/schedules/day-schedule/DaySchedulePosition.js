@@ -62,7 +62,6 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
       setSchedule(fetchedDay);
     };
     fetchSchedule();
-    setRenderPage(false);
   }, [day, renderPage]);
   // }, [day, createShift, updateShift, deleteShift]);
 
@@ -240,7 +239,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
             setIsOpen(false);
             setShiftId(null);
           }}
-          reload={() => setRenderPage(true)}
+          reload={() => setRenderPage((prevCheck) => !prevCheck)}
         />
       </Modal>
     </div>

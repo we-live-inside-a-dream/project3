@@ -3,14 +3,18 @@ import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import moment from "moment";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
-
+import { useManagerSettings } from "../../components/reusable/context/ManagerSettingsProvider";
 import DashboardGridNav from "../../components/dashboard/DashboardGridNav";
 
 function HomeDashBoardPage() {
   const [currentHour, setCurrentHour] = useState(moment().hour());
   const [hourGreeting, setHourGreeting] = useState("");
+
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
+
+  const value = useManagerSettings();
+  const positions = value.positions;
 
   useEffect(() => {
     let getGreeting = function () {
@@ -26,6 +30,8 @@ function HomeDashBoardPage() {
     };
     getGreeting();
   }, [currentHour]);
+
+  console.log("the positions in the setting", positions);
   return (
     <>
       <StyledPage>

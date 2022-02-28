@@ -38,7 +38,7 @@ function NavBar() {
         <LogoNavbarLink to="/">
           <Logo src={LogoImg} />
         </LogoNavbarLink>
-        <NavbarLink to="/shiftSwapManagerPage">SWAPSIES</NavbarLink>
+        <NavbarLink to="/managerApprovalsPage">SWAPSIES</NavbarLink>
         <NavbarLink to="/ManagerSettingsPage">SETTINGS</NavbarLink>
 
         {unread?.length > 0 ? (

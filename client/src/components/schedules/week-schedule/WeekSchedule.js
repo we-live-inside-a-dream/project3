@@ -37,9 +37,9 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
 
-  useEffect(() => {
-    console.log("list of names??", activeEmployeeList);
-  }, [activeEmployeeList]);
+  // useEffect(() => {
+  //   console.log("list of names??", activeEmployeeList);
+  // }, [activeEmployeeList]);
   useEffect(() => {
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");
@@ -103,7 +103,6 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     findDateRange();
     empAvail();
     getAllTheEmployees();
-    setRenderPage(false);
   }, [startDay, renderPage]);
 
   // empAvailibility.forEach(element => console.log(element.days[dayOfWeek]));
@@ -361,7 +360,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
             setModalData(null);
           }}
           deleteShift={() => setDeleteShift(true)}
-          reload={() => setRenderPage(true)}
+          reload={() => setRenderPage((prevCheck) => !prevCheck)}
           // createShift={createShift}
           // updateShift={updateShift}
         />

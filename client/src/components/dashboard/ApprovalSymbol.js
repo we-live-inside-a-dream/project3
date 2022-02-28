@@ -7,7 +7,7 @@ function ApprovalSymbol({ time }) {
     let findTheSymbol = function () {
       if (time.status === "pending") {
         setTheSymbol("⏳");
-      } else if (time.status === "confirm") {
+      } else if (time.status === "approved") {
         setTheSymbol("✅");
       } else {
         setTheSymbol("❌");

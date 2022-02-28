@@ -62,6 +62,7 @@ const TimeOffApproval = () => {
     };
     setModalConfirmIsOpen(false);
     updateTimeOff(newValue);
+    setManagerComment("");
   }
 
   useEffect(() => {
@@ -95,6 +96,7 @@ const TimeOffApproval = () => {
                     <StyledEditButton
                       style={{ margin: "5px 10px" }}
                       onClick={() => {
+                        setStatus("approved");
                         setDecision("approve");
                         setModalConfirmIsOpen(true);
                         setTimeOffValues(t);
@@ -105,7 +107,7 @@ const TimeOffApproval = () => {
                     <StyledEditButton
                       style={{ margin: "5px 10px" }}
                       onClick={() => {
-                        setStatus("reject");
+                        setStatus("denied");
                         setDecision("deny");
                         setModalConfirmIsOpen(true);
                         setTimeOffValues(t);
@@ -134,7 +136,7 @@ const TimeOffApproval = () => {
           <p>Employee:{timeOffValues?.firstName}</p>
           <p>Type of time off:{timeOffValues?.type}</p>
           <p>
-            Start Day: {moment(timeOffValues?.startDate).format("yy-MM-DD")}
+            Start Day: {moment(timeOffValues?.startDate).format("YYYY-MM-DD")}
           </p>
           <p>End Day: {moment(timeOffValues?.endDate).format("YYYY-MM-DD")}</p>
           {timeOffValues?.allDay === false && (

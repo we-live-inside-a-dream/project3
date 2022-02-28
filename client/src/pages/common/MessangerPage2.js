@@ -85,7 +85,7 @@ export default function Messenger() {
   }, [currentChat, arrivalMessage]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log("user", socket);
     const message = {
       sender: user._id,
@@ -127,6 +127,14 @@ export default function Messenger() {
   //   function formatUnread() {}
   //   formatUnread();
   // }, [socket]);
+
+  const handleKeypress = (e) => {
+    //it triggers by pressing the enter key
+    if (e.charCode === 13) {
+      console.log("enter was pressed");
+      handleSubmit();
+    }
+  };
 
   return (
     <>
@@ -173,6 +181,7 @@ export default function Messenger() {
                     placeholder="write something..."
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
+                    onKeyPress={handleKeypress}
                   ></ChatMessageInput>
                   {/* ></textarea> */}
 

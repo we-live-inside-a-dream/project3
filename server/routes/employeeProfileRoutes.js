@@ -272,16 +272,16 @@ router.get("/verify/:userId/:uniqueString", async (req, res) => {
 //   );
 // });
 
-//Password Reset
+//Password Reset request
 router.post("/requestPasswordReset", async (req, res) => {
   const { email } = req.body;
 
   //check if email exists
   await EmployeeProfile.findOne({ email });
-  if (data) {
+  if (EmployeeProfile.email) {
     //user exists
     //check if user is verified
-    if (!data.verified) {
+    if (!EmployeeProfile.verified) {
       res.json({
         error: "Email has not been verified yet. Please check your inbox.",
       });

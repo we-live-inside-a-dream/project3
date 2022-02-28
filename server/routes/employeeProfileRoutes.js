@@ -275,19 +275,25 @@ router.get("/verify/:userId/:uniqueString", async (req, res) => {
 //Password Reset request
 router.post("/requestPasswordReset", async (req, res) => {
   const { email } = req.body;
-
   //check if email exists
-  await EmployeeProfile.findOne({ email });
-  if (EmployeeProfile.email) {
+  let employeeProfile = await EmployeeProfile.findOne({ email: email });
+  console.log(employeeProfile, "EMPLOYEE EMAIL REQUEST");
+  if (employeeProfile) {
     //user exists
     //check if user is verified
-    if (!EmployeeProfile.verified) {
+    if (!employeeProfile.verified) {
       res.json({
-        error: "Email has not been verified yet. Please check your inbox.",
+        status: "FAILED",
+        message: "Email has not been verified yet. Please check your inbox.",
       });
     } else {
       //proceed with email to reset password
-      sendResetEmail({ email: email }, res);
+      sendResetEmail(
+        { email: email, _id: employeeProfile._id },
+        res.json({
+          status: "SUCCESS",
+        })
+      );
     }
   } else {
     res.json({
@@ -302,7 +308,7 @@ const sendResetEmail = async ({ _id, email }, res) => {
   const resetString = uuidv4() + _id;
   const redirectUrl =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5001/"
+      ? "http://localhost:3000/"
       : "http://daytwoday.herokuapp.com/";
 
   await PasswordReset.deleteMany({ userId: _id });
@@ -336,20 +342,21 @@ const sendResetEmail = async ({ _id, email }, res) => {
 };
 //actually reset the password
 router.post("/resetPassword", async (req, res) => {
-  let { userId, resetString, newPassword } = req.body;
+  let { userId, resetString, validatedPassword } = req.body;
 
-  let passwordReset = await PasswordReset.findOne({ userId });
-  if (passwordReset) {
+  let passwordResetData = await PasswordReset.findOne({ userId });
+  if (passwordResetData) {
     //password reset exists so we proceeed
 
-    const { expiresAt } = result;
-    const hashedResetString = result.resetString;
+    const { expiresAt } = passwordResetData.expiresAt;
+    const hashedResetString = passwordResetData.resetString;
     //checking for expired reset string
     if (expiresAt < Date.now()) {
       await PasswordReset.deleteOne({ userId });
       //Reset record deleted successfully
-      return res.json({
-        error: "Password reset link has expired",
+      res.json({
+        status: "FAILED",
+        message: "Password reset request has expired.",
       });
     } else {
       //valid reset record exists so validate the reset string
@@ -362,22 +369,21 @@ router.post("/resetPassword", async (req, res) => {
         //strings matched
         //hash password again
         const saltRounds = 10;
-        let hashedPassword = bcrypt.hash(newPassword, saltRounds);
+        let hashedPassword = bcrypt.hashSync(validatedPassword, saltRounds);
         //update user password
-        EmployeeProfile.updateOne(
-          { _id: userId },
-          { password: hashedPassword }
-        );
+        updateEmployeeProfile(userId, { password: hashedPassword });
         //update complete. Now delete reset record
         await PasswordReset.deleteOne({ userId });
         //both user record and reset record updated
         res.json({
-          success: "Password has been reset successfully.",
+          status: "SUCCESS",
+          message: "Password has been updated successfully.",
         });
       } else {
         //Existing record but incorrect reset string passed.
         res.json({
-          error: "Invalid password reset details passed.",
+          status: "FAILED",
+          message: "Invalid password reset details passed.",
         });
       }
     }

@@ -9,24 +9,12 @@ import {
   StyledButton,
   StyledContainer,
 } from "./StyledLogIn";
-import { emailValidation } from "./LoginValidation";
+import PasswordResetPending from "./PasswordResetPending";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
-  const [emailMessageVal, setEmailMessageVal] = useState(null);
-
-  let validation;
-  async function validateForm() {
-    if (emailMessageVal) {
-      console.log("email:", emailMessageVal);
-      validation = "Please make sure all fields are filled in properly.";
-      return validation;
-    } else console.log("email:", emailMessageVal);
-    validation = null;
-    return validation;
-  }
-  validateForm();
-  console.log("validate form", validation);
+  const [message, setMessage] = useState();
+  const [resetSuccess, setRequestSuccess] = useState(false);
 
   // console.log(authContext);
   const handleChange = (event, setter) => {
@@ -34,13 +22,22 @@ export default function ForgotPassword() {
     setter(value);
   };
 
-  const handleSubmit = async (e) => {
-    let response = await axios.post("/api/employeeProfile/requestPasswordReset", {
-      email,
-    });
-    let userEmail = response.data;
-    console.log("User requesting reset from Email.", response)
-    
+  const handleSubmit = async () => {
+    let response = await axios.post(
+      "/api/employeeProfile/requestPasswordReset",
+      {
+        email,
+      }
+    );
+    console.log("here");
+    let error = response.data;
+    if (error?.status === "FAILED") {
+      console.log("User requesting reset from Email.", error);
+      setMessage(error.message);
+    } else {
+      console.log("SUCCESS THIS REQUEST");
+      setRequestSuccess(true);
+    }
   };
 
   const handleKeypress = (e) => {
@@ -50,58 +47,46 @@ export default function ForgotPassword() {
       handleSubmit();
     }
   };
-
+  console.log(resetSuccess);
   return (
-    <StyledContainer>
-      <StyledLogIn />
-      <StyledFormWrapper>
-        <StyledForgotPassword type="submit">
-          <h1>Forgot Password</h1>
-          <div>
-            <label>Email</label>
-            {!emailMessageVal ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            {emailMessageVal ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "12px",
-                  marginBottom: "0px",
-                }}
-              >
-                {emailMessageVal}
-              </p>
-            ) : null}
-            <StyledInput
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              placeholder="Enter your email address here.."
-              onChange={(event) => {
-                handleChange(event, setEmail);
-                setEmailMessageVal(emailValidation(event.target.value));
-              }}
-              onKeyPress={handleKeypress}
-            />
-            <StyledButton id="submit" type="submit" onClick={handleSubmit}>
-              Submit
-            </StyledButton>
-          </div>
-        </StyledForgotPassword>
-      </StyledFormWrapper>
-    </StyledContainer>
+    <>
+      {resetSuccess === true ? (
+        <PasswordResetPending email={email} />
+      ) : (
+        <StyledContainer>
+          <StyledLogIn />
+          <StyledFormWrapper>
+            <StyledForgotPassword type="submit">
+              <h1>Forgot Password</h1>
+              <div>
+                <label>Email</label>
+                <StyledInput
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={email}
+                  placeholder="Enter your email address here.."
+                  onChange={(event) => {
+                    handleChange(event, setEmail);
+                    // setEmailMessageVal(emailValidation(event.target.value));
+                  }}
+                  onKeyPress={handleKeypress}
+                />
+                {message}
+                <br />
+                <StyledButton id="submit" type="submit" onClick={handleSubmit}>
+                  Submit
+                </StyledButton>
+              </div>
+            </StyledForgotPassword>
+          </StyledFormWrapper>
+        </StyledContainer>
+      )}
+    </>
   );
 }

@@ -101,6 +101,7 @@ export const StyledTextArea = styled.textarea`
 export const StyledButton = styled.button`
   /* background-color: #f7797d; */
   background-color: #35a1b9;
+  position: absolute;
   color: #fff;
   font-size: 16px;
   border: 0;
@@ -111,6 +112,7 @@ export const StyledButton = styled.button`
   margin-top: 10px;
   box-sizing: border-box;
   transition: ease-in-out 0.2s;
+  bottom: 0px;
 
   &:hover {
     background-color: ${colors.darkCharcoal};
@@ -211,4 +213,19 @@ export const StyledBox = styled.div`
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+`;
+
+export const StyledResetContainer = styled.div`
+  margin: 0;
+  min-height: 90vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(${background});
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: left;
 `;

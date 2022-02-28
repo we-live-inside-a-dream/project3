@@ -22,7 +22,7 @@ import MessangerPage2 from "./pages/common/MessangerPage2";
 import ApprovalPage from "./pages/manager/ManagerApprovalsPage";
 import EmployeeTimeOffViewPage from "./pages/common/EmployeeTimeOffViewPage";
 import ViewEventsPage from "./pages/common/ViewEventsPage";
-
+import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
 import ForgotPassword from "./components/login/ForgotPassword";
 import EmployeeShiftsViewPage from "./pages/common/EmployeeShiftsViewPage";
 // import ManagerViewOfShiftSwapRequests from "./components/schedules/shift-swapping/ManagerViewOfShiftSwapRequests";
@@ -34,13 +34,13 @@ import PasswordResetPending from "./components/login/PasswordResetPending";
 // import TimeOffPage from "./pages/common/TimeOffPage";
 import Providers from "./components/reusable/context/Providers";
 import BusinessDaysForm from "./components/management-settings/BusinessDaysForm";
-import ChatPopupWindow from "./components/messanger2/ChatPopupWindow.js";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
 function App() {
   return (
     <Providers>
+      
       {console.log("after providers")}
       <div
         style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
@@ -138,7 +138,11 @@ function App() {
             }
           />
           //this route is temporary for now
-          <Route path="/businessDays" element={<BusinessDaysForm />} />
+          <Route
+            path="/businessDays"
+            element={<BusinessDaysForm />
+            }
+          />
           <Route
             path="/human-resources"
             element={

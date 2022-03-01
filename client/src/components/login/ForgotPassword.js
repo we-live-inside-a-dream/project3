@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import {
   StyledLogIn,
   StyledFormWrapper,
@@ -8,6 +7,10 @@ import {
   StyledInput,
   StyledButton,
   StyledContainer,
+  ErrorMsg,
+  ButtonGroup,
+  StyledLabel,
+  StyledHeading,
 } from "./StyledLogIn";
 import PasswordResetPending from "./PasswordResetPending";
 
@@ -29,13 +32,11 @@ export default function ForgotPassword() {
         email,
       }
     );
-    console.log("here");
     let error = response.data;
     if (error?.status === "FAILED") {
       console.log("User requesting reset from Email.", error);
       setMessage(error.message);
     } else {
-      console.log("SUCCESS THIS REQUEST");
       setRequestSuccess(true);
     }
   };
@@ -57,32 +58,30 @@ export default function ForgotPassword() {
           <StyledLogIn />
           <StyledFormWrapper>
             <StyledForgotPassword type="submit">
-              <h1>Forgot Password</h1>
-              <div>
-                <label>Email</label>
-                <StyledInput
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  value={email}
-                  placeholder="Enter your email address here.."
-                  onChange={(event) => {
-                    handleChange(event, setEmail);
-                    // setEmailMessageVal(emailValidation(event.target.value));
-                  }}
-                  onKeyPress={handleKeypress}
-                />
-                {message}
-                <br />
+              <StyledHeading>Forgot Password</StyledHeading>
+              <StyledLabel>Email</StyledLabel>
+              <StyledInput
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                placeholder="Enter your email address here.."
+                onChange={(event) => {
+                  handleChange(event, setEmail);
+                }}
+                onKeyPress={handleKeypress}
+              />
+              <ErrorMsg>{message}</ErrorMsg>
+              <ButtonGroup>
                 <StyledButton id="submit" type="submit" onClick={handleSubmit}>
                   Submit
                 </StyledButton>
-              </div>
+              </ButtonGroup>
             </StyledForgotPassword>
           </StyledFormWrapper>
         </StyledContainer>

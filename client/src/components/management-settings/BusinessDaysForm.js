@@ -7,6 +7,7 @@ import {
   StyledForm,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import * as fns from "date-fns";
 import StyledTable from "../reusable/tables/StyledTable";
 
@@ -19,7 +20,7 @@ const weekDaysData = [
   { value: "saturday", label: "Saturday" },
   { value: "sunday", label: "Sunday" },
 ];
-function BusinessDaysForm(existingValues) {
+function BusinessDaysForm(existingValues, onSave) {
   const [createWeekDays, setCreateWeekDays] = useState(null);
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
@@ -28,6 +29,11 @@ function BusinessDaysForm(existingValues) {
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
   const [businessDayCreated, setBusinessDayCreated] = useState(null);
+  const [changeBusinessDay, setChangeBusinessDay] = useState(null);
+  const [editBusinessDay, setEditBusinessDay] = useState(null);
+  const [editStartTime, setEditStartTime] = useState(null);
+  const [editEndTime, setEditEndTime] = useState(null);
+  const [dayToDelete, setDayToDelete] = useState(null);
 
 
   const createWeekDayHandler = (newWeekDay) => {
@@ -59,21 +65,49 @@ function BusinessDaysForm(existingValues) {
     }
   },[existingValues])
 
+      async function createBusinessDays(newBusinessDay) {
+        await fetch("/api/businessDays", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newBusinessDay),
+        });
+        setBusinessDayCreated(newBusinessDay);
+      }
+
+      async function updateBusinessDay(updatedBusinessDays) {
+        await fetch("/api/businessDays/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedBusinessDays)
+        })
+        setChangeBusinessDay(updatedBusinessDays)
+      }
+
+      async function deleteBusinessDay() {
+        await fetch("/api/businessDays/delete" + dayToDelete, {
+          method: "DELETE"
+        })
+        let removeBusinessDay = await businessDayCreated.filter(
+          (day) => day !== dayToDelete
+        )
+        setBusinessDayCreated(removeBusinessDay)
+      }
+
   async function postData() {
     let newBusinessDays = {
       dayOfTheWeek: createWeekDays.value,
       start: fns.format(new Date(startTime), "HH:mm").toString(),
       end: fns.format(new Date(endTime), "HH:mm").toString()
     };
-    // async function createBusinessDays(newBusinessDays) {
-      await fetch("/api/businessDays", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newBusinessDays),
-      });
-      setBusinessDayCreated(newBusinessDays);
+    if(!existingValues) {
+      await createBusinessDays(newBusinessDays) 
+    }else if(existingValues) {
+       await updateBusinessDay(newBusinessDays)
+    }
   }
 
 
@@ -112,7 +146,14 @@ function BusinessDaysForm(existingValues) {
                     <td>{`${day.start}`}</td>
                     <td>{`${day.end}`}</td>
                   </td>
-
+                  <StyledEditButton
+                            margin={"0px 10px 0px 10px"}
+                            onClick={() => {
+                              setDayToDelete(day);
+                            }}
+                          >
+                            ❌
+                          </StyledEditButton>
                 </tr>
                 )
               })}

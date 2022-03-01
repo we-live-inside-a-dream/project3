@@ -19,7 +19,7 @@ const weekDaysData = [
   { value: "saturday", label: "Saturday" },
   { value: "sunday", label: "Sunday" },
 ];
-function BusinessDaysForm() {
+function BusinessDaysForm(existingValues) {
   const [createWeekDays, setCreateWeekDays] = useState(null);
   const [startTime, setStartTime] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
@@ -50,6 +50,15 @@ function BusinessDaysForm() {
     }
     getBusinessDays()
   },[])
+
+  useEffect(() => {
+    if(existingValues){
+      setCreateWeekDays(existingValues.createWeekDays)
+      setStartTime(existingValues.startTime)
+      setEndTime(existingValues.endTime)
+    }
+  },[existingValues])
+
   async function postData() {
     let newBusinessDays = {
       dayOfTheWeek: createWeekDays.value,

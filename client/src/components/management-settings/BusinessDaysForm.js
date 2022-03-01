@@ -20,7 +20,7 @@ const weekDaysData = [
   { value: "saturday", label: "Saturday" },
   { value: "sunday", label: "Sunday" },
 ];
-function BusinessDaysForm({existingValues, onSave}) {
+function BusinessDaysForm() {
   const [createWeekDays, setCreateWeekDays] = useState(null);
   const [start, setStart] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
@@ -29,12 +29,7 @@ function BusinessDaysForm({existingValues, onSave}) {
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
   const [businessDayCreated, setBusinessDayCreated] = useState(null);
-  const [changeBusinessDay, setChangeBusinessDay] = useState(null);
-  const [editBusinessDay, setEditBusinessDay] = useState(null);
-  const [editStartTime, setEditStartTime] = useState(null);
-  const [editEndTime, setEditEndTime] = useState(null);
   const [dayToDelete, setDayToDelete] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(null)
   const [businessHours, setBusinessHours] = useState(null)
 
 

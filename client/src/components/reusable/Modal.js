@@ -22,11 +22,13 @@ const ModalInner = styled.div`
 
 const ModalOverlay = styled.div`
   /* border: ${(props) => props.border || "10px"}; */
+  display: block;
   position: fixed;
-  top: 0;
+  /* width: 100%; */
+  top: 0px;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0px;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 1000;
 `;

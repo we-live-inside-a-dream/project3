@@ -248,7 +248,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                 lastName={employee.lastName}
               />
 
-              {dataWeek.map((date) => {
+              {dataWeek.map((date, index) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (
                     shift.employeeId === employee._id && shift.date === date
@@ -258,6 +258,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                 if (!shift)
                   return (
                     <td
+                      key={index}
                       style={{
                         position: "relative",
                         border: "lightGrey",
@@ -269,7 +270,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       }}
                     >
                       --
-                      <div
+                      <td
                         style={{
                           position: "absolute",
 
@@ -285,7 +286,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                         }}
                       />
                       {isEmployeeBookedOff(employee._id, date) === "full" ? (
-                        <div
+                        <td
                           style={{
                             position: "absolute",
                             borderRadius: "50%",
@@ -298,7 +299,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                         />
                       ) : null}
                       {isEmployeeBookedOff(employee._id, date) === "part" ? (
-                        <div
+                        <td
                           style={{
                             position: "absolute",
                             border: "2px solid black",

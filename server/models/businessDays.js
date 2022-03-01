@@ -8,7 +8,7 @@ const BusinessDays = mongoose.model("BusinessDays", {
   // },
   // value: String, 
   // label: String,
-  firstDayOfTheWeek: { type: String, unique: true},
+  // firstDayOfTheWeek: { type: String, unique: true},
   dayOfTheWeek: { type: String, unique: true },
   start: { type: String },
   end: { type: String },

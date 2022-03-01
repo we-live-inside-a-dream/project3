@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
-import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   StyledLogIn,
   StyledFormWrapper,
@@ -53,7 +52,7 @@ export default function LogIn() {
       email,
       password,
     });
-    
+
     let user = response.data;
     console.log("LOG IN", response);
     authContext.logIn(user);

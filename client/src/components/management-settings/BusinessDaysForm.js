@@ -7,6 +7,7 @@ import {
   StyledForm,
   RedStar,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import * as fns from "date-fns";
 import StyledTable from "../reusable/tables/StyledTable";
 
@@ -19,15 +20,22 @@ const weekDaysData = [
   { value: "saturday", label: "Saturday" },
   { value: "sunday", label: "Sunday" },
 ];
-function BusinessDaysForm() {
+function BusinessDaysForm({existingValues, onSave}) {
   const [createWeekDays, setCreateWeekDays] = useState(null);
-  const [startTime, setStartTime] = useState(
+  const [start, setStart] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
-  const [endTime, setEndTime] = useState(
+  const [end, setEnd] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
   const [businessDayCreated, setBusinessDayCreated] = useState(null);
+  // const [firstDayOfTheWeek, setFirstDayOfTheWeek] = useState(null)
+  const [changeBusinessDay, setChangeBusinessDay] = useState(null);
+  const [editBusinessDay, setEditBusinessDay] = useState(null);
+  const [editStartTime, setEditStartTime] = useState(null);
+  const [editEndTime, setEditEndTime] = useState(null);
+  const [dayToDelete, setDayToDelete] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(null)
 
 
   const createWeekDayHandler = (newWeekDay) => {
@@ -43,35 +51,69 @@ function BusinessDaysForm() {
 
   useEffect(() => {
     const getBusinessDays = async () => {
-      let fetchResult = await fetch("/api/businessDays/list/")
+      let fetchResult = await fetch("/api/businessDays/list")
       let fetchedBusinessDays = await fetchResult.json()
       console.log("these are the fetched business days",fetchedBusinessDays )
       setBusinessDayCreated(fetchedBusinessDays)
     }
     getBusinessDays()
   },[])
+
+  useEffect(() => {
+    if(existingValues){
+      setCreateWeekDays(existingValues.createWeekDays)
+      setStart(existingValues.startTime)
+      setEnd(existingValues.endTime)
+    }
+  },[existingValues])
+
+      async function createBusinessDays(newBusinessDays) {
+        await fetch("/api/businessDays", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newBusinessDays),
+        });
+        setBusinessDayCreated(newBusinessDays);
+        // setFirstDayOfTheWeek(newBusinessDay)
+      }
+
+      async function updateBusinessDay(updatedBusinessDays) {
+        await fetch("/api/businessDays/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedBusinessDays)
+        })
+        setChangeBusinessDay(updatedBusinessDays)
+      }
+
+      async function deleteBusinessDay() {
+        await fetch("/api/businessDays/delete", {
+          method: "DELETE"
+        })
+        let removeBusinessDay = await businessDayCreated.filter(
+          (day) => day !== dayToDelete
+        )
+        setBusinessDayCreated(removeBusinessDay)
+      }
+
   async function postData() {
-    let newBusinessDays = {
+    let newBusinessDaysInfo = {
       dayOfTheWeek: createWeekDays.value,
-      start: fns.format(new Date(startTime), "HH:mm").toString(),
-      end: fns.format(new Date(endTime), "HH:mm").toString()
+      // firstDayOfTheWeek: firstDayOfTheWeek.value,
+      start: fns.format(new Date(start), "HH:mm").toString(),
+      end: fns.format(new Date(end), "HH:mm").toString()
     };
-    // async function createBusinessDays(newBusinessDays) {
-      await fetch("/api/businessDays", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newBusinessDays),
-      });
-      setBusinessDayCreated(newBusinessDays);
+    createBusinessDays(newBusinessDaysInfo)
+    if(!existingValues) {
+      await createBusinessDays(newBusinessDaysInfo) 
+    }else if(existingValues) {
+       await updateBusinessDay(newBusinessDaysInfo)
+    }
   }
-
-
-
-  // async function updateBusinessDay(updatedBusinessDay) {
-  //   await fetch()
-  // }
 
   return (
     <StyledFormWrapper>
@@ -87,7 +129,7 @@ function BusinessDaysForm() {
             </thead>
             <tbody>
               {businessDayCreated?.map((day) => {
-                console.log("this is the mapped day", day)
+                console.log("this is the mapped day", businessDayCreated)
                 return (
                 <tr
                 key={day.created}
@@ -100,10 +142,19 @@ function BusinessDaysForm() {
                 >
                   <td>
                   <td>{`${day.dayOfTheWeek}`}</td>
+                  {/* <td>{`${day.firstDayOfTheWeek}`}</td> */}
                     <td>{`${day.start}`}</td>
                     <td>{`${day.end}`}</td>
                   </td>
-
+                  <StyledEditButton
+                            margin={"0px 10px 0px 10px"}
+                            onClick={() => {
+                              // setDayToDelete(day);
+                              deleteBusinessDay()
+                            }}
+                          >
+                            ❌
+                          </StyledEditButton>
                 </tr>
                 )
               })}
@@ -131,17 +182,17 @@ function BusinessDaysForm() {
           <label>Open Time</label>
           <BasicTimePicker
             type="time"
-            value={startTime}
+            value={start}
             onChange={(value) => {
-              onInputUpdate(value, setStartTime);
+              onInputUpdate(value, setStart);
             }}
           />
           <label>Close Time</label>
           <BasicTimePicker
             type="time"
-            value={endTime}
+            value={end}
             onChange={(value) => {
-              onInputUpdate(value, setEndTime);
+              onInputUpdate(value, setEnd);
             }}
           />
 

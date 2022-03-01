@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import Select from "react-select";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
@@ -61,6 +61,7 @@ const EmployeeEditForm = ({
 
   const value = useManagerSettings();
   const positionsList = value.positions;
+  let navigate = useNavigate();
 
   console.log("EXISTINGVALUES,", existingValues);
 
@@ -227,7 +228,6 @@ const EmployeeEditForm = ({
       firstName,
       lastName,
       email,
-      // passw1word,
       phoneNumber,
       positions: positions.map((p) => p.value),
       status: [status.value],
@@ -246,6 +246,7 @@ const EmployeeEditForm = ({
 
     if (existingValues) {
       await onSave(newEmployeeInfo);
+      navigate("/human-resources");
     }
   }
 

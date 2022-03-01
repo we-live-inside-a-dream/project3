@@ -35,6 +35,7 @@ import PasswordResetPending from "./components/login/PasswordResetPending";
 import Providers from "./components/reusable/context/Providers";
 import BusinessDaysForm from "./components/management-settings/BusinessDaysForm";
 import ResetPassword from "./components/login/ResetPassword";
+import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -202,7 +203,7 @@ function App() {
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}
           ></Route>
-          <Route path="/custom" element={<DaySchedulePosition />}></Route>
+          <Route path="/custom" element={<WeekSchedulePosition />}></Route>
           {/* last router */}
         </Routes>
         )

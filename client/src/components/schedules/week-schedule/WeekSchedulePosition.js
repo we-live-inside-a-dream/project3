@@ -46,9 +46,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   // const [availabilityColor, setAvailabilityColor] = useState();
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
-  useEffect(() => {
-    console.log("shift id is ...", value());
-  }, []);
+
   useEffect(() => {
     const getAllTheEmployees = async function () {
       let employeeLst = await fetch("/api/employeeProfile/employees/names");

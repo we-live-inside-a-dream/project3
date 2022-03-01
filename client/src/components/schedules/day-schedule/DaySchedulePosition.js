@@ -182,7 +182,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
             <tr key={employee._id} onClick={() => setShiftId(employee._id)}>
               <div>
                 <PositionPicTableData
-                  position={employee.position}
+                  position={employee?.position}
                   edit="edit"
                   onClick={() => setIsOpen(true)}
                 />

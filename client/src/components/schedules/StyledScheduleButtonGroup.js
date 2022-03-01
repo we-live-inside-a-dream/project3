@@ -3,25 +3,52 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 
 function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
   const [activeButton, setActiveButton] = useState();
+  const [addOne, setAddone] = useState(false);
   // console.log("CURRENT TAB AND ACTIVE BUTTON", currentTab, activeButton);
 
   useEffect(() => {
+    console.log("addOne", addOne);
+  }, [addOne]);
+
+  function handleClick() {
+    setAddone((prevCheck) => !prevCheck);
+    if (currentTab % 2 == 0) {
+      setCurrentTab((prevTab) => prevTab - 1);
+    } else {
+      setCurrentTab((prevTab) => prevTab + 1);
+    }
+  }
+
+  useEffect(() => {
+    if (!currentTab) return;
     setActiveButton(currentTab);
+    console.log("currentTab", currentTab);
+    console.log("activeButton", activeButton);
   }, [currentTab]);
 
   let buttonDay =
     activeButton === 1
       ? "var(--styledButtonHoverBackground)"
+      : activeButton === 2
+      ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
   let buttonWeek =
-    activeButton === 2
+    activeButton === 3
+      ? "var(--styledButtonHoverBackground)"
+      : activeButton === 4
       ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
   let buttonMonth =
-    activeButton === 3
+    activeButton === 5
+      ? "var(--styledButtonHoverBackground)"
+      : activeButton === 6
       ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
 
+  let buttonPositions =
+    currentTab % 2 == 0
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
   return (
     <div style={{ marginBottom: "0%", paddingBottom: "0%" }}>
       <StyledButton
@@ -40,8 +67,8 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
       </StyledButton>
       <StyledButton
         onClick={() => {
-          setCurrentTab(2);
-          setActiveButton(2);
+          setCurrentTab(3);
+          setActiveButton(3);
         }}
         style={{
           backgroundColor: buttonWeek,
@@ -54,8 +81,8 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
       </StyledButton>
       <StyledButton
         onClick={() => {
-          setCurrentTab(3);
-          setActiveButton(3);
+          setCurrentTab(5);
+          setActiveButton(5);
         }}
         style={{
           backgroundColor: buttonMonth,
@@ -65,6 +92,18 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         }}
       >
         MONTH
+      </StyledButton>
+
+      <StyledButton
+        onClick={() => handleClick()}
+        style={{
+          backgroundColor: buttonPositions,
+          margin: "0px",
+          border: "2px solid var(--styledButtonGroupBorder)",
+          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+        }}
+      >
+        Position / Employee
       </StyledButton>
     </div>
   );

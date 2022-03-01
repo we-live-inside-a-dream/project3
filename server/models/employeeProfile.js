@@ -30,7 +30,7 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   phoneNumber: {
     type: String,
@@ -41,11 +41,11 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     required: true,
   },
   permissions: {
-    type: String,
+    type: [String],
     required: true,
   },
   status: {
-    type: String,
+    type: [String],
     required: true,
   },
   verified: { type: Boolean, default: false },

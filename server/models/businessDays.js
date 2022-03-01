@@ -1,12 +1,10 @@
 const mongoose = require("./mongooseDb");
 
 const BusinessDays = mongoose.model("BusinessDays", {
-
   dayOfTheWeek: { type: String, unique: true },
   start: { type: String },
   end: { type: String },
-  openForBusiness: {Type: Boolean},
-  
+  openForBusiness: { Type: Boolean },
 });
 
 async function createBusinessDay(businessDaysData) {

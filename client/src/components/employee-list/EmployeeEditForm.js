@@ -42,14 +42,13 @@ const EmployeeEditForm = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState([]);
+  // const [password, setPassword] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState([]);
   const [permissions, setPermissions] = useState([]);
-  const [defaultStatus, setDefaultStatus] = useState(null);
-  const [defaultPositions, setDefaultPositions] = useState(null);
-  const [defaultPermissions, setDefaultPermissions] = useState(null);
+  // const [defaultStatus, setDefaultStatus] = useState([]);
+  // const [defaultPermissions, setDefaultPermissions] = useState([]);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -63,6 +62,8 @@ const EmployeeEditForm = ({
   const value = useManagerSettings();
   const positionsList = value.positions;
 
+  console.log("EXISTINGVALUES,", existingValues);
+
   useEffect(() => {
     if (existingValues) {
       let currentPositions = [];
@@ -71,34 +72,35 @@ const EmployeeEditForm = ({
           currentPositions.push(line);
         }
       });
-      setDefaultPositions(currentPositions);
+      setPositions(currentPositions);
     }
-  }, []);
+  }, [existingValues, permissions, positionsList, status]);
 
-  // useEffect(() => {
-  //   const statusFilter = statusData?.filter((r) => r.value === status);
-  //   setDefaultStatus(statusFilter);
-  //   console.log("this is status", status);
-  // }, [status]);
+  useEffect(() => {
+    if (existingValues) {
+      let currentStatus = [];
+      statusData.forEach((line) => {
+        if (existingValues?.status?.includes(line.value)) {
+          currentStatus.push(line);
+        }
+      });
+      setStatus(currentStatus);
+    }
+  }, [existingValues]);
+  console.log("CURRENT STATUS %%%%%%%%%%%%%%%%", status);
 
-  // useEffect(() => {
-  //   const permissionsFilter = permissionsData?.filter(
-  //     (r) => r.value === permissions
-  //   );
-  //   setDefaultPermissions(permissionsFilter);
-  //   console.log("this is the employee permission", permissions);
-  // }, [permissions]);
-
-  // useEffect(() => {
-  //   if (positionsData) {
-  //     empNames.map((person) => {
-  //       return contactsData.push({
-  //         value: `${person._id}`,
-  //         label: `${person.firstName} ${person.lastName[0]}`,
-  //       });
-  //     });
-  //   }
-  // }, [empNames]);
+  useEffect(() => {
+    if (existingValues) {
+      let currentPermissions = [];
+      permissionsData.forEach((line) => {
+        if (existingValues?.permissions?.includes(line.value)) {
+          currentPermissions.push(line);
+        }
+      });
+      setPermissions(currentPermissions);
+    }
+  }, [existingValues]);
+  console.log("CURRENT PERMISSIONS %%%%%%%%%%%%%%%%", permissions);
 
   useEffect(() => {
     if (existingValues) {
@@ -106,14 +108,25 @@ const EmployeeEditForm = ({
       setLastName(existingValues.lastName);
       setEmail(existingValues.email);
       setPhoneNumber(existingValues.phoneNumber);
+      // setStatus({ value: existingValues.status[0] });
+      // setPermissions({ value: existingValues.permissions[0] });
+
+      // setStatus(
+      //   existingValues.status.map((item) => {
+      //     return { value: item };
+      //   })
+      // );
+      // setPermissions(
+      //   existingValues.permissions.map((item) => {
+      //     return { value: item };
+      //   })
+      // );
       setPositions(
         existingValues.positions.map((item) => {
           return { value: item };
         })
       );
-      setStatus(existingValues.status);
-      setPermissions(existingValues.permissions);
-    } else setPassword("password12");
+    }
   }, [existingValues]);
 
   function onInputUpdate(event, setter) {
@@ -122,36 +135,37 @@ const EmployeeEditForm = ({
   }
 
   const handlePositionChange = (newPositions) => {
+    console.log(newPositions);
     setPositions(newPositions);
     console.log("this is positions", newPositions);
-    // setPosMessageVal(positionValidation(newPositions));
-    // console.log("Positions", newPositions);
+    setPosMessageVal(positionValidation(newPositions));
+    console.log("Positions", positions);
   };
+  console.log("this is positions", positions);
+
   const handlePermissionsChange = (newPermission) => {
     setPermissions(newPermission);
     console.log("this is permissions", permissions);
     setPermissMessageVal(permissionsValidation(newPermission));
-    console.log("Positions", newPermission);
+    console.log("Permissions", permissions);
   };
+  console.log("this is permissions", permissions);
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
     setStatusMessageVal(statusValidation(newStatus));
-    console.log("status", newStatus);
   };
+  console.log("status", status);
 
   async function createEmployee(newEmployee) {
-    // const newEmployee = {firstName: "", lastName: ""}
     let response = await fetch("/api/employeeProfile/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newEmployee),
-      // body: newEmployee
     });
     let id = await response.json();
-    // navigate("/createEmployee/" + newEmployee._id);
     console.log("just before the id is set to ", id);
     setId(id);
     console.log("the id for the created employee is:", response);
@@ -164,7 +178,6 @@ const EmployeeEditForm = ({
       phoneMessageVal ||
       fnameMessageVal ||
       lnameMessageVal ||
-      // passMessageVal ||
       posMessageVal ||
       statusMessageVal ||
       permissMessageVal
@@ -178,8 +191,6 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        // "password:",
-        // passMessageVal,
         "position:",
         posMessageVal,
         "status:",
@@ -200,8 +211,6 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        // "password:",
-        // passMessageVal,
         "position:",
         posMessageVal,
         "status:",
@@ -218,18 +227,18 @@ const EmployeeEditForm = ({
       firstName,
       lastName,
       email,
-      password,
+      // passw1word,
       phoneNumber,
       positions: positions.map((p) => p.value),
-      status: status.value,
-      permissions: permissions.value,
+      status: [status.value],
+      permissions: [permissions.value],
     };
     validateForm();
-    console.log("validate form", validation);
+    // console.log("validate form", validation);
     console.log("Saving new employee information", newEmployeeInfo);
 
     //happy if existing values and validate form is all good:
-    if (!existingValues && validation === null) {
+    if (existingValues === null && validation === null) {
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
@@ -238,14 +247,7 @@ const EmployeeEditForm = ({
     if (existingValues) {
       await onSave(newEmployeeInfo);
     }
-    // return "this form needs serious help";
   }
-
-  // function onAddPosition() {
-  //   positions.push(positionToAdd);
-  //   setPositionToAdd("");
-  //   setPositions(positions);
-  // }
 
   return (
     <>
@@ -258,7 +260,7 @@ const EmployeeEditForm = ({
             <label style={{ marginBottom: "0px" }}>
               First Name
               <RedStar />
-            </label>{" "}
+            </label>
             {firstName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
@@ -397,19 +399,12 @@ const EmployeeEditForm = ({
             <Select
               isMulti
               name="employee position"
-              value={defaultPositions}
-              // value={positions}
+              value={positions}
+              // value={[{ value: "dog", label: "Dog" }]}
               options={positionsList}
               onChange={handlePositionChange}
-              // className="basic-multi-select"
-              // classNamePrefix="select"
+              // required="true"
             ></Select>
-            {/* <Select
-              value={positions}
-              options={positionData}
-              onChange={handlePositionChange}
-              required="true"
-            /> */}
           </div>
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
@@ -426,13 +421,10 @@ const EmployeeEditForm = ({
               ></p>
             ) : null}
             <Select
-              name="employee position"
-              defaultValue={defaultPermissions}
               value={permissions}
               options={permissionsData}
               onChange={handlePermissionsChange}
-              // className="basic-multi-select"
-              // classNamePrefix="select"
+              // required="true"
             ></Select>
           </div>
 
@@ -453,10 +445,9 @@ const EmployeeEditForm = ({
             ) : null}
             <Select
               value={status}
-              defaultValue={defaultStatus}
               options={statusData}
               onChange={handleStatusChange}
-              required="true"
+              // required="true"
             />
           </div>
           <div>
@@ -465,7 +456,7 @@ const EmployeeEditForm = ({
             </StyledButton>
           </div>
           <div>
-            {shown === true ? (
+            {/* {shown === true ? (
               <p
                 style={{
                   color: "red",
@@ -475,7 +466,7 @@ const EmployeeEditForm = ({
               >
                 form is invalid
               </p>
-            ) : null}
+            ) : null} */}
           </div>
         </StyledForm>
       </StyledFormWrapper>

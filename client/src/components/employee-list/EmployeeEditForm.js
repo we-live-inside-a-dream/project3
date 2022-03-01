@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Select from "react-select";
 // import { useNavigate } from "react-router-dom";
 import {
@@ -17,9 +17,11 @@ import {
   statusValidation,
   positionValidation,
   passwordValidation,
+  permissionsValidation,
 } from "../validateForms.js";
+import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
 
-const positionData = [
+const permissionsData = [
   { value: "manager", label: "Manager" },
   { value: "supervisor", label: "Supervisor" },
   { value: "employee", label: "Employee" },
@@ -44,6 +46,7 @@ const EmployeeEditForm = ({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState(null);
+  const [permissions, setPermissions] = useState([]);
   const [defaultStatus, setDefaultStatus] = useState(null);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
@@ -52,6 +55,7 @@ const EmployeeEditForm = ({
   const [posMessageVal, setPosMessageVal] = useState(null);
   const [statusMessageVal, setStatusMessageVal] = useState(null);
   const [passMessageVal, setPassMessageVal] = useState(null);
+  const [permissMessageVal, setPermissMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
   // const [permissions, setPermissions] = useState("");
 
@@ -59,6 +63,8 @@ const EmployeeEditForm = ({
 
   // const [positionToAdd, setPositionToAdd] = useState("");
   // let navigate = useNavigate();
+  const value = useManagerSettings();
+  const positionsList = value.positions;
 
   useEffect(() => {
     const typeFilter = statusData?.filter((r) => r.value === status);
@@ -85,6 +91,7 @@ const EmployeeEditForm = ({
       setPhoneNumber(existingValues.phoneNumber);
       setPositions(existingValues.positions);
       setStatus(existingValues.status);
+      setPermissions(existingValues.permissions);
     }
   }, [existingValues]);
 
@@ -94,15 +101,16 @@ const EmployeeEditForm = ({
   }
 
   const handlePositionChange = (newPositions) => {
-    // let array = []
-    // newPositions.map((x) => array.push(x.value));
-    // console.log("THIS IS OUR ARRAY", array);
-    // console.log("new positions", newPositions)
     setPositions(newPositions);
-    // setPermissions("")
     console.log("this is positions", positions);
     setPosMessageVal(positionValidation(newPositions));
     console.log("Positions", newPositions);
+  };
+  const handlePermissionsChange = (newPermission) => {
+    setPermissions(newPermission);
+    console.log("this is permissions", permissions);
+    setPermissMessageVal(permissionsValidation(newPermission));
+    console.log("Positions", newPermission);
   };
 
   const handleStatusChange = (newStatus) => {
@@ -137,7 +145,8 @@ const EmployeeEditForm = ({
       lnameMessageVal ||
       passMessageVal ||
       posMessageVal ||
-      statusMessageVal
+      statusMessageVal ||
+      permissMessageVal
     ) {
       console.log(
         "email:",
@@ -153,8 +162,11 @@ const EmployeeEditForm = ({
         "position:",
         posMessageVal,
         "status:",
-        statusMessageVal
+        statusMessageVal,
+        "permissions:",
+        permissMessageVal
       );
+
       validation = "please make sure that all fields are valid";
       return validation;
     } else
@@ -172,7 +184,9 @@ const EmployeeEditForm = ({
         "position:",
         posMessageVal,
         "status:",
-        statusMessageVal
+        statusMessageVal,
+        "permissions:",
+        permissMessageVal
       );
     validation = null;
     return validation;
@@ -187,6 +201,7 @@ const EmployeeEditForm = ({
       phoneNumber,
       positions: positions.map((p) => p.value),
       status: status.value,
+      permissions: permissions.value,
     };
     validateForm();
     console.log("validate form", validation);
@@ -362,7 +377,7 @@ const EmployeeEditForm = ({
               isMulti
               name="employee position"
               defaultValue={positions}
-              options={positionData}
+              options={positionsList}
               onChange={handlePositionChange}
               className="basic-multi-select"
               classNamePrefix="select"
@@ -374,15 +389,36 @@ const EmployeeEditForm = ({
               required="true"
             /> */}
           </div>
-          <StyledButton onClick={postData}>Save Details</StyledButton>
-          
+          <div>
+            <label style={{ marginBottom: "10px", display: "block" }}>
+              Permissions
+              <RedStar />
+            </label>{" "}
+            {!positions ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                }}
+              ></p>
+            ) : null}
+            <Select
+              name="employee position"
+              defaultValue={permissions}
+              options={permissionsData}
+              onChange={handlePermissionsChange}
+              className="basic-multi-select"
+              classNamePrefix="select"
+            ></Select>
+          </div>
 
           <div>
             <label style={{ marginBottom: "10px", display: "block" }}>
               Status
               <RedStar />
             </label>
-            
+
             {!status ? (
               <p
                 style={{
@@ -400,11 +436,22 @@ const EmployeeEditForm = ({
             />
           </div>
           <div>
-          {shown === true ? <p style={{
+            <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
+              Save Details
+            </StyledButton>
+          </div>
+          <div>
+            {shown === true ? (
+              <p
+                style={{
                   color: "red",
                   fontSize: "20px",
                   marginBottom: "0px",
-                }}>form is invalid</p> : null}
+                }}
+              >
+                form is invalid
+              </p>
+            ) : null}
           </div>
         </StyledForm>
       </StyledFormWrapper>

@@ -36,7 +36,6 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     type: String,
     required: true,
   },
-
   positions: {
     type: [String],
     required: true,

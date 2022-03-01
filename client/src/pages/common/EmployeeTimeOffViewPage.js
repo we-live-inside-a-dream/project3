@@ -68,16 +68,16 @@ const EmployeeTimeOffViewPage = () => {
   }
 
   function statusConvert(status) {
-    if (status === "confirm") {
+    if (status === "approved") {
       return "Approved";
-    } else if (status === "reject") {
+    } else if (status === "denied") {
       return "Denied";
     } else return "Pending";
   }
 
   return (
-    <div>
-      <StyledPage styled={{ position: "relative" }}>
+    <div style={{ position: "relative" }}>
+      <StyledPage>
         {!loading ? (
           <div
             style={{
@@ -114,13 +114,13 @@ const EmployeeTimeOffViewPage = () => {
             <StyledTable padding={"5px"}>
               <thead>
                 <tr>
-                  <th>STATUS</th>
-                  {/* <th>NAME</th> */}
                   <th>TYPE</th>
                   <th>START DATE</th>
                   <th>END DATE</th>
                   <th>COMMENTS</th>
-                  <th>EDIT/DELETE</th>
+                  <th style={{ padding: "20px" }}>EDIT/DELETE</th>
+                  <th>MANAGER COMMENTS</th>
+                  <th style={{ padding: "20px" }}>STATUS</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,18 +135,16 @@ const EmployeeTimeOffViewPage = () => {
                         height: "auto",
                       }}
                     >
-                      <td>
-                        {<ApprovalSymbol time={t} />}
-                        {`${statusConvert(t.status)}`}
-                      </td>
                       <td>{`${t.type}`}</td>
                       <td>{`${t.startDate}`}</td>
                       <td>{`${t.endDate}`}</td>
                       {/* <td>{`${t.status}`}</td> */}
                       <td>{`${t.comment}`}</td>
+
                       <td>
                         <div>
                           <StyledEditButton
+                            margin={"0px 10px 0px 10px"}
                             fontSize="25px"
                             onClick={() => {
                               setModalEditIsOpen(true);
@@ -158,7 +156,7 @@ const EmployeeTimeOffViewPage = () => {
                           </StyledEditButton>
 
                           <StyledEditButton
-                            margin={"0px 20px"}
+                            margin={"0px 10px 0px 10px"}
                             onClick={() => {
                               setTimeToDelete(t._id);
                               setModalConfirmIsOpen(true);
@@ -168,6 +166,11 @@ const EmployeeTimeOffViewPage = () => {
                           </StyledEditButton>
                         </div>
                       </td>
+                      <td>{t.managerComment}</td>
+                      <td>
+                        {<ApprovalSymbol time={t} />}
+                        {`${statusConvert(t.status)}`}
+                      </td>
                     </tr>
                   );
                 })}
@@ -176,8 +179,11 @@ const EmployeeTimeOffViewPage = () => {
 
             {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
 
-            <div styled={{ padding: "40%" }}>
-              <StyledButton onClick={() => setModalApplyIsOpen(true)}>
+            <div styled={{ padding: "40%", position: "relative" }}>
+              <StyledButton
+                onClick={() => setModalApplyIsOpen(true)}
+                style={{ position: "absolute", marginLeft: "58px" }}
+              >
                 Request Time off
               </StyledButton>
             </div>

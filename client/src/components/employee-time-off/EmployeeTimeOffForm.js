@@ -322,7 +322,7 @@ const EmployeeTimeOffForm = ({
             <h3>Confirm Time Off</h3>
             <p>Type of time off:{type?.label}</p>
             <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
-            <p>end Day: {moment(endDate).format("YYYY-MM-DD")}</p>
+            <p>End Day: {moment(endDate).format("YYYY-MM-DD")}</p>
             {allDay === false && (
               <>
                 <p>Start Time: {moment(startTime).format("h:mm a")}</p>

@@ -36,6 +36,7 @@ import Providers from "./components/reusable/context/Providers";
 import BusinessDaysForm from "./components/management-settings/BusinessDaysForm";
 import ResetPassword from "./components/login/ResetPassword";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
+import MonthSchedulePage from "./pages/manager/MonthSchedulePage";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -138,13 +139,21 @@ function App() {
               </RequireAuth>
             }
           />
-          //this route is temporary for now
+
           <Route path="/businessDays" element={<BusinessDaysForm />} />
           <Route
             path="/human-resources"
             element={
               <Manager>
                 <EmployeesMenuPage />
+              </Manager>
+            }
+          />
+          <Route
+            path="/MonthSchedulePage"
+            element={
+              <Manager>
+                <MonthSchedulePage />
               </Manager>
             }
           />

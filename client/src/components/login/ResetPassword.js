@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { StyledInput } from "../reusable/Inputs/StyledEmployeeForm";
+import { useNavigate, useParams } from "react-router-dom";
 // import { passwordValidation } from "./LoginValidation";
 import {
   StyledButton,
   StyledResetContainer,
   StyledForgotPassword,
-  StyledForm,
+  StyledInput,
+  StyledLabel,
+  StyledHeading,
+  ButtonGroup,
 } from "./StyledLogIn";
 
 const ResetPassword = () => {
@@ -18,7 +20,7 @@ const ResetPassword = () => {
   const [message, setMessage] = useState();
 
   const { userId, resetString } = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(userId, resetString);
   });
@@ -61,6 +63,7 @@ const ResetPassword = () => {
       console.log("Password has been updated successfully.", response);
       setMessage(response.message);
     }
+    navigate("/login");
   };
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
@@ -71,51 +74,51 @@ const ResetPassword = () => {
   };
   return (
     <StyledResetContainer>
-      <StyledForm type="submit">
-        <StyledForgotPassword type="submit">
-          <h1>Forgot Password</h1>
-          <StyledInput
-            margin="normal"
-            required
-            fullWidth
-            name="newPassword"
-            label="New Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={newPassword}
-            placeholder="New Password.."
-            onChange={(event) => {
-              handleChange(event, setNewPassword);
-              // setNewPassMessageVal(passwordValidation(event.target.value));
-            }}
-            onKeyPress={handleKeypress}
-          />
-          <p>Confirm Password</p>
-          <StyledInput
-            margin="normal"
-            required
-            fullWidth
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={confirmPassword}
-            placeholder="Confirm Password.."
-            onChange={(event) => {
-              handleChange(event, setValidatedPassword);
-              // setNewPassMessageVal(passwordValidation(event.target.value));
-            }}
-            onKeyPress={handleKeypress}
-          />
-          {message}
-          <br />
+      <StyledForgotPassword type="submit">
+        <StyledHeading>Reset Password</StyledHeading>
+        <StyledLabel>New Password</StyledLabel>
+        <StyledInput
+          margin="normal"
+          required
+          fullWidth
+          name="newPassword"
+          label="New Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={newPassword}
+          placeholder="New Password.."
+          onChange={(event) => {
+            handleChange(event, setNewPassword);
+            // setNewPassMessageVal(passwordValidation(event.target.value));
+          }}
+          onKeyPress={handleKeypress}
+        />
+        <StyledLabel>Confirm Password</StyledLabel>
+        <StyledInput
+          margin="normal"
+          required
+          fullWidth
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={confirmPassword}
+          placeholder="Confirm Password.."
+          onChange={(event) => {
+            handleChange(event, setValidatedPassword);
+            // setNewPassMessageVal(passwordValidation(event.target.value));
+          }}
+          onKeyPress={handleKeypress}
+        />
+        {message}
+        <ButtonGroup>
           <StyledButton id="submit" type="submit" onClick={handleSubmit}>
             Submit
           </StyledButton>
-        </StyledForgotPassword>
-      </StyledForm>
+        </ButtonGroup>
+      </StyledForgotPassword>
     </StyledResetContainer>
   );
 };

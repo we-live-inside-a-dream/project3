@@ -191,15 +191,15 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           {schedule?.map((employee) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
             <tr key={employee._id} onClick={() => setShiftId(employee._id)}>
-              <div>
+              <td>
                 <NamePicTableData
                   firstName={employee.firstName}
                   lastName={employee.lastName}
+                  position={employee?.position}
                   edit="edit"
                   onClick={() => setIsOpen(true)}
                 />
-                <div>{employee.position}</div>
-              </div>
+              </td>
 
               {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
                 DO you want to delete this shift?

@@ -21,12 +21,25 @@ function ScheduleMenuPage() {
           />
         )}
         {currentTab === 2 && (
+          <DaySchedulePage
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+          />
+        )}
+
+        {currentTab === 3 && (
           <WeekSchedulePage
             setCurrentTab={setCurrentTab}
             currentTab={currentTab}
           />
         )}
-        {currentTab === 3 && (
+        {currentTab === 4 && (
+          <WeekSchedulePage
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+          />
+        )}
+        {currentTab === 5 && (
           <MonthSchedulePage
             setCurrentTab={setCurrentTab}
             currentTab={currentTab}

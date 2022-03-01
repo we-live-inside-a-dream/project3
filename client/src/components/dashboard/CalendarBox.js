@@ -42,7 +42,7 @@ export const CalendarBox = function () {
         transform={"Scale(.75)"}
         transformOrigin={"top center"}
         title="EVENTS CALENDAR"
-        clickFunction={() => navigate("/events")}
+        clickFunction={() => navigate("/MonthSchedulePage")}
         content={<CalendarWidget />}
       ></DashboardBoxScale>
     </>

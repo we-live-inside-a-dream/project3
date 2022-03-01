@@ -7,6 +7,7 @@ function NamePicTableData({
   onClick,
   firstName,
   lastName,
+  setModalOpen,
 }) {
   return (
     <td>

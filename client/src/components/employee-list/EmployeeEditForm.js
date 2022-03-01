@@ -48,6 +48,8 @@ const EmployeeEditForm = ({
   const [status, setStatus] = useState(null);
   const [permissions, setPermissions] = useState([]);
   const [defaultStatus, setDefaultStatus] = useState(null);
+  const [defaultPositions, setDefaultPositions] = useState(null);
+  const [defaultPermissions, setDefaultPermissions] = useState(null);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -57,20 +59,35 @@ const EmployeeEditForm = ({
   const [passMessageVal, setPassMessageVal] = useState(null);
   const [permissMessageVal, setPermissMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
-  // const [permissions, setPermissions] = useState("");
 
-  // const [message, setMessage] = useState("");
-
-  // const [positionToAdd, setPositionToAdd] = useState("");
-  // let navigate = useNavigate();
   const value = useManagerSettings();
   const positionsList = value.positions;
 
   useEffect(() => {
-    const typeFilter = statusData?.filter((r) => r.value === status);
-    setDefaultStatus(typeFilter);
-    console.log("this is status", status);
-  }, [status]);
+    if (existingValues) {
+      let currentPositions = [];
+      positionsList?.forEach((line) => {
+        if (existingValues?.positions?.includes(line.value)) {
+          currentPositions.push(line);
+        }
+      });
+      setDefaultPositions(currentPositions);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const statusFilter = statusData?.filter((r) => r.value === status);
+  //   setDefaultStatus(statusFilter);
+  //   console.log("this is status", status);
+  // }, [status]);
+
+  // useEffect(() => {
+  //   const permissionsFilter = permissionsData?.filter(
+  //     (r) => r.value === permissions
+  //   );
+  //   setDefaultPermissions(permissionsFilter);
+  //   console.log("this is the employee permission", permissions);
+  // }, [permissions]);
 
   // useEffect(() => {
   //   if (positionsData) {
@@ -89,10 +106,14 @@ const EmployeeEditForm = ({
       setLastName(existingValues.lastName);
       setEmail(existingValues.email);
       setPhoneNumber(existingValues.phoneNumber);
-      setPositions(existingValues.positions);
+      setPositions(
+        existingValues.positions.map((item) => {
+          return { value: item };
+        })
+      );
       setStatus(existingValues.status);
       setPermissions(existingValues.permissions);
-    }
+    } else setPassword("password12");
   }, [existingValues]);
 
   function onInputUpdate(event, setter) {
@@ -102,9 +123,9 @@ const EmployeeEditForm = ({
 
   const handlePositionChange = (newPositions) => {
     setPositions(newPositions);
-    console.log("this is positions", positions);
-    setPosMessageVal(positionValidation(newPositions));
-    console.log("Positions", newPositions);
+    console.log("this is positions", newPositions);
+    // setPosMessageVal(positionValidation(newPositions));
+    // console.log("Positions", newPositions);
   };
   const handlePermissionsChange = (newPermission) => {
     setPermissions(newPermission);
@@ -143,7 +164,7 @@ const EmployeeEditForm = ({
       phoneMessageVal ||
       fnameMessageVal ||
       lnameMessageVal ||
-      passMessageVal ||
+      // passMessageVal ||
       posMessageVal ||
       statusMessageVal ||
       permissMessageVal
@@ -157,8 +178,8 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        "password:",
-        passMessageVal,
+        // "password:",
+        // passMessageVal,
         "position:",
         posMessageVal,
         "status:",
@@ -179,8 +200,8 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        "password:",
-        passMessageVal,
+        // "password:",
+        // passMessageVal,
         "position:",
         posMessageVal,
         "status:",
@@ -296,7 +317,7 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          {password && (
+          {/* {password && (
             <div>
               <label>
                 password
@@ -333,7 +354,7 @@ const EmployeeEditForm = ({
                 }}
               />
             </div>
-          )}
+          )} */}
           <div>
             <label>
               Phone Number
@@ -376,11 +397,12 @@ const EmployeeEditForm = ({
             <Select
               isMulti
               name="employee position"
-              defaultValue={positions}
+              value={defaultPositions}
+              // value={positions}
               options={positionsList}
               onChange={handlePositionChange}
-              className="basic-multi-select"
-              classNamePrefix="select"
+              // className="basic-multi-select"
+              // classNamePrefix="select"
             ></Select>
             {/* <Select
               value={positions}
@@ -405,11 +427,12 @@ const EmployeeEditForm = ({
             ) : null}
             <Select
               name="employee position"
-              defaultValue={permissions}
+              defaultValue={defaultPermissions}
+              value={permissions}
               options={permissionsData}
               onChange={handlePermissionsChange}
-              className="basic-multi-select"
-              classNamePrefix="select"
+              // className="basic-multi-select"
+              // classNamePrefix="select"
             ></Select>
           </div>
 
@@ -429,6 +452,7 @@ const EmployeeEditForm = ({
               ></p>
             ) : null}
             <Select
+              value={status}
               defaultValue={defaultStatus}
               options={statusData}
               onChange={handleStatusChange}

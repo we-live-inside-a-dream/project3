@@ -20,7 +20,7 @@ const weekDaysData = [
   { value: "saturday", label: "Saturday" },
   { value: "sunday", label: "Sunday" },
 ];
-function BusinessDaysForm({existingValues, onSave}) {
+function BusinessDaysForm() {
   const [createWeekDays, setCreateWeekDays] = useState(null);
   const [start, setStart] = useState(
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
@@ -29,13 +29,8 @@ function BusinessDaysForm({existingValues, onSave}) {
     "Wed Feb 02 2022 00:00:00 GMT-0700 (Mountain Standard Time"
   );
   const [businessDayCreated, setBusinessDayCreated] = useState(null);
-  // const [firstDayOfTheWeek, setFirstDayOfTheWeek] = useState(null)
-  const [changeBusinessDay, setChangeBusinessDay] = useState(null);
-  const [editBusinessDay, setEditBusinessDay] = useState(null);
-  const [editStartTime, setEditStartTime] = useState(null);
-  const [editEndTime, setEditEndTime] = useState(null);
   const [dayToDelete, setDayToDelete] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(null)
+  const [businessHours, setBusinessHours] = useState(null)
 
 
   const createWeekDayHandler = (newWeekDay) => {
@@ -54,18 +49,18 @@ function BusinessDaysForm({existingValues, onSave}) {
       let fetchResult = await fetch("/api/businessDays/list")
       let fetchedBusinessDays = await fetchResult.json()
       console.log("these are the fetched business days",fetchedBusinessDays )
-      setBusinessDayCreated(fetchedBusinessDays)
+      setBusinessHours(fetchedBusinessDays)
     }
     getBusinessDays()
-  },[])
+  },[dayToDelete, businessDayCreated])
 
-  useEffect(() => {
-    if(existingValues){
-      setCreateWeekDays(existingValues.createWeekDays)
-      setStart(existingValues.startTime)
-      setEnd(existingValues.endTime)
-    }
-  },[existingValues])
+  // useEffect(() => {
+  //   if(existingValues){
+  //     setCreateWeekDays(existingValues.createWeekDays)
+  //     setStart(existingValues.startTime)
+  //     setEnd(existingValues.endTime)
+  //   }
+  // },[existingValues])
 
       async function createBusinessDays(newBusinessDays) {
         await fetch("/api/businessDays", {
@@ -76,43 +71,37 @@ function BusinessDaysForm({existingValues, onSave}) {
           body: JSON.stringify(newBusinessDays),
         });
         setBusinessDayCreated(newBusinessDays);
-        // setFirstDayOfTheWeek(newBusinessDay)
       }
 
-      async function updateBusinessDay(updatedBusinessDays) {
-        await fetch("/api/businessDays/update", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedBusinessDays)
-        })
-        setChangeBusinessDay(updatedBusinessDays)
-      }
+      // async function updateBusinessDay(updatedBusinessDays) {
+      //   await fetch("/api/businessDays/update", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify(updatedBusinessDays)
+      //   })
+      //   setChangeBusinessDay(updatedBusinessDays)
+      // }
 
-      async function deleteBusinessDay() {
-        await fetch("/api/businessDays/delete", {
+      async function deleteBusinessDay(removedDay) {
+        await fetch("/api/businessDays/delete/" + removedDay, {
           method: "DELETE"
         })
-        let removeBusinessDay = await businessDayCreated.filter(
-          (day) => day !== dayToDelete
-        )
-        setBusinessDayCreated(removeBusinessDay)
       }
 
   async function postData() {
     let newBusinessDaysInfo = {
       dayOfTheWeek: createWeekDays.value,
-      // firstDayOfTheWeek: firstDayOfTheWeek.value,
       start: fns.format(new Date(start), "HH:mm").toString(),
       end: fns.format(new Date(end), "HH:mm").toString()
     };
     createBusinessDays(newBusinessDaysInfo)
-    if(!existingValues) {
-      await createBusinessDays(newBusinessDaysInfo) 
-    }else if(existingValues) {
-       await updateBusinessDay(newBusinessDaysInfo)
-    }
+  //   if(!existingValues) {
+  //     await createBusinessDays(newBusinessDaysInfo) 
+  //   }else if(existingValues) {
+  //      await updateBusinessDay(newBusinessDaysInfo)
+  //   }
   }
 
   return (
@@ -125,53 +114,43 @@ function BusinessDaysForm({existingValues, onSave}) {
                 <th>Weekday</th>
                 <th>Open Time</th>
                 <th>Close Time</th>
+                <th>Remove</th>
               </tr>
             </thead>
             <tbody>
-              {businessDayCreated?.map((day) => {
-                console.log("this is the mapped day", businessDayCreated)
+              {businessHours?.map((day) => {
+                console.log("this is the mapped day", day)
                 return (
                 <tr
-                key={day.created}
+                key={day._id}
                 value={day}
-                style={{
-                  padding: "10px",
-                  textAlign: "center",
-                  height: "auto",
-                }}
+                // style={{
+                //   padding: "10px",
+                //   textAlign: "center",
+                //   height: "auto",
+                // }}
                 >
-                  <td>
                   <td>{`${day.dayOfTheWeek}`}</td>
-                  {/* <td>{`${day.firstDayOfTheWeek}`}</td> */}
                     <td>{`${day.start}`}</td>
                     <td>{`${day.end}`}</td>
-                  </td>
+                  <td>
+                 <div>
                   <StyledEditButton
                             margin={"0px 10px 0px 10px"}
                             onClick={() => {
-                              // setDayToDelete(day);
-                              deleteBusinessDay()
+                              setDayToDelete(day);
+                              deleteBusinessDay(day.dayOfTheWeek)
                             }}
                           >
                             ❌
                           </StyledEditButton>
+                          </div>
+                          </td>   
                 </tr>
                 )
               })}
             </tbody>
-              
-
           </StyledTable>
-          
-          {/* <label>
-            First Day of week
-            <RedStar />
-            </label>
-          <Select
-            defaultValue={createWeekDays}
-            options={weekDaysData}
-            onChange={createWeekDayHandler}
-          /> */}
           <br />
           <label>Weekday</label>
           <Select

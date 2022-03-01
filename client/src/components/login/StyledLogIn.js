@@ -279,7 +279,7 @@ export const TextLink = styled(Link)`
   text-decoration: none;
   color: ${colors.dark1};
   transition: ease-in-out 0.3s;
-
+  
   &:hover {
     text-decoration: underline;
     letter-spacing: 1px;

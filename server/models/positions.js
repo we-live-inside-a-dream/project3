@@ -14,6 +14,7 @@ async function createPosition(Data) {
 
 async function getPositions() {
   let allPositions = await Position.find({}).select(["-_id"]);
+
   console.log("FROM MODEL, all positions", allPositions);
   return allPositions;
 }

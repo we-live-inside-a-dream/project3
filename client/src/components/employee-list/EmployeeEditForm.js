@@ -38,6 +38,7 @@ const EmployeeEditForm = ({
   setId,
   setCurrentCreateTab,
   existingValues,
+  edit,
 }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -383,74 +384,79 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          <div>
-            <label style={{ marginBottom: "10px", display: "block" }}>
-              Positions
-              <RedStar />
-            </label>{" "}
-            {!positions ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            <Select
-              isMulti
-              name="employee position"
-              value={positions}
-              // value={[{ value: "dog", label: "Dog" }]}
-              options={positionsList}
-              onChange={handlePositionChange}
-              // required="true"
-            ></Select>
-          </div>
-          <div>
-            <label style={{ marginBottom: "10px", display: "block" }}>
-              Permissions
-              <RedStar />
-            </label>{" "}
-            {!positions ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            <Select
-              value={permissions}
-              options={permissionsData}
-              onChange={handlePermissionsChange}
-              // required="true"
-            ></Select>
-          </div>
+          {edit !== false ? (
+            <>
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Positions
+                  <RedStar />
+                </label>{" "}
+                {!positions ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  isMulti
+                  name="employee position"
+                  value={positions}
+                  // value={[{ value: "dog", label: "Dog" }]}
+                  options={positionsList}
+                  onChange={handlePositionChange}
+                  // required="true"
+                ></Select>
+              </div>
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Permissions
+                  <RedStar />
+                </label>{" "}
+                {!positions ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  value={permissions}
+                  options={permissionsData}
+                  onChange={handlePermissionsChange}
+                  // required="true"
+                ></Select>
+              </div>
 
-          <div>
-            <label style={{ marginBottom: "10px", display: "block" }}>
-              Status
-              <RedStar />
-            </label>
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Status
+                  <RedStar />
+                </label>
 
-            {!status ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            <Select
-              value={status}
-              options={statusData}
-              onChange={handleStatusChange}
-              // required="true"
-            />
-          </div>
+                {!status ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  value={status}
+                  options={statusData}
+                  onChange={handleStatusChange}
+                  // required="true"
+                />
+              </div>
+            </>
+          ) : null}
+
           <div>
             <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
               Save Details

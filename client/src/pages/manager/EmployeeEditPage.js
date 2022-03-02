@@ -39,7 +39,7 @@ const EmployeeEditPage = () => {
       },
       body: JSON.stringify(updatedEmployee),
     });
-    navigate("/createEmployee/" + employeeId);
+    // navigate("/createEmployee/" + employeeId);
   }
   return (
     <StyledPage>

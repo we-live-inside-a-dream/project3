@@ -9,25 +9,47 @@ import AvailabilityModal from "./AvailabilityModal";
 import NamePicTableData from "../reusable/NamePicTableData";
 import StyledPage from "../reusable/styled-page/StyledPage";
 
-function EmployeeAvailabilityDetail({}) {
+function EmployeeAvailabilityDetail({
+  userId,
+  availabilityId,
+  userAvailability,
+}) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [maxHoursIsOpen, setMaxHoursIsOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [maxHoursPerWeek, setMaxHoursPerWeek] = useState(0);
+  const [id, setId] = useState();
   const [availability, setAvailability] = useState({
-    days: [],
     day: "",
     maxHoursPerWeek: 0,
     firstName: "",
     lastName: "",
     employeeProfileId: "",
   });
+
   let params = useParams();
-  let id = params.id;
+  useEffect(() => {
+    if (params) {
+      setId(params.id);
+    }
+    if (availabilityId) {
+      setId(availabilityId);
+    }
+    // if (userId) {
+    //   // setId(userId);
+    //   setAvailability(userAvailability);
+    //   setFirstName(userAvailability?.firstName);
+    //   setlastName(userAvailability?.lastName);
+    //   setMaxHoursPerWeek(userAvailability?.maxHoursPerWeek);
+    // }
+  }, [availabilityId, params]);
 
   useEffect(() => {
+    if (!id) return;
+    console.log("userId", userId);
+    console.log("id", id);
     const fetchAvailabilityById = async () => {
       let fetchResult = await fetch("/api/availability/availability-day/" + id);
       let theAvailability = await fetchResult.json();

@@ -1,4 +1,3 @@
-import { relativeTimeRounding } from "moment";
 import React from "react";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
@@ -8,6 +7,7 @@ function NamePicTableData({
   onClick,
   firstName,
   lastName,
+  setModalOpen,
   position,
 }) {
   return (

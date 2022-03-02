@@ -66,4 +66,6 @@ delete http://localhost:5001/api/businessDays/delete/friday
 
 ###
 get http://localhost:5001/api/businessDays/list
+###
+get http://localhost:5001/api/positions/get-all
 

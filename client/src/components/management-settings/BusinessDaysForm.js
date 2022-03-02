@@ -153,11 +153,16 @@ function BusinessDaysForm() {
           </StyledTable>
           <br />
           <label>Weekday</label>
-          <Select
+          <div style={{ width: "50%"}}>
+          <Select 
             defaultValue={createWeekDays}
             options={weekDaysData}
             onChange={createWeekDayHandler}
           />
+          </div>
+          <br/>
+          <div style={{display: "inline-flex"}}>
+            <div style={{ margin:"auto" }}>
           <label>Open Time</label>
           <BasicTimePicker
             type="time"
@@ -166,6 +171,8 @@ function BusinessDaysForm() {
               onInputUpdate(value, setStart);
             }}
           />
+          </div>
+          <div style={{ margin:"auto" }}>
           <label>Close Time</label>
           <BasicTimePicker
             type="time"
@@ -174,10 +181,9 @@ function BusinessDaysForm() {
               onInputUpdate(value, setEnd);
             }}
           />
-
-          
-
-
+          </div>
+          </div>
+          <div>
           <StyledButton
             onClick={() => {
               postData();
@@ -185,6 +191,7 @@ function BusinessDaysForm() {
           >
             Submit
           </StyledButton>
+          </div>
         </div>
       </StyledForm>
     </StyledFormWrapper>

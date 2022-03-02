@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle, css } from "styled-components";
 
 //background
-import background from "../assets/agenda.jpg";
+import background from "../assets/vector-bg.jpg";
 import { Link } from "react-router-dom";
 
 export const colors = {
@@ -9,7 +9,9 @@ export const colors = {
   darkTeal: "#4488AB",
   darkPurple: "indigo",
   darkCharcoal: "#282c34",
-  blue: "#034efc",
+  torquoise: "#1fb6fb",
+  blue: "#1484b6",
+  teal: "#18a6e8",
   darkTeal2: "#07889b",
   red: "#DC2626",
 };
@@ -30,7 +32,7 @@ export const StyledLogIn = createGlobalStyle`
 
 export const StyledContainer = styled.div`
   margin: 0;
-  min-height: 90vh;
+  min-height: 93vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,13 +80,12 @@ export const StyledFormWrapper = styled.div`
 export const StyledForm = styled.div`
   width: 100%;
   height: 48vh;
-  min-width: 400px;
+  min-width: 350px;
   max-width: 20vw;
-  padding: 40px;
+  padding: 20px 50px 20px 50px;
   background-color: #fff;
-  border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 15px 30px 30px 30px rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledInput = styled.input`
@@ -108,7 +109,7 @@ export const StyledTextArea = styled.textarea`
 `;
 export const StyledButton = styled.button`
   /* background-color: #f7797d; */
-  background-color: #03a1fc;
+  background-color: #1fb6fb;
   justify-content: center;
   color: #fff;
   font-size: 17px;
@@ -250,12 +251,13 @@ export const ButtonGroup = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 15px;
+  margin-top: 25px;
 `;
 
 export const LinkContainer = styled.div`
   text-align: center;
   margin: auto;
+  margin-top: 25px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -279,7 +281,7 @@ export const TextLink = styled(Link)`
   text-decoration: none;
   color: ${colors.dark1};
   transition: ease-in-out 0.3s;
-  
+
   &:hover {
     text-decoration: underline;
     letter-spacing: 1px;

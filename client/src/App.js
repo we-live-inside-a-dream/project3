@@ -45,7 +45,7 @@ function App() {
     <Providers>
       {console.log("after providers")}
       <div
-        style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}
+        style={{ display: "grid", gridTemplateRows: "7vh 1fr" }}
         className="App"
       >
         <GlobalStyle />
@@ -215,7 +215,6 @@ function App() {
           <Route path="/custom" element={<WeekSchedulePosition />}></Route>
           {/* last router */}
         </Routes>
-        )
       </div>
     </Providers>
   );

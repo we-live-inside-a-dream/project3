@@ -44,6 +44,11 @@ const positionValidation = function (value) {
   // alert("position is ok");
   else return null;
 };
+const permissionsValidation = function (value) {
+  if (value.length === 0) {
+    return "at least one permission is required";
+  } else return null;
+};
 
 const statusValidation = function (value) {
   if (value.length === 0) {
@@ -94,4 +99,5 @@ module.exports = {
   dateValidation,
   timeValidation,
   requiredValidation,
+  permissionsValidation,
 };

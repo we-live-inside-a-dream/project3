@@ -30,23 +30,22 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   phoneNumber: {
     type: String,
     required: true,
   },
-
   positions: {
     type: [String],
     required: true,
   },
   permissions: {
-    type: String,
+    type: [String],
     required: true,
   },
   status: {
-    type: String,
+    type: [String],
     required: true,
   },
   verified: { type: Boolean, default: false },
@@ -84,10 +83,12 @@ const logIn = async (user) => {
 };
 
 const listOfEmployees = async () => {
-  return EmployeeProfile.find({}).select(["-password"]);
+  return EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
+    "-password",
+  ]);
 };
 const getActiveEmployeeNames = async () => {
-  let name = EmployeeProfile.find({ status: "active" }).select([
+  let name = EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
     "firstName",
     "lastName",
     "_id",

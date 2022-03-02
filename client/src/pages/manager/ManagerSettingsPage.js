@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import StyledPageTitle from "../../components/reusable/styled-page/StyledPageTitle";
 import PositionSettings from "../../components/management-settings/PositionSettings";
+import BusinessDaysForm from "../../components/management-settings/BusinessDaysForm";
 
 function ManagerSettingsPage() {
   const [positionsView, setPositionsView] = useState(false);
@@ -28,7 +29,7 @@ function ManagerSettingsPage() {
           Business Days & Times Settings {daysHoursView === false ? "▾" : "▴"}
         </h3>
         {daysHoursView === true && (
-          <h3>HERE IS WHERE SOME CONTENT WILL BE!!!</h3>
+          <BusinessDaysForm />
         )}
         <h3
           style={{ color: "var(--accentColorTitle)", cursor: "pointer" }}

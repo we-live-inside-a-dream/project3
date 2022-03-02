@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Select from "react-select";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   // StyledEmployeeForm,
   StyledFormWrapper,
@@ -17,9 +17,11 @@ import {
   statusValidation,
   positionValidation,
   passwordValidation,
+  permissionsValidation,
 } from "../validateForms.js";
+import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
 
-const positionData = [
+const permissionsData = [
   { value: "manager", label: "Manager" },
   { value: "supervisor", label: "Supervisor" },
   { value: "employee", label: "Employee" },
@@ -36,15 +38,18 @@ const EmployeeEditForm = ({
   setId,
   setCurrentCreateTab,
   existingValues,
+  edit,
 }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState([]);
+  // const [password, setPassword] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
-  const [status, setStatus] = useState(null);
-  const [defaultStatus, setDefaultStatus] = useState(null);
+  const [status, setStatus] = useState([]);
+  const [permissions, setPermissions] = useState([]);
+  // const [defaultStatus, setDefaultStatus] = useState([]);
+  // const [defaultPermissions, setDefaultPermissions] = useState([]);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -52,30 +57,52 @@ const EmployeeEditForm = ({
   const [posMessageVal, setPosMessageVal] = useState(null);
   const [statusMessageVal, setStatusMessageVal] = useState(null);
   const [passMessageVal, setPassMessageVal] = useState(null);
+  const [permissMessageVal, setPermissMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
-  // const [permissions, setPermissions] = useState("");
 
-  // const [message, setMessage] = useState("");
+  const value = useManagerSettings();
+  const positionsList = value.positions;
+  let navigate = useNavigate();
 
-  // const [positionToAdd, setPositionToAdd] = useState("");
-  // let navigate = useNavigate();
+  console.log("EXISTINGVALUES,", existingValues);
 
   useEffect(() => {
-    const typeFilter = statusData?.filter((r) => r.value === status);
-    setDefaultStatus(typeFilter);
-    console.log("this is status", status);
-  }, [status]);
+    if (existingValues) {
+      let currentPositions = [];
+      positionsList?.forEach((line) => {
+        if (existingValues?.positions?.includes(line.value)) {
+          currentPositions.push(line);
+        }
+      });
+      setPositions(currentPositions);
+    }
+  }, [existingValues, permissions, positionsList, status]);
 
-  // useEffect(() => {
-  //   if (positionsData) {
-  //     empNames.map((person) => {
-  //       return contactsData.push({
-  //         value: `${person._id}`,
-  //         label: `${person.firstName} ${person.lastName[0]}`,
-  //       });
-  //     });
-  //   }
-  // }, [empNames]);
+  useEffect(() => {
+    if (existingValues) {
+      let currentStatus = [];
+      statusData.forEach((line) => {
+        if (existingValues?.status?.includes(line.value)) {
+          currentStatus.push(line);
+        }
+      });
+      setStatus(currentStatus);
+    }
+  }, [existingValues]);
+  console.log("CURRENT STATUS %%%%%%%%%%%%%%%%", status);
+
+  useEffect(() => {
+    if (existingValues) {
+      let currentPermissions = [];
+      permissionsData.forEach((line) => {
+        if (existingValues?.permissions?.includes(line.value)) {
+          currentPermissions.push(line);
+        }
+      });
+      setPermissions(currentPermissions);
+    }
+  }, [existingValues]);
+  console.log("CURRENT PERMISSIONS %%%%%%%%%%%%%%%%", permissions);
 
   useEffect(() => {
     if (existingValues) {
@@ -83,8 +110,24 @@ const EmployeeEditForm = ({
       setLastName(existingValues.lastName);
       setEmail(existingValues.email);
       setPhoneNumber(existingValues.phoneNumber);
-      setPositions(existingValues.positions);
-      setStatus(existingValues.status);
+      // setStatus({ value: existingValues.status[0] });
+      // setPermissions({ value: existingValues.permissions[0] });
+
+      // setStatus(
+      //   existingValues.status.map((item) => {
+      //     return { value: item };
+      //   })
+      // );
+      // setPermissions(
+      //   existingValues.permissions.map((item) => {
+      //     return { value: item };
+      //   })
+      // );
+      setPositions(
+        existingValues.positions.map((item) => {
+          return { value: item };
+        })
+      );
     }
   }, [existingValues]);
 
@@ -94,35 +137,37 @@ const EmployeeEditForm = ({
   }
 
   const handlePositionChange = (newPositions) => {
-    // let array = []
-    // newPositions.map((x) => array.push(x.value));
-    // console.log("THIS IS OUR ARRAY", array);
-    // console.log("new positions", newPositions)
+    console.log(newPositions);
     setPositions(newPositions);
-    // setPermissions("")
-    console.log("this is positions", positions);
+    console.log("this is positions", newPositions);
     setPosMessageVal(positionValidation(newPositions));
-    console.log("Positions", newPositions);
+    console.log("Positions", positions);
   };
+  console.log("this is positions", positions);
+
+  const handlePermissionsChange = (newPermission) => {
+    setPermissions(newPermission);
+    console.log("this is permissions", permissions);
+    setPermissMessageVal(permissionsValidation(newPermission));
+    console.log("Permissions", permissions);
+  };
+  console.log("this is permissions", permissions);
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
     setStatusMessageVal(statusValidation(newStatus));
-    console.log("status", newStatus);
   };
+  console.log("status", status);
 
   async function createEmployee(newEmployee) {
-    // const newEmployee = {firstName: "", lastName: ""}
     let response = await fetch("/api/employeeProfile/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newEmployee),
-      // body: newEmployee
     });
     let id = await response.json();
-    // navigate("/createEmployee/" + newEmployee._id);
     console.log("just before the id is set to ", id);
     setId(id);
     console.log("the id for the created employee is:", response);
@@ -135,9 +180,9 @@ const EmployeeEditForm = ({
       phoneMessageVal ||
       fnameMessageVal ||
       lnameMessageVal ||
-      passMessageVal ||
       posMessageVal ||
-      statusMessageVal
+      statusMessageVal ||
+      permissMessageVal
     ) {
       console.log(
         "email:",
@@ -148,13 +193,14 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        "password:",
-        passMessageVal,
         "position:",
         posMessageVal,
         "status:",
-        statusMessageVal
+        statusMessageVal,
+        "permissions:",
+        permissMessageVal
       );
+
       validation = "please make sure that all fields are valid";
       return validation;
     } else
@@ -167,12 +213,12 @@ const EmployeeEditForm = ({
         fnameMessageVal,
         "last:",
         lnameMessageVal,
-        "password:",
-        passMessageVal,
         "position:",
         posMessageVal,
         "status:",
-        statusMessageVal
+        statusMessageVal,
+        "permissions:",
+        permissMessageVal
       );
     validation = null;
     return validation;
@@ -183,17 +229,17 @@ const EmployeeEditForm = ({
       firstName,
       lastName,
       email,
-      password,
       phoneNumber,
       positions: positions.map((p) => p.value),
-      status: status.value,
+      status: [status.value],
+      permissions: [permissions.value],
     };
     validateForm();
-    console.log("validate form", validation);
+    // console.log("validate form", validation);
     console.log("Saving new employee information", newEmployeeInfo);
 
     //happy if existing values and validate form is all good:
-    if (!existingValues && validation === null) {
+    if (existingValues === null && validation === null) {
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
@@ -201,15 +247,9 @@ const EmployeeEditForm = ({
 
     if (existingValues) {
       await onSave(newEmployeeInfo);
+      navigate("/human-resources");
     }
-    // return "this form needs serious help";
   }
-
-  // function onAddPosition() {
-  //   positions.push(positionToAdd);
-  //   setPositionToAdd("");
-  //   setPositions(positions);
-  // }
 
   return (
     <>
@@ -222,7 +262,7 @@ const EmployeeEditForm = ({
             <label style={{ marginBottom: "0px" }}>
               First Name
               <RedStar />
-            </label>{" "}
+            </label>
             {firstName === "" ? (
               <p
                 style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
@@ -281,7 +321,7 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          {password && (
+          {/* {password && (
             <div>
               <label>
                 password
@@ -318,7 +358,7 @@ const EmployeeEditForm = ({
                 }}
               />
             </div>
-          )}
+          )} */}
           <div>
             <label>
               Phone Number
@@ -344,67 +384,96 @@ const EmployeeEditForm = ({
               }}
             />
           </div>
-          <div>
-            <label style={{ marginBottom: "10px", display: "block" }}>
-              Positions
-              <RedStar />
-            </label>{" "}
-            {!positions ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            <Select
-              isMulti
-              name="employee position"
-              defaultValue={positions}
-              options={positionData}
-              onChange={handlePositionChange}
-              className="basic-multi-select"
-              classNamePrefix="select"
-            ></Select>
-            {/* <Select
-              value={positions}
-              options={positionData}
-              onChange={handlePositionChange}
-              required="true"
-            /> */}
-          </div>
-          <StyledButton onClick={postData}>Save Details</StyledButton>
-          
+          {edit !== false ? (
+            <>
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Positions
+                  <RedStar />
+                </label>{" "}
+                {!positions ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  isMulti
+                  name="employee position"
+                  value={positions}
+                  // value={[{ value: "dog", label: "Dog" }]}
+                  options={positionsList}
+                  onChange={handlePositionChange}
+                  // required="true"
+                ></Select>
+              </div>
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Permissions
+                  <RedStar />
+                </label>{" "}
+                {!positions ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  value={permissions}
+                  options={permissionsData}
+                  onChange={handlePermissionsChange}
+                  // required="true"
+                ></Select>
+              </div>
+
+              <div>
+                <label style={{ marginBottom: "10px", display: "block" }}>
+                  Status
+                  <RedStar />
+                </label>
+
+                {!status ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                <Select
+                  value={status}
+                  options={statusData}
+                  onChange={handleStatusChange}
+                  // required="true"
+                />
+              </div>
+            </>
+          ) : null}
 
           <div>
-            <label style={{ marginBottom: "10px", display: "block" }}>
-              Status
-              <RedStar />
-            </label>
-            
-            {!status ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                }}
-              ></p>
-            ) : null}
-            <Select
-              defaultValue={defaultStatus}
-              options={statusData}
-              onChange={handleStatusChange}
-              required="true"
-            />
+            <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
+              Save Details
+            </StyledButton>
           </div>
           <div>
-          {shown === true ? <p style={{
+            {/* {shown === true ? (
+              <p
+                style={{
                   color: "red",
                   fontSize: "20px",
                   marginBottom: "0px",
-                }}>form is invalid</p> : null}
+                }}
+              >
+                form is invalid
+              </p>
+            ) : null} */}
           </div>
         </StyledForm>
       </StyledFormWrapper>

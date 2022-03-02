@@ -72,7 +72,7 @@ function NavBar() {
               <StyledNavButton>LOG OUT</StyledNavButton>
             </Link>
           )}
-          <StyledAvatarButton />
+          <StyledAvatarButton to={"/profile"} />
         </RightContainer>
       </NavbarInnerContainer>
       {extendNavbar && (

@@ -41,9 +41,9 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
   let buttonMonth =
     activeButton === 5
       ? "var(--styledButtonHoverBackground)"
-      : activeButton === 6
-      ? "var(--styledButtonHoverBackground)"
-      : "var(--styledButtonBackground)";
+      : // : activeButton === 6
+        // ? "var(--styledButtonHoverBackground)"
+        "var(--styledButtonBackground)";
 
   let buttonPositions =
     currentTab % 2 == 0

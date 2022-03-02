@@ -19,7 +19,7 @@ const Profile = () => {
   const [employeeProfileView, setEmployeeProfileView] = useState(false);
   const [availabilityView, setAvailabilityView] = useState(false);
   const [employee, setEmployee] = useState();
-
+  const edit = false;
   useEffect(() => {
     if (id) {
       const fetchAvailabilityById = async () => {
@@ -75,7 +75,11 @@ const Profile = () => {
           {employeeProfileView === false ? "▾" : "▴"}
         </h3>
         {employeeProfileView === true && (
-          <EmployeeEditForm existingValues={employee} onSave={updateEmployee} />
+          <EmployeeEditForm
+            edit={edit}
+            existingValues={employee}
+            onSave={updateEmployee}
+          />
         )}
 
         <h3
@@ -85,7 +89,11 @@ const Profile = () => {
           Availability Settings {availabilityView === false ? "▾" : "▴"}
         </h3>
         {availabilityView === true && (
-          <AvailabilityDetail availabilityId={availability?._id} />
+          //   <AvailabilityDetail availabilityId={availability?._id} />
+          <EmployeeAvailabilityForm
+            existingValues={availability}
+            theId={availability._id}
+          />
         )}
         {/* <h3
           style={{ color: "var(--accentColorTitle)", cursor: "pointer" }}

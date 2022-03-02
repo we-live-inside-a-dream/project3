@@ -83,10 +83,12 @@ const logIn = async (user) => {
 };
 
 const listOfEmployees = async () => {
-  return EmployeeProfile.find({}).select(["-password"]);
+  return EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
+    "-password",
+  ]);
 };
 const getActiveEmployeeNames = async () => {
-  let name = EmployeeProfile.find({ status: "active" }).select([
+  let name = EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
     "firstName",
     "lastName",
     "_id",

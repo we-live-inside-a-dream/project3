@@ -67,15 +67,17 @@ function EmployeeProfileList() {
           </tr>
         </thead>
         <tbody>
-          {employees?.map((employee, index) => {
+          {employees?.map((employee) => {
             return (
               <StyledTableRow key={employee._id}>
-                <NamePicTableData
-                  onClick={() => selectProfile(employee._id)}
-                  firstName={employee.firstName}
-                  lastName={employee.lastName}
-                  edit="edit"
-                />
+                <td>
+                  <NamePicTableData
+                    onClick={() => selectProfile(employee._id)}
+                    firstName={employee.firstName}
+                    lastName={employee.lastName}
+                    edit="edit"
+                  />
+                </td>
                 <StyledTableData>{employee.email}</StyledTableData>
                 <StyledTableData>{employee.phoneNumber}</StyledTableData>
                 <StyledTableData>

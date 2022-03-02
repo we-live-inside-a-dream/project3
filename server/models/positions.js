@@ -13,7 +13,11 @@ async function createPosition(Data) {
 }
 
 async function getPositions() {
+<<<<<<< HEAD
   let allPositions = await Position.find({}).select([-"_id"]);
+=======
+  let allPositions = await Position.find({}).select(["-_id"]);
+>>>>>>> 2111b68ebabd58f8f8311d429b26663ac0a063c1
   console.log("FROM MODEL, all positions", allPositions);
   return allPositions;
 }

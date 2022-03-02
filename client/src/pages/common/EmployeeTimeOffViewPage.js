@@ -177,7 +177,7 @@ const EmployeeTimeOffViewPage = () => {
               </tbody>
             </StyledTable>
 
-            {timeOffRequests?.length < 1 ? <h1>Do drugs</h1> : null}
+            {timeOffRequests?.length < 1 ? <h1>You Have no time off requests</h1> : null}
 
             <div styled={{ padding: "40%", position: "relative" }}>
               <StyledButton

@@ -13,6 +13,7 @@ import {
   ButtonGroup,
   TextLink,
   LinkContainer,
+  ErrorMsg,
   // ErrorMsg,
 } from "./StyledLogIn";
 import AuthenticationContext from "./AuthenticationContext";
@@ -23,11 +24,10 @@ export default function LogIn() {
   const [password, setPassword] = useState("");
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [passMessageVal, setPassMessageVal] = useState(null);
-  // const [message, setMessage] = useState();
 
   let validation;
   async function validateForm() {
-    if (emailMessageVal || passMessageVal) {
+    if (emailMessageVal === "" || passMessageVal === "") {
       console.log("email:", emailMessageVal, "password:", passMessageVal);
       validation = "Please make sure all fields are filled in properly.";
       return validation;
@@ -74,26 +74,6 @@ export default function LogIn() {
         <StyledForm type="submit">
           <StyledHeading>Log In</StyledHeading>
           <StyledLabel>Email</StyledLabel>
-          {!emailMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            ></p>
-          ) : null}
-          {emailMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            >
-              {emailMessageVal}
-            </p>
-          ) : null}
           <StyledInput
             margin="normal"
             required
@@ -107,30 +87,9 @@ export default function LogIn() {
             placeholder="Email.."
             onChange={(event) => {
               handleChange(event, setEmail);
-              setEmailMessageVal(emailValidation(event.target.value));
             }}
           />
           <StyledLabel>Password</StyledLabel>
-          {!passMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            ></p>
-          ) : null}
-          {passMessageVal ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            >
-              {passMessageVal}
-            </p>
-          ) : null}
           <StyledInput
             margin="normal"
             required
@@ -144,18 +103,57 @@ export default function LogIn() {
             placeholder="Password.."
             onChange={(event) => {
               handleChange(event, setPassword);
-              setPassMessageVal(passwordValidation(event.target.value));
             }}
+            // onSubmit={setPassMessageVal(passwordValidation(password))}
             onKeyPress={handleKeypress}
           />
-          {/* <ErrorMsg>{message}</ErrorMsg> */}
+          {!emailMessageVal ? (
+            <ErrorMsg
+              style={{
+                color: "red",
+                fontSize: "12px",
+                marginBottom: "0px",
+              }}
+            ></ErrorMsg>
+          ) : null}
+          {emailMessageVal ? (
+            <ErrorMsg
+              style={{
+                color: "red",
+                fontSize: "12px",
+                marginBottom: "0px",
+              }}
+            >
+              {emailMessageVal}
+            </ErrorMsg>
+          ) : null}
+          {!passMessageVal ? (
+            <ErrorMsg
+              style={{
+                color: "red",
+                fontSize: "12px",
+                marginBottom: "0px",
+              }}
+            ></ErrorMsg>
+          ) : null}
+          {passMessageVal ? (
+            <ErrorMsg
+              style={{
+                color: "red",
+                fontSize: "12px",
+                marginBottom: "0px",
+              }}
+            >
+              {passMessageVal}
+            </ErrorMsg>
+          ) : null}
           <ButtonGroup>
             <StyledButton id="submit" type="submit" onClick={handleSubmit}>
               Log In
             </StyledButton>
           </ButtonGroup>
           <LinkContainer>
-            <TextLink to="/forgotpassword">Forgot Password</TextLink>
+            <TextLink to="/forgotpassword">Forgot Password?</TextLink>
           </LinkContainer>
         </StyledForm>
       </StyledFormWrapper>

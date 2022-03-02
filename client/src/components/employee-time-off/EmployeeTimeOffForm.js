@@ -54,14 +54,18 @@ const EmployeeTimeOffForm = ({
   const user = authContext.user;
 
   useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      const typeFilter = typeData?.filter((r) => r.value === type);
-      setDefaultType(typeFilter);
-      console.log("this is type", type);
+    if (existingValues) {
+      let isMounted = true;
+      if (isMounted) {
+        const typeFilter = typeData?.filter(
+          (r) => r.value === existingValues.type
+        );
+        setType(typeFilter);
+        console.log("this is type", type);
+      }
+      isMounted = false;
     }
-    isMounted = false;
-  }, [type]);
+  }, [existingValues, type]);
 
   useEffect(() => {
     if (existingValues) {
@@ -163,13 +167,13 @@ const EmployeeTimeOffForm = ({
     } else setShown(true);
 
     // onSave();
-    if (existingValues) {
-      console.log("New Time off...", newEmployeeTimeOff);
-      // await updateShift(newEmployeeTimeOff);
-    } else {
-      console.log("New Time off...", newEmployeeTimeOff);
-      // await createTimeOff(newEmployeeTimeOff);
-    }
+    // if (existingValues) {
+    //   console.log("New Time off...", newEmployeeTimeOff);
+    //   // await updateShift(newEmployeeTimeOff);
+    // } else {
+    //   console.log("New Time off...", newEmployeeTimeOff);
+    //   // await createTimeOff(newEmployeeTimeOff);
+    // }
   }
 
   console.log("USER:", user?.firstName, user?.lastName);
@@ -186,11 +190,7 @@ const EmployeeTimeOffForm = ({
             <RedStar />
           </label>
 
-          <Select
-            defaultValue={defaultType}
-            options={typeData}
-            onChange={typeHandler}
-          />
+          <Select value={type} options={typeData} onChange={typeHandler} />
         </div>
         <div></div>
 

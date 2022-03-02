@@ -10,6 +10,7 @@ import {
 import StyledEditButton from "../../components/reusable/Inputs/StyledEditButton";
 import * as fns from "date-fns";
 import StyledTable from "../reusable/tables/StyledTable";
+import { requiredValidation, timeValidation } from "../validateForms";
 
 const weekDaysData = [
   { value: "monday", label: "Monday" },
@@ -40,6 +41,7 @@ function BusinessDaysForm() {
     setCreateWeekDays(newWeekDay);
     console.log("created weekday", newWeekDay);
   };
+
   console.log("this is setBusinessDayCreated", setBusinessDayCreated);
 
   function onInputUpdate(value, setter) {
@@ -124,14 +126,10 @@ function BusinessDaysForm() {
       start: fns.format(new Date(start), "HH:mm").toString(),
       end: fns.format(new Date(end), "HH:mm").toString(),
     };
-    //   if(!existingValues) {
-    //     await createBusinessDays(newBusinessDaysInfo)
-    //   }else if(existingValues) {
-    //      await updateBusinessDay(newBusinessDaysInfo)
-    //   }
+    validateForm();
     if (validation === null) {
       await createBusinessDays(newBusinessDaysInfo);
-    }else setShown(true)
+    } else setShown(true);
   }
 
   return (
@@ -184,9 +182,25 @@ function BusinessDaysForm() {
           <br />
           <label>Weekday</label>
           <div style={{ width: "50%" }}>
+            {createWeekDays === "" ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "10px",
+                  marginBottom: "0px",
+                  marginTop: "0px",
+                }}
+              >
+                {"required"}
+              </p>
+            ) : null}
             <Select
               defaultValue={createWeekDays}
               options={weekDaysData}
+              // onChange={() => {
+              //   createWeekDayHandler(),
+              //     setWeekDayMessageVal(requiredValidation(createWeekDays));
+              // }}
               onChange={createWeekDayHandler}
             />
           </div>
@@ -203,14 +217,39 @@ function BusinessDaysForm() {
               />
             </div>
             <div style={{ margin: "auto" }}>
-              <label>Close Time</label>
-              <BasicTimePicker
-                type="time"
-                value={end}
-                onChange={(value) => {
-                  onInputUpdate(value, setEnd);
-                }}
-              />
+              <label>
+                Close Time
+                {!endTimeMessageVal ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                      marginTop: "0px",
+                    }}
+                  ></p>
+                ) : null}
+                {endTimeMessageVal ? (
+                  <p
+                    style={{
+                      color: "red",
+                      fontSize: "10px",
+                      marginBottom: "0px",
+                      marginTop: "0px",
+                    }}
+                  >
+                    {endTimeMessageVal}
+                  </p>
+                ) : null}
+                <BasicTimePicker
+                  type="time"
+                  value={end}
+                  onChange={(value) => {
+                    onInputUpdate(value, setEnd);
+                    setEndTimeMessageVal(timeValidation(start, value));
+                  }}
+                />
+              </label>
             </div>
           </div>
           <div>
@@ -222,6 +261,17 @@ function BusinessDaysForm() {
               Submit
             </StyledButton>
           </div>
+          {shown === true ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "20px",
+                marginBottom: "0px",
+              }}
+            >
+              form is invalid
+            </p>
+          ) : null}
         </div>
       </StyledForm>
     </StyledFormWrapper>

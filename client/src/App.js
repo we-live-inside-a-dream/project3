@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import {Helmet} from "react-helmet";
 // import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
@@ -44,6 +45,12 @@ import Profile from "./pages/common/Profile";
 function App() {
   return (
     <Providers>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Day2Day</title>
+        <link rel="canonical" href="http://mysite.com/example" />
+        <meta name="description" content="Day2Day Title" />
+      </Helmet>
       {console.log("after providers")}
       <div
         style={{ display: "grid", gridTemplateRows: "8vh 1fr" }}

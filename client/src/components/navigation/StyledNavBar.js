@@ -137,7 +137,7 @@ export const StyledNavButton = styled.button`
     transform: translate(5% 5%);
   }
 `;
-export const StyledAvatarButton = styled.div`
+export const StyledAvatarButton = styled(Link)`
   background-color: grey;
   height: 2.8rem;
   width: 2.8rem;

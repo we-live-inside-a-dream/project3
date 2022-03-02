@@ -37,6 +37,7 @@ import BusinessDaysForm from "./components/management-settings/BusinessDaysForm"
 import ResetPassword from "./components/login/ResetPassword";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 import MonthSchedulePage from "./pages/manager/MonthSchedulePage";
+import Profile from "./pages/common/Profile";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -188,7 +189,7 @@ function App() {
             path="/profile"
             element={
               <RequireAuth>
-                <ProfilePage />
+                <Profile />
               </RequireAuth>
             }
           />
@@ -208,6 +209,14 @@ function App() {
               </RequireAuth>
             }
           />
+          {/* <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
+            }
+          /> */}
           <Route
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}

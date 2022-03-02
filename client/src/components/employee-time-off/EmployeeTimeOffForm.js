@@ -22,7 +22,6 @@ const typeData = [
   { value: "vacation-unpaid", label: "Vacation Unpaid" },
   { value: "canada-day", label: "Canada Day" },
   { value: "sick-day", label: "Sick Day" },
-  { value: "dead", label: "Im Dead" },
 ];
 
 const EmployeeTimeOffForm = ({

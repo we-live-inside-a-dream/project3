@@ -79,7 +79,7 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledForm = styled.div`
   width: 100%;
-  height: 48vh;
+  height: 45vh;
   min-width: 350px;
   max-width: 20vw;
   padding: 20px 50px 20px 50px;

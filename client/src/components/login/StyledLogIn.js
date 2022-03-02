@@ -11,6 +11,7 @@ export const colors = {
   darkCharcoal: "#282c34",
   torquoise: "#1fb6fb",
   blue: "#1484b6",
+  darkblue: "#0b4661",
   teal: "#18a6e8",
   darkTeal2: "#07889b",
   red: "#DC2626",
@@ -109,22 +110,24 @@ export const StyledTextArea = styled.textarea`
 `;
 export const StyledButton = styled.button`
   /* background-color: #f7797d; */
-  background-color: #1fb6fb;
+  background-color: ${colors.blue};
   justify-content: center;
   color: #fff;
   font-size: 17px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 20px;
   height: 40px;
   padding: 0px 20px;
   margin-bottom: 20px;
   margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
   box-sizing: border-box;
   transition: ease-in-out 0.2s;
   bottom: 0px;
 
   &:hover {
-    background-color: ${colors.blue};
+    background-color: ${colors.darkblue};
     color: ${colors.theme};
     font-weight: 600;
     cursor: pointer;

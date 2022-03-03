@@ -11,6 +11,7 @@ export const colors = {
   darkCharcoal: "#282c34",
   torquoise: "#1fb6fb",
   blue: "#1484b6",
+  darkblue: "#0b4661",
   teal: "#18a6e8",
   darkTeal2: "#07889b",
   red: "#DC2626",
@@ -109,22 +110,24 @@ export const StyledTextArea = styled.textarea`
 `;
 export const StyledButton = styled.button`
   /* background-color: #f7797d; */
-  background-color: #1fb6fb;
+  background-color: ${colors.blue};
   justify-content: center;
   color: #fff;
   font-size: 17px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 20px;
   height: 40px;
   padding: 0px 20px;
   margin-bottom: 20px;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-left: 40px;
+  margin-right: 40px;
   box-sizing: border-box;
   transition: ease-in-out 0.2s;
   bottom: 0px;
 
   &:hover {
-    background-color: ${colors.blue};
+    background-color: ${colors.darkblue};
     color: ${colors.theme};
     font-weight: 600;
     cursor: pointer;
@@ -174,15 +177,23 @@ export const StyledError = styled.div`
 `;
 
 export const StyledForgotPassword = styled.div`
-  width: 100%;
-  justify-content: center;
-  min-width: 400px;
+  min-width: 350px;
   max-width: 20vw;
-  padding: 40px;
+  height: 35vh;
+  padding: 20px 50px 20px 50px;
   background-color: #fff;
-  border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 15px 15px 30px 15px rgba(0, 0, 0, 0.2);
+`;
+
+export const StyledResetPassword = styled.div`
+  min-width: 350px;
+  max-width: 20vw;
+  height: 40vh;
+  padding: 20px 50px 20px 50px;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 15px 15px 30px 15px rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledFormButton = styled.button`
@@ -242,7 +253,7 @@ export const StyledResetContainer = styled.div`
 export const ErrorMsg = styled.div`
   font-size: 13px;
   color: ${colors.red};
-  margin-top: 5px;
+  margin-top: 15px;
   margin-bottom: 10px;
   text-align: center;
 `;

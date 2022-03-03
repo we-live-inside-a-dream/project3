@@ -84,7 +84,7 @@ export default function LogIn() {
             autoComplete="email"
             autoFocus
             value={email}
-            placeholder="Email.."
+            placeholder="user@email.com"
             onChange={(event) => {
               handleChange(event, setEmail);
             }}
@@ -100,7 +100,7 @@ export default function LogIn() {
             id="password"
             autoComplete="current-password"
             value={password}
-            placeholder="Password.."
+            placeholder="* * * * * * * *"
             onChange={(event) => {
               handleChange(event, setPassword);
             }}

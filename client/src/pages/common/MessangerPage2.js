@@ -1,4 +1,4 @@
-import "./messenger.css";
+// import "./messenger.css";
 
 import Conversation from "../../components/messanger2/Conversation";
 import Message from "../../components/messanger2/Message";
@@ -20,7 +20,7 @@ import {
 } from "../../components/messanger2/StyledMessangerPage";
 import { StyledButton } from "../../components/reusable/Inputs/StyledEmployeeForm";
 
-export default function Messenger() {
+export default function Messenger({ show }) {
   const value = useSocket();
   const socket = value.socket;
   // const fetchUnread = value.fetchUnread;
@@ -29,6 +29,8 @@ export default function Messenger() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [margin, setMargin] = useState("auto");
+  const [padding, setPadding] = useState("10px");
   // const [onlineUsers, setOnlineUsers] = useState([]);
 
   // const socket = useRef();
@@ -36,6 +38,15 @@ export default function Messenger() {
   const user = authContext.user;
 
   const scrollRef = useRef();
+
+  useEffect(() => {
+    console.log("show", show);
+  }, [show]);
+  useEffect(() => {
+    if (!show) return;
+    setMargin("0");
+    setPadding("0");
+  }, [show]);
 
   useEffect(() => {
     if (socket == null) return;
@@ -139,11 +150,11 @@ export default function Messenger() {
   return (
     <>
       {/* <Topbar /> */}
-      <StyledMessangerPage>
-        {/* <div className="messenger"> */}
-        {/* <div className="chatMenu"> */}
-        {/* <div className="chatMenuWrapper"> */}
-        {/* {conversations?.map((c) => (
+      <StyledMessangerPage margin={margin} padding={padding}>
+        <div className="messenger">
+          {/* <div className="chatMenu"> */}
+          {/* <div className="chatMenuWrapper"> */}
+          {/* {conversations?.map((c) => (
           <div
           key={c._id}
           onClick={() => {
@@ -155,58 +166,58 @@ export default function Messenger() {
           <div></div>
           </div>
         ))} */}
-        {/* </div> */}
-        {/* </div> */}
-        <ChatBox>
-          {/* <div className="chatBox"> */}
-          <ChatBoxWrapper>
+          {/* </div> */}
+          {/* </div> */}
+          {/* <ChatBox> */}
+          <div className="chatBox">
+            {/* <ChatBoxWrapper> */}
             {/* <div className="chatBoxWrapper"> */}
             {currentChat ? (
               <>
-                <ChatBoxTop>
-                  {/* <div className="chatBoxTop"> */}
+                {/* <ChatBoxTop> */}
+                <div className="chatBoxTop">
                   {messages.map((m) => (
                     <div key={m._id} ref={scrollRef}>
                       <Message message={m} own={m.sender === user._id} />
                     </div>
                   ))}
-                </ChatBoxTop>
+                </div>
+                {/* </ChatBoxTop> */}
 
-                {/* </div> */}
-                <ChatBoxBottom>
-                  {/* <div className="chatBoxBottom"> */}
-                  {/* <textarea */}
-                  <ChatMessageInput
-                    // className="chatMessageInput"
+                {/* <ChatBoxBottom> */}
+                <div className="chatBoxBottom">
+                  {/* <ChatMessageInput */}
+                  <textarea
+                    className="chatMessageInput"
                     placeholder="write something..."
                     onChange={(e) => setNewMessage(e.target.value)}
                     value={newMessage}
                     onKeyPress={handleKeypress}
-                  ></ChatMessageInput>
-                  {/* ></textarea> */}
+                  ></textarea>
+                  {/* ></ChatMessageInput> */}
 
-                  {/* <StyledButton */}
-                  <SendButton
-                    // className="chatSubmitButton"
+                  <button
+                    // <SendButton
+                    className="sendButton"
                     onClick={handleSubmit}
                   >
                     Send
-                  </SendButton>
-                  {/* </StyledButton> */}
-                </ChatBoxBottom>
-                {/* </div> */}
+                    {/* </SendButton> */}
+                  </button>
+                  {/* </ChatBoxBottom> */}
+                </div>
               </>
             ) : (
               <span className="noConversationText">
                 Open a conversation to start a chat.
               </span>
             )}
-          </ChatBoxWrapper>
-          {/* </div> */}
-        </ChatBox>
-        <ContactsList setCurrentChat={setCurrentChat} />
-        {/* </div> */}
-        {/* </div> */}
+            {/* </ChatBoxWrapper> */}
+            {/* </div> */}
+            {/* </ChatBox> */}
+          </div>
+          <ContactsList setCurrentChat={setCurrentChat} />
+        </div>
       </StyledMessangerPage>
     </>
   );

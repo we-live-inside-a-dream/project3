@@ -239,7 +239,7 @@ const EmployeeEditForm = ({
     console.log("Saving new employee information", newEmployeeInfo);
 
     //happy if existing values and validate form is all good:
-    if (existingValues === null && validation === null) {
+    if (!existingValues && validation === null) {
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);

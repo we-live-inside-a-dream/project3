@@ -111,20 +111,20 @@ export const ContactsList = ({ setCurrentChat }) => {
             classNamePrefix="select"
           ></Select>
           <StyledButton onClick={postData}>SELECT FRIENDS</StyledButton>
-          <StyledContactList>
-            {conversations?.map((c) => (
-              <div
-                key={c._id}
-                onClick={() => {
-                  setCurrentChat(c);
-                  fetchUnread();
-                }}
-              >
-                <Conversation id={user?._id} conversation={c} />
-              </div>
-            ))}
-          </StyledContactList>
         </ChatMenuWrapper>
+        <StyledContactList>
+          {conversations?.map((c) => (
+            <div
+              key={c._id}
+              onClick={() => {
+                setCurrentChat(c);
+                fetchUnread();
+              }}
+            >
+              <Conversation id={user?._id} conversation={c} />
+            </div>
+          ))}
+        </StyledContactList>
       </ContactsBox>
     </>
   );

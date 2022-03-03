@@ -350,8 +350,14 @@ const EventEditForm = ({
             value={startDate}
             onChange={(value) => {
               onDateInputUpdate(
-                fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                fns.format(new Date(value), "yyyy-MM-DD").toString(),
                 setStartDate
+              );
+              setDateMessageVal(
+                dateValidation(
+                  startDate,
+                  fns.format(new Date(value), "yyyy-MM-dd").toString()
+                )
               );
             }}
           />
@@ -394,7 +400,7 @@ const EventEditForm = ({
                 );
                 setDateMessageVal(
                   dateValidation(
-                    startDate,
+                    endDate,
                     fns.format(new Date(value), "yyyy-MM-dd").toString()
                   )
                 );

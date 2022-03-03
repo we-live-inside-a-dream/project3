@@ -50,7 +50,7 @@ function EventViewDiv({
   };
   let theTime = function (start, end) {
     console.log("FROM THE TIME FUNCTION", start, end);
-    if (start && end) {
+    if (start === end) {
       return `${moment(start).format("HH:mm a")} - ${moment(start).format(
         "HH:mm a"
       )}`;
@@ -76,7 +76,10 @@ function EventViewDiv({
         )}
       </h3>
       <p>{`Event type: ${theEvent?.type}`}</p>
-      <p>{theDate(theEvent?.startDate, theEvent?.endDate)}</p>
+      <p>
+        {theDate(theEvent?.startDate)}
+        {/* theEvent?.endDate) */}
+      </p>
       <p>{`Time: ${theTime(theEvent?.startTime, theEvent?.endTime)}`}</p>
       <p>{`Notes:
       ${theEvent?.notes}`}</p>

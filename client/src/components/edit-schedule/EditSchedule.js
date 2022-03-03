@@ -165,6 +165,14 @@ function EditSchedule({
       shiftTimeMessageVal ||
       shiftBrakeMessageVal
     ) {
+      console.log(
+      "Employee Message",
+      empNameMessageVal,
+      "Date message", 
+      shiftDateMessageVal,
+      "Time message", 
+      shiftTimeMessageVal,
+    )
       validation = "Please make sure that all fields are valid";
       setShown(true);
       return validation;

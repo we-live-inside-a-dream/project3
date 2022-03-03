@@ -80,7 +80,7 @@ export const StyledFormWrapper = styled.div`
 
 export const StyledForm = styled.div`
   width: 100%;
-  height: 45vh;
+  height: 50vh;
   min-width: 350px;
   max-width: 20vw;
   padding: 20px 50px 20px 50px;
@@ -268,7 +268,7 @@ export const ButtonGroup = styled.div`
 export const LinkContainer = styled.div`
   text-align: center;
   margin: auto;
-  margin-top: 25px;
+  margin-top: 1px;
   margin-left: auto;
   margin-right: auto;
 `;

@@ -7,7 +7,9 @@ export const StyledMessangerPage = styled.div`
     background-color: var(--styledPage);
     /* margin: auto; */
     position: relative;
-    height: calc(75vh - 70px);
+    max-height: 75vh;
+    min-height: 25vh;
+    /* height: calc(75vh - 70px); */
     display: flex;
     min-width: 40em;
     filter: drop-shadow(3px 3px 10px lightgrey);
@@ -31,6 +33,7 @@ export const StyledMessangerPage = styled.div`
   }
   .chatBoxBottom {
     margin-top: 5px;
+
     /* padding: 1em; */
     display: flex;
     justify-content: space-between;
@@ -44,15 +47,35 @@ export const StyledMessangerPage = styled.div`
   .chatMessageInput {
     position: relative;
     width: 85%;
-    height: 100%;
+    height: 95%;
     padding: 0;
+    resize: none;
   }
   .sendButton {
+    font-size: 1em;
+    color: var(--headerWhiteFont);
+    background-color: var(--styledButtonBackground);
+    border: 2px solid var(--styledButtonBackground);
+    border-radius: 3px;
     position: relative;
     top: 0;
+    bottom: 0;
     right: 0;
     height: 100%;
     width: 15%;
+
+    cursor: pointer;
+    transition-duration: 0.4s;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--styledButtonHoverBackground);
+      border: 2px solid var(--styledButtonHoverBorder);
+    }
+    &:active {
+      /* background-color: #3e8e41; */
+      box-shadow: 0 2px #666;
+      transform: translate(5% 5%);
+    }
   }
 
   @media screen and (max-width: 768px) {
@@ -78,10 +101,10 @@ export const StyledContactList = styled.div`
   background-color: var(--styledPage);
   padding: 1em;
   font-size: 15px;
-  height: 75%;
+  max-height: 75%;
 
   overflow-y: auto;
-  position: absolute;
+  position: relative;
   right: 1em;
   bottom: 1em;
   left: 0;
@@ -192,7 +215,7 @@ export const ChatPopup = styled.div`
     /* top: 10rem; */
     /* height: 60vh; */
     /* height: 20rem; */
-    width: 50%;
+    width: 25%;
     /* display: flex; */
     flex-direction: column;
     /* justify-content: space-between; */

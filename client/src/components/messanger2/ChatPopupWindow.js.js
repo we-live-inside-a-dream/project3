@@ -3,13 +3,23 @@ import { ChatButton, ChatPopup, MessageLogo } from "./StyledMessangerPage";
 import MessangerPage2 from "../../pages/common/MessangerPage2";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
 import msgIcon from "./messageIcon.png";
+import { useEffect } from "react";
 
 const ChatPopupWindow = () => {
   const [show, setShow] = React.useState(false);
   const value = useSocket();
   const unread = value.unread;
+
+  // useEffect(() => {
+  //   console.log("show", show);
+  // }, [show]);
   return (
     <>
+      <ChatPopup>
+        <div className={show ? "popup show" : "popup"}>
+          <MessangerPage2 show={show} />
+        </div>
+      </ChatPopup>
       <ChatButton onClick={() => setShow((prevCheck) => !prevCheck)}>
         <MessageLogo src={msgIcon} />x
       </ChatButton>
@@ -28,11 +38,6 @@ const ChatPopupWindow = () => {
           }}
         />
       ) : null}
-      <ChatPopup>
-        <div className={show ? "popup show" : "popup"}>
-          <MessangerPage2 />
-        </div>
-      </ChatPopup>
     </>
   );
 };

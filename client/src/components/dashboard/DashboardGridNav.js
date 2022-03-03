@@ -37,11 +37,11 @@ const DashboardGridNav = function () {
       <TimeOffBox onClick={() => navigate("/timeOff/page")} />
       <CalendarBox />
       <MessagesBox />
-      <AnnouncementsBox />
+      {/* <AnnouncementsBox />
       {authContext?.user?.permissions?.includes("manager") ||
       authContext?.user?.permissions?.includes("admin") ? (
         <FilesBox />
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

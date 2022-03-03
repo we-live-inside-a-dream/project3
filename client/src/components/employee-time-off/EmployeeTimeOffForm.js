@@ -20,7 +20,7 @@ import { dateValidation } from "../validateForms";
 const typeData = [
   { value: "vacation-paid", label: "Vacation Paid" },
   { value: "vacation-unpaid", label: "Vacation Unpaid" },
-  { value: "canada-day", label: "Canada Day" },
+  { value: "mental-health-day", label: "Mental Health Day" },
   { value: "sick-day", label: "Sick Day" },
 ];
 

@@ -122,7 +122,7 @@ function BusinessDaysForm() {
 
   async function postData() {
     let newBusinessDaysInfo = {
-      dayOfTheWeek: createWeekDays.value,
+      dayOfTheWeek: createWeekDays.label,
       start: fns.format(new Date(start), "HH:mm").toString(),
       end: fns.format(new Date(end), "HH:mm").toString(),
     };

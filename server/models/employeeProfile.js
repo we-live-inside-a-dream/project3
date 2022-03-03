@@ -30,7 +30,6 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
   },
   password: {
     type: String,
-    // required: true,
   },
   phoneNumber: {
     type: String,

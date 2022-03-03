@@ -15,7 +15,7 @@ import {
   StyledNavButton,
   StyledAvatarButton,
 } from "./StyledNavBar";
-import LogoImg from "./Logo1.png";
+import LogoImg from "../assets/Logo1.png";
 import { Link } from "react-router-dom";
 import AuthenticationContext from "../login/AuthenticationContext";
 import { useSocket } from "../../components/reusable/context/SocketProvider";

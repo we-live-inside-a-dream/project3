@@ -53,7 +53,7 @@ function EditSchedule({
   // const updateShift = value.updateShift;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [start, setStart] = useState("");
+  const [start, setStart] = useState();
   const [end, setEnd] = useState("");
   const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
@@ -463,8 +463,9 @@ function EditSchedule({
             />
           ))}
           <div></div>
-
-          <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
+          {start ? (
+            <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
+          ) : null}
           <div styles={{ display: "flex", flexDirection: "row" }}>
             {shown === true ? <p>form needs a lotta work</p> : null}
             <StyledButton onClick={validateForm}>SUBMIT</StyledButton>

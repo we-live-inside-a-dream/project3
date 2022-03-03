@@ -230,16 +230,17 @@ const EmployeeEditForm = ({
       lastName,
       email,
       phoneNumber,
+      password: "password12",
       positions: positions.map((p) => p.value),
       status: [status.value],
       permissions: [permissions.value],
     };
     validateForm();
     // console.log("validate form", validation);
-    console.log("Saving new employee information", newEmployeeInfo);
 
     //happy if existing values and validate form is all good:
-    if (existingValues === null && validation === null) {
+    if (!existingValues && validation === null) {
+      console.log("Saving new employee information", newEmployeeInfo);
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
@@ -463,7 +464,7 @@ const EmployeeEditForm = ({
             </StyledButton>
           </div>
           <div>
-            {/* {shown === true ? (
+            {shown === true ? (
               <p
                 style={{
                   color: "red",
@@ -473,7 +474,7 @@ const EmployeeEditForm = ({
               >
                 form is invalid
               </p>
-            ) : null} */}
+            ) : null}
           </div>
         </StyledForm>
       </StyledFormWrapper>

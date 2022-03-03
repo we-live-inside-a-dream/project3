@@ -119,7 +119,7 @@ export const StyledButton = styled.button`
   height: 40px;
   padding: 0px 20px;
   margin-bottom: 20px;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 40px;
   margin-right: 40px;
   box-sizing: border-box;
@@ -177,15 +177,23 @@ export const StyledError = styled.div`
 `;
 
 export const StyledForgotPassword = styled.div`
-  width: 100%;
-  justify-content: center;
-  min-width: 400px;
+  min-width: 350px;
   max-width: 20vw;
-  padding: 40px;
+  height: 35vh;
+  padding: 20px 50px 20px 50px;
   background-color: #fff;
-  border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 15px 15px 30px 15px rgba(0, 0, 0, 0.2);
+`;
+
+export const StyledResetPassword = styled.div`
+  min-width: 350px;
+  max-width: 20vw;
+  height: 40vh;
+  padding: 20px 50px 20px 50px;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 15px 15px 30px 15px rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledFormButton = styled.button`
@@ -245,7 +253,7 @@ export const StyledResetContainer = styled.div`
 export const ErrorMsg = styled.div`
   font-size: 13px;
   color: ${colors.red};
-  margin-top: 5px;
+  margin-top: 15px;
   margin-bottom: 10px;
   text-align: center;
 `;

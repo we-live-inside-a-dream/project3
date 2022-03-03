@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   StyledButton,
   StyledResetContainer,
-  StyledForgotPassword,
   StyledInput,
   StyledLabel,
   StyledHeading,
   ButtonGroup,
+  StyledResetPassword,
 } from "./StyledLogIn";
 
 const ResetPassword = () => {
@@ -74,7 +74,7 @@ const ResetPassword = () => {
   };
   return (
     <StyledResetContainer>
-      <StyledForgotPassword type="submit">
+      <StyledResetPassword type="submit">
         <StyledHeading>Reset Password</StyledHeading>
         <StyledLabel>New Password</StyledLabel>
         <StyledInput
@@ -118,7 +118,7 @@ const ResetPassword = () => {
             Submit
           </StyledButton>
         </ButtonGroup>
-      </StyledForgotPassword>
+      </StyledResetPassword>
     </StyledResetContainer>
   );
 };

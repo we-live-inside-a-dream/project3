@@ -69,7 +69,6 @@ router.post("/create", async (req, res) => {
     firstName == "" ||
     lastName == "" ||
     email == "" ||
-    password == "" ||
     phoneNumber == "" ||
     positions == ""
   ) {
@@ -93,11 +92,6 @@ router.post("/create", async (req, res) => {
     res.json({
       status: "FAILED",
       message: "Invalid email detected.",
-    });
-  } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-    res.json({
-      status: "FAILED",
-      message: "Invalid password detected.",
     });
   } else {
     //checking if the user already exists

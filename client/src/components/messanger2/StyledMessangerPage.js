@@ -1,25 +1,91 @@
 import styled from "styled-components";
 
 export const StyledMessangerPage = styled.div`
-  background-color: var(--styledPage);
-  padding: 20px;
-  margin: auto;
-  position: relative;
-  height: calc(90vh - 70px);
-  display: flex;
-  min-width: 40em;
-  filter: drop-shadow(3px 3px 10px lightgrey);
+  margin: ${(props) => props.margin || "auto"};
+  padding: ${(props) => props.padding || "10px"};
+  .messenger {
+    background-color: var(--styledPage);
+    /* margin: auto; */
+    position: relative;
+    height: calc(75vh - 70px);
+    display: flex;
+    min-width: 40em;
+    filter: drop-shadow(3px 3px 10px lightgrey);
+  }
+  /* .messenger.show {
+    margin: 0;
+  } */
+  .chatBox {
+    flex: 2;
+    position: relative;
+    padding: 1em;
+  }
+  .chatBoxWrapper {
+    padding: 10px;
+  }
+  .chatBoxTop {
+    height: 85%;
+    position: relative;
+    overflow-y: scroll;
+    margin-left: 10px;
+  }
+  .chatBoxBottom {
+    margin-top: 5px;
+    /* padding: 1em; */
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    /* left: 1em; */
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 15%;
+  }
+  .chatMessageInput {
+    position: relative;
+    width: 85%;
+    height: 100%;
+    padding: 0;
+  }
+  .sendButton {
+    position: relative;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 15%;
+  }
+
+  @media screen and (max-width: 768px) {
+    .chatMenu {
+      flex: 1;
+    }
+
+    .chatMenuInput {
+      display: none;
+    }
+
+    .chatBox {
+      flex: 10;
+    }
+
+    .chatOnline {
+      flex: 1px;
+    }
+  }
 `;
 
 export const StyledContactList = styled.div`
   background-color: var(--styledPage);
   padding: 1em;
-  font-size: 0.625rem;
-  /* width: 100%; */
-  /* margin: auto; */
+  font-size: 15px;
+  height: 75%;
+
   overflow-y: auto;
   position: absolute;
-  height: 65vh;
+  right: 1em;
+  bottom: 1em;
+  left: 0;
+
   filter: drop-shadow(3px 3px 10px lightgrey);
   /* :hover {
     background-color: rgb(245, 243, 243);
@@ -27,7 +93,8 @@ export const StyledContactList = styled.div`
 `;
 
 export const ContactsBox = styled.div`
-  flex: 3.5;
+  flex: 1.5;
+  position: relative;
 `;
 
 export const ChatMenuInput = styled.div`
@@ -39,40 +106,43 @@ export const ChatMenuInput = styled.div`
 
 export const ChatMenuWrapper = styled.div`
   padding: 10px;
+
   /* height: 100%; */
 `;
 
-export const ChatBox = styled.div`
-  flex: 5.5;
-`;
+// export const ChatBox = styled.div`
+//   flex: 5.5;
+//   position: relative;
+// `;
 
-export const ChatBoxWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-`;
+// export const ChatBoxWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   position: relative;
+//   height: 100%;
+// `;
 
-export const ChatBoxTop = styled.div`
-  height: 65vh;
-  position: relative;
-  overflow-y: scroll;
-  margin-left: 10px;
-`;
+// export const ChatBoxTop = styled.div`
+//   position: relative;
+//   overflow-y: scroll;
+//   margin-left: 10px;
+// `;
 
-export const ChatBoxBottom = styled.div`
-  margin-top: 5px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: space-between;
-  bottom: 0px;
-`;
+// export const ChatBoxBottom = styled.div`
+//   margin-top: 5px;
+//   padding: 1em;
+//   display: flex;
+//   align-items: center;
+//   position: relative;
+//   justify-content: space-between;
+//   bottom: 0px;
+//   height: 15%;
+// `;
 export const ChatMessageInput = styled.textarea`
-  width: 80%;
-  height: 90px;
-  padding: 10px;
-  margin-left: 10px;
+  width: 85%;
+  height: 100%;
+
   /* position: fixed; */
 `;
 // export const Convo = styled.div`
@@ -117,20 +187,22 @@ export const ChatPopup = styled.div`
     display: none;
     font-size: 10px;
     position: fixed;
-    bottom: 6rem;
-    right: 7rem;
-    height: 60vh;
+    bottom: 10rem;
+    right: 0;
+    /* top: 10rem; */
+    /* height: 60vh; */
+    /* height: 20rem; */
     width: 50%;
     /* display: flex; */
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 0.75rem;
     /* box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4); */
     border-radius: 10px;
     z-index: 1000;
   }
   .popup.show {
-    display: flex;
+    display: block;
   }
 `;
 

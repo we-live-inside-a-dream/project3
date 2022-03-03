@@ -135,6 +135,8 @@ const EmployeeTimeOffForm = ({
     return validation;
   }
 
+  
+
   async function postData() {
     let newEmployeeTimeOff = {
       type: type.value,
@@ -319,7 +321,7 @@ const EmployeeTimeOffForm = ({
         >
           <div style={{ padding: "20px" }}>
             <h3>Confirm Time Off</h3>
-            <p>Type of time off:{type?.label}</p>
+            <p>Type of time off:{" "}{type?.label}</p>
             <p>Start Day: {moment(startDate).format("yy-MM-DD")}</p>
             <p>End Day: {moment(endDate).format("YYYY-MM-DD")}</p>
             {allDay === false && (
@@ -328,7 +330,7 @@ const EmployeeTimeOffForm = ({
                 <p>End Time: {moment(endTime).format("h:mm a")}</p>
               </>
             )}
-            <p>Comments:{comment}</p>
+            <p>Comments:{" "}{comment}</p>
             <div></div>
 
             <StyledButton

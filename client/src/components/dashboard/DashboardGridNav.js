@@ -9,6 +9,9 @@ import UpcomingShiftsBox from "./UpcomingShiftsBox";
 import AuthenticationContext from "../login/AuthenticationContext";
 import TimeOffBox from "./TimeOffBox";
 import { useNavigate } from "react-router-dom";
+import ApprovalsBox from "./ApprovalsBox";
+import SettingsBox from "./SettingsBox";
+import HelpBox from "./HelpBox";
 
 let dashGridStyle = {
   display: "flex",
@@ -36,12 +39,16 @@ const DashboardGridNav = function () {
       <UpcomingShiftsBox />
       <TimeOffBox onClick={() => navigate("/timeOff/page")} />
       <CalendarBox />
+      <ApprovalsBox />
       <MessagesBox />
-      {/* <AnnouncementsBox />
-      {authContext?.user?.permissions?.includes("manager") ||
+      <SettingsBox />
+      <HelpBox />
+
+      {/* {authContext?.user?.permissions?.includes("manager") ||
       authContext?.user?.permissions?.includes("admin") ? (
         <FilesBox />
-      ) : null} */}
+      ) : null}{" "}
+       */}
     </div>
   );
 };

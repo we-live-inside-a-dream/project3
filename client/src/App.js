@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 // import axios from "axios";
 import NavBar from "./components/navigation/NavBar";
 // import EmployeeEditForm from "./components/employee-list/EmployeeEditForm";
@@ -39,6 +39,7 @@ import ResetPassword from "./components/login/ResetPassword";
 import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSchedulePosition";
 import MonthSchedulePage from "./pages/manager/MonthSchedulePage";
 import Profile from "./pages/common/Profile";
+import HelpMenuPage from "./pages/common/HelpMenuPage";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -224,6 +225,14 @@ function App() {
               </RequireAuth>
             }
           /> */}
+          <Route
+            path="/help"
+            element={
+              <RequireAuth>
+                <HelpMenuPage />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/avail-detail/:id"
             element={<EmployeeAvailabilityDetail />}

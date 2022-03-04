@@ -426,6 +426,7 @@ const EmployeeEditForm = ({
                   ></p>
                 ) : null}
                 <Select
+                  label={permissions}
                   value={permissions}
                   options={permissionsData}
                   onChange={handlePermissionsChange}

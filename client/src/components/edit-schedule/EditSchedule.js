@@ -29,13 +29,13 @@ import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider"
 import PositionsForm from "../management-settings/PositionsForm";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
-const positionList = [
-  { name: "Supervisor" },
-  { name: "Waitress" },
-  { name: "Cashier" },
-  { name: "Dishwasher" },
-  { name: "The Rezza" },
-];
+// const positionList = [
+//   { name: "Supervisor" },
+//   { name: "Waitress" },
+//   { name: "Cashier" },
+//   { name: "Dishwasher" },
+//   { name: "The Rezza" },
+// ];
 
 function EditSchedule({
   onClose,
@@ -55,15 +55,17 @@ function EditSchedule({
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState();
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
   const [breakStart, setBreakStart] = useState("");
   const [breakEnd, setBreakEnd] = useState("");
   const [breakPaid, setBreakPaid] = useState();
-  const [employeeId, setEmployeeId] = useState("");
+  const [employeeId, setEmployeeId] = useState();
   const [empNames, setEmpNames] = useState([]);
   const [position, setPosition] = useState([]);
+  // const [positionList, setPositionList] = useState();
+  const [empPositions, setEmpPositions] = useState();
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
@@ -75,15 +77,30 @@ function EditSchedule({
   // const [deleteShift, setDeleteShift] = useState(false);
 
   const value = useManagerSettings();
-  const positions = value.positions;
+  // useEffect(() => {
+  //   let positionList = null;
+  //   if (!employeeId) {
+  const positionList = value.positions;
+  //   } else {
+  //     positionList = empPositions.positions;
+  //   }
+  // }, [employeeId]);
 
   useEffect(() => {
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
-
+      console.log("fetchedNames", fetchedNames);
       setEmpNames(fetchedNames);
     };
+    const fetchPositions = async () => {
+      let fetchResult = await fetch("/api/employeeProfile/employees/positions");
+      let fetchedPositions = await fetchResult.json();
+      console.log("fetchedPositions", fetchedPositions);
+      setEmpPositions(fetchedPositions);
+    };
+
+    fetchPositions();
     fetchNames();
   }, []);
 
@@ -104,25 +121,32 @@ function EditSchedule({
 
   useEffect(() => {
     if (!modalData) return;
+    console.log("modalData", modalData);
     setExistingValues(modalData);
   }, [modalData]);
 
   useEffect(() => {
-    console.log("time to edit", existingValues);
+    // console.log("time to edit", existingValues);
     if (!existingValues) return;
     setFirstName(existingValues.firstName);
     setEmployeeId(existingValues.employeeId);
     setLastName(existingValues.lastName);
-    setStart(
-      ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
-    ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
-    setEnd(
-      ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
-    ); // its FINE
+    if (existingValues.start) {
+      setStart(
+        ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
+      ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
+      setEnd(
+        ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
+      ); // its FINE
+    }
     setDate(existingValues.date);
     setBreaks(existingValues.breaks);
     setPosition(existingValues.position);
   }, [existingValues]);
+
+  useEffect(() => {
+    console.log("start", start);
+  }, [start]);
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {
@@ -160,19 +184,15 @@ function EditSchedule({
 
   let validation;
   async function validateForm() {
-    if (
-      empNameMessageVal ||
-      shiftDateMessageVal ||
-      shiftTimeMessageVal
-    ) {
+    if (empNameMessageVal || shiftDateMessageVal || shiftTimeMessageVal) {
       console.log(
-      "Employee Message",
-      empNameMessageVal,
-      "Date message", 
-      shiftDateMessageVal,
-      "Time message", 
-      shiftTimeMessageVal,
-    )
+        "Employee Message",
+        empNameMessageVal,
+        "Date message",
+        shiftDateMessageVal,
+        "Time message",
+        shiftTimeMessageVal
+      );
       validation = "Please make sure that all fields are valid";
       setShown(true);
       return validation;
@@ -184,7 +204,6 @@ function EditSchedule({
   }
 
   async function postData() {
-
     let newShift = {
       employeeId,
       firstName,
@@ -199,12 +218,12 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (existingValues && validation === null) {
+    if (modalData.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
       reload();
-    } else if (!existingValues && validation === null) {
+    } else if (!modalData.start && validation === null) {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
@@ -234,7 +253,6 @@ function EditSchedule({
     setBreaks(newBreak);
   }
 
-  
   // async function validateForm() {
   //   if (
   //     empNameMessageVal ||
@@ -248,7 +266,6 @@ function EditSchedule({
 
   //   return validation;
   // }
-  
 
   return (
     <>
@@ -313,7 +330,8 @@ function EditSchedule({
           >
             {/* {name} */}
             <option></option>
-            {positions?.map((event) => {
+
+            {positionList?.map((event) => {
               return (
                 <option key={event._id} value={event.label}>
                   {event.label}

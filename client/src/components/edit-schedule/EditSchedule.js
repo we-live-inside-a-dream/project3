@@ -29,13 +29,13 @@ import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider"
 import PositionsForm from "../management-settings/PositionsForm";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
-const positionList = [
-  { name: "Supervisor" },
-  { name: "Waitress" },
-  { name: "Cashier" },
-  { name: "Dishwasher" },
-  { name: "The Rezza" },
-];
+// const positionList = [
+//   { name: "Supervisor" },
+//   { name: "Waitress" },
+//   { name: "Cashier" },
+//   { name: "Dishwasher" },
+//   { name: "The Rezza" },
+// ];
 
 function EditSchedule({
   onClose,
@@ -53,7 +53,7 @@ function EditSchedule({
   // const updateShift = value.updateShift;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [start, setStart] = useState();
+  const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [date, setDate] = useState("");
   const [breaks, setBreaks] = useState([]);
@@ -64,6 +64,7 @@ function EditSchedule({
   const [employeeId, setEmployeeId] = useState("");
   const [empNames, setEmpNames] = useState([]);
   const [position, setPosition] = useState([]);
+  const [empPositions, setEmpPositions] = useState();
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
@@ -81,9 +82,17 @@ function EditSchedule({
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
-
+      console.log("fetchedNames", fetchedNames);
       setEmpNames(fetchedNames);
     };
+    const fetchPositions = async () => {
+      let fetchResult = await fetch("/api/employeeProfile/employees/positions");
+      let fetchedPositions = await fetchResult.json();
+      console.log("fetchedPositions", fetchedPositions);
+      setEmpPositions(fetchedPositions);
+    };
+
+    // fetchPositions();
     fetchNames();
   }, []);
 
@@ -108,21 +117,27 @@ function EditSchedule({
   }, [modalData]);
 
   useEffect(() => {
-    console.log("time to edit", existingValues);
+    // console.log("time to edit", existingValues);
     if (!existingValues) return;
     setFirstName(existingValues.firstName);
     setEmployeeId(existingValues.employeeId);
     setLastName(existingValues.lastName);
-    setStart(
-      ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
-    ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
-    setEnd(
-      ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
-    ); // its FINE
+    if (existingValues.start) {
+      setStart(
+        ` Wed Feb 02 2022 ${existingValues.start}:00 GMT-0700 (Mountain Standard Time)`
+      ); //dont look at this! HH:mm => ISO string so the time picker with accept the value
+      setEnd(
+        ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
+      ); // its FINE
+    }
     setDate(existingValues.date);
     setBreaks(existingValues.breaks);
     setPosition(existingValues.position);
   }, [existingValues]);
+
+  useEffect(() => {
+    console.log("start", start);
+  }, [start]);
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {

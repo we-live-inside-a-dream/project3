@@ -339,20 +339,20 @@ const EmployeeTimeOffForm = ({
                 setModalConfirmIsOpen(false);
               }}
             >
-              Confirm
+              CONFIRM
             </StyledButton>
             <StyledButton
               onClick={() => {
                 setModalConfirmIsOpen(false);
               }}
             >
-              Cancel
+              CANCEL
             </StyledButton>
           </div>
         </Modal>
         <div>
           <StyledButton style={{ marginLeft: "1px" }} onClick={confirmHandler}>
-            Apply Time Off
+            APPLY TIME OFF
           </StyledButton>
         </div>
       </StyledForm>

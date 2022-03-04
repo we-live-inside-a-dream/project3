@@ -55,15 +55,16 @@ function EditSchedule({
   const [lastName, setLastName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState();
   const [breaks, setBreaks] = useState([]);
   const [breakName, setBreakName] = useState();
   const [breakStart, setBreakStart] = useState("");
   const [breakEnd, setBreakEnd] = useState("");
   const [breakPaid, setBreakPaid] = useState();
-  const [employeeId, setEmployeeId] = useState("");
+  const [employeeId, setEmployeeId] = useState();
   const [empNames, setEmpNames] = useState([]);
   const [position, setPosition] = useState([]);
+  // const [positionList, setPositionList] = useState();
   const [empPositions, setEmpPositions] = useState();
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
@@ -76,7 +77,14 @@ function EditSchedule({
   // const [deleteShift, setDeleteShift] = useState(false);
 
   const value = useManagerSettings();
-  const positions = value.positions;
+  // useEffect(() => {
+  //   let positionList = null;
+  //   if (!employeeId) {
+  const positionList = value.positions;
+  //   } else {
+  //     positionList = empPositions.positions;
+  //   }
+  // }, [employeeId]);
 
   useEffect(() => {
     const fetchNames = async () => {
@@ -92,7 +100,7 @@ function EditSchedule({
       setEmpPositions(fetchedPositions);
     };
 
-    // fetchPositions();
+    fetchPositions();
     fetchNames();
   }, []);
 
@@ -113,6 +121,7 @@ function EditSchedule({
 
   useEffect(() => {
     if (!modalData) return;
+    console.log("modalData", modalData);
     setExistingValues(modalData);
   }, [modalData]);
 
@@ -207,12 +216,12 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (existingValues.start && validation === null) {
+    if (modalData.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);
       reload();
-    } else if (!existingValues.start && validation === null) {
+    } else if (!modalData.start && validation === null) {
       console.log("New Shift...", newShift);
       await createShift(newShift);
       setExistingValues(null);
@@ -320,7 +329,8 @@ function EditSchedule({
           >
             {/* {name} */}
             <option></option>
-            {positions?.map((event) => {
+
+            {positionList?.map((event) => {
               return (
                 <option key={event._id} value={event.label}>
                   {event.label}

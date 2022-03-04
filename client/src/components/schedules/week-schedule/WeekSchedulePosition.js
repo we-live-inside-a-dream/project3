@@ -174,8 +174,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   function onClickHandler(shift, position, date) {
     setIsOpen(true);
     setModalData({
-      position: position.name,
-
+      position: position.label,
       date: date,
     });
     setShiftId(shift._id);
@@ -285,7 +284,6 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
                     onClick={() => {
                       onClickHandler(shift, position, date);
                     }}
-                    backgroundColor={availabilityColor}
                   >
                     {`${shift.firstName} ${shift.lastName[0]}`}
                     <br />

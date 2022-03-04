@@ -26,6 +26,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
   const [shiftId, setShiftId] = useState("");
   // const [deleteShift, setDeleteShift] = useState(false);
   const [renderPage, setRenderPage] = useState();
+  const [modalData, setModalData] = useState();
 
   useEffect(() => {
     let today = new Date();
@@ -86,6 +87,11 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
 
     // converts 8:30 into 8.5 etc...
     return timeString;
+  }
+
+  function handleClick() {
+    setModalData({ date: day });
+    setIsOpen(true);
   }
 
   return (
@@ -225,7 +231,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT</StyledButton>
+      <StyledButton onClick={() => handleClick()}>ADD SHIFT</StyledButton>
       <Modal
         open={isOpen}
         onClose={() => {
@@ -234,6 +240,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
         }}
       >
         <EditSchedule
+          modalData={modalData}
           shiftId={shiftId}
           onClose={() => {
             setIsOpen(false);

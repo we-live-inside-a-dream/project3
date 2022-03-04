@@ -100,6 +100,7 @@ const getActiveEmployeePositions = async () => {
   let name = EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
     "positions",
     "_id",
+    "firstName",
   ]);
   // console.log("get names...", name);
   return name;

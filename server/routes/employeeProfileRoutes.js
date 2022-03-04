@@ -8,6 +8,7 @@ const {
   listOfEmployees,
   getActiveEmployeeNames,
   EmployeeProfile,
+  getActiveEmployeePositions,
 } = require("../models/employeeProfile");
 
 //mongodb UserVerification model

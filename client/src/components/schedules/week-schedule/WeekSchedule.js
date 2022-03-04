@@ -94,6 +94,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       while (firstDate.add(1, "days").diff(lastDate) <= 0) {
         datesArray.push(firstDate.clone().format("ddd, Do").toString());
         dateNumberArray.push(firstDate.clone().format("yyyy-MM-DD").toString());
+        console.log("dateNumberArray", dateNumberArray);
       }
       setTitleWeek(datesArray);
       setDataWeek(dateNumberArray);

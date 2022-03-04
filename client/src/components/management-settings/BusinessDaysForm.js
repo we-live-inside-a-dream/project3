@@ -216,7 +216,7 @@ function BusinessDaysForm() {
                 }}
               />
             </div>
-            <div style={{ margin: "auto" }}>
+            <div style={{position: "relative", left: "30%"}}>
               <label>
                 Close Time
                 {!endTimeMessageVal ? (
@@ -241,7 +241,7 @@ function BusinessDaysForm() {
                     {endTimeMessageVal}
                   </p>
                 ) : null}
-                <BasicTimePicker
+                <BasicTimePicker style={{position: "relative", left: "30%"}}
                   type="time"
                   value={end}
                   onChange={(value) => {

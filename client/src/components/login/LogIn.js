@@ -6,6 +6,7 @@ import {
   StyledFormWrapper,
   StyledForm,
   StyledInput,
+  StyledResetInput,
   StyledButton,
   StyledContainer,
   StyledHeading,
@@ -17,26 +18,10 @@ import {
   // ErrorMsg,
 } from "./StyledLogIn";
 import AuthenticationContext from "./AuthenticationContext";
-import { emailValidation, passwordValidation } from "./LoginValidation";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailMessageVal, setEmailMessageVal] = useState(null);
-  const [passMessageVal, setPassMessageVal] = useState(null);
-
-  let validation;
-  async function validateForm() {
-    if (emailMessageVal === "" || passMessageVal === "") {
-      console.log("email:", emailMessageVal, "password:", passMessageVal);
-      validation = "Please make sure all fields are filled in properly.";
-      return validation;
-    } else console.log("email:", emailMessageVal, "password:", passMessageVal);
-    validation = null;
-    return validation;
-  }
-  validateForm();
-  console.log("validate form", validation);
 
   const authContext = useContext(AuthenticationContext);
 
@@ -88,9 +73,10 @@ export default function LogIn() {
             onChange={(event) => {
               handleChange(event, setEmail);
             }}
+            onKeyPress={handleKeypress}
           />
           <StyledLabel>Password</StyledLabel>
-          <StyledInput
+          <StyledResetInput
             margin="normal"
             required
             fullWidth
@@ -100,53 +86,12 @@ export default function LogIn() {
             id="password"
             autoComplete="current-password"
             value={password}
-            placeholder="* * * * * * * *"
+            placeholder="********"
             onChange={(event) => {
               handleChange(event, setPassword);
             }}
-            // onSubmit={setPassMessageVal(passwordValidation(password))}
             onKeyPress={handleKeypress}
           />
-          {!emailMessageVal ? (
-            <ErrorMsg
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            ></ErrorMsg>
-          ) : null}
-          {emailMessageVal ? (
-            <ErrorMsg
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            >
-              {emailMessageVal}
-            </ErrorMsg>
-          ) : null}
-          {!passMessageVal ? (
-            <ErrorMsg
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            ></ErrorMsg>
-          ) : null}
-          {passMessageVal ? (
-            <ErrorMsg
-              style={{
-                color: "red",
-                fontSize: "12px",
-                marginBottom: "0px",
-              }}
-            >
-              {passMessageVal}
-            </ErrorMsg>
-          ) : null}
           <ButtonGroup>
             <StyledButton id="submit" type="submit" onClick={handleSubmit}>
               Log In

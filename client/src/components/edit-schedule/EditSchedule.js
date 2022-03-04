@@ -182,13 +182,17 @@ function EditSchedule({
     setter(value);
   }
 
+  let validation;
   async function validateForm() {
-    if (
-      empNameMessageVal ||
-      shiftDateMessageVal ||
-      shiftTimeMessageVal ||
-      shiftBrakeMessageVal
-    ) {
+    if (empNameMessageVal || shiftDateMessageVal || shiftTimeMessageVal) {
+      console.log(
+        "Employee Message",
+        empNameMessageVal,
+        "Date message",
+        shiftDateMessageVal,
+        "Time message",
+        shiftTimeMessageVal
+      );
       validation = "Please make sure that all fields are valid";
       setShown(true);
       return validation;
@@ -200,8 +204,6 @@ function EditSchedule({
   }
 
   async function postData() {
-    // validateForm();
-
     let newShift = {
       employeeId,
       firstName,
@@ -212,7 +214,7 @@ function EditSchedule({
       breaks,
       position,
     };
-    // validateForm();
+    validateForm();
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
@@ -251,7 +253,6 @@ function EditSchedule({
     setBreaks(newBreak);
   }
 
-  let validation;
   // async function validateForm() {
   //   if (
   //     empNameMessageVal ||
@@ -406,6 +407,7 @@ function EditSchedule({
           <BasicTimePicker
             label="Shift Start"
             type="time"
+            onAccept
             value={start}
             onChange={(value) => {
               onInputUpdate(value, setStart);
@@ -419,7 +421,7 @@ function EditSchedule({
             value={end}
             onChange={(value) => {
               onInputUpdate(value, setEnd);
-              setShiftTimeMessageVal(timeValidation(start, end));
+              setShiftTimeMessageVal(timeValidation(start, value));
             }}
           />
         </div>
@@ -492,6 +494,6 @@ function EditSchedule({
       {/* </StyledFormWrapper> */}
     </>
   );
-} //final brace
+}
 
 export default EditSchedule;

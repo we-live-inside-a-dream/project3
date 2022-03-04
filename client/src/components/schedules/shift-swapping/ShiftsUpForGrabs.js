@@ -24,7 +24,7 @@ function ShiftsUpForGrabs() {
 
     fetchAvailableShifts();
   }, [user?._id]);
-
+  console.log("THESE ARE THE AVAILABLE SHIFTS", availableShifts);
   const formatTime = function (time) {
     let newTime = moment(time, "hh:mma").format("h:mma");
     return newTime;

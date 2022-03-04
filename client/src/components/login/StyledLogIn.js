@@ -81,6 +81,7 @@ export const StyledFormWrapper = styled.div`
 export const StyledForm = styled.div`
   width: 100%;
   height: 45vh;
+  min-height: 400px;
   min-width: 350px;
   max-width: 20vw;
   padding: 20px 50px 20px 50px;
@@ -180,6 +181,7 @@ export const StyledForgotPassword = styled.div`
   min-width: 350px;
   max-width: 20vw;
   height: 35vh;
+  min-height: 300px;
   padding: 20px 50px 20px 50px;
   background-color: #fff;
   box-sizing: border-box;
@@ -190,6 +192,7 @@ export const StyledResetPassword = styled.div`
   min-width: 350px;
   max-width: 20vw;
   height: 40vh;
+  min-height: 400px;
   padding: 20px 50px 20px 50px;
   background-color: #fff;
   box-sizing: border-box;
@@ -223,21 +226,23 @@ export const StyledWrapper = styled.div`
   background-color: #ffffff;
 `;
 
+//used by forgot password confirmation page
 export const StyledBox = styled.div`
   width: 100%;
-  height: 30vh;
-  min-width: 400px;
-  max-width: 50vw;
+  height: 25vh;
+  min-height: 250px;
+  min-width: 500px;
+  max-width: 40vw;
   padding: 40px;
   background-color: #fff;
-  border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+  display: inline-block;
 `;
 
 export const StyledResetContainer = styled.div`
   margin: 0;
-  min-height: 90vh;
+  min-height: 93vh;
   position: relative;
   display: flex;
   justify-content: center;
@@ -268,7 +273,7 @@ export const ButtonGroup = styled.div`
 export const LinkContainer = styled.div`
   text-align: center;
   margin: auto;
-  margin-top: 25px;
+  margin-top: 1px;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -309,4 +314,18 @@ export const Logo = styled.div`
   background-size: cover;
   background-position: center;
   margin: auto;
+`;
+
+export const StyledResetInput = styled.input`
+  display: block;
+  width: 100%;
+  background-color: #eee;
+  height: 38px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin: 10px 0 15px 0;
+  padding-left: 20px;
+  box-sizing: border-box;
+  letter-spacing: 2px;
+  font-size: 15px;
 `;

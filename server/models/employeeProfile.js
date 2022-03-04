@@ -95,6 +95,15 @@ const getActiveEmployeeNames = async () => {
   // console.log("get names...", name);
   return name;
 };
+
+const getActiveEmployeePositions = async () => {
+  let name = EmployeeProfile.find({ status: { $ne: "inactive" } }).select([
+    "positions",
+    "_id",
+  ]);
+  // console.log("get names...", name);
+  return name;
+};
 // get Employee Profile by Profile id
 const getEmployeeProfileByProfileId = async (employeeProfile_id) => {
   return EmployeeProfile.findById(employeeProfile_id);
@@ -139,4 +148,5 @@ module.exports = {
   findPositionsByEmployeeId,
   EmployeeProfile,
   getActiveEmployeeNames,
+  getActiveEmployeePositions,
 };

@@ -160,6 +160,12 @@ router.get("/employees/names", async (req, res) => {
   res.send(employeeNames);
 });
 
+router.get("/employees/positions", async (req, res) => {
+  let employeePositions = await getActiveEmployeePositions();
+  // console.log("empNames:",employeeNames)
+  res.send(employeePositions);
+});
+
 router.get("/getByEmail/:email", async (req, res) => {
   let email = req.params.email;
   let employeeEmail = await findEmployeeByProfileEmail(email);

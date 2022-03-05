@@ -136,7 +136,7 @@ function BusinessDaysForm() {
     <StyledFormWrapper>
       <StyledForm>
         <div>
-          <StyledTable padding={"5px"}>
+          <StyledTable style={{position: "relative", right: "1.5%"}}>
             <thead>
               <tr>
                 <th>Weekday</th>

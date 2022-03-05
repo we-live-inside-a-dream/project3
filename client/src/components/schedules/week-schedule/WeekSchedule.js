@@ -320,6 +320,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       borderTop: "lightGrey",
                       borderLeft: "lightGrey",
                       borderRight: "lightGrey",
+                      backgroundColor: availabilityColor,
                     }}
                     key={shift._id}
                     onClick={() => {
@@ -331,7 +332,6 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       //need to send date,employeeId
                       console.log("FROM ONCLICK", employee._id, date, shift);
                     }}
-                    backgroundColor={availabilityColor}
                   >
                     {`${shift.start}-${shift.end} `}
                     <br />

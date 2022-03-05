@@ -102,6 +102,7 @@ function EditSchedule({
   }, [position]);
 
   useEffect(() => {
+    if (empNames) return;
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
@@ -181,20 +182,11 @@ function EditSchedule({
       let filteredEmployeeIds = employeesWithPosition.map((ewp) => {
         return ewp;
       });
-      // setEmpNames(filterEmpNames);
+      setEmpNames(filteredEmployeeIds);
       console.log("filteredEmployeeIds", filteredEmployeeIds);
-      // let newListOfNames = empNames.filter((en) => {
-      //   en._id.includes(filteredEmployeeIds);
-      // });
-      // console.log("newListOfNames", newListOfNames);
     }
     filterEmpNames();
   }, [position]);
-  // useEffect(() => {
-  //   if (!empPositions) return;
-  //   console.log("empPositions.firstName", empPositions);
-  //   filterEmpNames();
-  // }, [position]);
 
   async function updateShift(updatedUser) {
     console.log("new user data", updatedUser);

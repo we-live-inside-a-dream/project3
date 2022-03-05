@@ -27,7 +27,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
       );
       setCurrentChat(res.data);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

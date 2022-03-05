@@ -17,7 +17,7 @@ const ScheduleAvailability = ({ date, id }) => {
     setRenderTimeoff(null);
     function isEmployeeavailable() {
       let dayOfWeek = fns.getDay(new Date(date));
-      console.log("isEmpAvail!");
+      // console.log("isEmpAvail!");
       // dayOfweek is the index for days array monday=0, sunday=6
       const availableToday = availability?.days[dayOfWeek];
 
@@ -65,7 +65,7 @@ const ScheduleAvailability = ({ date, id }) => {
           "/api/availability/by-employee/off/" + id
         );
         let theAvailability = await fetchResult.json();
-        console.log(theAvailability);
+        // console.log(theAvailability);
         setAvailability(theAvailability.availabilities);
         setMaxHoursPerWeek(theAvailability?.availabilities.maxHoursPerWeek);
         setTimeoff(theAvailability.vacation);
@@ -75,7 +75,7 @@ const ScheduleAvailability = ({ date, id }) => {
   }, [id]);
 
   useEffect(() => {
-    console.log("time off function", renderTimeoff);
+    // console.log("time off function", renderTimeoff);
   }, [renderTimeoff]);
 
   // useEffect(()=>{

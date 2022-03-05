@@ -248,7 +248,7 @@ function EditSchedule({
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 
-    if (modalData.start && validation === null) {
+    if (existingValues.start && validation === null) {
       console.log("Update Shift...", newShift);
       await updateShift(newShift);
       setExistingValues(null);

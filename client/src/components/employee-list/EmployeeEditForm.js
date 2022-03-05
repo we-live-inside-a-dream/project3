@@ -20,6 +20,7 @@ import {
   permissionsValidation,
 } from "../validateForms.js";
 import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const permissionsData = [
   { value: "manager", label: "Manager" },
@@ -43,7 +44,7 @@ const EmployeeEditForm = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState();
+  const [password, setPassword] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState([]);
@@ -63,8 +64,12 @@ const EmployeeEditForm = ({
   const value = useManagerSettings();
   const positionsList = value.positions;
   let navigate = useNavigate();
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
   console.log("EXISTINGVALUES,", existingValues);
+  console.log("THE PERMISSIONS FOR THIS USER ARE:", user.permissions);
+  console.log("THE NAME  OF THIS USER IS ", user.firstName);
 
   useEffect(() => {
     if (existingValues) {
@@ -207,16 +212,29 @@ const EmployeeEditForm = ({
   }
 
   async function postData() {
-    let newEmployeeInfo = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      // password: "password12",
-      positions: positions.map((p) => p.value),
-      status: [status.value],
-      permissions: [permissions.value],
-    };
+    let newEmployeeInfo;
+    if (!existingValues) {
+      newEmployeeInfo = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password: "password12",
+        positions: positions.map((p) => p.value),
+        status: [status.value],
+        permissions: [permissions.value],
+      };
+    } else {
+      newEmployeeInfo = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        positions: positions.map((p) => p.value),
+        status: [status.value],
+        permissions: [permissions.value],
+      };
+    }
     validateForm();
 
     //happy if existing values and validate form is all good:
@@ -227,7 +245,11 @@ const EmployeeEditForm = ({
       setCurrentCreateTab(12);
     } else if (existingValues && validation === null) {
       await onSave(newEmployeeInfo);
-      navigate("/human-resources");
+      console.log("THIS IS THE USERS PERMISSIONS", user.permissions);
+      user.permissions.includes("manager") ||
+      user.permissions.includes("admimnistrator")
+        ? navigate("/human-resources")
+        : navigate("/profile");
     } else setShown(true);
   }
 

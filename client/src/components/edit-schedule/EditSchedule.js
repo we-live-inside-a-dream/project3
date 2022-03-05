@@ -8,16 +8,11 @@ import BreaksComponent from "./BreaksComponent";
 
 import {
   firstNameValidation,
-  dateValidation,
   timeValidation,
   requiredValidation,
 } from "../validateForms";
 
 import {
-  // StyledEmployeeForm,
-  StyledFormWrapper,
-  StyledForm,
-  StyledInput,
   StyledModal,
   RedStar,
   OneColumn,
@@ -70,7 +65,6 @@ function EditSchedule({
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
   const [shiftTimeMessageVal, setShiftTimeMessageVal] = useState(null);
-  const [shiftBrakeMessageVal, setShiftBrakeMessageVal] = useState(null);
   const [empAvailibility, setEmpAvailibility] = useState();
   const [existingValues, setExistingValues] = useState();
   const [shown, setShown] = useState(false);
@@ -244,7 +238,6 @@ function EditSchedule({
       breaks,
       position,
     };
-    // validateForm();
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 

@@ -57,9 +57,9 @@ function EditSchedule({
   const [breakEnd, setBreakEnd] = useState("");
   const [breakPaid, setBreakPaid] = useState();
   const [employeeId, setEmployeeId] = useState();
-  const [empNames, setEmpNames] = useState([]);
+  const [empNames, setEmpNames] = useState();
   const [position, setPosition] = useState([]);
-  // const [positionList, setPositionList] = useState();
+  const [positionList, setPositionList] = useState();
   const [empPositions, setEmpPositions] = useState();
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
@@ -71,16 +71,32 @@ function EditSchedule({
   // const [deleteShift, setDeleteShift] = useState(false);
 
   const value = useManagerSettings();
-  // useEffect(() => {
-  //   let positionList = null;
-  //   if (!employeeId) {
-  const positionList = value.positions;
-  //   } else {
-  //     positionList = empPositions.positions;
-  //   }
-  // }, [employeeId]);
+  useEffect(() => {
+    //***constructs employee positions List based of employee selected***
+    if (!employeeId) {
+      const listOfAllPositions = value.positions;
+      setPositionList(listOfAllPositions);
+    } else {
+      const selectedEmployee = empPositions?.find(
+        (employee) => employee._id === employeeId
+      );
+      const selectedEmployeePositions = selectedEmployee.positions.map((e) => ({
+        value: e,
+        label: e.charAt(0).toUpperCase() + e.slice(1),
+      }));
+      setPositionList(selectedEmployeePositions);
+    }
+  }, [employeeId]);
 
   useEffect(() => {
+    console.log("empNames", empNames);
+  }, [empNames]);
+  useEffect(() => {
+    console.log("position", position);
+  }, [position]);
+
+  useEffect(() => {
+    if (empNames) return;
     const fetchNames = async () => {
       let fetchResult = await fetch("/api/employeeProfile/employees/names");
       let fetchedNames = await fetchResult.json();
@@ -94,8 +110,8 @@ function EditSchedule({
       setEmpPositions(fetchedPositions);
     };
 
-    fetchPositions();
     fetchNames();
+    fetchPositions();
   }, []);
 
   useEffect(() => {
@@ -138,9 +154,9 @@ function EditSchedule({
     setPosition(existingValues.position);
   }, [existingValues]);
 
-  useEffect(() => {
-    console.log("start", start);
-  }, [start]);
+  // useEffect(() => {
+  //   console.log("start", position);
+  // }, [position]);
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {
@@ -151,6 +167,20 @@ function EditSchedule({
       body: JSON.stringify(createdUser),
     });
   }
+  useEffect(() => {
+    if (!empPositions) return;
+    function filterEmpNames() {
+      let employeesWithPosition = empPositions.filter((p) =>
+        p.positions.includes(position.toLowerCase())
+      );
+      let filteredEmployeeIds = employeesWithPosition.map((ewp) => {
+        return ewp;
+      });
+      setEmpNames(filteredEmployeeIds);
+      console.log("filteredEmployeeIds", filteredEmployeeIds);
+    }
+    filterEmpNames();
+  }, [position]);
 
   async function updateShift(updatedUser) {
     console.log("new user data", updatedUser);
@@ -314,8 +344,9 @@ function EditSchedule({
             label={position}
             value={position}
             onChange={(event) => {
-              onInputUpdate(event.target.value, setPosition);
-              console.log("position", event.target.value);
+              setPosition(() => event.target.value);
+              // console.log("position", event.target.value);
+              // filterEmpNames();
             }}
             style={{
               width: "100%",
@@ -326,7 +357,7 @@ function EditSchedule({
 
             {positionList?.map((event) => {
               return (
-                <option key={event._id} value={event.label}>
+                <option className="list" key={event._id} value={event.label}>
                   {event.label}
                 </option>
               );

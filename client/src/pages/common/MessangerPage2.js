@@ -51,7 +51,7 @@ export default function Messenger({ show }) {
   useEffect(() => {
     if (socket == null) return;
     socket.on("getMessage", (data) => {
-      console.log("get message...", data);
+      // console.log("get message...", data);
       setArrivalMessage({
         sender: data.sender,
         text: data.text,
@@ -89,7 +89,7 @@ export default function Messenger({ show }) {
         );
         setMessages(res.data);
       } catch (err) {
-        console.log("api/messages/query", err);
+        // console.log("api/messages/query", err);
       }
     };
     getMessages();
@@ -107,7 +107,7 @@ export default function Messenger({ show }) {
     };
     //member is an array of Id's for members of convo
     const recipients = currentChat.members.map((r) => r.value);
-    console.log("socket...", socket);
+    // console.log("socket...", socket);
     // console.log("user id", user._id);
     // console.log("currentChat", currentChat);
     // console.log("recipients", recipients);
@@ -125,7 +125,7 @@ export default function Messenger({ show }) {
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
-      console.log("api/messages", err);
+      // console.log("api/messages", err);
     }
   };
 
@@ -142,7 +142,7 @@ export default function Messenger({ show }) {
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
     if (e.charCode === 13) {
-      console.log("enter was pressed");
+      // console.log("enter was pressed");
       handleSubmit();
     }
   };

@@ -236,7 +236,7 @@ function EditSchedule({
       end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
-      position,
+      position: position.toLowerCase(),
     };
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);

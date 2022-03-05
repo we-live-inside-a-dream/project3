@@ -244,7 +244,7 @@ function EditSchedule({
       breaks,
       position,
     };
-    validateForm();
+    // validateForm();
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
 

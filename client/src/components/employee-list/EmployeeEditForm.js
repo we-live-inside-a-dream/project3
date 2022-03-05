@@ -212,7 +212,7 @@ const EmployeeEditForm = ({
       lastName,
       email,
       phoneNumber,
-      password: "password12",
+      // password: "password12",
       positions: positions.map((p) => p.value),
       status: [status.value],
       permissions: [permissions.value],

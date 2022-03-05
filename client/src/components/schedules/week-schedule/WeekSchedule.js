@@ -171,7 +171,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       lastName: employee.lastName,
       date: date,
     });
-    setShiftId(shift._id);
+    setShiftId(shift?._id);
 
     //need to send date,employeeId
     console.log("FROM ONCLICK", employee._id, date, shift);

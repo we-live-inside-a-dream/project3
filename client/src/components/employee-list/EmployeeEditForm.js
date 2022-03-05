@@ -434,6 +434,27 @@ const EmployeeEditForm = ({
                 ></Select>
               </div>
 
+           
+
+            <div style={{position: "relative", top:"25%"}}>
+            <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
+              Save Details
+            </StyledButton>
+          </div>
+          <>
+            {shown === true ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "20px",
+                  marginBottom: "0px",
+                }}
+              >
+                form is invalid
+              </p>
+            ) : null}
+         </>
+
               <div>
                 <label style={{ marginBottom: "10px", display: "block" }}>
                   Status
@@ -459,24 +480,9 @@ const EmployeeEditForm = ({
             </>
           ) : null}
 
-          <div>
-            <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
-              Save Details
-            </StyledButton>
-          </div>
-          <div>
-            {shown === true ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "20px",
-                  marginBottom: "0px",
-                }}
-              >
-                form is invalid
-              </p>
-            ) : null}
-          </div>
+         
+
+          
         </StyledForm>
       </StyledFormWrapper>
     </>

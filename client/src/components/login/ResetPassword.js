@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   StyledButton,
   StyledResetContainer,
-  StyledInput,
+  StyledResetInput,
   StyledLabel,
   StyledHeading,
   ButtonGroup,
@@ -14,7 +14,6 @@ import {
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
   // const [newPassMessageVal, setNewPassMessageVal] = useState(null);
   const [validatedPassword, setValidatedPassword] = useState();
   const [message, setMessage] = useState();
@@ -28,7 +27,8 @@ const ResetPassword = () => {
     const value = event.target.value;
     setter(value);
   };
-  // let validation;
+
+    // let validation;
   // async function validateForm() {
   //   if (newPassMessageVal) {
   //     console.log("newPassword:", newPassMessageVal);
@@ -40,12 +40,8 @@ const ResetPassword = () => {
   // }
   // validateForm();
   // console.log("validate form", validation);
-  const handleSubmit = async () => {
-    // if (newPassword === confirmPassword) {
-    //   setValidatedPassword(newPassword);
-    // } else {
-    //   setMessage("Passwords do not match");
-    // }
+  
+  const handleSubmit = async (req, res) => {
     let newUserPassword = await axios.post(
       "/api/employeeProfile/resetPassword",
       {
@@ -56,9 +52,12 @@ const ResetPassword = () => {
     );
     console.log("here");
     let response = newUserPassword.data;
-    if (response?.status === "FAILED") {
-      console.log("User requesting reset from Email.", response);
-      setMessage(response.message);
+    if (!newPassword === validatedPassword) {
+      res.json({
+        status: "FAILED",
+        message: "Passwords do not match.",
+      });
+      return;
     } else {
       console.log("Password has been updated successfully.", response);
       setMessage(response.message);
@@ -77,7 +76,7 @@ const ResetPassword = () => {
       <StyledResetPassword type="submit">
         <StyledHeading>Reset Password</StyledHeading>
         <StyledLabel>New Password</StyledLabel>
-        <StyledInput
+        <StyledResetInput
           margin="normal"
           required
           fullWidth
@@ -87,7 +86,7 @@ const ResetPassword = () => {
           id="password"
           autoComplete="current-password"
           value={newPassword}
-          placeholder="New Password.."
+          placeholder="********"
           onChange={(event) => {
             handleChange(event, setNewPassword);
             // setNewPassMessageVal(passwordValidation(event.target.value));
@@ -95,7 +94,7 @@ const ResetPassword = () => {
           onKeyPress={handleKeypress}
         />
         <StyledLabel>Confirm Password</StyledLabel>
-        <StyledInput
+        <StyledResetInput
           margin="normal"
           required
           fullWidth
@@ -104,8 +103,8 @@ const ResetPassword = () => {
           type="password"
           id="password"
           autoComplete="current-password"
-          value={confirmPassword}
-          placeholder="Confirm Password.."
+          value={validatedPassword}
+          placeholder="********"
           onChange={(event) => {
             handleChange(event, setValidatedPassword);
             // setNewPassMessageVal(passwordValidation(event.target.value));

@@ -14,15 +14,23 @@ function DaySchedule({ setCurrentTab, currentTab }) {
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState();
   const [isOpen, setIsOpen] = useState();
-  const [shiftId, setShiftId] = useState("");
+  const [shiftId, setShiftId] = useState();
   // const [deleteShift, setDeleteShift] = useState(false);
   const [renderPage, setRenderPage] = useState();
+  const [modalData, setModalData] = useState();
 
   useEffect(() => {
     let today = new Date();
     setDay(moment(today).format("yyyy-MM-DD"));
   }, []);
 
+  useEffect(() => {
+    console.log("day", modalData);
+  }, [modalData]);
+
+  useEffect(() => {
+    console.log("shiftId", shiftId);
+  }, [shiftId]);
   // useEffect(() => {
   //   if (shiftId) {
   //     const fetchShift = async () => {
@@ -50,6 +58,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     const fetchSchedule = async () => {
       let fetchResult = await fetch(`/api/schedule/day?day=${day}`);
       let fetchedDay = await fetchResult.json();
+      console.log("fetchedDay", fetchedDay);
       setSchedule(fetchedDay);
     };
     fetchSchedule();
@@ -78,6 +87,11 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     // converts 8:30 into 8.5 etc...
     return timeString;
   }
+  function handleClick() {
+    setModalData({ date: day });
+    setIsOpen(true);
+  }
+
   // async function createShift(createdUser) {
   //   await fetch("/api/schedule/schedule/new", {
   //     method: "POST",
@@ -197,7 +211,9 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                   lastName={employee.lastName}
                   position={employee?.position}
                   edit="edit"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() => {
+                    setIsOpen(true);
+                  }}
                 />
               </td>
 
@@ -237,7 +253,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT</StyledButton>
+      <StyledButton onClick={() => handleClick()}>ADD SHIFT</StyledButton>
       <Modal
         open={isOpen}
         onClose={() => {
@@ -246,10 +262,12 @@ function DaySchedule({ setCurrentTab, currentTab }) {
         }}
       >
         <EditSchedule
+          modalData={modalData}
           shiftId={shiftId}
           onClose={() => {
             setIsOpen(false);
             setShiftId(null);
+            setModalData(null);
           }}
           reload={() => setRenderPage((prevCheck) => !prevCheck)}
         />

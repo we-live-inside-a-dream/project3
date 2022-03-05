@@ -8,6 +8,7 @@ const {
   listOfEmployees,
   getActiveEmployeeNames,
   EmployeeProfile,
+  getActiveEmployeePositions,
 } = require("../models/employeeProfile");
 
 //mongodb UserVerification model
@@ -30,7 +31,7 @@ require("dotenv").config();
 
 //nodemailer
 let transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: "Gmail",
   auth: {
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASS,
@@ -158,6 +159,12 @@ router.get("/employees/names", async (req, res) => {
   let employeeNames = await getActiveEmployeeNames();
   // console.log("empNames:",employeeNames)
   res.send(employeeNames);
+});
+
+router.get("/employees/positions", async (req, res) => {
+  let employeePositions = await getActiveEmployeePositions();
+  // console.log("empNames:",employeeNames)
+  res.send(employeePositions);
 });
 
 router.get("/getByEmail/:email", async (req, res) => {

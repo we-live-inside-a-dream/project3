@@ -28,6 +28,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
     moment().startOf("week").format("yyyy-MM-DD").toString()
   );
   const value = useManagerSettings();
+  const positions = value.positions;
   const [activeEmployeeList, setActiveEmployeeList] = useState([]);
   const [modalEmployee, setModalEmployee] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +44,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   const [renderPage, setRenderPage] = useState();
   const [deleteShift, setDeleteShift] = useState(false);
   const [modalData, setModalData] = useState();
+
   // const [availabilityColor, setAvailabilityColor] = useState();
   let availabilityColor = "";
   //this use effect is just to have access to the current active employees for name and Id for the display, and the edit form
@@ -172,8 +174,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   function onClickHandler(shift, position, date) {
     setIsOpen(true);
     setModalData({
-      position: position.name,
-
+      position: position.label,
       date: date,
     });
     setShiftId(shift._id);
@@ -245,13 +246,13 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
           </tr>
         </thead>
         <tbody>
-          {positionList?.map((position, index) => (
+          {positions?.map((position, index) => (
             <tr key={index}>
-              <PositionPicTableData position={position.name} />
+              <PositionPicTableData position={position.label} />
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (
-                    shift.position === position.name && shift.date === date
+                    shift.position === position.label && shift.date === date
                   );
                 });
 
@@ -283,7 +284,6 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
                     onClick={() => {
                       onClickHandler(shift, position, date);
                     }}
-                    backgroundColor={availabilityColor}
                   >
                     {`${shift.firstName} ${shift.lastName[0]}`}
                     <br />

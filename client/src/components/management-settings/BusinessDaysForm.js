@@ -136,7 +136,7 @@ function BusinessDaysForm() {
     <StyledFormWrapper>
       <StyledForm>
         <div>
-          <StyledTable padding={"5px"}>
+          <StyledTable style={{position: "relative", right: "1.5%"}}>
             <thead>
               <tr>
                 <th>Weekday</th>
@@ -181,7 +181,7 @@ function BusinessDaysForm() {
           </StyledTable>
           <br />
           <label>Weekday</label>
-          <div style={{ width: "50%" }}>
+          <div style={{ position: 'relative', left:"1%", width: "36%" }}>
             {createWeekDays === "" ? (
               <p
                 style={{
@@ -206,7 +206,7 @@ function BusinessDaysForm() {
           </div>
           <br />
           <div style={{ display: "inline-flex" }}>
-            <div style={{ margin: "auto" }}>
+            <div style={{ marginRight: "auto" }}>
               <label>Open Time</label>
               <BasicTimePicker
                 type="time"

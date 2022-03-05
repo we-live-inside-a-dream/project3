@@ -92,6 +92,7 @@ router.get("/shifts-up-for-grabs", async (req, res) => {
   let employeePositions = await employeeProfileModel.findPositionsByEmployeeId(
     userId
   );
+
   let availableShiftsList =
     await scheduleModel.findAvailableShiftsByEmployeePositions(
       userId,

@@ -40,6 +40,7 @@ import WeekSchedulePosition from "./components/schedules/week-schedule/WeekSched
 import MonthSchedulePage from "./pages/manager/MonthSchedulePage";
 import Profile from "./pages/common/Profile";
 import HelpMenuPage from "./pages/common/HelpMenuPage";
+import MyEventsPage from "./pages/common/MyEventsPage";
 
 // import ErrorUnauthorizedUser from "./pages/common/ErrorUnauthorizedUser";
 
@@ -161,9 +162,9 @@ function App() {
           <Route
             path="/MonthSchedulePage"
             element={
-              <Manager>
-                <MonthSchedulePage />
-              </Manager>
+              <RequireAuth>
+                <MyEventsPage />
+              </RequireAuth>
             }
           />
           <Route path="/createEvent" element={<EventsPage />} />

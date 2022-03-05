@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const EmployeeEditPage = () => {
   let params = useParams();
   let employeeId = params.id;
   let navigate = useNavigate();
   const [employee, setEmployee] = useState();
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
   useEffect(() => {
     let isMounted = true;
@@ -39,7 +42,6 @@ const EmployeeEditPage = () => {
       },
       body: JSON.stringify(updatedEmployee),
     });
-    // navigate("/createEmployee/" + employeeId);
   }
   return (
     <StyledPage>

@@ -65,7 +65,7 @@ function EditSchedule({
   const [position, setPosition] = useState([]);
   const [positionList, setPositionList] = useState();
   const [empPositions, setEmpPositions] = useState();
-  const [breakToAdd, setBreakToAdd] = useState([]);
+  const [breakToAdd, setBreakToAdd] = useState();
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [empPosMessageVal, setEmpPosMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
@@ -162,13 +162,17 @@ function EditSchedule({
       ); // its FINE
     }
     setDate(existingValues.date);
-    setBreaks(existingValues.breaks);
+
+    if (existingValues.breaks) {
+      setBreaks(existingValues.breaks);
+    }
+
     setPosition(existingValues.position);
   }, [existingValues]);
 
-  // useEffect(() => {
-  //   console.log("start", position);
-  // }, [position]);
+  useEffect(() => {
+    console.log("breaks", breaks);
+  }, [breaks]);
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {
@@ -284,9 +288,9 @@ function EditSchedule({
     breaky.start = fns.format(new Date(breakStart), "HH:mm").toString(); //ISO date => HH:mm
     breaky.end = fns.format(new Date(breakEnd), "HH:mm").toString();
     breaky.paid = breakPaid;
-
+    console.log("newBreak", newBreak);
     newBreak.push(breaky);
-    setBreakToAdd("");
+    // setBreakToAdd("");
     setBreaks(newBreak);
   }
 
@@ -517,7 +521,6 @@ function EditSchedule({
           </NativeSelect>
         </div>
         <div>
-          {" "}
           <StyledEditButton
             onClick={onAddBreak}
             style={{

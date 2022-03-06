@@ -10,18 +10,22 @@ import {
   firstNameValidation,
   timeValidation,
   requiredValidation,
+  positionValidation,
 } from "../validateForms";
 
 import {
   StyledModal,
   RedStar,
   OneColumn,
+  StyledInput,
 } from "../reusable/Inputs/StyledEmployeeForm.js";
+import Modal from "../reusable/Modal";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import ScheduleAvailability from "./ScheduleAvailability";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
 import PositionsForm from "../management-settings/PositionsForm";
+import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
 const breakList = [{ name: "Coffee" }, { name: "Lunch" }, { name: "Coffee2" }];
 // const positionList = [
@@ -63,6 +67,7 @@ function EditSchedule({
   const [empPositions, setEmpPositions] = useState();
   const [breakToAdd, setBreakToAdd] = useState([]);
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
+  const [empPosMessageVal, setEmpPosMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
   const [shiftTimeMessageVal, setShiftTimeMessageVal] = useState(null);
   const [empAvailibility, setEmpAvailibility] = useState();
@@ -215,17 +220,25 @@ function EditSchedule({
 
   let validation;
   async function validateForm() {
-    if (empNameMessageVal || shiftDateMessageVal || shiftTimeMessageVal) {
+    if (
+      empNameMessageVal ||
+      shiftDateMessageVal ||
+      shiftTimeMessageVal ||
+      !position
+    ) {
       console.log(
         "Employee Message",
         empNameMessageVal,
         "Date message",
         shiftDateMessageVal,
         "Time message",
-        shiftTimeMessageVal
+        shiftTimeMessageVal,
+        "POsition Message",
+        empPosMessageVal
       );
       validation = "Please make sure that all fields are valid";
       setShown(true);
+      console.log("THIS IS THE VALIDATION");
       return validation;
     } else validation = null;
     setShown(false);
@@ -243,7 +256,7 @@ function EditSchedule({
       end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
-      position: position.toLowerCase(),
+      position,
     };
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
@@ -301,77 +314,20 @@ function EditSchedule({
     <>
       {/* <StyledFormWrapper> */}
       <StyledModal>
-        <StyledButton
-          style={{ position: "fixed", top: "0px", right: "0px" }}
+        <StyledEditButton
+          padding="15px"
+          style={{
+            position: "fixed",
+            top: "0px",
+            right: "0px",
+            color: "var(--accentColorTitle)",
+            fontSize: "2em",
+          }}
           onClick={onClose}
         >
           x
-        </StyledButton>
+        </StyledEditButton>
         <h1>Schedule</h1>
-        <div>
-          <InputLabel>
-            Employee Name
-            <RedStar />
-          </InputLabel>
-          {employeeId === "" ? (
-            <p
-              style={{
-                color: "red",
-                fontSize: "10px",
-                marginBottom: "0px",
-                marginTop: "0px",
-              }}
-            ></p>
-          ) : null}
-          <NativeSelect
-            // defaultValue={employeeId}
-            id="name-input"
-            value={employeeId}
-            label="name"
-            onChange={(event) => {
-              onInputUpdate(event.target.value, setEmployeeId);
-              setEmpNameMessageVal(firstNameValidation(employeeId));
-            }}
-          >
-            {/* {name} */}
-            <option></option>
-            {empNames?.map((event) => {
-              return (
-                <option key={event._id} value={event._id}>
-                  {event.firstName + " " + event.lastName}
-                </option>
-              );
-            })}
-          </NativeSelect>
-          <InputLabel>
-            Positions
-            <RedStar />
-          </InputLabel>
-          <NativeSelect
-            label={position}
-            value={position}
-            onChange={(event) => {
-              setPosition(() => event.target.value);
-              // console.log("position", event.target.value);
-              // filterEmpNames();
-            }}
-            style={{
-              width: "100%",
-            }}
-          >
-            {/* {name} */}
-            <option></option>
-
-            {positionList?.map((event) => {
-              return (
-                <option className="list" key={event._id} value={event.label}>
-                  {event.label}
-                </option>
-              );
-            })}
-          </NativeSelect>
-        </div>
-
         <div>
           <InputLabel>
             Date
@@ -402,14 +358,91 @@ function EditSchedule({
               setShiftDateMessageVal(requiredValidation(date));
             }}
           />
+        </div>
+        <div>
+          <InputLabel>Employee Availability</InputLabel>
           <ScheduleAvailability date={date} id={employeeId} />
         </div>
+        <div>
+          <InputLabel>
+            Employee Name
+            <RedStar />
+          </InputLabel>
+          {employeeId === "" ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "10px",
+                marginBottom: "0px",
+                marginTop: "0px",
+              }}
+            ></p>
+          ) : null}
+          <NativeSelect
+            // defaultValue={employeeId}
+            id="name-input"
+            value={employeeId}
+            label="name"
+            onChange={(event) => {
+              onInputUpdate(event.target.value, setEmployeeId);
+              setEmpNameMessageVal(firstNameValidation(employeeId));
+            }}
+            style={{
+              width: "95%",
+              border: "1px solif black",
+            }}
+          >
+            {/* {name} */}
+            <option></option>
+            {empNames?.map((event) => {
+              return (
+                <option key={event._id} value={event._id}>
+                  {event.firstName + " " + event.lastName}
+                </option>
+              );
+            })}
+          </NativeSelect>
+        </div>
+
+        <div>
+          <InputLabel>
+            Position
+            <RedStar />
+          </InputLabel>
+          <NativeSelect
+            label={position}
+            value={position}
+            onChange={(event) => {
+              setPosition(event.target.value);
+
+              // filterEmpNames();
+            }}
+            style={{
+              width: "95%",
+            }}
+          >
+            {/* {name} */}
+            <option></option>
+
+            {positionList?.map((event) => {
+              return (
+                <option className="list" key={event._id} value={event.label}>
+                  {event.label}
+                </option>
+              );
+            })}
+          </NativeSelect>
+        </div>
+
+        {/* <div> */}
+        {/* </div> */}
 
         <div>
           <InputLabel>
             Schedule Shift Time
             <RedStar />
           </InputLabel>
+
           {!shiftTimeMessageVal ? (
             <p
               style={{
@@ -435,6 +468,7 @@ function EditSchedule({
               {shiftTimeMessageVal}
             </p>
           ) : null}
+
           <BasicTimePicker
             label="Shift Start"
             type="time"
@@ -444,7 +478,8 @@ function EditSchedule({
               onInputUpdate(value, setStart);
             }}
           />
-
+        </div>
+        <div style={{ marginTop: "auto" }}>
           <BasicTimePicker
             label="Shift End"
             type="time"
@@ -467,6 +502,7 @@ function EditSchedule({
             }}
             style={{
               width: "100%",
+              marginTop: "auto",
             }}
           >
             {/* {name} */}
@@ -479,31 +515,38 @@ function EditSchedule({
               );
             })}
           </NativeSelect>
+        </div>
+        <div>
+          {" "}
+          <StyledEditButton
+            onClick={onAddBreak}
+            style={{
+              marginTop: "30px",
+              fontSize: "1em",
+              color: "var(--accentColorTitle)",
+            }}
+          >
+            + ADD BREAK
+          </StyledEditButton>
+        </div>
 
+        <div>
           <BasicTimePicker
             label="Break Start"
             type="time"
             value={breakStart}
             onChange={(value) => onInputUpdate(value, setBreakStart)}
           />
-
+        </div>
+        <div>
           <BasicTimePicker
             label="Break End"
             type="time"
             value={breakEnd}
             onChange={(value) => onInputUpdate(value, setBreakEnd)}
           />
-          <StyledButton
-            fontSize={"1.5em"}
-            margin={"1em"}
-            padding={"10"}
-            onClick={onAddBreak}
-          >
-            Add Break
-          </StyledButton>
-        </div>
 
-        <div>
+          <InputLabel>Scheduled Breaks:</InputLabel>
           {breaks?.map((breakys, index) => (
             <BreaksComponent
               myKey={breakys._id}
@@ -512,14 +555,25 @@ function EditSchedule({
               onRemoveBreak={onRemoveBreak}
             />
           ))}
-          <div></div>
-          {start ? (
-            <StyledButton onClick={deleteShiftById}>Delete</StyledButton>
+        </div>
+
+        <div styles={{ display: "flex", flexDirection: "row" }}>
+          {shown === true ? (
+            <p style={{ color: "red" }}>
+              Please make sure that all required fields have valid inputs
+            </p>
           ) : null}
-          <div styles={{ display: "flex", flexDirection: "row" }}>
-            {shown === true ? <p>form needs a lotta work</p> : null}
-            <StyledButton onClick={validateForm}>SUBMIT</StyledButton>
-          </div>
+          <StyledButton onClick={validateForm} style={{ marginRight: "auto" }}>
+            SUBMIT
+          </StyledButton>
+          {start ? (
+            <StyledButton
+              style={{ marginRight: "auto" }}
+              onClick={deleteShiftById}
+            >
+              DELETE
+            </StyledButton>
+          ) : null}
         </div>
       </StyledModal>
       {/* </StyledFormWrapper> */}

@@ -37,7 +37,7 @@ const lastNameValidation = function (value) {
   else return null;
 };
 const positionValidation = function (value) {
-  if (value.length === 0) {
+  if (!value) {
     // alert("at least one position is required");
     return "at least one position is required";
   }

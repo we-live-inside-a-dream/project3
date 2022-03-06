@@ -211,7 +211,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                   lastName={employee.lastName}
                   position={
                     employee?.position.charAt(0).toUpperCase() +
-                    employee.position.slice(1)
+                    employee?.position.slice(1)
                   }
                   edit="edit"
                   onClick={() => {

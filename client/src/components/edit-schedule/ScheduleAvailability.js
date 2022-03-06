@@ -97,10 +97,13 @@ const ScheduleAvailability = ({ date, id }) => {
 
   return (
     <div>
-      {renderTimeoff ? renderTimeoff : renderAvailability}
-      <br />
-      <br />
-      maxhours:{maxHoursPerWeek}
+      <p style={{ margin: "5px 0px", fontSize: ".8em" }}>
+        {renderTimeoff ? renderTimeoff : renderAvailability}
+      </p>
+
+      <p style={{ margin: "5px 0px", fontSize: ".8em" }}>
+        maxhours:{maxHoursPerWeek}
+      </p>
     </div>
   );
 };

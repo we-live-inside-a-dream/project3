@@ -233,7 +233,6 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
 
           // deleteEvent={() => setDeleteEvent(true)}
         />
-        **edit**
       </Modal>
     </div>
   );

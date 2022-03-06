@@ -209,7 +209,10 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                 <NamePicTableData
                   firstName={employee.firstName}
                   lastName={employee.lastName}
-                  position={employee?.position}
+                  position={
+                    employee?.position.charAt(0).toUpperCase() +
+                    employee.position.slice(1)
+                  }
                   edit="edit"
                   onClick={() => {
                     setIsOpen(true);

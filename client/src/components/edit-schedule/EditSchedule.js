@@ -72,19 +72,26 @@ function EditSchedule({
 
   const value = useManagerSettings();
   useEffect(() => {
+    // if (!position) return;
     //***constructs employee positions List based of employee selected***
     if (!employeeId) {
       const listOfAllPositions = value.positions;
       setPositionList(listOfAllPositions);
     } else {
-      const selectedEmployee = empPositions?.find(
-        (employee) => employee._id === employeeId
-      );
-      const selectedEmployeePositions = selectedEmployee.positions.map((e) => ({
-        value: e,
-        label: e.charAt(0).toUpperCase() + e.slice(1),
-      }));
-      setPositionList(selectedEmployeePositions);
+      // setPositionList(null);
+      const newPositionList = async () => {
+        const selectedEmployee = await empPositions?.find(
+          (employee) => employee?._id === employeeId
+        );
+        const selectedEmployeePositions = selectedEmployee.positions.map(
+          (e) => ({
+            value: e,
+            label: e.charAt(0).toUpperCase() + e.slice(1),
+          })
+        );
+        setPositionList(selectedEmployeePositions);
+      };
+      newPositionList();
     }
   }, [employeeId]);
 

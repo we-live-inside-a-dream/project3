@@ -77,7 +77,7 @@ function EditSchedule({
 
   const value = useManagerSettings();
   useEffect(() => {
-    // if (!position) return;
+    if (!empPositions) return;
     //***constructs employee positions List based of employee selected***
     if (!employeeId) {
       const listOfAllPositions = value.positions;
@@ -98,14 +98,7 @@ function EditSchedule({
       };
       newPositionList();
     }
-  }, [employeeId]);
-
-  useEffect(() => {
-    console.log("empNames", empNames);
-  }, [empNames]);
-  useEffect(() => {
-    console.log("position", position);
-  }, [position]);
+  }, [employeeId, empPositions]);
 
   useEffect(() => {
     if (empNames) return;

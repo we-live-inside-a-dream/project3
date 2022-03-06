@@ -15,7 +15,7 @@ const ScheduleAvailability = ({ date, id }) => {
 
   useEffect(() => {
     if (!id) return;
-    console.log("empID", id);
+
     setRenderAvailability(null);
     function isEmployeeavailable() {
       let dayOfWeek = fns.getDay(new Date(date));

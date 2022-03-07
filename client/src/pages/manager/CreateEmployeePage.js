@@ -30,6 +30,7 @@ const CreateEmployeePage = () => {
     <>
       {currentCreateTab === 10 && (
         <EmployeeEditForm
+          style={{ margin: "auto" }}
           setId={setCreatedEmployeeId}
           setCurrentCreateTab={setCurrentCreatetTab}
         />

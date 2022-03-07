@@ -156,6 +156,7 @@ function EditSchedule({
         ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
       ); // its FINE
     }
+
     setDate(existingValues.date);
 
     if (existingValues.breaks) {

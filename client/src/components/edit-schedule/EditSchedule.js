@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import * as fns from "date-fns";
+import Select from "react-select";
 import { NativeSelect } from "@mui/material";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
@@ -65,7 +66,7 @@ function EditSchedule({
   const [position, setPosition] = useState([]);
   const [positionList, setPositionList] = useState();
   const [empPositions, setEmpPositions] = useState();
-  const [breakToAdd, setBreakToAdd] = useState([]);
+  const [breakToAdd, setBreakToAdd] = useState();
   const [empNameMessageVal, setEmpNameMessageVal] = useState(null);
   const [empPosMessageVal, setEmpPosMessageVal] = useState(null);
   const [shiftDateMessageVal, setShiftDateMessageVal] = useState(null);
@@ -77,7 +78,7 @@ function EditSchedule({
 
   const value = useManagerSettings();
   useEffect(() => {
-    // if (!position) return;
+    if (!empPositions) return;
     //***constructs employee positions List based of employee selected***
     if (!employeeId) {
       const listOfAllPositions = value.positions;
@@ -88,24 +89,18 @@ function EditSchedule({
         const selectedEmployee = await empPositions?.find(
           (employee) => employee?._id === employeeId
         );
-        const selectedEmployeePositions = selectedEmployee.positions.map(
-          (e) => ({
-            value: e,
-            label: e.charAt(0).toUpperCase() + e.slice(1),
-          })
-        );
-        setPositionList(selectedEmployeePositions);
+        formatForSelect(selectedEmployee.positions, setPositionList);
+        // const selectedEmployeePositions = selectedEmployee.positions.map(
+        //   (e) => ({
+        //     value: e,
+        //     label: e.charAt(0).toUpperCase() + e.slice(1),
+        //   })
+        // );
+        // setPositionList(selectedEmployeePositions);
       };
       newPositionList();
     }
-  }, [employeeId]);
-
-  useEffect(() => {
-    console.log("empNames", empNames);
-  }, [empNames]);
-  useEffect(() => {
-    console.log("position", position);
-  }, [position]);
+  }, [employeeId, empPositions]);
 
   useEffect(() => {
     if (empNames) return;
@@ -161,14 +156,27 @@ function EditSchedule({
         ` Wed Feb 02 2022 ${existingValues.end}:00 GMT-0700 (Mountain Standard Time)`
       ); // its FINE
     }
+
     setDate(existingValues.date);
-    setBreaks(existingValues.breaks);
+
+    if (existingValues.breaks) {
+      setBreaks(existingValues.breaks);
+    }
+
     setPosition(existingValues.position);
   }, [existingValues]);
 
-  // useEffect(() => {
-  //   console.log("start", position);
-  // }, [position]);
+  useEffect(() => {
+    console.log("breaks", breaks);
+  }, [breaks]);
+
+  function formatForSelect(item, setter) {
+    const formattedItem = item.map((e) => ({
+      value: e,
+      label: e.charAt(0).toUpperCase() + e.slice(1),
+    }));
+    setter(formattedItem);
+  }
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {
@@ -256,7 +264,7 @@ function EditSchedule({
       end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
-      position,
+      position: position.toLowerCase(),
     };
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
@@ -284,9 +292,9 @@ function EditSchedule({
     breaky.start = fns.format(new Date(breakStart), "HH:mm").toString(); //ISO date => HH:mm
     breaky.end = fns.format(new Date(breakEnd), "HH:mm").toString();
     breaky.paid = breakPaid;
-
+    console.log("newBreak", newBreak);
     newBreak.push(breaky);
-    setBreakToAdd("");
+    // setBreakToAdd("");
     setBreaks(newBreak);
   }
 
@@ -412,7 +420,7 @@ function EditSchedule({
 
             {positionList?.map((event) => {
               return (
-                <option className="list" key={event._id} value={event.label}>
+                <option className="list" key={event._id} value={event.value}>
                   {event.label}
                 </option>
               );
@@ -503,7 +511,6 @@ function EditSchedule({
           </NativeSelect>
         </div>
         <div>
-          {" "}
           <StyledEditButton
             onClick={onAddBreak}
             style={{

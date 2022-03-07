@@ -177,6 +177,21 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     console.log("FROM ONCLICK", employee._id, date, shift);
   }
 
+  function tConvert(time) {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? "a" : "p"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(""); // return adjusted time or original string
+  }
+
   return (
     <div className="container">
       <div
@@ -334,9 +349,16 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       console.log("FROM ONCLICK", employee._id, date, shift);
                     }}
                   >
-                    {`${shift.start}-${shift.end} `}
+                    {/* fns.format(new Date(shift.start), "HH:mm aaaaa'm'") */}
+                    {`${moment(shift.start, "hh:mm").format("h:mma")}-${moment(
+                      shift.end,
+                      "hh:mm"
+                    ).format("h:mma")}`}
                     <br />
-                    {`${shift.position}`}
+                    {`${
+                      shift.position.charAt(0).toUpperCase() +
+                      shift.position.slice(1)
+                    }`}
                   </td>
                 );
               })}

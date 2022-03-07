@@ -14,7 +14,9 @@ const ScheduleAvailability = ({ date, id }) => {
   });
 
   useEffect(() => {
-    setRenderTimeoff(null);
+    if (!id) return;
+
+    setRenderAvailability(null);
     function isEmployeeavailable() {
       let dayOfWeek = fns.getDay(new Date(date));
       // console.log("isEmpAvail!");
@@ -44,13 +46,13 @@ const ScheduleAvailability = ({ date, id }) => {
             } // scheduled off all day
           } else {
             setRenderTimeoff(
-              `approved ${time.type} ${time.startDate} to ${time.endDate}`
+              `approved timeoff ${time.startDate} to ${time.endDate}`
             );
           } //multiple days off
           // setRenderTimeoff("Time off true");
         } else {
           setRenderTimeoff(null);
-          return "im here";
+          return null;
         }
       });
     }
@@ -60,23 +62,21 @@ const ScheduleAvailability = ({ date, id }) => {
 
   useEffect(() => {
     if (id) {
+      setRenderAvailability(null);
+      setRenderTimeoff(null);
       const fetchAvailabilityById = async () => {
         let fetchResult = await fetch(
           "/api/availability/by-employee/off/" + id
         );
         let theAvailability = await fetchResult.json();
-        // console.log(theAvailability);
+
+        setTimeoff(theAvailability.vacation);
         setAvailability(theAvailability.availabilities);
         setMaxHoursPerWeek(theAvailability?.availabilities.maxHoursPerWeek);
-        setTimeoff(theAvailability.vacation);
       };
       fetchAvailabilityById();
     }
   }, [id]);
-
-  useEffect(() => {
-    // console.log("time off function", renderTimeoff);
-  }, [renderTimeoff]);
 
   // useEffect(()=>{
   //     let AvailableToday = function (dayObject) {

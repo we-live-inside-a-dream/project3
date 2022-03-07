@@ -4,6 +4,8 @@ import {
   StyledButton,
   StyledInput,
   StyledForm,
+  StyledFormWrapper,
+  StyledForm2,
 } from "../reusable/Inputs/StyledEmployeeForm";
 import StyledTable from "../reusable/tables/StyledTable";
 import Modal from "../reusable/Modal";
@@ -42,7 +44,7 @@ function PositionSettings() {
 
   return (
     <div>
-      <div style={{ justifyContent: "left" }}>
+      <StyledForm2 style={{ justifyContent: "left" }}>
         <StyledTable>
           <thead>
             <tr style={{ height: "40px" }}>
@@ -85,10 +87,13 @@ function PositionSettings() {
             })}
           </tbody>
         </StyledTable>
-        <StyledButton onClick={() => setModalOpen(!modalOpen)}>
+        <StyledButton
+          style={{ marginTop: "1em" }}
+          onClick={() => setModalOpen(!modalOpen)}
+        >
           Add Position
         </StyledButton>
-      </div>
+      </StyledForm2>
 
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         {method === "delete" ? (

@@ -99,7 +99,7 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
           MONTH
         </StyledButton>
       </div>
-      <div style={{ minWidth: "10em" }}>
+      <div style={{ margin: "0 0 0 1em", minWidth: "11.6em" }}>
         <StyledButton
           onClick={() => handleClick()}
           style={{
@@ -107,13 +107,13 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
             margin: "0px",
             border: "2px solid var(--styledButtonGroupBorder)",
             borderRight: "0px",
-            borderRadius: "50% 0 0 50%",
+            borderRadius: "3px 0 0 3px",
             padding: ".8rem 0 .8rem 0",
-            width: "5em",
+            width: "5.8em",
             "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
           }}
         >
-          Position
+          POSITION
         </StyledButton>
         <StyledButton
           onClick={() => handleClick()}
@@ -122,13 +122,13 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
             margin: "0px",
             border: "2px solid var(--styledButtonGroupBorder)",
             borderLeft: "0px",
-            borderRadius: "0 50% 50% 0",
+            borderRadius: "0 3px 3px 0",
             padding: ".8rem 0 .8rem 0",
-            width: "5em",
+            width: "5.8em",
             "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
           }}
         >
-          Employee
+          EMPLOYEE
         </StyledButton>
       </div>
     </>

@@ -133,148 +133,147 @@ function BusinessDaysForm() {
   }
 
   return (
-    <StyledFormWrapper>
-      <StyledForm>
-        <div>
-          <StyledTable style={{position: "relative", right: "1.5%"}}>
-            <thead>
-              <tr>
-                <th>Weekday</th>
-                <th>Open Time</th>
-                <th>Close Time</th>
-                <th>Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {businessHours?.map((day) => {
-                console.log("this is the mapped day", day);
-                return (
-                  <tr
-                    key={day._id}
-                    value={day}
-                    // style={{
-                    //   padding: "10px",
-                    //   textAlign: "center",
-                    //   height: "auto",
-                    // }}
-                  >
-                    <td>{`${day.dayOfTheWeek}`}</td>
-                    <td>{`${day.start}`}</td>
-                    <td>{`${day.end}`}</td>
-                    <td>
-                      <div>
-                        <StyledEditButton
-                          margin={"0px 10px 0px 10px"}
-                          onClick={() => {
-                            setDayToDelete(day);
-                            deleteBusinessDay(day.dayOfTheWeek);
-                          }}
-                        >
-                          ❌
-                        </StyledEditButton>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </StyledTable>
-          <br />
-          <label>Weekday</label>
-          <div style={{ position: 'relative', left:"1%", width: "36%" }}>
-            {createWeekDays === "" ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "10px",
-                  marginBottom: "0px",
-                  marginTop: "0px",
-                }}
-              >
-                {"required"}
-              </p>
-            ) : null}
-            <Select
-              defaultValue={createWeekDays}
-              options={weekDaysData}
-              // onChange={() => {
-              //   createWeekDayHandler(),
-              //     setWeekDayMessageVal(requiredValidation(createWeekDays));
-              // }}
-              onChange={createWeekDayHandler}
-            />
-          </div>
-          <br />
-          <div style={{ display: "inline-flex" }}>
-            <div style={{ marginRight: "auto" }}>
-              <label>Open Time</label>
-              <BasicTimePicker
-                type="time"
-                value={start}
-                onChange={(value) => {
-                  onInputUpdate(value, setStart);
-                }}
-              />
-            </div>
-            <div style={{position: "relative", left: "30%"}}>
-              <label>
-                Close Time
-                {!endTimeMessageVal ? (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      marginBottom: "0px",
-                      marginTop: "0px",
-                    }}
-                  ></p>
-                ) : null}
-                {endTimeMessageVal ? (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      marginBottom: "0px",
-                      marginTop: "0px",
-                    }}
-                  >
-                    {endTimeMessageVal}
-                  </p>
-                ) : null}
-                <BasicTimePicker style={{position: "relative", left: "30%"}}
-                  type="time"
-                  value={end}
-                  onChange={(value) => {
-                    onInputUpdate(value, setEnd);
-                    setEndTimeMessageVal(timeValidation(start, value));
-                  }}
-                />
-              </label>
-            </div>
-          </div>
-          <div>
-            <StyledButton
-              onClick={() => {
-                postData();
-              }}
-            >
-              Submit
-            </StyledButton>
-          </div>
-          {shown === true ? (
+    <StyledForm style={{ justifyContent: "left" }}>
+      <div>
+        <StyledTable style={{ position: "relative", right: "1.5%" }}>
+          <thead>
+            <tr>
+              <th>Weekday</th>
+              <th>Open Time</th>
+              <th>Close Time</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {businessHours?.map((day) => {
+              console.log("this is the mapped day", day);
+              return (
+                <tr
+                  key={day._id}
+                  value={day}
+                  // style={{
+                  //   padding: "10px",
+                  //   textAlign: "center",
+                  //   height: "auto",
+                  // }}
+                >
+                  <td>{`${day.dayOfTheWeek}`}</td>
+                  <td>{`${day.start}`}</td>
+                  <td>{`${day.end}`}</td>
+                  <td>
+                    <div>
+                      <StyledEditButton
+                        margin={"0px 10px 0px 10px"}
+                        onClick={() => {
+                          setDayToDelete(day);
+                          deleteBusinessDay(day.dayOfTheWeek);
+                        }}
+                      >
+                        ❌
+                      </StyledEditButton>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </StyledTable>
+        <br />
+        <label>Weekday</label>
+        <div style={{ position: "relative", left: "1%", width: "36%" }}>
+          {createWeekDays === "" ? (
             <p
               style={{
                 color: "red",
-                fontSize: "20px",
+                fontSize: "10px",
                 marginBottom: "0px",
+                marginTop: "0px",
               }}
             >
-              form is invalid
+              {"required"}
             </p>
           ) : null}
+          <Select
+            defaultValue={createWeekDays}
+            options={weekDaysData}
+            // onChange={() => {
+            //   createWeekDayHandler(),
+            //     setWeekDayMessageVal(requiredValidation(createWeekDays));
+            // }}
+            onChange={createWeekDayHandler}
+          />
         </div>
-      </StyledForm>
-    </StyledFormWrapper>
+        <br />
+        <div style={{ display: "inline-flex" }}>
+          <div style={{ marginRight: "auto" }}>
+            <label>Open Time</label>
+            <BasicTimePicker
+              type="time"
+              value={start}
+              onChange={(value) => {
+                onInputUpdate(value, setStart);
+              }}
+            />
+          </div>
+          <div style={{ position: "relative", left: "30%" }}>
+            <label>
+              Close Time
+              {!endTimeMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                    marginTop: "0px",
+                  }}
+                ></p>
+              ) : null}
+              {endTimeMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                    marginTop: "0px",
+                  }}
+                >
+                  {endTimeMessageVal}
+                </p>
+              ) : null}
+              <BasicTimePicker
+                style={{ position: "relative", left: "30%" }}
+                type="time"
+                value={end}
+                onChange={(value) => {
+                  onInputUpdate(value, setEnd);
+                  setEndTimeMessageVal(timeValidation(start, value));
+                }}
+              />
+            </label>
+          </div>
+        </div>
+        <div>
+          <StyledButton
+            onClick={() => {
+              postData();
+            }}
+          >
+            Submit
+          </StyledButton>
+        </div>
+        {shown === true ? (
+          <p
+            style={{
+              color: "red",
+              fontSize: "20px",
+              marginBottom: "0px",
+            }}
+          >
+            form is invalid
+          </p>
+        ) : null}
+      </div>
+    </StyledForm>
   );
 }
 

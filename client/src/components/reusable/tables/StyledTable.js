@@ -11,8 +11,9 @@ const StyledTable = styled.table`
   border-radius: 0px;
   border-collapse: collapse;
   border-spacing: 0;
-  margin: 0rem auto;
-  width: 60%;
+  margin: ${(props) => props.margin || "0rem auto"};
+
+  width: 100%;
 
   th {
     font-size: 1em;

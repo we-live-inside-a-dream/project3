@@ -203,16 +203,19 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: " 65%  35%",
+          gridTemplateColumns: " 36%  34% 30%",
           height: "auto",
+          marginBottom: "1em",
         }}
       >
-        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
+        <div style={{ display: "flex" }}>
           <StyledScheduleButtonGroup
             setCurrentTab={setCurrentTab}
             currentTab={currentTab}
             style={{ marginRight: "20px", alignSelf: "baseline" }}
           />
+        </div>
+        <div style={{ display: "inline-flex", alignContent: "baseline" }}>
           <WeekScheduleLegend
             style={{ marginLeft: "15px", paddingBottom: "0px" }}
           />
@@ -222,33 +225,33 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
         <div
           style={{
             gridTemplateRow: "1",
-            display: "inline",
+            display: "flex",
             alignContent: "baseline",
             alignItems: "baseLine",
             justifyContent: "right",
+            position: "relative",
           }}
         >
           <h2
             style={{
+              fontSize: "1em",
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
               color: "var(--accentColorTitle)",
-              marginTop: "0px",
-              marginBottom: "0px",
-              paddingBottom: "0px",
-              display: "inline",
             }}
           >
-            Week starting:
+            Week start:
           </h2>
-          <BasicDatePicker
-            value={startDay}
-            onChange={(value) => {
-              onInputUpdate(value, setStartDay);
-              console.log(value, "is the newStartDay");
-            }}
-          />
+          <div style={{ padding: "1rem" }}>
+            <BasicDatePicker
+              value={startDay}
+              onChange={(value) => {
+                onInputUpdate(value, setStartDay);
+                console.log(value, "is the newStartDay");
+              }}
+            />
+          </div>
         </div>
       </div>
       <StyledTable>

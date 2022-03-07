@@ -120,6 +120,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           display: "grid",
           gridTemplateColumns: " 50%  20% 30%",
           height: "auto",
+          marginBottom: "1em",
         }}
       >
         <div style={{ display: "inline-flex", alignContent: "baseline" }}>
@@ -134,13 +135,14 @@ function DaySchedule({ setCurrentTab, currentTab }) {
         <div
           style={{
             gridTemplateRow: "1",
-            display: "inline",
+            display: "flex",
             alignContent: "baseline",
             alignItems: "baseLine",
             justifyContent: "right",
+            position: "relative",
           }}
         >
-          <h2
+          {/* <h2
             style={{
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
@@ -150,11 +152,14 @@ function DaySchedule({ setCurrentTab, currentTab }) {
               marginBottom: "0px",
               paddingBottom: "0px",
               display: "inline",
+              position: "relative",
+              bottom: "0",
             }}
           >
             For day:
-          </h2>
+          </h2> */}
           <BasicDatePicker
+            style={{ display: "inline" }}
             value={day}
             onChange={(value) => {
               onInputUpdate(value, setDay);
@@ -163,7 +168,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           />
         </div>
       </div>
-      <StyledTable>
+      <StyledTable margin={"0 0 0 0 "}>
         <thead>
           <tr>
             <th>NAME</th>
@@ -256,7 +261,9 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton onClick={() => handleClick()}>ADD SHIFT</StyledButton>
+      <StyledButton style={{ marginTop: "1em" }} onClick={() => handleClick()}>
+        ADD SHIFT
+      </StyledButton>
       <Modal
         open={isOpen}
         onClose={() => {

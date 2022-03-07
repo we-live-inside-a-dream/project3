@@ -33,11 +33,13 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
   return (
     <div
       style={{
-        marginRight: "20%",
-        marginLeft: "20%",
-        width: "auto",
+        marginRight: "auto",
+        marginLeft: "auto",
+        padding: "1em",
         marginBottom: "2%",
         marginTop: "1%",
+        display: "flex",
+        justifyContent: "center",
       }}
     >
       <StyledButton

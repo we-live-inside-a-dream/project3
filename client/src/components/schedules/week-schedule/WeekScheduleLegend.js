@@ -17,7 +17,7 @@ function WeekScheduleLegend() {
           backgroundColor: "#FC4445",
           lineHeight: ".5",
           display: "inline-block",
-          margin: " 0px 8px",
+          margin: " auto 8px",
           gridRow: "1",
           justifyContent: "left",
         }}
@@ -32,7 +32,7 @@ function WeekScheduleLegend() {
           backgroundColor: "gold",
           lineHeight: ".5",
           display: "inline-block",
-          margin: " 0px 8px",
+          margin: " auto 8px",
           gridRow: "2",
           justifyContent: "left",
         }}
@@ -49,7 +49,7 @@ function WeekScheduleLegend() {
           backgroundColor: "#32cd32",
           lineHeight: ".5",
           display: "inline-block",
-          margin: " 0px 8px",
+          margin: " auto 8px",
           gridRow: "3",
           justifyContent: "left",
         }}

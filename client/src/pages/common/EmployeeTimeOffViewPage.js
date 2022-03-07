@@ -179,12 +179,11 @@ const EmployeeTimeOffViewPage = () => {
 
             {timeOffRequests?.length < 1 ? <div style={{marginLeft:"33%"}}> <h1>You Have no time off requests</h1> </div>: null}
 
-            <div styled={{ padding: "40%", position: "relative" }}>
-             <div style={{marginLeft:"14%"}}> <StyledButton
+            <div>
+             <div style={{position:"relative", left: "18em"}}> <StyledButton
                 onClick={() => setModalApplyIsOpen(true)}
-                style={{ position: "absolute", marginLeft: "58px" }}
               >
-                Request Time off
+                REQUEST TIME OFF
               </StyledButton>
               </div>
             </div>

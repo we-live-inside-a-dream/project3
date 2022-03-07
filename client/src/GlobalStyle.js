@@ -16,6 +16,7 @@ const GlobalStyle = createGlobalStyle`
   --styledButtonGroupBorder:  #66b9bf;
   --dashGridBoxBackground: white;
   --nameIconBorder: #E37222;
+  --nameIconBorderHover:  #eeaa78;
   --appBackground: whitesmoke;
   --navBackground: whitesmoke;
   --white: #ffffff;

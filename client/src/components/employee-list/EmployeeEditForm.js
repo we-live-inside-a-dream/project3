@@ -255,7 +255,7 @@ const EmployeeEditForm = ({
 
   return (
     <>
-      <StyledForm>
+      <StyledForm style={{ margin: " 80px auto" }}>
         <h2>Employee Description</h2>
         <div></div>
         <div>
@@ -362,10 +362,8 @@ const EmployeeEditForm = ({
                 isMulti
                 name="employee position"
                 value={positions}
-                // value={[{ value: "dog", label: "Dog" }]}
                 options={positionsList}
                 onChange={handlePositionChange}
-                // required="true"
               ></Select>
             </div>
             <div>
@@ -386,7 +384,6 @@ const EmployeeEditForm = ({
                 value={permissions}
                 options={permissionsData}
                 onChange={handlePermissionsChange}
-                // required="true"
               ></Select>
             </div>
 
@@ -409,15 +406,17 @@ const EmployeeEditForm = ({
                 value={status}
                 options={statusData}
                 onChange={handleStatusChange}
-                // required="true"
               />
             </div>
           </>
         ) : null}
 
         <div>
-          <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
-            Save Details
+          <StyledButton
+            onClick={postData}
+            style={{ position: "relative", top: "1em", left: 0, marginLeft: 0 }}
+          >
+            SAVE DETAILS
           </StyledButton>
         </div>
         <div>

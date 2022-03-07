@@ -104,37 +104,46 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2>{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
-          <label style={{ textTransform: "upperCase" }}>
-            Max weekly hours
-            <StyledInput
-              type="number"
-              min={0}
-              value={availability?.maxHoursPerWeek}
-              onChange={(e) =>
-                setAvailability({
-                  ...availability,
-                  maxHoursPerWeek: e.target.value,
-                })
-              }
+      {/* <StyledFormWrapper> */}
+      <StyledForm>
+        <h2
+          style={{ marginTop: "0px" }}
+        >{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
+        <label style={{ textTransform: "upperCase" }}>
+          Max weekly hours
+          <StyledInput
+            type="number"
+            min={0}
+            value={availability?.maxHoursPerWeek}
+            onChange={(e) =>
+              setAvailability({
+                ...availability,
+                maxHoursPerWeek: e.target.value,
+              })
+            }
+          />
+        </label>
+        {availability?.days?.map((day, index) => {
+          return (
+            <AvailabilityDay
+              key={index}
+              index={index}
+              day={day}
+              setAvailability={setAvailability}
+              availability={availability}
+              setIsError={setIsError}
             />
-          </label>
-          {availability?.days?.map((day, index) => {
-            return (
-              <AvailabilityDay
-                key={index}
-                index={index}
-                day={day}
-                setAvailability={setAvailability}
-                availability={availability}
-                setIsError={setIsError}
-              />
-            );
-          })}
+          );
+        })}
 
+        <div style={{ display: "baseline" }}>
           <StyledButton
+            style={{
+              marginLeft: "auto",
+              marginBottom: "auto",
+              // marginTop: "auto",
+              // marginRight: "auto",
+            }}
             onClick={() => {
               postData();
               navigate("/human-resources");
@@ -142,8 +151,9 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
           >
             SAVE AVAILABILITY DETAILS
           </StyledButton>
-        </StyledForm>
-      </StyledFormWrapper>
+        </div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

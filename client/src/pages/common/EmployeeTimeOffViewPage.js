@@ -180,7 +180,7 @@ const EmployeeTimeOffViewPage = () => {
                 onClick={() => setModalApplyIsOpen(true)}
                 style={{ position: "absolute", marginTop: "1em" }}
               >
-                Request Time off
+                REQUEST TIME OFF
               </StyledButton>
             </StyledTable>
 

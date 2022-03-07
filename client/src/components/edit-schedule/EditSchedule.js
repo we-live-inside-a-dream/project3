@@ -296,20 +296,6 @@ function EditSchedule({
     setBreaks(newBreak);
   }
 
-  // async function validateForm() {
-  //   if (
-  //     empNameMessageVal ||
-  //     shiftDateMessageVal ||
-  //     shiftTimeMessageVal ||
-  //     shiftBrakeMessageVal
-  //   ) {
-  //     validation = "Please make sure that all fields are valid";
-  //     return validation;
-  //   } else validation = null;
-
-  //   return validation;
-  // }
-
   return (
     <>
       {/* <StyledFormWrapper> */}

@@ -66,6 +66,7 @@ function ShiftSwapConformModal({
 
     console.log("New Shift...", newShiftSwapRequest);
     await updateShift(newShiftSwapRequest);
+    setSwapConfirmModalIsOpen(false);
   }
 
   return (
@@ -96,7 +97,6 @@ function ShiftSwapConformModal({
       <StyledButton
         onClick={() => {
           postSwapRequest();
-          setSwapConfirmModalIsOpen(false);
         }}
       >
         CONFIRM

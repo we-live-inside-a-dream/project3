@@ -54,7 +54,8 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
     };
 
     console.log("New Shift...", newShiftSwapRequest);
-    await updateShift(newShiftSwapRequest);
+
+    setShiftBidModalIsOpen(false);
   }
 
   return (

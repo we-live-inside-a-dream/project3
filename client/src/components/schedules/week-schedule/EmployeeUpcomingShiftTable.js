@@ -152,7 +152,12 @@ function EmployeeUpcomingShiftList() {
           setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
         />
       </Modal>
-      {shiftsUpForGrabsIsOpen ? <ShiftsUpForGrabs user={user} /> : null}
+      {shiftsUpForGrabsIsOpen ? (
+        <ShiftsUpForGrabs
+          setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
+          user={user}
+        />
+      ) : null}
     </div>
   );
 }

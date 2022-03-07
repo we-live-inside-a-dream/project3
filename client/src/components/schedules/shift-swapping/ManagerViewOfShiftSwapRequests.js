@@ -25,7 +25,6 @@ function ManagerViewOfShiftSwapRequests() {
     }
     findShiftSwapRequests();
   }, []);
-  console.log(typeof swapRequests);
 
   return (
     <div>
@@ -57,7 +56,6 @@ function ManagerViewOfShiftSwapRequests() {
                         setDetailShift(request);
                         setDecision("approved");
                         setShiftApprovalModalIsOpen(true);
-                        setSwapRequests([...swapRequests]);
                       }}
                     >
                       ✅
@@ -68,7 +66,6 @@ function ManagerViewOfShiftSwapRequests() {
                         setDetailShift(request);
                         setDecision("denied");
                         setShiftApprovalModalIsOpen(true);
-                        setSwapRequests([...swapRequests]);
                       }}
                     >
                       ❌
@@ -86,8 +83,11 @@ function ManagerViewOfShiftSwapRequests() {
       >
         <ManagerConfirmSwapModal
           shift={detailShift}
-          setShiftApprovalModalIsOpen={setShiftApprovalModalIsOpen}
+          setShiftApprovalModalIsOpen={() => setShiftApprovalModalIsOpen(false)}
           decision={decision}
+          swapRequestValues={detailShift}
+          swapRequests={swapRequests}
+          setSwapRequests={setSwapRequests}
         />
       </Modal>
     </div>

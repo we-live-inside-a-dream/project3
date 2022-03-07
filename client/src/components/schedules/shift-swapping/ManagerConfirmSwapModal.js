@@ -10,6 +10,9 @@ function ManagerConfirmSwapModal({
   shift,
   setShiftApprovalModalIsOpen,
   decision,
+  swapRequestValues,
+  swapRequests,
+  setSwapRequests,
 }) {
   const [managerMessage, setManagerMessage] = useState();
   const authContext = useContext(AuthenticationContext);
@@ -59,12 +62,12 @@ function ManagerConfirmSwapModal({
       swapRequestStatus: decision === "approved" ? "approved" : "denied",
       swapRequestDate: shift.swapRequestDate,
       swapBidRequest: decision === "approved" ? "approved" : "denied",
-      reasonForSwap: shift.reason,
+      reasonForSwap: shift.reasonForSwap,
       shiftBidId: shift.shiftBidId,
       bidderFirstName: shift.bidderFirstName,
       bidderLastName: shift.bidderLastName,
       bidRequestDate: shift.bidRequestDate,
-      approvingManagerId: user._id,
+      approvingManagerId: user?._id,
       previousShiftOwnerId: shift.employeeId,
       previousShiftOwnerFirstName: shift.firstName,
       previousShiftOwnerLastName: shift.lastName,
@@ -73,6 +76,15 @@ function ManagerConfirmSwapModal({
 
     console.log("New Shift...", newShiftSwapManagerDecision);
     await updateShift(newShiftSwapManagerDecision);
+    let updatedSwapRequestList = swapRequests.map((swap) => {
+      if (swap._id === swapRequestValues._id) {
+        return newShiftSwapManagerDecision;
+      } else {
+        return swap;
+      }
+    });
+    setSwapRequests(updatedSwapRequestList);
+    setShiftApprovalModalIsOpen();
   }
 
   return (
@@ -86,11 +98,12 @@ function ManagerConfirmSwapModal({
       <p>{`Position: ${shift.position}`}</p>
       <label>Decision Message:</label>
       <StyledTextArea
-        onChange={(value) => handleMessageInput(value, setManagerMessage)}
+        onChange={(event) =>
+          handleMessageInput(event.target.value, setManagerMessage)
+        }
       ></StyledTextArea>
       <StyledButton
         onClick={() => {
-          setShiftApprovalModalIsOpen(false);
           postBidRequest();
         }}
       >

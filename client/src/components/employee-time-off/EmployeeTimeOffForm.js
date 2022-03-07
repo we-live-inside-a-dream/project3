@@ -162,15 +162,6 @@ const EmployeeTimeOffForm = ({
       await createEmployeeTimeOff(newEmployeeTimeOff);
       setModalApplyIsOpen(false);
     } else setShown(true);
-
-    // onSave();
-    // if (existingValues) {
-    //   console.log("New Time off...", newEmployeeTimeOff);
-    //   // await updateShift(newEmployeeTimeOff);
-    // } else {
-    //   console.log("New Time off...", newEmployeeTimeOff);
-    //   // await createTimeOff(newEmployeeTimeOff);
-    // }
   }
 
   return (

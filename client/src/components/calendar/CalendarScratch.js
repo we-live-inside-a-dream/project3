@@ -24,6 +24,7 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
   const [isOpen, setIsOpen] = useState(false);
   const [eventId, setEventId] = useState("");
   const [daySelectChoice, setDaySelectChoice] = useState();
+  const [closeViewDiv, setCloseViewDiv] = useState(false);
   let user = authContext.user;
   let permissions = user?.permissions;
 
@@ -125,14 +126,6 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
     }
   };
 
-  // let findDatefromDay = function (day) {
-  //   const day = theDate.getDate();
-  //   const month = theDate.getMonth();
-  //   const year = theDate.getFullYear();
-  //   const dayString = `${month + 1}/${i - paddingDays}/${year}`;
-  //   setDaySelectChoice;
-  // };
-
   return (
     <div
       id="container"
@@ -149,8 +142,12 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
           isOpen={isOpen}
           setEventId={setEventId}
           eventId={setEventId}
+          existingValues={eventToReveal}
           setExistingValues={setExistingValues}
+          setCloseViewDiv={setCloseViewDiv}
           onClose={() => setRevealEventDetails(false)}
+          allEvents={allEvents}
+          setAllEvents={setAllEvents}
         />
       )}
 

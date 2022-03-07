@@ -18,6 +18,7 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import * as fns from "date-fns";
+import moment from "moment";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const typeData = [
@@ -163,6 +164,22 @@ const EventEditForm = ({
     await fetch(`/api/events/delete-event?id=${theEventId}`, {
       method: "DELETE",
     });
+    let resetValues = function () {
+      setTheEventId("");
+      setTitle("");
+      setStartTime("");
+      setEndTime("");
+      setStartDate("");
+      setEndDate("");
+      setType();
+      setNotes("");
+      setAllDay(true);
+      setVisibility();
+      setMandatory(false);
+      setRecurring(false);
+    };
+    resetValues();
+    setIsOpen(false);
   }
 
   let validation;
@@ -262,8 +279,8 @@ const EventEditForm = ({
       <StyledForm>
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
-        <div>
-          <label style={{ marginBottom: "0px" }}>
+        <div style={{marginRight: "4.5em"}}>
+          <label>
             Event Name:
             <RedStar />
           </label>
@@ -290,8 +307,6 @@ const EventEditForm = ({
         </div>
         <div>
           <br />
-          <label>
-            Mandatory:
             <StyledCheck
               className="check"
               name="mandatory"
@@ -300,10 +315,10 @@ const EventEditForm = ({
               checked={mandatory === true}
               onChange={(e) => setMandatory(e.target.checked)}
             />
-          </label>
-          <br />
           <label>
-            Recurring:
+            Mandatory
+            </label>
+          <br />
             <StyledCheck
               className="check"
               name="recurring"
@@ -312,10 +327,12 @@ const EventEditForm = ({
               checked={recurring === true}
               onChange={(e) => setRecurring(e.target.checked)}
             />
+          <label>
+            Recurring
           </label>
         </div>
 
-        <div style={{ margin: "0px" }}>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Type:
             <RedStar />
@@ -327,8 +344,11 @@ const EventEditForm = ({
           />
         </div>
 
-        <div>
-          <label>Visibility:</label>
+        <div style={{marginRight: "4.5em"}}>
+          <label>
+            Visibility:
+            <RedStar />
+            </label>
           <Select
             isMulti
             name="visibility"
@@ -338,7 +358,7 @@ const EventEditForm = ({
           />
         </div>
 
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Start Day:
             <RedStar />
@@ -350,19 +370,21 @@ const EventEditForm = ({
             value={startDate}
             onChange={(value) => {
               onDateInputUpdate(
-                fns.format(new Date(value), "yyyy-MM-DD").toString(),
+                moment(value).format("yyyy-MM-DD"),
+                // fns.format(new Date(value), "yyyy-MM-DD").toString(),
                 setStartDate
               );
               setDateMessageVal(
                 dateValidation(
                   startDate,
-                  fns.format(new Date(value), "yyyy-MM-dd").toString()
+
+                  fns.format(new Date(value), "yyyy-MM-DD").toString()
                 )
               );
             }}
           />
         </div>
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             End Day:
             <RedStar />
@@ -395,7 +417,9 @@ const EventEditForm = ({
               value={endDate}
               onChange={(value) => {
                 onDateInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  // fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  moment(value).format("yyyy-MM-DD"),
+
                   setEndDate
                 );
                 setDateMessageVal(
@@ -467,7 +491,7 @@ const EventEditForm = ({
                   {timeMessageVal}
                 </p>
               ) : null}
-              <BasicTimePicker
+              <BasicTimePicker style={{ width: "220px"}}
                 type="time"
                 value={endTime}
                 onChange={(value) => {
@@ -480,7 +504,7 @@ const EventEditForm = ({
         )}
         <div></div>
         <div></div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", marginBottom: "10px" }}>
           <StyledButton
             onClick={() => {
               postData();
@@ -496,7 +520,7 @@ const EventEditForm = ({
             DELETE
           </StyledButton>
         </div>
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>Notes:</label>
           <StyledTextArea
             value={notes}

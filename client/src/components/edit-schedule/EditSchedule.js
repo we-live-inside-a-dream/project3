@@ -354,8 +354,8 @@ function EditSchedule({
           />
         </div>
         <div>
-          <InputLabel>Employee Availability</InputLabel>
-          <ScheduleAvailability date={date} id={employeeId} />
+          <InputLabel>Employee Availability/Time Off</InputLabel>
+          <ScheduleAvailability date={date} id={employeeId} name={firstName} />
         </div>
         <div>
           <InputLabel>
@@ -412,7 +412,7 @@ function EditSchedule({
               // filterEmpNames();
             }}
             style={{
-              width: "95%",
+              width: "100%",
             }}
           >
             {/* {name} */}

@@ -263,7 +263,7 @@ const EventEditForm = ({
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
         <div>
-          <label style={{ marginBottom: "0px" }}>
+          <label>
             Event Name:
             <RedStar />
           </label>
@@ -315,7 +315,7 @@ const EventEditForm = ({
           </label>
         </div>
 
-        <div style={{ margin: "0px" }}>
+        <div>
           <label>
             Type:
             <RedStar />
@@ -328,7 +328,10 @@ const EventEditForm = ({
         </div>
 
         <div>
-          <label>Visibility:</label>
+          <label>
+            Visibility:
+            <RedStar />
+            </label>
           <Select
             isMulti
             name="visibility"
@@ -467,7 +470,7 @@ const EventEditForm = ({
                   {timeMessageVal}
                 </p>
               ) : null}
-              <BasicTimePicker
+              <BasicTimePicker style={{ width: "220px"}}
                 type="time"
                 value={endTime}
                 onChange={(value) => {
@@ -480,7 +483,7 @@ const EventEditForm = ({
         )}
         <div></div>
         <div></div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", marginBottom: "10px" }}>
           <StyledButton
             onClick={() => {
               postData();

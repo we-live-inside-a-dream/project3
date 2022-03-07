@@ -48,6 +48,7 @@ function BusinessDaysForm() {
     setter(value);
   }
 
+  //what is in the gard is for rendering upon delete and create
   useEffect(() => {
     const getBusinessDays = async () => {
       let fetchResult = await fetch("/api/businessDays/list");

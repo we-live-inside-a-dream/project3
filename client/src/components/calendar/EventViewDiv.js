@@ -28,45 +28,79 @@ function EventViewDiv({
   setIsOpen,
   setEventId,
   setExistingValues,
+  existingValues,
+  setCloseViewDiv,
   isOpen,
   onClose,
+  allEvents,
+  setAllEvents,
 }) {
   const [theEvent, setTheEvent] = useState();
+  const [eventStartDay, setEventStartDay] = useState();
+  const [eventEndDay, setEventEndDay] = useState();
+  const [eventStartTime, setEventStartTime] = useState();
+  const [eventEndTime, setEventEndTime] = useState();
+  const [eventComments, setEventComments] = useState();
+  const [eventTitle, setEventTitle] = useState();
+  const [eventType, setEventType] = useState();
+  const [theEventId, setTheEventId] = useState();
+  const [employeeId, setEmployeeId] = useState();
+  const [eventName, setEventName] = useState();
   const authContext = useContext(AuthenticationContext);
   const user = authContext.user;
 
   useEffect(() => {
-    if (eventToReveal) {
-      setTheEvent(eventToReveal);
+    if (existingValues) {
+      setTheEventId(existingValues._id);
+      setEventType(existingValues.type[0]);
+      setEventStartDay(existingValues.startDate);
+      setEventEndDay(existingValues.endDate);
+      setEventComments(existingValues.notes);
+      setEventStartTime(existingValues.startTime);
+      setEventEndTime(existingValues.endTime);
+      setEventTitle(existingValues.title);
+      setEmployeeId(existingValues.employeeProfileId);
+      setEventName(existingValues.title);
     }
-  }, [eventToReveal]);
+  }, [existingValues]);
+  console.log(eventStartTime, eventEndTime, eventStartDay, eventEndDay);
+  async function deleteEventData(theEventId) {
+    console.log("FROM THE DELETE FUNCTION", theEventId);
+    await fetch(`/api/events/delete-event?id=${theEventId}`, {
+      method: "DELETE",
+    });
+    let filteredEvents = allEvents.filter((e) => e._id !== theEventId);
+    setAllEvents([...filteredEvents]);
+  }
 
   let theDate = function (start, end) {
+    let newStart = moment(start).format("ddd MMM Do yyyy");
+    let newEnd = moment(end).format("ddd MMM Do yyyy");
     if (start !== end) {
-      return `${moment(start).format("ddd MMM do yyyy")} - ${moment(
-        start
-      ).format("ddd MMM do yyyy")}`;
-    } else return `${moment(start).format("ddd MMM do yyyy")}`;
+      return `${newStart} - ${newEnd}`;
+    } else return `${newStart}`;
   };
   let theTime = function (start, end) {
-    console.log("FROM THE TIME FUNCTION", start, end);
-    if (start === end) {
-      return `${moment(start).format("HH:mm a")} - ${moment(start).format(
-        "HH:mm a"
-      )}`;
-    } else return "all day";
+    console.log("THIS IS THE START TIME");
+    let newStart = moment(start, "HH:mm").format("h:mma");
+    let newEnd = moment(end, "HH:mm").format("h:mma");
+    if (start !== end) {
+      return `${newStart} - ${newEnd}`;
+    } else if (start === "00:00" || end === "00:00") {
+      return "all day";
+    } else return "no times available";
   };
   console.log("FROM THE MODAL", eventToReveal);
   console.log("type of existingValues", setExistingValues);
   return (
     <div style={eventViewStyle}>
       <h3 style={{ color: "var(--accentColorTitle" }}>
-        {theEvent?.title}
-        {theEvent?.employeeProfileId === user?._id && (
+        {eventName}
+        {employeeId === user?._id && (
           <StyledEditButton
             onClick={() => {
               console.log("the event from edit button", theEvent);
-              setEventId(theEvent?._id);
+              setEventId(theEventId);
               setExistingValues(eventToReveal);
               setIsOpen(!isOpen);
             }}
@@ -74,15 +108,22 @@ function EventViewDiv({
             ✎
           </StyledEditButton>
         )}
+        <StyledEditButton
+          onClick={() => {
+            setExistingValues(eventToReveal);
+            deleteEventData(theEventId);
+            setCloseViewDiv(true);
+            onClose();
+          }}
+        >
+          🗑️
+        </StyledEditButton>
       </h3>
-      <p>{`Event type: ${theEvent?.type}`}</p>
-      <p>
-        {theDate(theEvent?.startDate)}
-        {/* theEvent?.endDate) */}
-      </p>
-      <p>{`Time: ${theTime(theEvent?.startTime, theEvent?.endTime)}`}</p>
+      <p>{`Event type: ${eventType}`}</p>
+      <p>{theDate(eventStartDay, eventEndDay)}</p>
+      <p>{`Time: ${theTime(eventStartTime, eventEndTime)}`}</p>
       <p>{`Notes:
-      ${theEvent?.notes}`}</p>
+      ${eventComments}`}</p>
       <div style={{ position: "relative" }}>
         <StyledEditButton
           onClick={onClose}

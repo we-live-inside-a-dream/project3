@@ -25,11 +25,7 @@ const Day = ({
       return " 1px solid lightGrey";
     } else return " 1px solid white";
   };
-  // const eventTypeColor = function (event) {
-  //   if (event.visibility.includes("user")) {
-  //     return "var(--accentColorTitle)";
-  //   } else return "var(--styledButtonHoverBorder)";
-  // };
+
   const eventDivStyle = {
     backgroundColor: "var(--accentColorTitle)",
     padding: "0px, 5px",
@@ -102,15 +98,18 @@ const Day = ({
             onClick={() => {
               // setEventToReveal(e);
               showEvent(e);
-              setEventId = { setEventId };
-              eventId = { setEventId };
-              isOpen = { isOpen };
-              setIsOpen = { setIsOpen };
+              setEventId(setEventId);
+              eventId(setEventId);
+              isOpen(true);
             }}
+            setRevealEventDetails={setRevealEventDetails}
+            revealEventDetails={revealEventDetails}
             setEventId={setEventId}
             eventId={setEventId}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
+            onClose={() => setIsOpen(false)}
+            // isOpen={isOpen}
+            // setIsOpen={setIsOpen}
+            existingValues={e}
             setExistingValues={setExistingValues}
           >
             <p

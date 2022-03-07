@@ -18,6 +18,7 @@ import StyledButton from "../reusable/Inputs/StyledButton";
 import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import BasicDatePicker from "../reusable/Inputs/BasicDatePicker";
 import * as fns from "date-fns";
+import moment from "moment";
 import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const typeData = [
@@ -163,6 +164,22 @@ const EventEditForm = ({
     await fetch(`/api/events/delete-event?id=${theEventId}`, {
       method: "DELETE",
     });
+    let resetValues = function () {
+      setTheEventId("");
+      setTitle("");
+      setStartTime("");
+      setEndTime("");
+      setStartDate("");
+      setEndDate("");
+      setType();
+      setNotes("");
+      setAllDay(true);
+      setVisibility();
+      setMandatory(false);
+      setRecurring(false);
+    };
+    resetValues();
+    setIsOpen(false);
   }
 
   let validation;
@@ -353,13 +370,15 @@ const EventEditForm = ({
             value={startDate}
             onChange={(value) => {
               onDateInputUpdate(
-                fns.format(new Date(value), "yyyy-MM-DD").toString(),
+                moment(value).format("yyyy-MM-DD"),
+                // fns.format(new Date(value), "yyyy-MM-DD").toString(),
                 setStartDate
               );
               setDateMessageVal(
                 dateValidation(
                   startDate,
-                  fns.format(new Date(value), "yyyy-MM-dd").toString()
+
+                  fns.format(new Date(value), "yyyy-MM-DD").toString()
                 )
               );
             }}
@@ -398,7 +417,9 @@ const EventEditForm = ({
               value={endDate}
               onChange={(value) => {
                 onDateInputUpdate(
-                  fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  // fns.format(new Date(value), "yyyy-MM-dd").toString(),
+                  moment(value).format("yyyy-MM-DD"),
+
                   setEndDate
                 );
                 setDateMessageVal(

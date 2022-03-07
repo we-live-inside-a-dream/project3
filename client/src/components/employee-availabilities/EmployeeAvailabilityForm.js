@@ -106,7 +106,9 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
     <div>
       <StyledFormWrapper>
         <StyledForm>
-          <h2>{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
+          <h2
+            style={{ marginTop: "0px" }}
+          >{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
           <label style={{ textTransform: "upperCase" }}>
             Max weekly hours
             <StyledInput
@@ -134,14 +136,21 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
             );
           })}
 
-          <StyledButton
-            onClick={() => {
-              postData();
-              navigate("/human-resources");
-            }}
-          >
-            SAVE AVAILABILITY DETAILS
-          </StyledButton>
+          <div>
+            <StyledButton
+              style={{
+                marginLeft: "0px",
+                marginBottom: "0px",
+                marginTop: "auto",
+              }}
+              onClick={() => {
+                postData();
+                navigate("/human-resources");
+              }}
+            >
+              SAVE AVAILABILITY DETAILS
+            </StyledButton>
+          </div>
         </StyledForm>
       </StyledFormWrapper>
     </div>

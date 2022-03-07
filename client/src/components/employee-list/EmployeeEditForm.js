@@ -416,8 +416,8 @@ const EmployeeEditForm = ({
         ) : null}
 
         <div>
-          <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
-            Save Details
+          <StyledButton onClick={postData} style={{ position: 'relative', top: "1em", left: 0, marginLeft: 0}}>
+            SAVE DETAILS
           </StyledButton>
         </div>
         <div>

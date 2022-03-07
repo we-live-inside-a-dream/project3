@@ -243,15 +243,14 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
           >
             Week start:
           </h2>
-          <div style={{ padding: "1rem" }}>
-            <BasicDatePicker
-              value={startDay}
-              onChange={(value) => {
-                onInputUpdate(value, setStartDay);
-                console.log(value, "is the newStartDay");
-              }}
-            />
-          </div>
+
+          <BasicDatePicker
+            value={startDay}
+            onChange={(value) => {
+              onInputUpdate(value, setStartDay);
+              console.log(value, "is the newStartDay");
+            }}
+          />
         </div>
       </div>
       <StyledTable>

@@ -76,10 +76,6 @@ const Day = ({
         <StyledEditButton
           onClick={() => {
             setDaySelectChoice(moment(day.date).format("yyyy-MM-DD"));
-            console.log(
-              daySelectChoice,
-              "is the day select choice!!!!!!!!!!!!!!!!!!!!!!!"
-            );
             setIsOpen(!isOpen);
           }}
           style={addEventButtonStyle}

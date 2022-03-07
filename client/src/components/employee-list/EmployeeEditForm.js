@@ -255,7 +255,7 @@ const EmployeeEditForm = ({
 
   return (
     <>
-      <StyledForm>
+      <StyledForm style={{ margin: " 80px auto" }}>
         <h2>Employee Description</h2>
         <div></div>
         <div>

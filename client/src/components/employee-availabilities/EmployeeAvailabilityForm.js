@@ -104,55 +104,56 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2
-            style={{ marginTop: "0px" }}
-          >{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
-          <label style={{ textTransform: "upperCase" }}>
-            Max weekly hours
-            <StyledInput
-              type="number"
-              min={0}
-              value={availability?.maxHoursPerWeek}
-              onChange={(e) =>
-                setAvailability({
-                  ...availability,
-                  maxHoursPerWeek: e.target.value,
-                })
-              }
+      {/* <StyledFormWrapper> */}
+      <StyledForm>
+        <h2
+          style={{ marginTop: "0px" }}
+        >{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
+        <label style={{ textTransform: "upperCase" }}>
+          Max weekly hours
+          <StyledInput
+            type="number"
+            min={0}
+            value={availability?.maxHoursPerWeek}
+            onChange={(e) =>
+              setAvailability({
+                ...availability,
+                maxHoursPerWeek: e.target.value,
+              })
+            }
+          />
+        </label>
+        {availability?.days?.map((day, index) => {
+          return (
+            <AvailabilityDay
+              key={index}
+              index={index}
+              day={day}
+              setAvailability={setAvailability}
+              availability={availability}
+              setIsError={setIsError}
             />
-          </label>
-          {availability?.days?.map((day, index) => {
-            return (
-              <AvailabilityDay
-                key={index}
-                index={index}
-                day={day}
-                setAvailability={setAvailability}
-                availability={availability}
-                setIsError={setIsError}
-              />
-            );
-          })}
+          );
+        })}
 
-          <div>
-            <StyledButton
-              style={{
-                marginLeft: "0px",
-                marginBottom: "0px",
-                marginTop: "auto",
-              }}
-              onClick={() => {
-                postData();
-                navigate("/human-resources");
-              }}
-            >
-              SAVE AVAILABILITY DETAILS
-            </StyledButton>
-          </div>
-        </StyledForm>
-      </StyledFormWrapper>
+        <div style={{ display: "baseline" }}>
+          <StyledButton
+            style={{
+              marginLeft: "auto",
+              marginBottom: "auto",
+              // marginTop: "auto",
+              // marginRight: "auto",
+            }}
+            onClick={() => {
+              postData();
+              navigate("/human-resources");
+            }}
+          >
+            SAVE AVAILABILITY DETAILS
+          </StyledButton>
+        </div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

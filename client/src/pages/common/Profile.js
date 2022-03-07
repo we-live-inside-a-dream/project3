@@ -91,6 +91,7 @@ const Profile = () => {
         {availabilityView === true && (
           //   <AvailabilityDetail availabilityId={availability?._id} />
           <EmployeeAvailabilityForm
+            style={{ margin: "0px auto" }}
             existingValues={availability}
             theId={user._id}
           />

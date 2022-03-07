@@ -17,11 +17,13 @@ function EmployeesMenuPage() {
           HUMAN RESOURCES
         </StyledPageTitle>
         <div style={{ margin: "auto", justifyContent: "center" }}>
-          <StyledEmployeePageButtonGroup
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab}
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          />
+          <div style={{ width: "100%", margin: "auto" }}>
+            <StyledEmployeePageButtonGroup
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+              style={{ margin: "40px auto", padding: "0px" }}
+            />
+          </div>
         </div>
         {currentTab === 1 && (
           <EmployeesList

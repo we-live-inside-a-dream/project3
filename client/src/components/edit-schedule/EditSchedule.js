@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import * as fns from "date-fns";
+import Select from "react-select";
 import { NativeSelect } from "@mui/material";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import BreaksComponent from "./BreaksComponent";
@@ -88,13 +89,14 @@ function EditSchedule({
         const selectedEmployee = await empPositions?.find(
           (employee) => employee?._id === employeeId
         );
-        const selectedEmployeePositions = selectedEmployee.positions.map(
-          (e) => ({
-            value: e,
-            label: e.charAt(0).toUpperCase() + e.slice(1),
-          })
-        );
-        setPositionList(selectedEmployeePositions);
+        formatForSelect(selectedEmployee.positions, setPositionList);
+        // const selectedEmployeePositions = selectedEmployee.positions.map(
+        //   (e) => ({
+        //     value: e,
+        //     label: e.charAt(0).toUpperCase() + e.slice(1),
+        //   })
+        // );
+        // setPositionList(selectedEmployeePositions);
       };
       newPositionList();
     }
@@ -166,6 +168,14 @@ function EditSchedule({
   useEffect(() => {
     console.log("breaks", breaks);
   }, [breaks]);
+
+  function formatForSelect(item, setter) {
+    const formattedItem = item.map((e) => ({
+      value: e,
+      label: e.charAt(0).toUpperCase() + e.slice(1),
+    }));
+    setter(formattedItem);
+  }
 
   async function createShift(createdUser) {
     await fetch("/api/schedule/schedule/new", {
@@ -253,7 +263,7 @@ function EditSchedule({
       end: fns.format(new Date(end), "HH:mm").toString(),
       date,
       breaks,
-      position,
+      position: position.toLowerCase(),
     };
     console.log("validate form", validation);
     console.log("saving new schedule form", newShift);
@@ -423,7 +433,7 @@ function EditSchedule({
 
             {positionList?.map((event) => {
               return (
-                <option className="list" key={event._id} value={event.label}>
+                <option className="list" key={event._id} value={event.value}>
                   {event.label}
                 </option>
               );

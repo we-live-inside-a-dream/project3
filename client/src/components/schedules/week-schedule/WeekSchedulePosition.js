@@ -252,7 +252,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (
-                    shift.position === position.label && shift.date === date
+                    shift.position === position.value && shift.date === date
                   );
                 });
 

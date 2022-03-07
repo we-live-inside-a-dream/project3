@@ -336,7 +336,10 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                   >
                     {`${shift.start}-${shift.end} `}
                     <br />
-                    {`${shift.position}`}
+                    {`${
+                      shift.position.charAt(0).toUpperCase() +
+                      shift.position.slice(1)
+                    }`}
                   </td>
                 );
               })}

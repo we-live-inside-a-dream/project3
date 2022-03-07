@@ -362,10 +362,8 @@ const EmployeeEditForm = ({
                 isMulti
                 name="employee position"
                 value={positions}
-                // value={[{ value: "dog", label: "Dog" }]}
                 options={positionsList}
                 onChange={handlePositionChange}
-                // required="true"
               ></Select>
             </div>
             <div>
@@ -386,7 +384,6 @@ const EmployeeEditForm = ({
                 value={permissions}
                 options={permissionsData}
                 onChange={handlePermissionsChange}
-                // required="true"
               ></Select>
             </div>
 
@@ -409,7 +406,6 @@ const EmployeeEditForm = ({
                 value={status}
                 options={statusData}
                 onChange={handleStatusChange}
-                // required="true"
               />
             </div>
           </>

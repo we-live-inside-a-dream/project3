@@ -163,6 +163,7 @@ const EventEditForm = ({
     await fetch(`/api/events/delete-event?id=${theEventId}`, {
       method: "DELETE",
     });
+    setIsOpen(false)
   }
 
   let validation;

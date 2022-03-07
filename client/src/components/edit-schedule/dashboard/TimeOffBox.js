@@ -52,7 +52,6 @@ const TimeOffBox = function ({ onClick }) {
         style={{
           background: "var(--mainHeader)",
           alignSelf: "flex-start",
-          // margin: "0px auto 0px auto",
           color: "var(--headerWhiteFont)",
           textAlign: "center",
           border: "2px solid var(--mainHeader)",
@@ -62,13 +61,6 @@ const TimeOffBox = function ({ onClick }) {
         <h3>TIME OFF</h3>
       </div>
       <div style={{ position: "relative" }}>
-        {/* <StyledScaledComponent
-        //   padding={padding}
-        //   top={top}
-        //   left={left}
-        //   transformOrigin={transformOrigin}
-        //   transform={transform}
-        > */}
         {timeOff?.map((time, index) => {
           return (
             <div key={index}>
@@ -88,7 +80,6 @@ const TimeOffBox = function ({ onClick }) {
             </div>
           );
         })}
-        {/* </StyledScaledComponent> */}
       </div>
     </div>
   );

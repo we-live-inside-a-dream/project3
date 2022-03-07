@@ -9,15 +9,18 @@ function PermissionsCheckboxes({ permissionSetter, permissionValue }) {
   const [administrator, setAdministrator] = useState(true);
 
   function setPermission() {
-    let permissions = [employee, supervisor, manager, administrator];
+    let permissions = [
+      employee === true ? "employee" : null,
+      supervisor === true ? "supervisor" : null,
+      manager === true ? "manager" : null,
+      "administrator",
+    ];
 
     let permissionArray = [...permissions];
-    console.log(
-      permissionValue,
-      //   permissionSetter,
-      "are in this part of the form"
+    let filteredPermissionArray = permissionArray.filter(
+      (permission) => permission !== null
     );
-    permissionSetter(permissionArray);
+    permissionSetter([...filteredPermissionArray]);
   }
 
   function onInputChange(value, setter) {
@@ -89,9 +92,10 @@ function PermissionsForm() {
   const [appSettingsView, setAppSettingsView] = useState();
   const [appSettingsEdit, setAppSettingsEdit] = useState();
 
-const postData = 
-  function updatePermissions
-
+  // const postData =
+  //   function updatePermission
+  console.log("scheduleView", scheduleView);
+  console.log("scheduleEdit", scheduleEdit);
   return (
     <div>
       <h3>Schedules:</h3>
@@ -161,7 +165,11 @@ const postData =
         permissionSetter={setAppSettingsEdit}
       />
 
-      <StyledButton onClick={postData}>SUBMIT</StyledButton>
+      <StyledButton
+      //    onClick={postData}
+      >
+        SUBMIT
+      </StyledButton>
     </div>
   );
 }

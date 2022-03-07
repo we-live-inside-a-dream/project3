@@ -37,7 +37,6 @@ export const Logo = styled.img`
   margin: 0px auto;
   max-width: 65px;
   height: auto;
-  background-color: #35a1b9;
   &:hover {
     cursor: pointer;
   }

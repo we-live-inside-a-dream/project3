@@ -15,23 +15,23 @@ const Profile = () => {
   const user = authContext.user;
   const id = user._id;
   const [availability, setAvailability] = useState();
-
   const [employeeProfileView, setEmployeeProfileView] = useState(false);
   const [availabilityView, setAvailabilityView] = useState(false);
   const [employee, setEmployee] = useState();
+  const [employeeEdit, setEmployeeEdit] = useState(false);
   const edit = false;
+
   useEffect(() => {
     if (id) {
       const fetchAvailabilityById = async () => {
-        let fetchResult = await fetch("/api/availability/by-employee/" + id);
+        let fetchResult = await fetch(`/api/availability/by-employee/${id}`);
         let theAvailability = await fetchResult.json();
-        console.log(theAvailability);
         setAvailability(theAvailability);
       };
       fetchAvailabilityById();
     }
   }, [id]);
-  console.log(availability);
+  console.log("THE AVAILABILITY #####################", availability);
 
   useEffect(() => {
     let isMounted = true;
@@ -91,8 +91,9 @@ const Profile = () => {
         {availabilityView === true && (
           //   <AvailabilityDetail availabilityId={availability?._id} />
           <EmployeeAvailabilityForm
+            style={{ margin: "0px auto" }}
             existingValues={availability}
-            theId={availability._id}
+            theId={user._id}
           />
         )}
         {/* <h3

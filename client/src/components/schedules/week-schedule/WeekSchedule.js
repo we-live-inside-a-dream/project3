@@ -94,7 +94,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       while (firstDate.add(1, "days").diff(lastDate) <= 0) {
         datesArray.push(firstDate.clone().format("ddd, Do").toString());
         dateNumberArray.push(firstDate.clone().format("yyyy-MM-DD").toString());
-        console.log("dateNumberArray", dateNumberArray);
+        // console.log("dateNumberArray", dateNumberArray);
       }
       setTitleWeek(datesArray);
       setDataWeek(dateNumberArray);
@@ -171,10 +171,25 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       lastName: employee.lastName,
       date: date,
     });
-    setShiftId(shift._id);
+    setShiftId(shift?._id);
 
     //need to send date,employeeId
     console.log("FROM ONCLICK", employee._id, date, shift);
+  }
+
+  function tConvert(time) {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? "a" : "p"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(""); // return adjusted time or original string
   }
 
   return (
@@ -321,6 +336,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       borderTop: "lightGrey",
                       borderLeft: "lightGrey",
                       borderRight: "lightGrey",
+                      backgroundColor: availabilityColor,
                     }}
                     key={shift._id}
                     onClick={() => {
@@ -332,11 +348,17 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                       //need to send date,employeeId
                       console.log("FROM ONCLICK", employee._id, date, shift);
                     }}
-                    backgroundColor={availabilityColor}
                   >
-                    {`${shift.start}-${shift.end} `}
+                    {/* fns.format(new Date(shift.start), "HH:mm aaaaa'm'") */}
+                    {`${moment(shift.start, "hh:mm").format("h:mma")}-${moment(
+                      shift.end,
+                      "hh:mm"
+                    ).format("h:mma")}`}
                     <br />
-                    {`${shift.position}`}
+                    {`${
+                      shift.position.charAt(0).toUpperCase() +
+                      shift.position.slice(1)
+                    }`}
                   </td>
                 );
               })}
@@ -354,7 +376,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
         <EditSchedule
           shiftId={shiftId}
           modalData={modalData}
-          // existingValues={shift}
+          //existingValues={shift}
           // clearValues={() => setShift(null)}
           onClose={() => {
             setIsOpen(false);

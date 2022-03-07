@@ -20,6 +20,7 @@ import {
   permissionsValidation,
 } from "../validateForms.js";
 import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const permissionsData = [
   { value: "manager", label: "Manager" },
@@ -43,7 +44,7 @@ const EmployeeEditForm = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState();
+  const [password, setPassword] = useState();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState([]);
@@ -63,8 +64,12 @@ const EmployeeEditForm = ({
   const value = useManagerSettings();
   const positionsList = value.positions;
   let navigate = useNavigate();
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
 
   console.log("EXISTINGVALUES,", existingValues);
+  console.log("THE PERMISSIONS FOR THIS USER ARE:", user.permissions);
+  console.log("THE NAME  OF THIS USER IS ", user.firstName);
 
   useEffect(() => {
     if (existingValues) {
@@ -80,12 +85,9 @@ const EmployeeEditForm = ({
 
   useEffect(() => {
     if (existingValues) {
-      let currentStatus = [];
-      statusData.forEach((line) => {
-        if (existingValues?.status?.includes(line.value)) {
-          currentStatus.push(line);
-        }
-      });
+      let currentStatus = statusData.find((line) =>
+        existingValues?.status?.includes(line.value)
+      );
       setStatus(currentStatus);
     }
   }, [existingValues]);
@@ -93,12 +95,10 @@ const EmployeeEditForm = ({
 
   useEffect(() => {
     if (existingValues) {
-      let currentPermissions = [];
-      permissionsData.forEach((line) => {
-        if (existingValues?.permissions?.includes(line.value)) {
-          currentPermissions.push(line);
-        }
-      });
+      let currentPermissions = permissionsData.find((line) =>
+        existingValues?.permissions?.includes(line.value)
+      );
+      console.log("$$$$, current permissions", currentPermissions);
       setPermissions(currentPermissions);
     }
   }, [existingValues]);
@@ -110,19 +110,6 @@ const EmployeeEditForm = ({
       setLastName(existingValues.lastName);
       setEmail(existingValues.email);
       setPhoneNumber(existingValues.phoneNumber);
-      // setStatus({ value: existingValues.status[0] });
-      // setPermissions({ value: existingValues.permissions[0] });
-
-      // setStatus(
-      //   existingValues.status.map((item) => {
-      //     return { value: item };
-      //   })
-      // );
-      // setPermissions(
-      //   existingValues.permissions.map((item) => {
-      //     return { value: item };
-      //   })
-      // );
       setPositions(
         existingValues.positions.map((item) => {
           return { value: item };
@@ -225,111 +212,144 @@ const EmployeeEditForm = ({
   }
 
   async function postData() {
-    let newEmployeeInfo = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password: "password12",
-      positions: positions.map((p) => p.value),
-      status: [status.value],
-      permissions: [permissions.value],
-    };
+    let newEmployeeInfo;
+    if (!existingValues) {
+      newEmployeeInfo = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password: "password12",
+        positions: positions.map((p) => p.value),
+        status: [status.value],
+        permissions: [permissions.value],
+      };
+    } else {
+      newEmployeeInfo = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        positions: positions.map((p) => p.value),
+        status: [status.value],
+        permissions: [permissions.value],
+      };
+    }
     validateForm();
-    // console.log("validate form", validation);
 
     //happy if existing values and validate form is all good:
+    console.log("********Saving new employee information", newEmployeeInfo);
     if (!existingValues && validation === null) {
-      console.log("Saving new employee information", newEmployeeInfo);
       await createEmployee(newEmployeeInfo);
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
-    } else setShown(true);
-
-    if (existingValues) {
+    } else if (existingValues && validation === null) {
       await onSave(newEmployeeInfo);
-      navigate("/human-resources");
-    }
+      console.log("THIS IS THE USERS PERMISSIONS", user.permissions);
+      user.permissions.includes("manager") ||
+      user.permissions.includes("admimnistrator")
+        ? navigate("/human-resources")
+        : navigate("/profile");
+    } else setShown(true);
   }
 
   return (
     <>
-      {/* <StyledEmployeeForm />  */}
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2>Employee Description</h2>
-          <div></div>
-          <div>
-            <label style={{ marginBottom: "0px" }}>
-              First Name
-              <RedStar />
-            </label>
-            {firstName === "" ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            <StyledInput
-              value={firstName}
-              onChange={(event) => {
-                onInputUpdate(event, setFirstName);
-                setFnameMessageVal(firstNameValidation(firstName));
-              }}
-              required
-            />
-          </div>
-          <div>
-            <label>
-              Last Name
-              <RedStar />
-            </label>
-            {lastName === "" ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            <StyledInput
-              value={lastName}
-              onChange={(event) => {
-                onInputUpdate(event, setLastName);
-                setLnameMessageVal(lastNameValidation(lastName));
-              }}
-            />
-          </div>
-          <div>
-            <label>
-              Email
-              <RedStar />
-            </label>
-            {!emailMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            {emailMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {emailMessageVal}
-              </p>
-            ) : null}
-            <StyledInput
-              type="email"
-              value={email}
-              onChange={(event) => {
-                onInputUpdate(event, setEmail);
-                setEmailMessageVal(emailValidation(email));
-              }}
-            />
-          </div>
-          {/* {password && (
+      <StyledForm style={{ margin: " 80px auto" }}>
+        <h2>Employee Description</h2>
+        <div></div>
+        <div>
+          <label style={{ marginBottom: "0px" }}>
+            First Name
+            <RedStar />
+          </label>
+          {firstName === "" ? (
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
+          ) : null}
+          <StyledInput
+            value={firstName}
+            onChange={(event) => {
+              onInputUpdate(event, setFirstName);
+              setFnameMessageVal(firstNameValidation(firstName));
+            }}
+            required
+          />
+        </div>
+        <div>
+          <label>
+            Last Name
+            <RedStar />
+          </label>
+          {lastName === "" ? (
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
+          ) : null}
+          <StyledInput
+            value={lastName}
+            onChange={(event) => {
+              onInputUpdate(event, setLastName);
+              setLnameMessageVal(lastNameValidation(lastName));
+            }}
+          />
+        </div>
+        <div>
+          <label>
+            Email
+            <RedStar />
+          </label>
+          {!emailMessageVal ? (
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
+          ) : null}
+          {emailMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {emailMessageVal}
+            </p>
+          ) : null}
+          <StyledInput
+            type="email"
+            value={email}
+            onChange={(event) => {
+              onInputUpdate(event, setEmail);
+              setEmailMessageVal(emailValidation(email));
+            }}
+          />
+        </div>
+        <div>
+          <label>
+            Phone Number
+            <RedStar />
+          </label>
+          {!phoneMessageVal ? (
+            <p
+              style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
+            ></p>
+          ) : null}
+          {phoneMessageVal ? (
+            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
+              {phoneMessageVal}
+            </p>
+          ) : null}
+          <StyledInput
+            value={phoneNumber}
+            onChange={(event) => {
+              onInputUpdate(event, setPhoneNumber);
+              setPhoneMessageVal(phoneNumberValidation(phoneNumber));
+            }}
+          />
+        </div>
+        {edit !== false ? (
+          <>
             <div>
-              <label>
-                password
+              <label style={{ marginBottom: "10px", display: "block" }}>
+                Positions
                 <RedStar />
-              </label>
-
-              {!passMessageVal ? (
+              </label>{" "}
+              {!positions ? (
                 <p
                   style={{
                     color: "red",
@@ -338,153 +358,81 @@ const EmployeeEditForm = ({
                   }}
                 ></p>
               ) : null}
-              {passMessageVal ? (
+              <Select
+                isMulti
+                name="employee position"
+                value={positions}
+                options={positionsList}
+                onChange={handlePositionChange}
+              ></Select>
+            </div>
+            <div>
+              <label style={{ marginBottom: "10px", display: "block" }}>
+                Permissions
+                <RedStar />
+              </label>{" "}
+              {!positions ? (
                 <p
                   style={{
                     color: "red",
                     fontSize: "10px",
                     marginBottom: "0px",
                   }}
-                >
-                  {passMessageVal}
-                </p>
+                ></p>
               ) : null}
+              <Select
+                value={permissions}
+                options={permissionsData}
+                onChange={handlePermissionsChange}
+              ></Select>
+            </div>
 
-              <StyledInput
-                value={password}
-                type="password"
-                onChange={(event) => {
-                  onInputUpdate(event, setPassword);
-                  setPassMessageVal(passwordValidation(password));
-                }}
+            <div>
+              <label style={{ marginBottom: "10px", display: "block" }}>
+                Status
+                <RedStar />
+              </label>
+
+              {!status ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                ></p>
+              ) : null}
+              <Select
+                value={status}
+                options={statusData}
+                onChange={handleStatusChange}
               />
             </div>
-          )} */}
-          <div>
-            <label>
-              Phone Number
-              <RedStar />
-            </label>
-            {!phoneMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              ></p>
-            ) : null}
-            {phoneMessageVal ? (
-              <p
-                style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}
-              >
-                {phoneMessageVal}
-              </p>
-            ) : null}
-            <StyledInput
-              value={phoneNumber}
-              onChange={(event) => {
-                onInputUpdate(event, setPhoneNumber);
-                setPhoneMessageVal(phoneNumberValidation(phoneNumber));
+          </>
+        ) : null}
+
+        <div>
+          <StyledButton
+            onClick={postData}
+            style={{ position: "relative", top: "1em", left: 0, marginLeft: 0 }}
+          >
+            SAVE DETAILS
+          </StyledButton>
+        </div>
+        <div>
+          {shown === true ? (
+            <p
+              style={{
+                color: "red",
+                fontSize: "20px",
+                marginBottom: "0px",
               }}
-            />
-          </div>
-          {edit !== false ? (
-            <>
-              <div>
-                <label style={{ marginBottom: "10px", display: "block" }}>
-                  Positions
-                  <RedStar />
-                </label>{" "}
-                {!positions ? (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      marginBottom: "0px",
-                    }}
-                  ></p>
-                ) : null}
-                <Select
-                  isMulti
-                  name="employee position"
-                  value={positions}
-                  // value={[{ value: "dog", label: "Dog" }]}
-                  options={positionsList}
-                  onChange={handlePositionChange}
-                  // required="true"
-                ></Select>
-              </div>
-              <div>
-                <label style={{ marginBottom: "10px", display: "block" }}>
-                  Permissions
-                  <RedStar />
-                </label>{" "}
-                {!positions ? (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      marginBottom: "0px",
-                    }}
-                  ></p>
-                ) : null}
-                <Select
-                  label={permissions}
-                  value={permissions}
-                  options={permissionsData}
-                  onChange={handlePermissionsChange}
-                  // required="true"
-                ></Select>
-              </div>
-
-           
-
-            <div style={{position: "relative", top:"25%"}}>
-            <StyledButton onClick={postData} style={{ marginLeft: "0px" }}>
-              Save Details
-            </StyledButton>
-          </div>
-          <>
-            {shown === true ? (
-              <p
-                style={{
-                  color: "red",
-                  fontSize: "20px",
-                  marginBottom: "0px",
-                }}
-              >
-                form is invalid
-              </p>
-            ) : null}
-         </>
-
-              <div>
-                <label style={{ marginBottom: "10px", display: "block" }}>
-                  Status
-                  <RedStar />
-                </label>
-
-                {!status ? (
-                  <p
-                    style={{
-                      color: "red",
-                      fontSize: "10px",
-                      marginBottom: "0px",
-                    }}
-                  ></p>
-                ) : null}
-                <Select
-                  value={status}
-                  options={statusData}
-                  onChange={handleStatusChange}
-                  // required="true"
-                />
-              </div>
-            </>
+            >
+              form is invalid
+            </p>
           ) : null}
-
-         
-
-          
-        </StyledForm>
-      </StyledFormWrapper>
+        </div>
+      </StyledForm>
     </>
   );
 };

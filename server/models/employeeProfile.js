@@ -101,6 +101,7 @@ const getActiveEmployeePositions = async () => {
     "positions",
     "_id",
     "firstName",
+    "lastName",
   ]);
   // console.log("get names...", name);
   return name;

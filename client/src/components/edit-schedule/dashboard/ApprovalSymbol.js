@@ -16,7 +16,7 @@ function ApprovalSymbol({ time }) {
     findTheSymbol();
   }, [time]);
 
-  return <div>{theSymbol}</div>;
+  return <>{theSymbol}</>;
 }
 
 export default ApprovalSymbol;

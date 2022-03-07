@@ -83,7 +83,7 @@ function EmployeeProfileList() {
                 <StyledTableData>
                   <ul style={{ listStyleType: "none" }}>
                     {employee.positions.map((position, index) => {
-                      return <li key={{ index }}>{position}</li>;
+                      return <li key={index}>{position}</li>;
                     })}
                   </ul>
                 </StyledTableData>

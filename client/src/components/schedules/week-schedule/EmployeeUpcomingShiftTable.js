@@ -31,8 +31,8 @@ function EmployeeUpcomingShiftList() {
     };
     getUpcomingShiftsById();
   }, [id, today]);
-
-  // console.log("today is ", today);
+  console.log("THE EMPLOYEE's shift LIST IS", shifts);
+  console.log("today is ", today);
 
   const formatTime = function (time) {
     let newTime = moment(time, "hh:mma").format("h:mma");
@@ -152,7 +152,12 @@ function EmployeeUpcomingShiftList() {
           setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
         />
       </Modal>
-      {shiftsUpForGrabsIsOpen ? <ShiftsUpForGrabs user={user} /> : null}
+      {shiftsUpForGrabsIsOpen ? (
+        <ShiftsUpForGrabs
+          setSwapConfirmModalIsOpen={setSwapConfirmModalIsOpen}
+          user={user}
+        />
+      ) : null}
     </div>
   );
 }

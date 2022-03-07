@@ -52,6 +52,7 @@ function ShiftSwapConformModal({
       end: shift.end,
       date: shift.date,
       breaks: shift.breaks,
+      position: shift.position,
       swapRequestStatus: "pending",
       swapRequestDate: new Date(),
       reasonForSwap,
@@ -65,6 +66,7 @@ function ShiftSwapConformModal({
 
     console.log("New Shift...", newShiftSwapRequest);
     await updateShift(newShiftSwapRequest);
+    setSwapConfirmModalIsOpen(false);
   }
 
   return (
@@ -92,7 +94,13 @@ function ShiftSwapConformModal({
         onChange={(event) => onSwapReasonInputUpdate(event, setReasonForSwap)}
       />
 
-      <StyledButton onClick={postSwapRequest}>CONFIRM</StyledButton>
+      <StyledButton
+        onClick={() => {
+          postSwapRequest();
+        }}
+      >
+        CONFIRM
+      </StyledButton>
       <StyledButton onClick={() => setSwapConfirmModalIsOpen(false)}>
         CANCEL
       </StyledButton>

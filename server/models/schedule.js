@@ -95,18 +95,19 @@ async function findAvailableShiftsByEmployeePositions(positions) {
   console.log(
     "from schedule model, positions before search are",
     positions,
+    today,
     "for employee with id"
   );
   let shiftArray = [];
-  for (p in positions) {
+
+  for (position of positions) {
     let shifts = await Schedule.find({
-      position: p,
+      position: positions,
       swapRequestStatus: "pending",
       date: { $gte: today },
     });
     shiftArray = [...shifts];
   }
-
   return shiftArray;
 }
 

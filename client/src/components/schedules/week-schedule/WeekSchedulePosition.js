@@ -174,13 +174,28 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   function onClickHandler(shift, position, date) {
     setIsOpen(true);
     setModalData({
-      position: position.label,
+      position: position.value,
       date: date,
     });
     setShiftId(shift._id);
 
     //need to send date,employeeId
     console.log("FROM ONCLICK", position, date, shift);
+  }
+
+  function tConvert(time) {
+    // Check correct time format and split into components
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      // If time format correct
+      time = time.slice(1); // Remove full string match value
+      time[5] = +time[0] < 12 ? "am" : "pm"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join(""); // return adjusted time or original string
   }
 
   return (
@@ -252,7 +267,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (
-                    shift.position === position.label && shift.date === date
+                    shift.position === position.value && shift.date === date
                   );
                 });
 
@@ -285,9 +300,9 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
                       onClickHandler(shift, position, date);
                     }}
                   >
-                    {`${shift.firstName} ${shift.lastName[0]}`}
+                    {`${tConvert(shift.start)}-${tConvert(shift.end)}`}
                     <br />
-                    {`${shift.start}-${shift.end} `}
+                    {`${shift.firstName} ${shift.lastName[0]}`}
                   </td>
                 );
               })}

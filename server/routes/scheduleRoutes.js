@@ -92,9 +92,12 @@ router.get("/shifts-up-for-grabs", async (req, res) => {
   let employeePositions = await employeeProfileModel.findPositionsByEmployeeId(
     userId
   );
+  console.log(
+    "FROM SCHEDULE ROUTES< POSITIONS FOR EMPLOYEE BY ID ARE************",
+    employeePositions
+  );
   let availableShiftsList =
     await scheduleModel.findAvailableShiftsByEmployeePositions(
-      userId,
       employeePositions
     );
   console.log("from API: available shifts are", availableShiftsList);

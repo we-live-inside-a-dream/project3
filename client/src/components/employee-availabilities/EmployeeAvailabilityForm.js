@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import AvailabilityDay from "./AvailabilityDay";
 import {
   StyledInput,
@@ -9,6 +9,7 @@ import {
 } from "../reusable/Inputs/StyledEmployeeForm.js";
 import { Navigate, useNavigate } from "react-router-dom";
 import { timeValidation } from "../validateForms";
+import AuthenticationContext from "../../components/login/AuthenticationContext";
 
 const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [employeeId, setEmployeeId] = useState("");
@@ -21,10 +22,9 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
   const [timeMessageVal, setTimeMessageVal] = useState(null);
   const [shown, setShown] = useState(false);
   const [availability, setAvailability] = useState({});
-
+  const authContext = useContext(AuthenticationContext);
+  let user = authContext.user;
   let navigate = useNavigate();
-
-  console.log("IS ERROR:", isError);
 
   useEffect(() => {
     if (!existingValues) {
@@ -81,7 +81,14 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
     };
     console.log("Saving availability for: ", firstName, lastName);
     await updateAvailability(updatedAvailability);
-    navigate("/availabilities");
+    if (
+      user.permissions === "manager" ||
+      user.permissions === "administrator"
+    ) {
+      navigate("/availabilities");
+    } else {
+      navigate("/profile");
+    }
   }
 
   async function updateAvailability(updatedAvailability) {
@@ -97,37 +104,46 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
 
   return (
     <div>
-      <StyledFormWrapper>
-        <StyledForm>
-          <h2>{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
-          <label style={{ textTransform: "upperCase" }}>
-            Max weekly hours
-            <StyledInput
-              type="number"
-              min={0}
-              value={availability?.maxHoursPerWeek}
-              onChange={(e) =>
-                setAvailability({
-                  ...availability,
-                  maxHoursPerWeek: e.target.value,
-                })
-              }
+      {/* <StyledFormWrapper> */}
+      <StyledForm>
+        <h2
+          style={{ marginTop: "0px" }}
+        >{`Edit Recurring Availability for ${availability?.firstName} ${availability?.lastName}`}</h2>
+        <label style={{ textTransform: "upperCase" }}>
+          Max weekly hours
+          <StyledInput
+            type="number"
+            min={0}
+            value={availability?.maxHoursPerWeek}
+            onChange={(e) =>
+              setAvailability({
+                ...availability,
+                maxHoursPerWeek: e.target.value,
+              })
+            }
+          />
+        </label>
+        {availability?.days?.map((day, index) => {
+          return (
+            <AvailabilityDay
+              key={index}
+              index={index}
+              day={day}
+              setAvailability={setAvailability}
+              availability={availability}
+              setIsError={setIsError}
             />
-          </label>
-          {availability?.days?.map((day, index) => {
-            return (
-              <AvailabilityDay
-                key={index}
-                index={index}
-                day={day}
-                setAvailability={setAvailability}
-                availability={availability}
-                setIsError={setIsError}
-              />
-            );
-          })}
+          );
+        })}
 
+        <div style={{ display: "baseline" }}>
           <StyledButton
+            style={{
+              marginLeft: "auto",
+              marginBottom: "auto",
+              // marginTop: "auto",
+              // marginRight: "auto",
+            }}
             onClick={() => {
               postData();
               navigate("/human-resources");
@@ -135,8 +151,9 @@ const EmployeeAvailabilityForm = ({ existingValues, theId }) => {
           >
             SAVE AVAILABILITY DETAILS
           </StyledButton>
-        </StyledForm>
-      </StyledFormWrapper>
+        </div>
+      </StyledForm>
+      {/* </StyledFormWrapper> */}
     </div>
   );
 };

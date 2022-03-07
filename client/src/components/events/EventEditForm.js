@@ -279,7 +279,7 @@ const EventEditForm = ({
       <StyledForm>
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Event Name:
             <RedStar />
@@ -307,8 +307,6 @@ const EventEditForm = ({
         </div>
         <div>
           <br />
-          <label>
-            Mandatory:
             <StyledCheck
               className="check"
               name="mandatory"
@@ -317,10 +315,10 @@ const EventEditForm = ({
               checked={mandatory === true}
               onChange={(e) => setMandatory(e.target.checked)}
             />
-          </label>
-          <br />
           <label>
-            Recurring:
+            Mandatory
+            </label>
+          <br />
             <StyledCheck
               className="check"
               name="recurring"
@@ -329,10 +327,12 @@ const EventEditForm = ({
               checked={recurring === true}
               onChange={(e) => setRecurring(e.target.checked)}
             />
+          <label>
+            Recurring
           </label>
         </div>
 
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Type:
             <RedStar />
@@ -344,7 +344,7 @@ const EventEditForm = ({
           />
         </div>
 
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Visibility:
             <RedStar />
@@ -358,7 +358,7 @@ const EventEditForm = ({
           />
         </div>
 
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             Start Day:
             <RedStar />
@@ -384,7 +384,7 @@ const EventEditForm = ({
             }}
           />
         </div>
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>
             End Day:
             <RedStar />
@@ -520,7 +520,7 @@ const EventEditForm = ({
             DELETE
           </StyledButton>
         </div>
-        <div>
+        <div style={{marginRight: "4.5em"}}>
           <label>Notes:</label>
           <StyledTextArea
             value={notes}

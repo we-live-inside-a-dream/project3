@@ -559,7 +559,7 @@ function EditSchedule({
           <StyledButton onClick={validateForm} style={{ marginRight: "auto" }}>
             SUBMIT
           </StyledButton>
-          {start ? (
+          {existingValues?.start ? (
             <StyledButton
               style={{ marginRight: "auto" }}
               onClick={deleteShiftById}

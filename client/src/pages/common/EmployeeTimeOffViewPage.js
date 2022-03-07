@@ -175,18 +175,21 @@ const EmployeeTimeOffViewPage = () => {
                   );
                 })}
               </tbody>
-            </StyledTable>
-
-            {timeOffRequests?.length < 1 ? <div style={{marginLeft:"33%"}}> <h1>You Have no time off requests</h1> </div>: null}
-
-            <div>
-             <div style={{position:"relative", left: "18em"}}> <StyledButton
+              <StyledButton
+                margin={"0"}
                 onClick={() => setModalApplyIsOpen(true)}
+                style={{ position: "absolute", marginTop: "1em" }}
               >
                 REQUEST TIME OFF
               </StyledButton>
+            </StyledTable>
+
+            {timeOffRequests?.length < 1 ? (
+              <div style={{ marginLeft: "33%" }}>
+                {" "}
+                <h1>You Have no time off requests</h1>{" "}
               </div>
-            </div>
+            ) : null}
           </div>
         )}
       </StyledPage>
@@ -219,7 +222,9 @@ const EmployeeTimeOffViewPage = () => {
         }}
         open={modalConfirmIsOpen}
       >
-        <div><h3>Are you sure you want to Delete your time off request?</h3></div>
+        <div>
+          <h3>Are you sure you want to Delete your time off request?</h3>
+        </div>
         <StyledButton
           onClick={() => {
             deleteTimeOff();

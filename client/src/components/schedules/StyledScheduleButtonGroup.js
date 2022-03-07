@@ -49,63 +49,89 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
     currentTab % 2 == 0
       ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
+  let buttonEmployee =
+    currentTab % 2 == 1
+      ? "var(--styledButtonHoverBackground)"
+      : "var(--styledButtonBackground)";
   return (
-    <div style={{ marginBottom: "0%", paddingBottom: "0%" }}>
-      <StyledButton
-        onClick={() => {
-          setCurrentTab(1);
-          setActiveButton(1);
-        }}
-        style={{
-          backgroundColor: buttonDay,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        DAY
-      </StyledButton>
-      <StyledButton
-        onClick={() => {
-          setCurrentTab(3);
-          setActiveButton(3);
-        }}
-        style={{
-          backgroundColor: buttonWeek,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        WEEK
-      </StyledButton>
-      <StyledButton
-        onClick={() => {
-          setCurrentTab(5);
-          setActiveButton(5);
-        }}
-        style={{
-          backgroundColor: buttonMonth,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        MONTH
-      </StyledButton>
-
-      <StyledButton
-        onClick={() => handleClick()}
-        style={{
-          backgroundColor: buttonPositions,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        Position / Employee
-      </StyledButton>
-    </div>
+    <>
+      <div style={{ marginBottom: "0%", paddingBottom: "0%" }}>
+        <StyledButton
+          onClick={() => {
+            setCurrentTab(1);
+            setActiveButton(1);
+          }}
+          style={{
+            backgroundColor: buttonDay,
+            margin: "0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+          }}
+        >
+          DAY
+        </StyledButton>
+        <StyledButton
+          onClick={() => {
+            setCurrentTab(3);
+            setActiveButton(3);
+          }}
+          style={{
+            backgroundColor: buttonWeek,
+            margin: "0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+          }}
+        >
+          WEEK
+        </StyledButton>
+        <StyledButton
+          onClick={() => {
+            setCurrentTab(5);
+            setActiveButton(5);
+          }}
+          style={{
+            backgroundColor: buttonMonth,
+            margin: "0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+          }}
+        >
+          MONTH
+        </StyledButton>
+      </div>
+      <div style={{ minWidth: "10em" }}>
+        <StyledButton
+          onClick={() => handleClick()}
+          style={{
+            backgroundColor: buttonPositions,
+            margin: "0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+            borderRight: "0px",
+            borderRadius: "50% 0 0 50%",
+            padding: ".8rem 0 .8rem 0",
+            width: "5em",
+            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+          }}
+        >
+          Position
+        </StyledButton>
+        <StyledButton
+          onClick={() => handleClick()}
+          style={{
+            backgroundColor: buttonEmployee,
+            margin: "0px",
+            border: "2px solid var(--styledButtonGroupBorder)",
+            borderLeft: "0px",
+            borderRadius: "0 50% 50% 0",
+            padding: ".8rem 0 .8rem 0",
+            width: "5em",
+            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
+          }}
+        >
+          Employee
+        </StyledButton>
+      </div>
+    </>
   );
 }
 export default StyledScheduleButtonGroup;

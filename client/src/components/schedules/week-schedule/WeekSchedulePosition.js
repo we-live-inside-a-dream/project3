@@ -174,7 +174,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
   function onClickHandler(shift, position, date) {
     setIsOpen(true);
     setModalData({
-      position: position.label,
+      position: position.value,
       date: date,
     });
     setShiftId(shift._id);

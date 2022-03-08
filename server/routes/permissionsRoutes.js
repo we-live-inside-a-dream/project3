@@ -23,6 +23,21 @@ router.get("/get-all", async (req, res) => {
   );
   res.json(allPermissions);
 });
+router.get("/get-by-user-permissions", async (req, res) => {
+  let userPermissions = req.query.permissions;
+  console.log(
+    "FROM THE AAAAPPPPIIII the employee permissions are",
+    userPermissions
+  );
+  let allPermissions = await permissionsModel.getPermissionsForUser(
+    userPermissions
+  );
+  console.log(
+    "FROM API permissions route, the permissions for this user are:",
+    allPermissions
+  );
+  res.json(allPermissions);
+});
 
 router.post("/update", async (req, res) => {
   let id = req.query.id;

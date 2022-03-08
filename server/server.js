@@ -66,6 +66,7 @@ const conversationsRouter = require("./routes/conversationsRoutes");
 const messagesRouter = require("./routes/messagesRoutes");
 const positionsRouter = require("./routes/positionRoutes");
 const businessDaysRouter = require("./routes/businessDaysRouts");
+const permissionsRouter = require("./routes/permissionsRoutes");
 
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
 app.use(express.json());
@@ -86,6 +87,7 @@ app.use("/api/events", eventsRouter);
 app.use("/api/schedule", scheduleRouter);
 app.use("/api/positions", positionsRouter);
 app.use("/api/businessDays", businessDaysRouter);
+app.use("/api/permissions", permissionsRouter);
 app.use("/", express.static("../client/build"));
 
 app.use("*", (req, res) => {

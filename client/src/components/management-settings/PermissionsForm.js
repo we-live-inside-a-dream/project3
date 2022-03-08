@@ -1,83 +1,7 @@
-import { InputLabel } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import PermissionsCheckboxes from "./permissionsCheckboxes";
 import StyledButton from "../reusable/Inputs/StyledButton";
 import { StyledForm2 } from "../reusable/Inputs/StyledEmployeeForm";
-
-function PermissionsCheckboxes({ permissionSetter, permissionValue }) {
-  const [employee, setEmployee] = useState(false);
-  const [supervisor, setSupervisor] = useState(false);
-  const [manager, setManager] = useState(false);
-  const [administrator, setAdministrator] = useState(true);
-
-  function setPermission() {
-    let permissions = [
-      employee === true ? "employee" : null,
-      supervisor === true ? "supervisor" : null,
-      manager === true ? "manager" : null,
-      "administrator",
-    ];
-
-    let permissionArray = [...permissions];
-    let filteredPermissionArray = permissionArray.filter(
-      (permission) => permission !== null
-    );
-    permissionSetter([...filteredPermissionArray]);
-  }
-
-  function onInputChange(value, setter) {
-    setter(value);
-    setPermission();
-  }
-
-  return (
-    <div style={{ display: "flex" }}>
-      <InputLabel style={{ margin: "0px 10px" }}>
-        <input
-          type="checkbox"
-          value={employee}
-          checked={employee === true}
-          onChange={(e) => {
-            onInputChange(e.target.checked, setEmployee);
-          }}
-        ></input>
-        Employee
-      </InputLabel>
-      <InputLabel style={{ margin: "0px 10px" }}>
-        <input
-          type="checkbox"
-          value={supervisor}
-          checked={supervisor === true}
-          onChange={(e) => {
-            onInputChange(e.target.checked, setSupervisor);
-          }}
-        ></input>
-        Supervisor
-      </InputLabel>
-      <InputLabel style={{ margin: "0px 10px" }}>
-        <input
-          type="checkbox"
-          value={manager}
-          checked={manager === true}
-          onChange={(e) => {
-            onInputChange(e.target.checked, setManager);
-          }}
-        ></input>
-        Manager
-      </InputLabel>
-      <InputLabel style={{ margin: "0px 10px" }}>
-        <input
-          type="checkbox"
-          value={administrator}
-          checked={administrator === true}
-          onChange={(e) => {
-            onInputChange(e.target.checked, setAdministrator);
-          }}
-        ></input>
-        Administrator
-      </InputLabel>
-    </div>
-  );
-}
 
 function PermissionsForm() {
   const [scheduleView, setScheduleView] = useState();
@@ -90,13 +14,89 @@ function PermissionsForm() {
   const [shiftSwapApprove, setShiftSwapApprove] = useState();
   const [employeeTimeOffView, setEmployeeTimeOffView] = useState();
   const [employeeTimeOffApprove, setEmployeeTimeOffApprove] = useState();
+  const [permissionsId, setPermissionsId] = useState();
   const [appSettingsView, setAppSettingsView] = useState();
   const [appSettingsEdit, setAppSettingsEdit] = useState();
 
-  // const postData =
-  //   function updatePermission
-  console.log("scheduleView", scheduleView);
-  console.log("scheduleEdit", scheduleEdit);
+  const [permissionsList, setPermissionsList] = useState();
+  const [existingValues, setExistingValues] = useState();
+
+  useEffect(() => {
+    async function getPermissionsList() {
+      let fetchedResult = await fetch("/api/permissions/get-all");
+      let fetchedPermissions = await fetchedResult.json();
+      setExistingValues(fetchedPermissions);
+    }
+    getPermissionsList();
+  }, []);
+  console.log("EXISTINGVALUES", existingValues);
+  useEffect(() => {
+    if (existingValues) {
+      setPermissionsId(existingValues._id);
+      setScheduleView(existingValues.scheduleView);
+      setScheduleEdit(existingValues.scheduleEdit);
+      setEmployeeProfileView(existingValues.employeeProfileView);
+      setEmployeeProfileEdit(existingValues.employeeProfileEdit);
+      setEmployeeAvailabilityView(existingValues.employeeAvailabilityView);
+      setEmployeeAvailabilityEdit(existingValues.employeeAvailabilityEdit);
+      setShiftSwapView(existingValues.shiftSwapView);
+      setShiftSwapApprove(existingValues.shiftSwapApprove);
+      setEmployeeTimeOffView(existingValues.employeeTimeOffView);
+      setEmployeeTimeOffApprove(existingValues.employeeTimeOffApprove);
+      setAppSettingsView(existingValues.appSettingsView);
+      setAppSettingsEdit(existingValues.appSettingsEdit);
+    }
+  }, [existingValues]);
+
+  async function createPermissions(newPermissions) {
+    console.log(
+      "FROM PERMISSIONS FORM< TRYING TO POST PERMISSIONS",
+      newPermissions
+    );
+    await fetch("/api/permissions/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPermissions),
+    });
+    setPermissionsList(newPermissions);
+  }
+
+  async function upDatePermissions(newPermissions) {
+    console.log(
+      "FROM THE PERMISSIONS FORM, HERE IS THE UPDATED PERMISSION INFO",
+      newPermissions
+    );
+    await fetch(`/api/permissions/update?id=${permissionsId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPermissions),
+    });
+  }
+
+  const postData = async function () {
+    let newPermissions = {
+      scheduleView,
+      scheduleEdit,
+      employeeProfileView,
+      employeeProfileEdit,
+      employeeAvailabilityView,
+      employeeAvailabilityEdit,
+      shiftSwapView,
+      shiftSwapApprove,
+      employeeTimeOffView,
+      employeeTimeOffApprove,
+      appSettingsView,
+      appSettingsEdit,
+    };
+    console.log("TRYING TO POST DATA", newPermissions);
+    if (permissionsList === null) {
+      await createPermissions(newPermissions);
+    } else await upDatePermissions(newPermissions);
+  };
+  // console.log("THIS IS THE PERMISSIONS LIST **********", permissionsList);
+  // console.log("scheduleView", scheduleView);
   return (
     <div>
       <StyledForm2>
@@ -105,73 +105,81 @@ function PermissionsForm() {
         <PermissionsCheckboxes
           permissionValue={scheduleView}
           permissionSetter={setScheduleView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Edit</h5>
         <PermissionsCheckboxes
           permissionValue={scheduleEdit}
           permissionSetter={setScheduleEdit}
+          postData={postData}
         />
         <h3>Employee Profiles:</h3>
         <h5 style={{ margin: "0px 5px" }}>Can View</h5>
         <PermissionsCheckboxes
           permissionValue={employeeProfileView}
           permissionSetter={setEmployeeProfileView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Edit</h5>
         <PermissionsCheckboxes
           permissionValue={employeeProfileEdit}
           permissionSetter={setEmployeeProfileEdit}
+          postData={postData}
         />
         <h3>Employee Availability:</h3>
         <h5 style={{ margin: "0px 5px" }}>Can View</h5>
         <PermissionsCheckboxes
           permissionValue={employeeAvailabilityView}
           permissionSetter={setEmployeeAvailabilityView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Edit</h5>
         <PermissionsCheckboxes
           permissionValue={employeeAvailabilityEdit}
           permissionSetter={setEmployeeAvailabilityEdit}
+          postData={postData}
         />
         <h3>Employee Shift Swaps:</h3>
         <h5 style={{ margin: "0px 5px" }}>Can View</h5>
         <PermissionsCheckboxes
           permissionValue={shiftSwapView}
           permissionSetter={setShiftSwapView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Approve</h5>
         <PermissionsCheckboxes
           permissionValue={shiftSwapApprove}
           permissionSetter={setShiftSwapApprove}
+          postData={postData}
         />
         <h3>Employee Time Off:</h3>
         <h5 style={{ margin: "0px 5px" }}>Can View</h5>
         <PermissionsCheckboxes
           permissionValue={employeeTimeOffView}
           permissionSetter={setEmployeeTimeOffView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Approve</h5>
         <PermissionsCheckboxes
           permissionValue={employeeTimeOffApprove}
           permissionSetter={setEmployeeTimeOffApprove}
+          postData={postData}
         />
         <h3>Settings for App:</h3>
         <h5 style={{ margin: "0px 5px" }}>Can View</h5>
         <PermissionsCheckboxes
           permissionValue={appSettingsView}
           permissionSetter={setAppSettingsView}
+          postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Edit</h5>
         <PermissionsCheckboxes
           permissionValue={appSettingsEdit}
           permissionSetter={setAppSettingsEdit}
+          postData={postData}
         />
 
-        <StyledButton
-        //    onClick={postData}
-        >
-          SUBMIT
-        </StyledButton>
+        <StyledButton onClick={postData}>SUBMIT</StyledButton>
       </StyledForm2>
     </div>
   );

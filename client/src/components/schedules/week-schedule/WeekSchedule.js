@@ -197,7 +197,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: " 36%  34% 30%",
+          gridTemplateColumns: " 40%  30% 30%",
           height: "auto",
           marginBottom: "1em",
         }}

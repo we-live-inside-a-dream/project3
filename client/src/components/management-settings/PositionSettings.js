@@ -66,9 +66,9 @@ function PositionSettings() {
                           setMethod("edit");
                           setModalOpen(!modalOpen);
                         }}
-                        style={{ margin: "0px 15px" }}
+                        style={{ margin: "0px 15px", fontSize: "1.2em" }}
                       >
-                        E
+                        ✎
                       </StyledEditButton>
                       <StyledEditButton
                         onClick={() => {
@@ -78,7 +78,7 @@ function PositionSettings() {
                         }}
                         style={{ margin: "0px 15px" }}
                       >
-                        X
+                        ❌
                       </StyledEditButton>
                     </div>
                   </td>

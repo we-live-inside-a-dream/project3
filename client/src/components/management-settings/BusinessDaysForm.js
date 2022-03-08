@@ -255,6 +255,7 @@ function BusinessDaysForm() {
         </div>
         <div>
           <StyledButton
+            style={{ marginTop: "15px" }}
             onClick={() => {
               postData();
             }}

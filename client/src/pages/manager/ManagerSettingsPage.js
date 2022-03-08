@@ -36,7 +36,7 @@ function ManagerSettingsPage() {
         >
           Employee Permissions Settings {permissionsView === false ? "▾" : "▴"}
         </h3>
-        {permissionsView === true && <PermissionsForm />}
+        <div>{permissionsView === true && <PermissionsForm />}</div>
       </StyledPage>
     </div>
   );

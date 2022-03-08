@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   font-size: ${(props) => props.fontSize || "1em"};
   padding: ${(props) => props.padding || "0.8rem"};
-  margin: ${(props) => props.margin || "0"};
+  margin: ${(props) => props.margin || "0 1em 0 0"};
   text-align: ${(props) => props.textAlign || "center"};
   color: var(--headerWhiteFont);
   background-color: var(--styledButtonBackground);

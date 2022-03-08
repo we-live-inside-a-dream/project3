@@ -28,6 +28,7 @@ const typeData = [
   { value: "meeting", label: "Meeting" },
   { value: "interview", label: "Interview" },
   { value: "staff", label: "Staff Event" },
+  { value: "personal-event", label: "Personal Event" },
 ];
 const visibilityData = [
   { value: "user", label: "Myself Only" },

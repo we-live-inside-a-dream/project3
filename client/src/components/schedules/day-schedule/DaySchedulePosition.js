@@ -193,8 +193,12 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
                   position={employee?.position}
                   edit="edit"
                   onClick={() => setIsOpen(true)}
+                  firstName={employee.firstName}
+                  lastName={employee.lastName}
                 />
-                <div>{employee.firstName + " " + employee.lastName[0]}</div>
+                {/* <div style={{ marginBottom: "10px" }}>
+                  {employee.firstName + " " + employee.lastName[0]}
+                </div> */}
               </div>
 
               {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>

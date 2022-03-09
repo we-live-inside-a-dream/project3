@@ -43,26 +43,18 @@ async function getPermissions() {
 async function getPermissionsForUser(empPer) {
   console.log("FROM THE PERMISSIONS MODEL, THE EMPLOYEE PERMISSION IS", empPer);
   let employeePermission = empPer;
-  let allPermissions = [];
+  let allPermissions = {};
   let permissions = await Permissions.findOne({});
-  let thePermissions = permissionChoices.map((permission) => {
+  //   let thePermissions =
+  permissionChoices.forEach((permission) => {
     if (permissions[permission].includes(employeePermission)) {
-      return permission;
+      allPermissions[permission] = true;
     } else {
-      return null;
+      allPermissions[permission] = false;
     }
   });
-
-  //   let allPermissions = permissionChoices.map((p, index) => {
-  //     if (permissions[p].includes(empPer)) {
-  //       return { [p]: true };
-  //     } else {
-  //       return { [p]: false };
-  //     }
-  //   });
-
   console.log("FROM MODEL, getting permissions list", allPermissions);
-  return thePermissions;
+  return allPermissions;
 }
 
 async function updatePermissions(id, newData) {

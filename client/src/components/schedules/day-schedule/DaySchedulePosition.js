@@ -195,6 +195,8 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
                   position={employee?.position}
                   edit="edit"
                   onClick={() => setIsOpen(true)}
+                  firstName={employee.firstName}
+                  lastName={employee.lastName}
                 />
                 {/* <td
                   style={{

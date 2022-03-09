@@ -27,6 +27,7 @@ function NamePicTableData({
             height: "2.5rem",
             width: "2.5rem",
             margin: "auto",
+            marginTop: "8px",
             alignSelf: "center",
             borderRadius: "50%",
             color: "white",

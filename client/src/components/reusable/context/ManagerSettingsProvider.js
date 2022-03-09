@@ -53,7 +53,7 @@ export function ManagerSettingsProvider({ children }) {
     "FROM THE MAAGER SETTINGS, THESE ARE THE PERMISSIONS!!!!!!!",
     permissions
   );
-  let value = { positions, breaks, businessHours };
+  let value = { positions, breaks, businessHours, permissions };
 
   return (
     <ManagerSettingsContext.Provider value={value}>

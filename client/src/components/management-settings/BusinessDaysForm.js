@@ -53,11 +53,25 @@ function BusinessDaysForm() {
     const getBusinessDays = async () => {
       let fetchResult = await fetch("/api/businessDays/list");
       let fetchedBusinessDays = await fetchResult.json();
-      console.log("these are the fetched business days", fetchedBusinessDays);
-      setBusinessHours(fetchedBusinessDays);
+      // console.log("these are the fetched business days", fetchedBusinessDays);
+      // setBusinessHours(fetchedBusinessDays);
+      sortAndSetBusinessHours(fetchedBusinessDays);
     };
     getBusinessDays();
   }, [dayToDelete, businessDayCreated]);
+
+  const sortAndSetBusinessHours = (fetchedBusinessDays) => {
+    const daysOfTheWeek = {
+      Monday: 0, Tuesday: 1, Wednesday: 2, Thursday: 3, Friday: 4, Saturday: 5, Sunday: 6
+    }
+    const sortedDays = fetchedBusinessDays.sort((a, b) => {
+      // console.log(daysOfTheWeek[a.dayOfTheWeek], a.dayOfTheWeek, daysOfTheWeek[b.dayOfTheWeek], b.dayOfTheWeek)
+      return daysOfTheWeek[a.dayOfTheWeek] - daysOfTheWeek[b.dayOfTheWeek]
+    })
+    
+    console.log("these are the fetched business days", sortedDays);
+      setBusinessHours(sortedDays);
+  }
 
   // useEffect(() => {
   //   if(existingValues){
@@ -255,6 +269,7 @@ function BusinessDaysForm() {
         </div>
         <div>
           <StyledButton
+            style={{ marginTop: "15px" }}
             onClick={() => {
               postData();
             }}

@@ -28,6 +28,7 @@ const typeData = [
   { value: "meeting", label: "Meeting" },
   { value: "interview", label: "Interview" },
   { value: "staff", label: "Staff Event" },
+  { value: "personal-event", label: "Personal Event" },
 ];
 const visibilityData = [
   { value: "user", label: "Myself Only" },
@@ -279,7 +280,7 @@ const EventEditForm = ({
       <StyledForm>
         <h2 style={{ margin: "0px" }}>Create Event</h2>
         <div></div>
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>
             Event Name:
             <RedStar />
@@ -332,7 +333,7 @@ const EventEditForm = ({
           </label>
         </div>
 
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>
             Type:
             <RedStar />
@@ -344,7 +345,7 @@ const EventEditForm = ({
           />
         </div>
 
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>
             Visibility:
             <RedStar />
@@ -358,12 +359,12 @@ const EventEditForm = ({
           />
         </div>
 
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>
             Start Day:
             <RedStar />
           </label>
-          <BasicDatePicker
+          <BasicDatePicker style={{width: "100%"}}
             type="date"
             id="single-day"
             name="day"
@@ -384,7 +385,7 @@ const EventEditForm = ({
             }}
           />
         </div>
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>
             End Day:
             <RedStar />
@@ -410,7 +411,7 @@ const EventEditForm = ({
                 {dateMessageVal}
               </p>
             ) : null}
-            <BasicDatePicker
+            <BasicDatePicker style={{width: "100%"}}
               type="date"
               id="single-day"
               name="day"
@@ -459,7 +460,7 @@ const EventEditForm = ({
           <>
             <label>
               Start Time:
-              <BasicTimePicker
+              <BasicTimePicker style={{width: "100%"}}
                 type="time"
                 value={startTime}
                 onChange={(value) => {
@@ -491,7 +492,7 @@ const EventEditForm = ({
                   {timeMessageVal}
                 </p>
               ) : null}
-              <BasicTimePicker style={{ width: "220px"}}
+              <BasicTimePicker style={{width: "100%"}}
                 type="time"
                 value={endTime}
                 onChange={(value) => {
@@ -520,7 +521,7 @@ const EventEditForm = ({
             DELETE
           </StyledButton>
         </div>
-        <div style={{marginRight: "4.5em"}}>
+        <div>
           <label>Notes:</label>
           <StyledTextArea
             value={notes}

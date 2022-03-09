@@ -11,6 +11,6 @@ const StyledPageTitle = styled.h1`
   margin: auto;
   text-align: center;
   text-shadow: 1px 2px 3px #2f2f30;
-  font-family: "Georgia", Times New Roman, Times, serif;
+  font-family: "Noto Sans", sans-serif;
 `;
 export default StyledPageTitle;

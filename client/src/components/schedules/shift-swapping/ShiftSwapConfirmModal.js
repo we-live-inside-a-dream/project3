@@ -94,7 +94,7 @@ function ShiftSwapConformModal({
         onChange={(event) => onSwapReasonInputUpdate(event, setReasonForSwap)}
       />
 
-      <StyledButton
+      <StyledButton style={{marginRight: "1em"}}
         onClick={() => {
           postSwapRequest();
         }}

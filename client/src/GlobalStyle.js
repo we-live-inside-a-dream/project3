@@ -31,6 +31,36 @@ const GlobalStyle = createGlobalStyle`
   --tableBackground: #ffffff;
   --tableFont: #545454;
   } 
+
+  :root {
+  --mainHeader: #3f87c7;
+  --accentColorTitle: #063970;
+  --navColorTitle: #063970;
+  --lightTangerine: #99ccfa;
+  --loginButtonMain:  #3f87c7;
+  --loginButtonHoverBackground: #99ccfa;
+  --loginButtonHoverBorder:  #99ccfa;
+  --styledButtonBackground: #063970;
+  --styledButtonHoverBackground: #3f87c7;
+  --styledButtonHoverBorder: #99ccfa;
+  --styledButtonGroupBorder:  #99ccfa;
+  --dashGridBoxBackground: white;
+  --nameIconBorder: #3f87c7;
+  --nameIconBorderHover:  #99ccfa;
+  --appBackground: #f8fcff;
+  --navBackground: #1d639d;
+  --white: #ffffff;
+  --headerWhiteFont:  #ffffff;
+  --headerBlackFont: #000000;
+  --styledPage: #ffffff;
+  --scrollThumb: #98c6ca;
+  --scheduleTimeBar: #99ccfa;
+  --lightSelectBackground: #ffffff;
+  --darkSelectBackground: #000000;
+  --transparent: rgba(255, 255, 255, 0);
+  --tableBackground: #ffffff;
+  --tableFont: #545454;
+  } 
   
 
 

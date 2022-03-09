@@ -178,7 +178,10 @@ const EmployeeTimeOffViewPage = () => {
               <StyledButton
                 margin={"0"}
                 onClick={() => setModalApplyIsOpen(true)}
-                style={{ position: "absolute", marginTop: "1em" }}
+                style={{
+                  position: "absolute",
+                  marginTop: "1em",
+                }}
               >
                 REQUEST TIME OFF
               </StyledButton>

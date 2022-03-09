@@ -47,6 +47,7 @@ const EmployeeProfile = mongoose.model("employeeProfile", {
     type: [String],
     required: true,
   },
+  imageUrl: String,
   verified: { type: Boolean, default: false },
 });
 
@@ -91,6 +92,7 @@ const getActiveEmployeeNames = async () => {
     "firstName",
     "lastName",
     "_id",
+    "imageUrl",
   ]);
   // console.log("get names...", name);
   return name;
@@ -102,8 +104,9 @@ const getActiveEmployeePositions = async () => {
     "_id",
     "firstName",
     "lastName",
+    "imageUrl",
   ]);
-  // console.log("get names...", name);
+  console.log("get names...", name);
   return name;
 };
 // get Employee Profile by Profile id

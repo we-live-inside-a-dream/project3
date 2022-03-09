@@ -34,7 +34,6 @@ function EmployeeProfileList({ employeeProfileEdit }) {
     console.log("selectAvailability called on id", id);
     selectProfileId(id);
   }
-
   return (
     <div>
       <h1
@@ -72,11 +71,15 @@ function EmployeeProfileList({ employeeProfileEdit }) {
               <StyledTableRow key={employee._id}>
                 <td>
                   <NamePicTableData
-                    onClick={() => selectProfile(employee._id)}
+                    onClick={() => {
+                      selectProfile(employee._id);
+                      console.log(employee.imageUrl);
+                    }}
                     firstName={employee.firstName}
                     lastName={employee.lastName}
                     edit="edit"
                     canEdit={employeeProfileEdit}
+                    imageUrl={employee.imageUrl}
                   />
                 </td>
                 <td>{employee.email}</td>

@@ -39,7 +39,7 @@ function NavBar() {
           <Logo src={LogoImg} />
         </LogoNavbarLink>
 
-        {unread?.length > 0 ? (
+        {/* {unread?.length > 0 ? (
           <div
             style={{
               height: "10px",
@@ -52,7 +52,7 @@ function NavBar() {
               right: "10em",
             }}
           />
-        ) : null}
+        ) : null} */}
         <LeftContainer>
           <NavbarLinkContainer
             extendNavbar={extendNavbar}

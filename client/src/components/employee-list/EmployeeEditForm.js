@@ -255,7 +255,7 @@ const EmployeeEditForm = ({
 
   return (
     <>
-      <StyledForm style={{ margin: " 80px auto" }}>
+      <StyledForm>
         <h2>Employee Description</h2>
         <div></div>
         <div>
@@ -414,7 +414,13 @@ const EmployeeEditForm = ({
         <div>
           <StyledButton
             onClick={postData}
-            style={{ position: "relative", top: "1em", left: 0, marginLeft: 0, marginTop: "20px" }}
+            style={{
+              position: "relative",
+              top: "1em",
+              left: 0,
+              marginLeft: 0,
+              marginTop: "20px",
+            }}
           >
             SAVE DETAILS
           </StyledButton>

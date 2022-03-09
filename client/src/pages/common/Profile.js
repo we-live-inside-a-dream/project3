@@ -75,12 +75,13 @@ const Profile = () => {
           {employeeProfileView === false ? "▾" : "▴"}
         </h3>
         {employeeProfileView === true && (
-          <EmployeeEditForm
-            style={{ justifyContent: "left" }}
-            edit={edit}
-            existingValues={employee}
-            onSave={updateEmployee}
-          />
+          <div style={{ justifyContent: "left" }}>
+            <EmployeeEditForm
+              edit={edit}
+              existingValues={employee}
+              onSave={updateEmployee}
+            />
+          </div>
         )}
 
         <h3

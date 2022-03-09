@@ -32,8 +32,6 @@ export const StyledMessangerPage = styled.div`
     margin-left: 10px;
   }
   .chatBoxBottom {
-    margin-top: 5px;
-
     /* padding: 1em; */
     display: flex;
     justify-content: space-between;
@@ -47,7 +45,7 @@ export const StyledMessangerPage = styled.div`
   .chatMessageInput {
     position: relative;
     width: 85%;
-    height: 95%;
+    /* height: 95%; */
     padding: 0;
     resize: none;
   }
@@ -99,14 +97,12 @@ export const StyledMessangerPage = styled.div`
 
 export const StyledContactList = styled.div`
   background-color: var(--styledPage);
-  padding: 1em;
-  font-size: 15px;
-  max-height: 75%;
 
+  font-size: 15px;
+  height: 80%;
   overflow-y: auto;
   position: relative;
-  right: 0;
-  bottom: 0;
+
   left: 0;
 
   filter: drop-shadow(3px 3px 10px lightgrey);
@@ -119,21 +115,25 @@ export const ContactsBox = styled.div`
   flex: 1.5;
   position: relative;
   right: 0;
+  padding: 1em;
+  padding-left: 0;
 `;
 
 export const ChatMenuInput = styled.div`
   width: 90%;
-  padding: 10px 0;
+
   border: none;
   border-bottom: 1px solid gray;
 `;
 
 export const ChatMenuWrapper = styled.div`
-  padding: 1em 1em 0em 1em;
+  justify-content: space-between;
   /* width: 100%; */
+  height: 20%;
   position: relative;
   background-color: var(--styledPage);
-  margin-right: 0.75rem;
+
+  /* height: 15%; */
 
   /* height: 100%; */
 `;
@@ -215,7 +215,7 @@ export const ChatPopup = styled.div`
     display: none;
     font-size: 10px;
     position: fixed;
-    bottom: 10rem;
+    bottom: 5rem;
     right: 0;
     /* top: 10rem; */
     /* height: 60vh; */
@@ -281,8 +281,8 @@ export const MessageStyles = styled.div`
 `;
 export const ChatButton = styled.button`
   position: fixed;
-  bottom: 3rem;
-  right: 3rem;
+  bottom: 1rem;
+  right: 1rem;
   /* background-color: dodgerblue; */
   color: white;
   border-radius: 50%;

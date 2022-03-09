@@ -10,7 +10,9 @@ function NamePicTableData({
   setModalOpen,
   position,
   canEdit,
+  imageUrl,
 }) {
+  console.log("THE IMAGE URL IS >>>>>>>>>>>>>>>>>>>>>>>>", imageUrl);
   return (
     <div
       style={{
@@ -21,7 +23,7 @@ function NamePicTableData({
     >
       <div style={{ gridRow: "1" }}></div>
       <div>
-        <div
+        {/* <div
           style={{
             gridRow: "1",
             backgroundColor: "grey",
@@ -39,6 +41,32 @@ function NamePicTableData({
           }}
         >
           {firstName[0]}
+        </div> */}
+        <div
+          style={{
+            gridRow: "1",
+            // backgroundImage: "url(" + imageUrl + ")",
+            height: "2.5rem",
+            width: "2.5rem",
+            margin: "auto",
+            marginTop: "8px",
+            // alignSelf: "center",
+            // backgroundSize: "contain",
+            overflow: "hidden",
+            top: "0",
+            left: "0",
+            borderRadius: "50%",
+            border: "3px solid var(--nameIconBorder)",
+            position: "relative",
+          }}
+        >
+          <img
+            className="science-portrait"
+            src={"/images/" + imageUrl}
+            alt={firstName}
+            style={{ width: "2.8rem", height: "2.6rem", borderRadius: "2.8%" }}
+            // style={{ backgroundPosition: "center" }}
+          />
         </div>
       </div>
 

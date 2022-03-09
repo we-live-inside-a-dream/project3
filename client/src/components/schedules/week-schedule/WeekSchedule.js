@@ -277,6 +277,7 @@ function WeekSchedule({ setCurrentTab, currentTab, scheduleEdit }) {
                 firstName={employee.firstName}
                 lastName={employee.lastName}
                 scheduleEdit={scheduleEdit}
+                imageUrl={employee.imageUrl}
               />
 
               {dataWeek.map((date, index) => {

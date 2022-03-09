@@ -223,6 +223,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
               <NamePicTableData
                 firstName={employee.firstName}
                 lastName={employee.lastName}
+                imageUrl={employee.imageURl}
               />
 
               {dataWeek.map((date) => {

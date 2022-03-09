@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledTable = styled.table`
   color: var() (--tableFont);
   background-color: var(--tableBackground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Lucida Sans", sans-serif;
   font-weight: 300;
   border: 1px solid grey;
   filter: drop-shadow(5px 5px 10px grey);

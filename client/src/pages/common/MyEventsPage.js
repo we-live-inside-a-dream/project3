@@ -8,7 +8,7 @@ function MyEventsPage({ setCurrentTab, currentTab }) {
   return (
     <>
       <StyledPage>
-        <StyledPageTitle>EVENTS CALENDAR</StyledPageTitle>
+        <StyledPageTitle>Event Calendar</StyledPageTitle>
         <MonthSchedulePage
           showButtonGroup={false}
           setCurrentTab={setCurrentTab}

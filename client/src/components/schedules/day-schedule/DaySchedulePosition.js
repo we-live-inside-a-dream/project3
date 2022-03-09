@@ -195,6 +195,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
                   position={employee?.position}
                   edit={scheduleEdit === true ? "edit" : null}
                   onClick={() => setIsOpen(true)}
+                  imageUrl={employee.imageUrl}
                 />
                 {/* <td
                   style={{

@@ -13,6 +13,7 @@ function EmployeeAvailabilityDetail({
   userId,
   availabilityId,
   userAvailability,
+  imageUrl,
 }) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -133,6 +134,7 @@ function EmployeeAvailabilityDetail({
                 lastName={lastName}
                 edit="edit"
                 onClick={() => setModalOpen(true)}
+                imageUrl={imageUrl}
               />
               <td>
                 {maxHoursPerWeek}

@@ -6,13 +6,14 @@ export const NavbarContainer = styled.nav`
   background-color: var(--navBackground);
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 5px 5px 8px;
+  z-index: 500;
 `;
 
 export const LeftContainer = styled.div`
   flex: 70%;
   display: flex;
   align-items: flex-start;
-  padding-left: 1%;
 `;
 
 export const RightContainer = styled.div`
@@ -21,7 +22,7 @@ export const RightContainer = styled.div`
   justify-content: flex-end;
 
   @media (min-width: 700px) {
-    height: 80px;
+    height: 60px;
   }
 `;
 // export const Logo = styled.image`
@@ -42,9 +43,11 @@ export const Pic = styled.img`
 
 export const Logo = styled.img`
   display: flex;
-  padding: 0px 0px;
+  padding-left: 7px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   margin: 0px auto;
-  max-width: 65px;
+  max-width: 52px;
   height: auto;
   &:hover {
     cursor: pointer;
@@ -64,7 +67,7 @@ export const MessageLogo = styled.img`
 
 export const NavbarExtendedContainer = styled.div`
   width: 100%;
-  height: 80px;
+  height: 70px;
   display: flex;
 `;
 
@@ -73,7 +76,7 @@ export const NavbarLinkContainer = styled.div`
   align-content: center;
 `;
 export const LogoNavbarLink = styled(Link)`
-  width: 80px;
+  width: auto;
   &:hover {
     cursor: pointer;
   }
@@ -123,7 +126,7 @@ export const NavbarInnerContainer = styled.div`
         display: none;
     } */
   width: 100%;
-  height: 70px;
+  height: 65px;
   display: flex;
   position: fixed;
   background-color: #1d639d;
@@ -137,7 +140,8 @@ export const StyledNavButton = styled.button`
   border: 3px solid var(--loginButtonMain);
   color: var(--headerWhiteFont);
   border-radius: 5px;
-  margin: 10px 10px 0px 10px;
+  margin: 14px 10px 0px 12px;
+  box-shadow: 0 2px #2f2f30;
   &:hover {
     cursor: pointer;
     background-color: var(--loginButtonHoverBackground);
@@ -150,13 +154,13 @@ export const StyledNavButton = styled.button`
   }
 `;
 export const StyledAvatarButton = styled(Link)`
-  background-color: grey;
+  /* background-color: grey; */
   height: 2.8rem;
   width: 2.8rem;
-  margin: 3px 10px;
+  margin: 6px 10px;
   border-radius: 50%;
-  color: white;
-  font-size: 2.2rem;
+  /* color: white; */
+  font-size: 1rem;
   text-align: center;
   border: 3px solid var(--nameIconBorder);
   &:hover {

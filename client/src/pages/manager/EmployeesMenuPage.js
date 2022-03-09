@@ -6,6 +6,7 @@ import CreateEmployeePage from "./CreateEmployeePage";
 import StyledEmployeePageButtonGroup from "./StyledEmployeePageButtonGroup";
 import EmployeeAvailabilityList from "../../components/employee-availabilities/EmployeeAvailabilityList";
 import { useManagerSettings } from "../../components/reusable/context/ManagerSettingsProvider";
+import { flexbox } from "@mui/system";
 
 function EmployeesMenuPage() {
   const [currentTab, setCurrentTab] = useState(1);
@@ -42,11 +43,19 @@ function EmployeesMenuPage() {
           />
         )}
         {currentTab === 2 && (
-          <CreateEmployeePage
-            setCurrentTab={setCurrentTab}
-            currentTab={currentTab}
-            employeeProfileEdit={perms?.employeeProfileEdit}
-          />
+          <div
+            style={{
+              margin: " 80px auto",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <CreateEmployeePage
+              setCurrentTab={setCurrentTab}
+              currentTab={currentTab}
+              employeeProfileEdit={perms?.employeeProfileEdit}
+            />
+          </div>
         )}
         {currentTab === 3 && (
           <EmployeeAvailabilityList

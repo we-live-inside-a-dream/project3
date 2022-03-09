@@ -21,7 +21,6 @@ function ScheduleBox() {
         alt="setting gear icon"
         picStyle={{ width: "100%" }}
       />
-    
     </>
   );
 }

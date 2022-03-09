@@ -105,8 +105,8 @@ export const StyledContactList = styled.div`
 
   overflow-y: auto;
   position: relative;
-  right: 1em;
-  bottom: 1em;
+  right: 0;
+  bottom: 0;
   left: 0;
 
   filter: drop-shadow(3px 3px 10px lightgrey);
@@ -118,6 +118,7 @@ export const StyledContactList = styled.div`
 export const ContactsBox = styled.div`
   flex: 1.5;
   position: relative;
+  right: 0;
 `;
 
 export const ChatMenuInput = styled.div`
@@ -128,7 +129,11 @@ export const ChatMenuInput = styled.div`
 `;
 
 export const ChatMenuWrapper = styled.div`
-  padding: 10px;
+  padding: 1em 1em 0em 1em;
+  /* width: 100%; */
+  position: relative;
+  background-color: var(--styledPage);
+  margin-right: 0.75rem;
 
   /* height: 100%; */
 `;

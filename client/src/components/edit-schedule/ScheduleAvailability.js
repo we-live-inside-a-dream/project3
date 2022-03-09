@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as fns from "date-fns";
+import moment from "moment";
 
 const ScheduleAvailability = ({ date, id }) => {
   const [renderAvailability, setRenderAvailability] = useState();
@@ -12,7 +13,9 @@ const ScheduleAvailability = ({ date, id }) => {
     day: "",
     maxHoursPerWeek: 0,
   });
-
+  function amPm(time) {
+    moment(time, "hh:mm").format("h:mma");
+  }
   useEffect(() => {
     if (!id) return;
 
@@ -27,10 +30,15 @@ const ScheduleAvailability = ({ date, id }) => {
         setRenderAvailability("employee is unavailable");
       } else if (!availableToday?.allDay) {
         setRenderAvailability(
-          `employee is available between ${availableToday?.start} and ${availableToday?.end}`
+          `employee is available between ${moment(
+            availableToday?.start,
+            "hh:mm"
+          ).format("h:mma")} and ${moment(availableToday?.end, "hh:mm").format(
+            "h:mma"
+          )}`
         );
       } else {
-        setRenderAvailability("employee is free to suffer!!");
+        setRenderAvailability("employee can work all day");
       }
     }
     function isTimeoff() {

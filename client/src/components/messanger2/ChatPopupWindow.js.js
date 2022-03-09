@@ -21,19 +21,21 @@ const ChatPopupWindow = () => {
         </div>
       </ChatPopup>
       <ChatButton onClick={() => setShow((prevCheck) => !prevCheck)}>
-        <MessageLogo src={msgIcon} />x
+        <MessageLogo src={msgIcon} />
       </ChatButton>
       {unread?.length > 0 ? (
         <div
           style={{
-            height: "10px",
-            width: "10px",
+            height: "25px",
+            width: "25px",
             borderRadius: "50%",
             backgroundColor: "red",
             position: "fixed",
             transformOrigin: "topRight",
-            bottom: "5em",
+            bottom: "5.5em",
             right: "3em",
+            pointerEvents: "none",
+            // opacity: "75%",
             zIndex: "101",
           }}
         />

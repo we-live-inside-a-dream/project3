@@ -103,6 +103,7 @@ export const ContactsList = ({ setCurrentChat }) => {
         <ChatMenuWrapper>
           <Select
             isMulti
+            // style={{ width: "100%" }}
             name="empNames"
             value={recipients}
             options={contactsData}
@@ -110,7 +111,15 @@ export const ContactsList = ({ setCurrentChat }) => {
             className="basic-multi-select"
             classNamePrefix="select"
           ></Select>
-          <StyledButton onClick={postData}>SELECT FRIENDS</StyledButton>
+
+          <StyledButton
+            style={{ width: "100%" }}
+            // padding={"0.8rem 100% 0.8rem 0.8rem"}
+            margin={"1em 0 0 0"}
+            onClick={postData}
+          >
+            SELECT FRIENDS
+          </StyledButton>
         </ChatMenuWrapper>
         <StyledContactList>
           {conversations?.map((c) => (

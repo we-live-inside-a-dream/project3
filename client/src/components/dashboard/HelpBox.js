@@ -20,7 +20,7 @@ function ScheduleBox() {
         clickFunction={() => navigate("/help")}
         image={nicerQuestion}
         alt="question mark for help"
-        picStyle={{ height: "180px", marginLeft: "50px" }}
+        picStyle={{ height: "180px", marginLeft: "60px" }}
       />
     </>
   );

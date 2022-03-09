@@ -123,11 +123,7 @@ function PositionPicTableData({
             position: "relative",
           }}
         >
-<<<<<<< HEAD
           {position[0] + position[1]}
-=======
-          {firstName[0]}
->>>>>>> 9c0f97a5a145caaa65a88bc569268df3dc035c29
         </div>
       </div>
 
@@ -141,7 +137,6 @@ function PositionPicTableData({
           position: "relative",
         }}
       >
-<<<<<<< HEAD
         <p>{`${position?.charAt(0).toUpperCase() + position?.slice(1)}`}</p>
         {edit && (
           <StyledEditButton
@@ -164,25 +159,6 @@ function PositionPicTableData({
           }}
         >
           {lastName ? `${firstName} ${lastName[0]}` : null}
-=======
-        <p>
-          {position}
-          {/* {`${firstName} ${lastName.slice(0, 1)}`} */}
-          {edit && <StyledEditButton onClick={onClick}>✎</StyledEditButton>}
-        </p>
-        <div
-          style={{
-            margin: 0,
-            marginBottom: "5px",
-            color: "black",
-            fontWeight: "100",
-            position: "absolute",
-            bottom: 0,
-          }}
-        >
-          {`${firstName} ${lastName.slice(0, 1)}`}
-          {/* {position} */}
->>>>>>> 9c0f97a5a145caaa65a88bc569268df3dc035c29
         </div>
         <p
           style={{

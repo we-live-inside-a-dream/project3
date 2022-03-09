@@ -21,7 +21,7 @@ export const RightContainer = styled.div`
   justify-content: flex-end;
 
   @media (min-width: 700px) {
-    height: 80px;
+    height: 60px;
   }
 `;
 // export const Logo = styled.image`
@@ -43,8 +43,10 @@ export const Pic = styled.img`
 export const Logo = styled.img`
   display: flex;
   padding: 0px 0px;
+  padding-left: 5px;
+  padding-top: 5px;
   margin: 0px auto;
-  max-width: 65px;
+  max-width: 55px;
   height: auto;
   &:hover {
     cursor: pointer;
@@ -64,7 +66,7 @@ export const MessageLogo = styled.img`
 
 export const NavbarExtendedContainer = styled.div`
   width: 100%;
-  height: 80px;
+  height: 70px;
   display: flex;
 `;
 
@@ -73,7 +75,7 @@ export const NavbarLinkContainer = styled.div`
   align-content: center;
 `;
 export const LogoNavbarLink = styled(Link)`
-  width: 80px;
+  width: auto;
   &:hover {
     cursor: pointer;
   }
@@ -123,7 +125,7 @@ export const NavbarInnerContainer = styled.div`
         display: none;
     } */
   width: 100%;
-  height: 70px;
+  height: 65px;
   display: flex;
   position: fixed;
   background-color: #1d639d;
@@ -153,7 +155,7 @@ export const StyledAvatarButton = styled(Link)`
   background-color: grey;
   height: 2.8rem;
   width: 2.8rem;
-  margin: 3px 10px;
+  margin: 6px 10px;
   border-radius: 50%;
   color: white;
   font-size: 2.2rem;

@@ -144,7 +144,7 @@ ${
   }
   body {
      ${"" /* font-family: Arial, Helvetica, sans-serif; */}
-     font-family: "Lucida Sans", sans-serif; 
+     font-family: "Roboto", sans-serif; 
 
     background-color: var(--appBackground);
     height: 100%;

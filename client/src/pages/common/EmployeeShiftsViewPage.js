@@ -12,7 +12,7 @@ function EmployeeShiftsViewPage() {
     <div>
       <StyledPage>
         <StyledPageTitle style={{ marginBottom: "50px" }}>
-          My Upcoming Shifts
+          Upcoming Shifts
         </StyledPageTitle>
         <EmployeeUpcomingShiftTable />
       </StyledPage>

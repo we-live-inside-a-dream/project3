@@ -8,7 +8,7 @@ const headerStyle = {
   backgroundColor: "var(--tableBackground)",
   color: "var(--accentColorTitle)",
   fontSize: "20px",
-  fontFamily: "sans-serif",
+  fontFamily: "Roboto, sans-serif",
   display: "grid",
   marginBottom: "0px",
   marginTop: "0px",

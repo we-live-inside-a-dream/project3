@@ -202,7 +202,7 @@ function DaySchedule({ setCurrentTab, currentTab, scheduleEdit }) {
                     employee?.position.charAt(0).toUpperCase() +
                     employee?.position.slice(1)
                   }
-                  imageUrl={`${employee.firstName}.jpg`}
+                  imageUrl={`${employee?.firstName.toLowerCase()}.jpg`}
                   canEdit={scheduleEdit}
                   edit="edit"
                   onClick={() => {

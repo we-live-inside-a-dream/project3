@@ -47,8 +47,10 @@ function NamePicTableData({
             gridRow: "1",
             // backgroundImage: "url(" + imageUrl + ")",
             backgroundColor: " var(--nameIconBorder)",
-            height: "32px",
-            width: "32px",
+            // height: "32px",
+            // width: "32px",
+            height: "2.8rem",
+            width: "2.8rem",
             margin: "auto",
             marginTop: "8px",
             overflow: "hidden",
@@ -56,21 +58,12 @@ function NamePicTableData({
             border: "3px solid var(--nameIconBorder)",
             position: "relative",
             display: "flex",
-            boxSizing: "border-box",
           }}
         >
           <img
             src={"/images/" + imageUrl}
             alt={firstName}
-            style={{
-              // height: "2.5rem",
-              // height: "100%",
-              width: "32px",
-              // width: "",
-              margin: "0px",
-              borderRadius: "50%",
-              boxSizing: "border-box",
-            }}
+
             // style={{ backgroundPosition: "center" }}
           />
         </div>

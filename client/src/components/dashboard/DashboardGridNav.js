@@ -24,6 +24,7 @@ let dashGridStyle = {
   width: "85%",
   height: "auto",
   margin: "50px auto",
+  paddingBottom: "60px",
 };
 
 const DashboardGridNav = function () {

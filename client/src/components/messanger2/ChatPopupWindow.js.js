@@ -2,7 +2,7 @@ import React from "react";
 import { ChatButton, ChatPopup, MessageLogo } from "./StyledMessangerPage";
 import MessangerPage2 from "../../pages/common/MessangerPage2";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
-import msgIcon from "./messageIcon.png";
+import msgIcon from "./chat.png";
 import { useEffect } from "react";
 
 const ChatPopupWindow = () => {

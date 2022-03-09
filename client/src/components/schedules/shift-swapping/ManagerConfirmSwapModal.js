@@ -13,6 +13,7 @@ function ManagerConfirmSwapModal({
   swapRequestValues,
   swapRequests,
   setSwapRequests,
+  reload,
 }) {
   const [managerMessage, setManagerMessage] = useState();
   const authContext = useContext(AuthenticationContext);
@@ -85,6 +86,7 @@ function ManagerConfirmSwapModal({
     });
     setSwapRequests(updatedSwapRequestList);
     setShiftApprovalModalIsOpen();
+    reload();
   }
 
   return (

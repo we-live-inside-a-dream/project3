@@ -11,6 +11,7 @@ function ManagerViewOfShiftSwapRequests() {
   const [detailShift, setDetailShift] = useState();
   const [shiftApprovalModalIsOpen, setShiftApprovalModalIsOpen] =
     useState(false);
+  const [render, setRender] = useState(false);
 
   // const authContext = useContext(AuthenticationContext);
   // let user = authContext.user;
@@ -24,7 +25,11 @@ function ManagerViewOfShiftSwapRequests() {
       setSwapRequests(retreivedSwapRequests);
     }
     findShiftSwapRequests();
-  }, []);
+  }, [render]);
+
+  const reload = () => {
+    setRender((prevCheck) => !prevCheck);
+  };
 
   return (
     <div>
@@ -82,6 +87,7 @@ function ManagerViewOfShiftSwapRequests() {
         onClose={() => setShiftApprovalModalIsOpen(false)}
       >
         <ManagerConfirmSwapModal
+          reload={reload}
           shift={detailShift}
           setShiftApprovalModalIsOpen={() => setShiftApprovalModalIsOpen(false)}
           decision={decision}

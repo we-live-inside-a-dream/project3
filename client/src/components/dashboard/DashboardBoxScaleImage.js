@@ -17,16 +17,17 @@ let dashBoxStyle = {
   //   justifyContent: "spaceAround",
 };
 
-const DashboardBoxScale = function ({
+const DashboardBoxScaleImage = function ({
   title,
   clickFunction,
-  content,
   padding,
   top,
   left,
   transform,
   transformOrigin,
   image,
+  picStyle,
+  alt,
 }) {
   return (
     <div style={dashBoxStyle}>
@@ -57,10 +58,10 @@ const DashboardBoxScale = function ({
           transformOrigin={transformOrigin}
           transform={transform}
         >
-          {content}
+          <img src={image} alt={alt} style={picStyle} />
         </StyledScaledComponent>
       </div>
     </div>
   );
 };
-export default DashboardBoxScale;
+export default DashboardBoxScaleImage;

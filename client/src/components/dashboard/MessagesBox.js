@@ -1,22 +1,24 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardBox from "./DashboardBox";
-import MessangerPage2 from "../../pages/common/MessangerPage2";
+import DashboardBoxScaleImage from "./DashboardBoxScaleImage";
+import MessageBubble from "./messageBubble.png";
 
 function MessagesBox() {
   let navigate = useNavigate();
 
   return (
     <>
-      <DashboardBox
+      <DashboardBoxScaleImage
         title="MESSAGES"
         padding="5px"
         top={0}
         left={0}
-        transform={"Scale(.3)"}
+        transform={"Scale(1)"}
         transformOrigin={"top left"}
         clickFunction={() => navigate("/chat")}
-        content={<MessangerPage2 />}
+        image={MessageBubble}
+        picStyle={{ width: "200px", marginLeft: "30px" }}
+        alt="message icon"
       />
     </>
   );

@@ -15,6 +15,7 @@ function HomeDashBoardPage() {
 
   const value = useManagerSettings();
   const positions = value.positions;
+  const permissions = value.permissions;
 
   useEffect(() => {
     let getGreeting = function () {
@@ -31,7 +32,6 @@ function HomeDashBoardPage() {
     getGreeting();
   }, [currentHour]);
 
-  console.log("the positions in the setting", positions);
   return (
     <>
       <StyledPage>

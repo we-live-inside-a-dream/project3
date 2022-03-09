@@ -54,7 +54,7 @@ const GlobalStyle = createGlobalStyle`
   --headerBlackFont: #000000;
   --styledPage: #ffffff;
   --scrollThumb: #98c6ca;
-  --scheduleTimeBar: #99ccfa;
+  --scheduleTimeBar: #1a578e;
   --lightSelectBackground: #ffffff;
   --darkSelectBackground: #000000;
   --transparent: rgba(255, 255, 255, 0);

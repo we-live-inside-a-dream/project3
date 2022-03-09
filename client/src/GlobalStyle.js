@@ -34,10 +34,10 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
   --mainHeader: #3f87c7;
-  --accentColorTitle: #063970;
+  --accentColorTitle: #2f2f30;
   --navColorTitle: #063970;
   --lightTangerine: #99ccfa;
-  --loginButtonMain:  #3f87c7;
+  --loginButtonMain: #579ddc;
   --loginButtonHoverBackground: #99ccfa;
   --loginButtonHoverBorder:  #99ccfa;
   --styledButtonBackground: #063970;
@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
   --headerWhiteFont:  #ffffff;
   --headerBlackFont: #000000;
   --styledPage: #ffffff;
-  --scrollThumb: #99ccfa;
+  --scrollThumb: #d3d3d3;
   --scheduleTimeBar: #1a578e;
   --lightSelectBackground: #ffffff;
   --darkSelectBackground: #000000;
@@ -144,7 +144,7 @@ ${
   }
   body {
      ${"" /* font-family: Arial, Helvetica, sans-serif; */}
-     font-family: "Roboto",Arial, Helvetica, sans-serif; 
+     font-family: "Lucida Sans", sans-serif; 
 
     background-color: var(--appBackground);
     height: 100%;
@@ -152,7 +152,7 @@ ${
     color: #555;
   }
     ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -160,7 +160,6 @@ ${
   }
   ::-webkit-scrollbar-thumb {
     background-color: var(--scrollThumb);
-  border-radius: 20px;
   background-color: var(--scrollThumb);
   } 
  *{

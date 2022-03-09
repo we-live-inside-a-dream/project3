@@ -17,7 +17,7 @@ const ApprovalPage = () => {
         }
       >
         <StyledPageTitle style={{ marginBottom: "40px" }}>
-          APPROVALS PAGE
+          Approvals Page
         </StyledPageTitle>
         <div
           style={{

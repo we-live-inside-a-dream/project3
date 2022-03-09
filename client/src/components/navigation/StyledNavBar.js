@@ -6,13 +6,14 @@ export const NavbarContainer = styled.nav`
   background-color: var(--navBackground);
   display: flex;
   flex-direction: column;
+  box-shadow: 5px 5px 5px 8px;
+  z-index: 500;
 `;
 
 export const LeftContainer = styled.div`
   flex: 70%;
   display: flex;
   align-items: flex-start;
-  padding-left: 1%;
 `;
 
 export const RightContainer = styled.div`
@@ -42,11 +43,11 @@ export const Pic = styled.img`
 
 export const Logo = styled.img`
   display: flex;
-  padding: 0px 0px;
-  padding-left: 5px;
+  padding-left: 7px;
+  padding-bottom: 5px;
   padding-top: 5px;
   margin: 0px auto;
-  max-width: 55px;
+  max-width: 52px;
   height: auto;
   &:hover {
     cursor: pointer;
@@ -139,7 +140,8 @@ export const StyledNavButton = styled.button`
   border: 3px solid var(--loginButtonMain);
   color: var(--headerWhiteFont);
   border-radius: 5px;
-  margin: 10px 10px 0px 10px;
+  margin: 14px 10px 0px 12px;
+  box-shadow: 0 2px #2f2f30;
   &:hover {
     cursor: pointer;
     background-color: var(--loginButtonHoverBackground);

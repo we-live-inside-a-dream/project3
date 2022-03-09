@@ -38,8 +38,8 @@ function EmployeeProfileList({ employeeProfileEdit }) {
     <div>
       <h1
         style={{
-          fontWeight: "400",
-          fontFamily: "Arial, Helvetica, sans-serif",
+          fontWeight: "600",
+          fontFamily: "Noto Sans, sans-serif",
           textAlign: "center",
           // textShadow: "1px 1px 2px grey",
           color: "var(--accentColorTitle)",
@@ -59,7 +59,7 @@ function EmployeeProfileList({ employeeProfileEdit }) {
           <tr>
             <StyledTableHeader>NAME</StyledTableHeader>
             <StyledTableHeader>EMAIL</StyledTableHeader>
-            <StyledTableHeader>PHONE#</StyledTableHeader>
+            <StyledTableHeader>PHONE #</StyledTableHeader>
             <StyledTableHeader>POSITION(S)</StyledTableHeader>
             <StyledTableHeader>STATUS</StyledTableHeader>
             <StyledTableHeader>PERMISSIONS</StyledTableHeader>

@@ -34,7 +34,7 @@ function EventsPage() {
   return (
     <div>
       <StyledPage>
-        <StyledPageTitle title="EVENTS CALENDAR" />
+        <StyledPageTitle title="Events Calendar" />
         <EventEditForm existingValues={event} onSave={updateEvent} />
       </StyledPage>
     </div>

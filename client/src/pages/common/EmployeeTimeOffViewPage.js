@@ -109,7 +109,7 @@ const EmployeeTimeOffViewPage = () => {
         ) : (
           <div>
             <StyledPageTitle style={{ marginBottom: "10px" }}>
-              TIME OFF REQUESTS
+              Time Off Requests
             </StyledPageTitle>
             <StyledTable padding={"5px"}>
               <thead>
@@ -190,7 +190,7 @@ const EmployeeTimeOffViewPage = () => {
             {timeOffRequests?.length < 1 ? (
               <div style={{ marginLeft: "33%" }}>
                 {" "}
-                <h1>You Have no time off requests</h1>{" "}
+                <h1>You have no Time Off requests</h1>{" "}
               </div>
             ) : null}
           </div>
@@ -226,7 +226,7 @@ const EmployeeTimeOffViewPage = () => {
         open={modalConfirmIsOpen}
       >
         <div>
-          <h3>Are you sure you want to Delete your time off request?</h3>
+          <h3>Are you sure you want to DELETE your time off request?</h3>
         </div>
         <StyledButton style={{marginRight: "1em"}}
           onClick={() => {

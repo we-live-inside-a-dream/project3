@@ -6,7 +6,7 @@ function HelpMenuPage() {
   return (
     <div>
       <StyledPage>
-        <StyledPageTitle>HELP MENU</StyledPageTitle>
+        <StyledPageTitle>Help & Instructions</StyledPageTitle>
         <h2>THIS IS WHERE CONTENT WILL BE</h2>
       </StyledPage>
     </div>

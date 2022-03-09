@@ -154,13 +154,13 @@ export const StyledNavButton = styled.button`
   }
 `;
 export const StyledAvatarButton = styled(Link)`
-  background-color: grey;
+  /* background-color: grey; */
   height: 2.8rem;
   width: 2.8rem;
   margin: 6px 10px;
   border-radius: 50%;
-  color: white;
-  font-size: 2.2rem;
+  /* color: white; */
+  font-size: 1rem;
   text-align: center;
   border: 3px solid var(--nameIconBorder);
   &:hover {

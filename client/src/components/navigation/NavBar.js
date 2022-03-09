@@ -22,11 +22,16 @@ import { useSocket } from "../../components/reusable/context/SocketProvider";
 
 function NavBar() {
   const [extendNavbar, setExtendNavbar] = useState(false);
+  const [picture, setPicture] = useState();
 
   const value = useSocket();
   const unread = value.unread;
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
+
+  useEffect(() => {
+    // setPicture;
+  }, []);
 
   useEffect(() => {
     console.log("socket changed", unread);
@@ -64,7 +69,21 @@ function NavBar() {
               <StyledNavButton>LOG OUT</StyledNavButton>
             </Link>
           )}
-          <StyledAvatarButton to={"/profile"} />
+          {/* {`${availability?.firstName}.jpg`} */}
+          <StyledAvatarButton to={"/profile"}>
+            <img
+              // src={"/images/" + imageUrl}
+              src={`/images/${user?.firstName}.jpg`}
+              alt={user?.firstName}
+              style={{
+                width: "2.9rem",
+                height: "2.9rem",
+                margin: "0px",
+                borderRadius: "50%",
+              }}
+              // style={{ backgroundPosition: "center" }}
+            />
+          </StyledAvatarButton>
         </RightContainer>
       </NavbarInnerContainer>
     </NavbarContainer>

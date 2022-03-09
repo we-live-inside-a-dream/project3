@@ -46,25 +46,31 @@ function NamePicTableData({
           style={{
             gridRow: "1",
             // backgroundImage: "url(" + imageUrl + ")",
-            height: "2.5rem",
-            width: "2.5rem",
+            backgroundColor: " var(--nameIconBorder)",
+            height: "32px",
+            width: "32px",
             margin: "auto",
             marginTop: "8px",
-            // alignSelf: "center",
-            // backgroundSize: "contain",
             overflow: "hidden",
-            top: "0",
-            left: "0",
             borderRadius: "50%",
             border: "3px solid var(--nameIconBorder)",
             position: "relative",
+            display: "flex",
+            boxSizing: "border-box",
           }}
         >
           <img
-            className="science-portrait"
             src={"/images/" + imageUrl}
             alt={firstName}
-            style={{ width: "2.8rem", height: "2.6rem", borderRadius: "2.8%" }}
+            style={{
+              // height: "2.5rem",
+              // height: "100%",
+              width: "32px",
+              // width: "",
+              margin: "0px",
+              borderRadius: "50%",
+              boxSizing: "border-box",
+            }}
             // style={{ backgroundPosition: "center" }}
           />
         </div>

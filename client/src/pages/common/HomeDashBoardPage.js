@@ -21,11 +21,11 @@ function HomeDashBoardPage() {
     let getGreeting = function () {
       let hourValue;
       if (currentHour >= 0 && currentHour < 12) {
-        hourValue = "morning";
+        hourValue = "Morning";
       } else if (currentHour >= 12 && currentHour <= 17) {
-        hourValue = "afternoon";
+        hourValue = "Afternoon";
       } else {
-        hourValue = "evening";
+        hourValue = "Evening";
       }
       setHourGreeting(hourValue);
     };

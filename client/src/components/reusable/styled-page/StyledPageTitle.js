@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledPageTitle = styled.h1`
   color: var(--accentColorTitle);
-  font-weight: 400;
+  font-weight: 600;
   font-size: 3.2rem;
   padding-bottom: 0px;
   margin-top: 10px;
@@ -10,6 +10,7 @@ const StyledPageTitle = styled.h1`
   padding-top: 15px;
   margin: auto;
   text-align: center;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  text-shadow: 1px 2px 3px #2f2f30;
+  font-family: "Georgia", Times New Roman, Times, serif;
 `;
 export default StyledPageTitle;

@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NamePicTableData from "../reusable/NamePicTableData";
+import StyledTableRow from "../reusable/StyledTableRow";
 
 function EmployeeAvailabilityList() {
   const [availabilityList, setAvailabilityList] = useState([]);
@@ -91,20 +92,22 @@ function EmployeeAvailabilityList() {
         <tbody>
           {availabilityList?.map((availability, index) => {
             return (
-              <tr key={index}>
-                <NamePicTableData
-                  firstName={availability.firstName}
-                  lastName={availability.lastName}
-                  existingValues={availability}
-                  edit="edit"
-                  onClick={() => selectAvailabilityById(availability._id)}
-                />
+              <StyledTableRow key={index}>
+                <td>
+                  <NamePicTableData
+                    firstName={availability.firstName}
+                    lastName={availability.lastName}
+                    existingValues={availability}
+                    edit="edit"
+                    onClick={() => selectAvailabilityById(availability._id)}
+                  />
+                </td>
 
                 <td>{availability.maxHoursPerWeek}</td>
                 {availability?.days?.map((day, index) => {
                   return <td key={index}>{renderAvailability(day)}</td>;
                 })}
-              </tr>
+              </StyledTableRow>
             );
           })}
         </tbody>

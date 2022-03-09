@@ -1,7 +1,7 @@
 import StyledTable from "../reusable/tables/StyledTable";
 import StyledTableHeader from "../reusable/tables/StyledTableHeader";
 import StyledTableRow from "../reusable/StyledTableRow";
-import StyledTableData from "../reusable/tables/StyledTableData.js";
+import td from "../reusable/tables/StyledTableData.js";
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -78,17 +78,17 @@ function EmployeeProfileList() {
                     edit="edit"
                   />
                 </td>
-                <StyledTableData>{employee.email}</StyledTableData>
-                <StyledTableData>{employee.phoneNumber}</StyledTableData>
-                <StyledTableData>
+                <td>{employee.email}</td>
+                <td>{employee.phoneNumber}</td>
+                <td>
                   <ul style={{ listStyleType: "none" }}>
                     {employee.positions.map((position, index) => {
                       return <li key={index}>{position}</li>;
                     })}
                   </ul>
-                </StyledTableData>
-                <StyledTableData>{employee.status}</StyledTableData>
-                <StyledTableData>{employee.permissions}</StyledTableData>
+                </td>
+                <td>{employee.status}</td>
+                <td>{employee.permissions}</td>
               </StyledTableRow>
             );
           })}

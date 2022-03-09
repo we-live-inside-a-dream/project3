@@ -94,7 +94,6 @@ function PositionPicTableData({
   onClick,
   firstName,
   lastName,
-  setModalOpen,
   position,
 }) {
   return (
@@ -105,7 +104,7 @@ function PositionPicTableData({
         gridTemplateColumns: "5% 25% 70%",
       }}
     >
-      <div style={{ gridRow: "1" }}></div>
+      <div style={{ position: "relative", gridRow: "1" }}></div>
       <div>
         <div
           style={{
@@ -121,9 +120,10 @@ function PositionPicTableData({
             fontSize: "2.2rem",
             textAlign: "center",
             border: "3px solid var(--nameIconBorder)",
+            position: "relative",
           }}
         >
-          {firstName[0]}
+          {position[0] + position[1]}
         </div>
       </div>
 
@@ -137,23 +137,28 @@ function PositionPicTableData({
           position: "relative",
         }}
       >
-        <p>
-          {position}
-          {/* {`${firstName} ${lastName.slice(0, 1)}`} */}
-          {edit && <StyledEditButton onClick={onClick}>✎</StyledEditButton>}
-        </p>
+        <p>{`${position?.charAt(0).toUpperCase() + position?.slice(1)}`}</p>
+        {edit && (
+          <StyledEditButton
+            style={{ position: "absolute", top: "0", right: "0" }}
+            fontSize={"1em"}
+            margin={0}
+            padding={0}
+            onClick={onClick}
+          >
+            ✎
+          </StyledEditButton>
+        )}
         <div
           style={{
-            margin: 0,
-            marginBottom: "5px",
+            margin: "0",
             color: "black",
             fontWeight: "100",
             position: "absolute",
-            bottom: 0,
+            bottom: "0",
           }}
         >
-          {`${firstName} ${lastName.slice(0, 1)}`}
-          {/* {position} */}
+          {lastName ? `${firstName} ${lastName[0]}` : null}
         </div>
         <p
           style={{

@@ -187,22 +187,27 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
         <tbody>
           {schedule?.map((employee) => (
             // <ShiftComponent businessHours = {businessHours} setShiftId = {setShiftId} employee = {employee} index ={index} />
-            <tr key={employee._id} onClick={() => setShiftId(employee._id)}>
-              <div>
+            <tr key={employee._id} onClick={() => setShiftId(employee?._id)}>
+              <td style={{ position: "relative" }}>
                 <PositionPicTableData
-                  position={
-                    employee?.position.charAt(0).toUpperCase() +
-                    employee?.position.slice(1)
-                  }
+                  firstName={employee?.firstName}
+                  lastName={employee?.lastName}
+                  position={employee?.position}
                   edit="edit"
                   onClick={() => setIsOpen(true)}
-                  firstName={employee.firstName}
-                  lastName={employee.lastName}
                 />
-                {/* <div style={{ marginBottom: "10px" }}>
+                {/* <td
+                  style={{
+                    margin: "0",
+                    color: "black",
+                    fontWeight: "100",
+                    position: "absolute",
+                    bottom: "0",
+                  }}
+                >
                   {employee.firstName + " " + employee.lastName[0]}
-                </div> */}
-              </div>
+                </td> */}
+              </td>
 
               {/* <Modal open={deleteShift} onClose={() => setDeleteShift(false)}>
                 DO you want to delete this shift?

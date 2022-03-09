@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardBoxScale from "./DashboardBoxScale";
+import DashboardBoxScaleImage from "./DashboardBoxScaleImage";
+import nicerQuestion from "./nicerQuestion.png";
 // import EmployeeUpcomingShiftList from "./EmployeeUpcomingShiftList";
 
 function ScheduleBox() {
@@ -9,7 +10,7 @@ function ScheduleBox() {
 
   return (
     <>
-      <DashboardBoxScale
+      <DashboardBoxScaleImage
         padding="20px"
         top={0}
         left={0}
@@ -17,7 +18,9 @@ function ScheduleBox() {
         transformOrigin={"top left"}
         title="HELP/INSTRUCTIONS"
         clickFunction={() => navigate("/help")}
-        content={content}
+        image={nicerQuestion}
+        alt="question mark for help"
+        picStyle={{ height: "180px", marginLeft: "50px" }}
       />
     </>
   );

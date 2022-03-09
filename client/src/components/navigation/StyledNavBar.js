@@ -30,6 +30,16 @@ export const RightContainer = styled.div`
 //   max-width: 200px;
 //   margin: 15px;
 // `;
+export const Pic = styled.img`
+  display: flex;
+  padding: 0px 0px;
+  margin: 0px auto;
+  max-width: 100%;
+  height: auto;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const Logo = styled.img`
   display: flex;

@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { InputLabel } from "@mui/material";
 
+function calculatePermissionSettings(employee, supervisor, manager) {
+  const permissions = ["administrator"];
+  if (employee) permissions.push("employee");
+  if (supervisor) permissions.push("supervisor");
+  if (manager) permissions.push("manager");
+  return permissions;
+}
+
 function PermissionsCheckboxes({
   permissionSetter,
   permissionValue,
@@ -10,13 +18,10 @@ function PermissionsCheckboxes({
   const [supervisor, setSupervisor] = useState(false);
   const [manager, setManager] = useState(false);
   const [administrator, setAdministrator] = useState(true);
+  const [permissions, setPermissions] = useState(
+    calculatePermissionSettings(employee, supervisor, manager)
+  );
 
-  let permissions = [
-    employee === true ? "employee" : null,
-    supervisor === true ? "supervisor" : null,
-    manager === true ? "manager" : null,
-    "administrator",
-  ];
   useEffect(() => {
     if (permissionValue) {
       permissionValue.includes("employee") && setEmployee(true);
@@ -26,14 +31,18 @@ function PermissionsCheckboxes({
     }
   }, [permissionValue]);
 
-  function setPermission() {
-    // permissionSetter([...permissions]);
-    let permissionArray = [...permissions];
-    let filteredPermissionArray = permissionArray.filter(
-      (permission) => permission !== null
+  function updatePermission() {
+    let permissionArray = calculatePermissionSettings(
+      employee,
+      supervisor,
+      manager
     );
-    permissionSetter([...filteredPermissionArray]);
+    setPermissions(permissionArray);
+    permissionSetter(permissionArray);
   }
+
+  useEffect(updatePermission, [employee, supervisor, manager]);
+
   function onInputChange(value, setter) {
     setter(value);
   }
@@ -47,25 +56,24 @@ function PermissionsCheckboxes({
           checked={employee === true}
           onChange={(e) => {
             onInputChange(e.target.checked, setEmployee);
-            setPermission();
-            postData();
           }}
         ></input>
         Employee
       </InputLabel>
+
       <InputLabel style={{ margin: "0px 10px" }}>
         <input
           type="checkbox"
           value={supervisor}
           checked={supervisor === true}
           onChange={(e) => {
+            console.log("%%%%", e.target.checked);
             onInputChange(e.target.checked, setSupervisor);
-            setPermission();
-            postData();
           }}
         ></input>
         Supervisor
       </InputLabel>
+
       <InputLabel style={{ margin: "0px 10px" }}>
         <input
           type="checkbox"
@@ -73,8 +81,6 @@ function PermissionsCheckboxes({
           checked={manager === true}
           onChange={(e) => {
             onInputChange(e.target.checked, setManager);
-            setPermission();
-            postData();
           }}
         ></input>
         Manager
@@ -86,8 +92,6 @@ function PermissionsCheckboxes({
           checked={administrator === true}
           onChange={(e) => {
             onInputChange(e.target.checked, setAdministrator);
-            setPermission();
-            postData();
           }}
         ></input>
         Administrator

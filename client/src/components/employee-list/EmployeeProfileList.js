@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NamePicTableData from "../reusable/NamePicTableData";
 
-function EmployeeProfileList() {
+function EmployeeProfileList({ employeeProfileEdit }) {
   const [employees, setEmployees] = useState([]);
 
   let navigate = useNavigate();
@@ -76,6 +76,7 @@ function EmployeeProfileList() {
                     firstName={employee.firstName}
                     lastName={employee.lastName}
                     edit="edit"
+                    canEdit={employeeProfileEdit}
                   />
                 </td>
                 <td>{employee.email}</td>

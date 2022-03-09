@@ -273,7 +273,10 @@ function WeekSchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
         <tbody>
           {positions?.map((position, index) => (
             <tr key={index}>
-              <PositionPicTableData position={position.label} />
+              <PositionPicTableData
+                position={position.label}
+                scheduleEdit={scheduleEdit}
+              />
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (

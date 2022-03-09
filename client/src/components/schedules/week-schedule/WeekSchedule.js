@@ -276,6 +276,7 @@ function WeekSchedule({ setCurrentTab, currentTab, scheduleEdit }) {
               <NamePicTableData
                 firstName={employee.firstName}
                 lastName={employee.lastName}
+                scheduleEdit={scheduleEdit}
               />
 
               {dataWeek.map((date, index) => {

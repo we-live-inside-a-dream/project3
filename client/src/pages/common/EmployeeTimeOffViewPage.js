@@ -102,7 +102,7 @@ const EmployeeTimeOffViewPage = () => {
                 height: "100vh",
               }}
               color={"var(--mainHeader)"}
-              // loading={loading}
+              loading={loading}
               size={300}
             />
           </div>

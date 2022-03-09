@@ -8,6 +8,7 @@ import BasicTimePicker from "../reusable/Inputs/BasicTimePicker";
 import * as fns from "date-fns";
 import moment from "moment";
 import { timeValidation } from "../validateForms";
+import ClockLoader from "react-spinners/ClockLoader";
 
 function AvailabilityDay({
   day,
@@ -21,6 +22,7 @@ function AvailabilityDay({
   const [end, setEnd] = useState(day.end);
   const [allDay, setAllDay] = useState(day.allDay);
   const [timeMessageVal, setTimeMessageVal] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const newAvailability = { ...availability };
@@ -36,6 +38,7 @@ function AvailabilityDay({
       } else return day;
     });
     setAvailability(newAvailability);
+    setLoading(true);
   }, [available, start, end, allDay]);
 
   useEffect(() => {
@@ -60,74 +63,112 @@ function AvailabilityDay({
 
   return (
     <div>
-      <p style={{ textTransform: "upperCase" }}>{day.dayName}</p>
-      <label className="check-label">
-        <StyledCheck
-          className="check"
-          name="available"
-          type="checkbox"
-          value={available}
-          checked={available === true}
-          onChange={(e) => {
-            setAvailable(e.target.checked);
-            if (!e.target.checked) {
-              setAllDay(false);
-            }
+      {!loading ? (
+        <div
+          style={{
+            height: "320px",
+            width: "320px",
+            borderRadius: "50%",
+            border: "3px solid var(--mainHeader)",
+            position: "absolute",
+            top: "0",
+            left: "0",
+            right: "0",
+            bottom: "0",
+            margin: "auto",
           }}
-        />
-        Available
-      </label>{" "}
-      <br />
-      {available === true && (
-        <label className="check-label">
-          <StyledCheck
-            className="check"
-            name="all-day"
-            type="checkbox"
-            value={allDay}
-            checked={allDay === true}
-            onChange={(e) => {
-              setAllDay(e.target.checked);
-              if (e.target.checked) {
-                setStart("");
-                setEnd("");
-              }
+        >
+          <ClockLoader
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "Center",
+              width: "100%",
+              height: "100vh",
             }}
+            color={"var(--mainHeader)"}
+            //loading={loading}
+            size={300}
           />
-          Available all day
-          <br />
-        </label>
-      )}
-      {allDay === false && available === true && (
-        <div>
-          <label>Start time</label>
-
-          <BasicTimePicker
-            value={` Wed Feb 02 2022 ${start}:00 GMT-0700 (Mountain Standard Time)`}
-            onChange={(value) => {
-              onInputUpdate(value, setStart);
-            }}
-          />
-
-          {timeMessageVal ? (
-            <p style={{ color: "red", fontSize: "10px", marginBottom: "0px" }}>
-              {timeMessageVal}
-            </p>
-          ) : null}
-          <label>End time</label>
-          <BasicTimePicker
-            value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}
-            onChange={(value) => {
-              onInputUpdate(value, setEnd);
-            }}
-          />
-
-          {end < start && (
-            <p style={{ color: "red" }}>
-              End time must be greater than start time!
-            </p>
-          )}
         </div>
+      ) : (
+        <>
+          <p style={{ textTransform: "upperCase" }}>{day.dayName}</p>
+          <label className="check-label">
+            <StyledCheck
+              className="check"
+              name="available"
+              type="checkbox"
+              value={available}
+              checked={available === true}
+              onChange={(e) => {
+                setAvailable(e.target.checked);
+                if (!e.target.checked) {
+                  setAllDay(false);
+                }
+              }}
+            />
+            Available
+          </label>{" "}
+          <br />
+          {available === true && (
+            <label className="check-label">
+              <StyledCheck
+                className="check"
+                name="all-day"
+                type="checkbox"
+                value={allDay}
+                checked={allDay === true}
+                onChange={(e) => {
+                  setAllDay(e.target.checked);
+                  if (e.target.checked) {
+                    setStart("");
+                    setEnd("");
+                  }
+                }}
+              />
+              Available all day
+              <br />
+            </label>
+          )}
+          {allDay === false && available === true && (
+            <div>
+              <label>Start time</label>
+
+              <BasicTimePicker
+                value={` Wed Feb 02 2022 ${start}:00 GMT-0700 (Mountain Standard Time)`}
+                onChange={(value) => {
+                  onInputUpdate(value, setStart);
+                }}
+              />
+
+              {timeMessageVal ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "10px",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {timeMessageVal}
+                </p>
+              ) : null}
+              <label>End time</label>
+              <BasicTimePicker
+                value={` Wed Feb 02 2022 ${end}:00 GMT-0700 (Mountain Standard Time)`}
+                onChange={(value) => {
+                  onInputUpdate(value, setEnd);
+                }}
+              />
+
+              {end < start && (
+                <p style={{ color: "red" }}>
+                  End time must be greater than start time!
+                </p>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

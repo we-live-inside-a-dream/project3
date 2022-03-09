@@ -5,7 +5,7 @@ import Modal from "../../components/reusable/Modal";
 import StyledButton from "../../components/reusable/Inputs/StyledButton";
 import DaySchedulePosition from "../../components/schedules/day-schedule/DaySchedulePosition";
 
-function DaySchedulePage({ setCurrentTab, currentTab }) {
+function DaySchedulePage({ setCurrentTab, currentTab, scheduleEdit }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -15,6 +15,7 @@ function DaySchedulePage({ setCurrentTab, currentTab }) {
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
           create={isOpen}
+          scheduleEdit={scheduleEdit}
         />
       )}
       {currentTab === 2 && (
@@ -23,6 +24,7 @@ function DaySchedulePage({ setCurrentTab, currentTab }) {
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
           create={isOpen}
+          scheduleEdit={scheduleEdit}
         />
       )}
       {/* <StyledButton onClick={() => setIsOpen(true)}>ADD SHIFT</StyledButton>

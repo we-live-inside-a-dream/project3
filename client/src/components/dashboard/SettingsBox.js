@@ -1,15 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardBoxScale from "./DashboardBoxScale";
-// import EmployeeUpcomingShiftList from "./EmployeeUpcomingShiftList";
+import DashboardBoxScaleImage from "./DashboardBoxScaleImage";
+import Gears from "./settingsGears.png";
 
 function ScheduleBox() {
   let navigate = useNavigate();
-  let content = "THIS LINK HAS SETTINGS/CONFIG for MANAGEMENT";
 
   return (
     <>
-      <DashboardBoxScale
+      <DashboardBoxScaleImage
         padding="20px"
         top={0}
         left={0}
@@ -17,7 +16,10 @@ function ScheduleBox() {
         transformOrigin={"top left"}
         title="SETTINGS"
         clickFunction={() => navigate("/ManagerSettingsPage")}
-        content={content}
+        // content={Gears}
+        image={Gears}
+        alt="setting gear icon"
+        picStyle={{ width: "100%" }}
       />
     </>
   );

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NamePicTableData from "../reusable/NamePicTableData";
 import StyledTableRow from "../reusable/StyledTableRow";
 
-function EmployeeAvailabilityList() {
+function EmployeeAvailabilityList({ employeeProfileEdit }) {
   const [availabilityList, setAvailabilityList] = useState([]);
   const navigate = useNavigate();
 
@@ -99,6 +99,7 @@ function EmployeeAvailabilityList() {
                     lastName={availability.lastName}
                     existingValues={availability}
                     edit="edit"
+                    canEdit={employeeProfileEdit}
                     onClick={() => selectAvailabilityById(availability._id)}
                   />
                 </td>

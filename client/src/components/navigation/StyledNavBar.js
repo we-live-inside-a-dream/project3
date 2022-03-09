@@ -6,7 +6,6 @@ export const NavbarContainer = styled.nav`
   background-color: var(--navBackground);
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
 `;
 
 export const LeftContainer = styled.div`
@@ -30,6 +29,16 @@ export const RightContainer = styled.div`
 //   max-width: 200px;
 //   margin: 15px;
 // `;
+export const Pic = styled.img`
+  display: flex;
+  padding: 0px 0px;
+  margin: 0px auto;
+  max-width: 100%;
+  height: auto;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const Logo = styled.img`
   display: flex;
@@ -114,8 +123,12 @@ export const NavbarInnerContainer = styled.div`
         display: none;
     } */
   width: 100%;
-  height: 60px;
+  height: 70px;
   display: flex;
+  position: fixed;
+  background-color: #1d639d;
+  padding-right: 1em;
+  z-index: 1000;
 `;
 export const StyledNavButton = styled.button`
   height: 35px;

@@ -29,7 +29,8 @@ function PermissionsForm() {
     }
     getPermissionsList();
   }, []);
-  console.log("EXISTINGVALUES", existingValues);
+  // console.log("EXISTINGVALUES!!!!!!!!!!", existingValues);
+
   useEffect(() => {
     if (existingValues) {
       setPermissionsId(existingValues._id);
@@ -49,10 +50,6 @@ function PermissionsForm() {
   }, [existingValues]);
 
   async function createPermissions(newPermissions) {
-    console.log(
-      "FROM PERMISSIONS FORM< TRYING TO POST PERMISSIONS",
-      newPermissions
-    );
     await fetch("/api/permissions/create", {
       method: "POST",
       headers: {
@@ -64,10 +61,6 @@ function PermissionsForm() {
   }
 
   async function upDatePermissions(newPermissions) {
-    console.log(
-      "FROM THE PERMISSIONS FORM, HERE IS THE UPDATED PERMISSION INFO",
-      newPermissions
-    );
     await fetch(`/api/permissions/update?id=${permissionsId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -95,8 +88,7 @@ function PermissionsForm() {
       await createPermissions(newPermissions);
     } else await upDatePermissions(newPermissions);
   };
-  // console.log("THIS IS THE PERMISSIONS LIST **********", permissionsList);
-  // console.log("scheduleView", scheduleView);
+
   return (
     <div>
       <StyledForm2>
@@ -105,6 +97,10 @@ function PermissionsForm() {
         <PermissionsCheckboxes
           permissionValue={scheduleView}
           permissionSetter={setScheduleView}
+          // permissionSetter={(sv) => {
+          //   console.log("THIS IS SV", sv);
+          //   setScheduleView(sv);
+          // }}
           postData={postData}
         />
         <h5 style={{ margin: "0px 5px" }}>Can Edit</h5>
@@ -179,7 +175,9 @@ function PermissionsForm() {
           postData={postData}
         />
 
-        <StyledButton onClick={postData}>SUBMIT</StyledButton>
+        <StyledButton style={{ marginTop: "25px" }} onClick={postData}>
+          SUBMIT PERMISSIONS
+        </StyledButton>
       </StyledForm2>
     </div>
   );

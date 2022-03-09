@@ -10,6 +10,7 @@ function MyEventsPage({ setCurrentTab, currentTab }) {
       <StyledPage>
         <StyledPageTitle>EVENTS CALENDAR</StyledPageTitle>
         <MonthSchedulePage
+          showButtonGroup={false}
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
           style={{ position: "relative", display: "flex" }}

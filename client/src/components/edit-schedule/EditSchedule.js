@@ -556,11 +556,7 @@ function EditSchedule({
               Please make sure that all required fields have valid inputs
             </p>
           ) : null}
-          <StyledButton 
-            onClick={validateForm}
-          >
-            SUBMIT
-          </StyledButton>
+          <StyledButton onClick={validateForm}>SUBMIT</StyledButton>
           {existingValues?.start ? (
             <StyledButton
               style={{ marginRight: "auto" }}

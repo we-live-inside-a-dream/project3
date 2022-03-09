@@ -33,8 +33,8 @@ function ManagerViewOfShiftSwapRequests() {
           <tr>
             <th>SHIFT DATE</th>
             <th>POSITION</th>
-            <th>BIDDEE</th>
-            <th>BIDDER</th>
+            <th>FROM</th>
+            <th>TO</th>
             <th>REASON</th>
             <th>APPROVE/DECLINE</th>
           </tr>

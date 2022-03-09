@@ -34,11 +34,13 @@ function ShiftsUpForGrabs() {
     return newDate;
   };
   const renderStatus = function (value) {
-    if (value.swapRequestStatus === "pending" && value.shiftBidId === null) {
-      return "✅";
-    }
-    if (value.swapRequestStatus === "pending" && value.shiftBidId !== null) {
+    if (value?.swapRequestStatus === "pending" && value.shiftBidId !== null) {
       return "⏳";
+    } else if (
+      value?.swapRequestStatus === "approved" &&
+      value?.shiftBidId !== null
+    ) {
+      return "✅";
     }
   };
 

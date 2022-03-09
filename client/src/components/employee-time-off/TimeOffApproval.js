@@ -133,8 +133,8 @@ const TimeOffApproval = () => {
             {`Are you sure you would like to ${decision} 
              the following time off?`}
           </h3>
-          <p>Employee:{timeOffValues?.firstName}</p>
-          <p>Type of time off:{timeOffValues?.type}</p>
+          <p>{`Employee: ${timeOffValues?.firstName}`}</p>
+          <p>{`Type of time off: ${timeOffValues?.type}`}</p>
           <p>
             Start Day: {moment(timeOffValues?.startDate).format("YYYY-MM-DD")}
           </p>
@@ -147,7 +147,7 @@ const TimeOffApproval = () => {
           )}
           <p>Comments:{timeOffValues?.comment}</p>
           <br />
-          <label>Manger Comment:</label>
+          <label>Manager Comment:</label>
           <StyledTextArea
             value={managerComment}
             onChange={(e) => setManagerComment(e.target.value)}

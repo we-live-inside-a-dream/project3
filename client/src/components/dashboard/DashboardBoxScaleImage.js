@@ -1,28 +1,34 @@
 import React from "react";
+import { withTheme } from "styled-components";
+import StyledScaledComponent from "./StyledScaledContent";
+import { Pic } from "../navigation/StyledNavBar";
 
 let dashBoxStyle = {
-  // width: "30%",
-  // height: "0",
-  // paddingBottom: "30%",
-  // border: "2px solid lightGrey",
-  // margin: "auto auto",
-  // borderRadius: "5%",
-  // overflow: "hidden",
-  // background: "var(--dashGridBoxBackground)",
-
-  //   justifyContent: "spaceAround",
   width: "30%",
   height: "0",
   paddingBottom: "26%",
   border: "2px solid darkGrey",
   margin: "auto auto",
-  borderRadius: "3%",
+  borderRadius: "5px",
   overflow: "hidden",
   // background: "var(--dashGridBoxBackground)",
   background: "white",
+
+  //   justifyContent: "spaceAround",
 };
 
-const DashboardBox = function ({ title, clickFunction, content }) {
+const DashboardBoxScaleImage = function ({
+  title,
+  clickFunction,
+  padding,
+  top,
+  left,
+  transform,
+  transformOrigin,
+  image,
+  picStyle,
+  alt,
+}) {
   return (
     <div style={dashBoxStyle}>
       <div
@@ -44,10 +50,18 @@ const DashboardBox = function ({ title, clickFunction, content }) {
       >
         <h3>{title}</h3>
       </div>
-      <div>
-        <div style={{ padding: "8px" }}>{content}</div>
+      <div style={{ position: "relative" }}>
+        <StyledScaledComponent
+          padding={padding}
+          top={top}
+          left={left}
+          transformOrigin={transformOrigin}
+          transform={transform}
+        >
+          <img src={image} alt={alt} style={picStyle} />
+        </StyledScaledComponent>
       </div>
     </div>
   );
 };
-export default DashboardBox;
+export default DashboardBoxScaleImage;

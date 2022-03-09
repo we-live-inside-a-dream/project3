@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ScheduleBox from "./ScheduleBox";
 import MessagesBox from "./MessagesBox";
 import AnnouncementsBox from "./AnnouncementsBox";
@@ -7,6 +7,7 @@ import HumanResourcesBox from "./HumanResourcesBox";
 import FilesBox from "./FilesBox";
 import UpcomingShiftsBox from "./UpcomingShiftsBox";
 import AuthenticationContext from "../login/AuthenticationContext";
+import { useManagerSettings } from "../../components/reusable/context/ManagerSettingsProvider";
 import TimeOffBox from "./TimeOffBox";
 import { useNavigate } from "react-router-dom";
 import ApprovalsBox from "./ApprovalsBox";
@@ -28,28 +29,40 @@ let dashGridStyle = {
 const DashboardGridNav = function () {
   const authContext = useContext(AuthenticationContext);
   const navigate = useNavigate();
-  //repeat autofill 30%
-  return (
-    <div style={dashGridStyle}>
-      <ScheduleBox />
-      {authContext?.user?.permissions?.includes("manager") ||
-      authContext?.user?.permissions?.includes("admin") ? (
-        <HumanResourcesBox />
-      ) : null}
-      <UpcomingShiftsBox />
-      <TimeOffBox onClick={() => navigate("/timeOff/page")} />
-      <CalendarBox />
-      <ApprovalsBox />
-      <MessagesBox />
-      <SettingsBox />
-      <HelpBox />
+  const [perms, setPerms] = useState();
+  const value = useManagerSettings();
+  const user = authContext.user;
 
-      {/* {authContext?.user?.permissions?.includes("manager") ||
-      authContext?.user?.permissions?.includes("admin") ? (
-        <FilesBox />
-      ) : null}{" "}
-       */}
-    </div>
+  useEffect(() => {
+    if (user) {
+      let allPermissions = value.permissions;
+      setPerms(allPermissions);
+    }
+  }, [value.permissions, user]);
+
+  return (
+    <>
+      {!perms && "Loading..."}
+      {perms && (
+        <div style={dashGridStyle}>
+          {perms?.scheduleView === true ? <ScheduleBox /> : null}
+          {/* {user?.permissions === "manager" ||
+          user?.permmissions === "administator" ? (
+            <HumanResourcesBox />
+          ) : null} */}
+          {perms?.employeeProfileEdit === true ? <HumanResourcesBox /> : null}
+          {perms?.scheduleView === true ? <UpcomingShiftsBox /> : null}
+          {perms?.scheduleView === true ? (
+            <TimeOffBox onClick={() => navigate("/timeOff/page")} />
+          ) : null}
+          {perms?.scheduleView === true ? <CalendarBox /> : null}
+          {perms?.shiftSwapView === true ? <ApprovalsBox /> : null}
+          {perms?.scheduleView === true ? <MessagesBox /> : null}
+          {perms?.appSettingsView === true ? <SettingsBox /> : null}
+          <HelpBox />
+        </div>
+      )}
+    </>
   );
 };
 

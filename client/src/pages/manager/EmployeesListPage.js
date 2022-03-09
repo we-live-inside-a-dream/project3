@@ -2,10 +2,10 @@ import React from "react";
 import StyledPage from "../../components/reusable/styled-page/StyledPage";
 import EmployeeProfileList from "../../components/employee-list/EmployeeProfileList";
 
-function EmployeesListPage() {
+function EmployeesListPage({ employeeProfileEdit }) {
   return (
     <div>
-      <EmployeeProfileList />
+      <EmployeeProfileList employeeProfileEdit={employeeProfileEdit} />
     </div>
   );
 }

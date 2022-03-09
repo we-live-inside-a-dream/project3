@@ -4,11 +4,11 @@ import EmployeeEditForm from "../../components/employee-list/EmployeeEditForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CreateEmployeePage = () => {
+const CreateEmployeePage = ({ employeeProfileEdit }) => {
   const [createdEmployeeId, setCreatedEmployeeId] = useState("");
   const [currentCreateTab, setCurrentCreatetTab] = useState(10);
 
-  let navigate = useNavigate();
+  let navigate = useNavigate({});
   // async function createEmployee() {
   //   const newEmployee = { firstName: "", lastName: "" };
   //   await fetch("/api/employeeProfile/create", {

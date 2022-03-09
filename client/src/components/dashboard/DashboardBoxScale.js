@@ -1,6 +1,7 @@
 import React from "react";
 import { withTheme } from "styled-components";
 import StyledScaledComponent from "./StyledScaledContent";
+import { Pic } from "../navigation/StyledNavBar";
 
 let dashBoxStyle = {
   width: "30%",
@@ -25,6 +26,7 @@ const DashboardBoxScale = function ({
   left,
   transform,
   transformOrigin,
+  image,
 }) {
   return (
     <div style={dashBoxStyle}>

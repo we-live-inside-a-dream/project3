@@ -15,7 +15,7 @@ import {
   StyledNavButton,
   StyledAvatarButton,
 } from "./StyledNavBar";
-import LogoImg from "../assets/LogoBluee.png";
+import LogoImg from "../assets/Day2DayLogo.gif";
 import { Link } from "react-router-dom";
 import AuthenticationContext from "../login/AuthenticationContext";
 import { useSocket } from "../../components/reusable/context/SocketProvider";
@@ -54,15 +54,9 @@ function NavBar() {
           />
         ) : null}
         <LeftContainer>
-          <NavbarLinkContainer extendNavbar={extendNavbar}>
-            <OpenLinksButton
-              onClick={() => {
-                setExtendNavbar((curr) => !curr);
-              }}
-            >
-              {extendNavbar ? <> &#10005;</> : <> &#8801;</>}
-            </OpenLinksButton>
-          </NavbarLinkContainer>
+          <NavbarLinkContainer
+            extendNavbar={extendNavbar}
+          ></NavbarLinkContainer>
         </LeftContainer>
         <RightContainer>
           {authContext.user?._id && (
@@ -73,17 +67,6 @@ function NavBar() {
           <StyledAvatarButton to={"/profile"} />
         </RightContainer>
       </NavbarInnerContainer>
-      {extendNavbar && (
-        <NavbarExtendedContainer>
-          <NavbarLinkExtended to="/">Home</NavbarLinkExtended>
-          <NavbarLinkExtended to="/employeeList">
-            Employee List
-          </NavbarLinkExtended>
-          <NavbarLinkExtended to="/dayView">
-            Schedule Day View
-          </NavbarLinkExtended>
-        </NavbarExtendedContainer>
-      )}
     </NavbarContainer>
   );
 }

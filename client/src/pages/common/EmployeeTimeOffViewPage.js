@@ -228,7 +228,7 @@ const EmployeeTimeOffViewPage = () => {
         <div>
           <h3>Are you sure you want to Delete your time off request?</h3>
         </div>
-        <StyledButton
+        <StyledButton style={{marginRight: "1em"}}
           onClick={() => {
             deleteTimeOff();
             setModalConfirmIsOpen(false);

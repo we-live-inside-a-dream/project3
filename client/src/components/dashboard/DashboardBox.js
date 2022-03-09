@@ -29,23 +29,17 @@ const DashboardBox = function ({ title, clickFunction, content }) {
         onClick={clickFunction}
         style={{
           background: "var(--mainHeader)",
-          // alignSelf: "flex-start",
-          // margin: "0px auto 0px auto",
-          color: "var(--headerWhiteFont)",
-          // textAlign: "center",
-          // border: "2px solid var(--mainHeader)",
-          // cursor: "pointer",
-          // background: "var(--mainHeader)",
           alignSelf: "flex-start",
-          // margin: "0px auto 0px auto",
-          // color: "var(--headerWhiteFont)",
+          margin: "0px auto 0px auto",
+          color: "var(--headerWhiteFont)",
           // color: "grey",
           // color: "var(--accentColorTitle)",
+          borderRadius: "2px",
 
           textAlign: "center",
           border: "2px solid var(--mainHeader)",
           cursor: "pointer",
-          // borderBottom: "2px solid darkGrey",
+          borderBottom: "2px solid var(--mainHeader)",
         }}
       >
         <h3>{title}</h3>

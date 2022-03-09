@@ -6,7 +6,6 @@ import nicerQuestion from "./nicerQuestion.png";
 
 function ScheduleBox() {
   let navigate = useNavigate();
-  let content = "THIS IS STATIC CONTENT CONTAINING A USER MANUAL ETC";
 
   return (
     <>

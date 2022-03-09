@@ -8,17 +8,22 @@ import WeekSchedulePosition from "../../components/schedules/week-schedule/WeekS
 
 import React from "react";
 
-function WeekSchedulePage({ setCurrentTab, currentTab }) {
+function WeekSchedulePage({ setCurrentTab, currentTab, scheduleEdit }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       {currentTab === 3 && (
-        <WeekSchedule setCurrentTab={setCurrentTab} currentTab={currentTab} />
+        <WeekSchedule
+          setCurrentTab={setCurrentTab}
+          currentTab={currentTab}
+          scheduleEdit={scheduleEdit}
+        />
       )}
       {currentTab === 4 && (
         <WeekSchedulePosition
           setCurrentTab={setCurrentTab}
           currentTab={currentTab}
+          scheduleEdit={scheduleEdit}
         />
       )}
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>

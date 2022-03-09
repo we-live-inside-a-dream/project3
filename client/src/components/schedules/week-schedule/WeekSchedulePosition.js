@@ -22,7 +22,7 @@ const positionList = [
   { name: "The Rezza" },
 ];
 
-function WeekSchedulePosition({ setCurrentTab, currentTab }) {
+function WeekSchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
   moment().format();
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
@@ -215,12 +215,20 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
             style={{ marginRight: "20px", alignSelf: "baseline" }}
           />
         </div>
+
         <div style={{ display: "inline-flex", alignContent: "baseline" }}>
-          <WeekScheduleLegend
-            style={{ marginLeft: "15px", paddingBottom: "0px" }}
-          />
-          <TimeOffLegend style={{ marginLeft: "15px", paddingBottom: "0px" }} />
+          {scheduleEdit === true ? (
+            <>
+              <WeekScheduleLegend
+                style={{ marginLeft: "15px", paddingBottom: "0px" }}
+              />
+              <TimeOffLegend
+                style={{ marginLeft: "15px", paddingBottom: "0px" }}
+              />
+            </>
+          ) : null}
         </div>
+
         {/* <div className="emptyDivForSpacing"> </div> */}
         <div
           style={{
@@ -265,7 +273,10 @@ function WeekSchedulePosition({ setCurrentTab, currentTab }) {
         <tbody>
           {positions?.map((position, index) => (
             <tr key={index}>
-              <PositionPicTableData position={position.label} />
+              <PositionPicTableData
+                position={position.label}
+                scheduleEdit={scheduleEdit}
+              />
               {dataWeek.map((date) => {
                 let shift = theWholeWeek.find((shift) => {
                   return (

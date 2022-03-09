@@ -22,18 +22,23 @@ const CalendarDateHeader = ({
   dateDisplay,
   currentTab,
   setCurrentTab,
+  showButtonGroup,
+  showPositions,
 }) => {
   return (
     <div id="header" style={headerStyle}>
       <div style={{ gridRow: "1", margin: "auto auto 0px 0px" }}>
-        <StyledScheduleButtonGroup
-          style={{
-            marginBottom: "0px",
-            marginTop: "0px",
-          }}
-          setCurrentTab={setCurrentTab}
-          currentTab={currentTab}
-        />
+        {showButtonGroup === true ? (
+          <StyledScheduleButtonGroup
+            style={{
+              marginBottom: "0px",
+              marginTop: "0px",
+            }}
+            setCurrentTab={setCurrentTab}
+            currentTab={currentTab}
+            showPositions={showPositions}
+          />
+        ) : null}
       </div>
 
       <div

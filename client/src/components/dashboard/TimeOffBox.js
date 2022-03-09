@@ -9,11 +9,12 @@ let dashBoxStyle = {
   width: "30%",
   height: "0",
   paddingBottom: "26%",
-  border: "2px solid lightGrey",
+  border: "2px solid darkGrey",
   margin: "auto auto",
-  borderRadius: "3%",
+  borderRadius: "5px",
   overflow: "hidden",
-  background: "var(--dashGridBoxBackground)",
+  // background: "var(--dashGridBoxBackground)",
+  background: "white",
 
   //   justifyContent: "spaceAround",
 };
@@ -52,11 +53,16 @@ const TimeOffBox = function ({ onClick }) {
         style={{
           background: "var(--mainHeader)",
           alignSelf: "flex-start",
-          // margin: "0px auto 0px auto",
+          margin: "0px auto 0px auto",
           color: "var(--headerWhiteFont)",
+          // color: "grey",
+          // color: "var(--accentColorTitle)",
+          borderRadius: "2px",
+
           textAlign: "center",
           border: "2px solid var(--mainHeader)",
           cursor: "pointer",
+          borderBottom: "2px solid var(--mainHeader)",
         }}
       >
         <h3>TIME OFF</h3>

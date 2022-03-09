@@ -43,16 +43,16 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
       swapRequestDate: shift.swapRequestDate,
       swapBidRequest: "pending",
       reasonForSwap: shift.reason,
-      shiftBidId: user._id,
-      bidderFirstName: user.firstName,
-      bidderLastName: user.lastName,
+      shiftBidId: user?._id,
+      bidderFirstName: user?.firstName,
+      bidderLastName: user?.lastName,
       bidRequestDate: new Date(),
       approvingManagerId: null,
       previousShiftOwnerId: shift.employeeId,
       previousShiftOwnerFirstName: shift.firstName,
       previousShiftOwnerLastName: shift.lastName,
     };
-
+    await updateShift(newShiftSwapRequest);
     console.log("New Shift...", newShiftSwapRequest);
 
     setShiftBidModalIsOpen(false);
@@ -73,7 +73,9 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
         );
       })} */}
 
-      <StyledButton onClick={postBidRequest}>CONFIRM</StyledButton>
+      <StyledButton onClick={postBidRequest} style={{ marginRight: "1em" }}>
+        CONFIRM
+      </StyledButton>
       <StyledButton onClick={() => setShiftBidModalIsOpen(false)}>
         CANCEL
       </StyledButton>

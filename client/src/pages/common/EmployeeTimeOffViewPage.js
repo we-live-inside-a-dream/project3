@@ -102,7 +102,7 @@ const EmployeeTimeOffViewPage = () => {
                 height: "100vh",
               }}
               color={"var(--mainHeader)"}
-              // loading={loading}
+              loading={loading}
               size={300}
             />
           </div>
@@ -178,7 +178,10 @@ const EmployeeTimeOffViewPage = () => {
               <StyledButton
                 margin={"0"}
                 onClick={() => setModalApplyIsOpen(true)}
-                style={{ position: "absolute", marginTop: "1em" }}
+                style={{
+                  position: "absolute",
+                  marginTop: "1em",
+                }}
               >
                 REQUEST TIME OFF
               </StyledButton>

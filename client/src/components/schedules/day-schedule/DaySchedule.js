@@ -9,7 +9,7 @@ import BasicDatePicker from "../../reusable/Inputs/BasicDatePicker";
 import moment from "moment";
 import { StyledButton } from "../../reusable/Inputs/StyledEmployeeForm";
 
-function DaySchedule({ setCurrentTab, currentTab }) {
+function DaySchedule({ setCurrentTab, currentTab, scheduleEdit }) {
   // const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState();
@@ -24,13 +24,13 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     setDay(moment(today).format("yyyy-MM-DD"));
   }, []);
 
-  useEffect(() => {
-    console.log("day", modalData);
-  }, [modalData]);
+  // useEffect(() => {
+  //   console.log("day", modalData);
+  // }, [modalData]);
 
-  useEffect(() => {
-    console.log("shiftId", shiftId);
-  }, [shiftId]);
+  // useEffect(() => {
+  //   console.log("shiftId", shiftId);
+  // }, [shiftId]);
   // useEffect(() => {
   //   if (shiftId) {
   //     const fetchShift = async () => {
@@ -91,7 +91,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
     setModalData({ date: day });
     setIsOpen(true);
   }
-
+  console.log("FROM DAY SCHEULE", scheduleEdit);
   // async function createShift(createdUser) {
   //   await fetch("/api/schedule/schedule/new", {
   //     method: "POST",
@@ -142,22 +142,6 @@ function DaySchedule({ setCurrentTab, currentTab }) {
             position: "relative",
           }}
         >
-          {/* <h2
-            style={{
-              fontWeight: "400",
-              fontFamily: "Arial, Helvetica, sans-serif",
-              textAlign: "right",
-              color: "#07889b",
-              marginTop: "0px",
-              marginBottom: "0px",
-              paddingBottom: "0px",
-              display: "inline",
-              position: "relative",
-              bottom: "0",
-            }}
-          >
-            For day:
-          </h2> */}
           <BasicDatePicker
             style={{ display: "inline" }}
             value={day}
@@ -218,6 +202,7 @@ function DaySchedule({ setCurrentTab, currentTab }) {
                     employee?.position.charAt(0).toUpperCase() +
                     employee?.position.slice(1)
                   }
+                  canEdit={scheduleEdit}
                   edit="edit"
                   onClick={() => {
                     setIsOpen(true);
@@ -261,9 +246,14 @@ function DaySchedule({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton style={{ marginTop: "1em" }} onClick={() => handleClick()}>
-        ADD SHIFT
-      </StyledButton>
+      {scheduleEdit === true ? (
+        <StyledButton
+          style={{ marginTop: "1em" }}
+          onClick={() => handleClick()}
+        >
+          ADD SHIFT
+        </StyledButton>
+      ) : null}
       <Modal
         open={isOpen}
         onClose={() => {

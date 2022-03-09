@@ -18,7 +18,7 @@ const positionList = [
   { name: "The Rezza" },
 ];
 
-function DaySchedulePosition({ setCurrentTab, currentTab }) {
+function DaySchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
   // const [shift, setShift] = useState();
   const [schedule, setSchedule] = useState([]);
   const [day, setDay] = useState();
@@ -193,7 +193,7 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
                   firstName={employee?.firstName}
                   lastName={employee?.lastName}
                   position={employee?.position}
-                  edit="edit"
+                  edit={scheduleEdit === true ? "edit" : null}
                   onClick={() => setIsOpen(true)}
                 />
                 {/* <td
@@ -245,9 +245,14 @@ function DaySchedulePosition({ setCurrentTab, currentTab }) {
           ))}
         </tbody>
       </StyledTable>
-      <StyledButton style={{ marginTop: "1em" }} onClick={() => handleClick()}>
-        ADD SHIFT
-      </StyledButton>
+      {scheduleEdit === true ? (
+        <StyledButton
+          style={{ marginTop: "1em" }}
+          onClick={() => handleClick()}
+        >
+          ADD SHIFT
+        </StyledButton>
+      ) : null}
       <Modal
         open={isOpen}
         onClose={() => {

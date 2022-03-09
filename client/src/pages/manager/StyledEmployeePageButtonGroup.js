@@ -96,7 +96,7 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
           "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
-        OTHER ONE
+        PAYROLL
       </StyledButton>
       <StyledButton
         onClick={() => {
@@ -110,7 +110,7 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
           "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
         }}
       >
-        OTHER TWO
+        FILES
       </StyledButton>
     </div>
   );

@@ -15,7 +15,7 @@ import {
   StyledNavButton,
   StyledAvatarButton,
 } from "./StyledNavBar";
-import LogoImg from "../assets/LogoBluee.png";
+import LogoImg from "../assets/Day2DayLogo.gif";
 import { Link } from "react-router-dom";
 import AuthenticationContext from "../login/AuthenticationContext";
 import { useSocket } from "../../components/reusable/context/SocketProvider";

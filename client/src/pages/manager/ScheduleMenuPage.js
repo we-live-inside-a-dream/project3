@@ -23,7 +23,7 @@ function ScheduleMenuPage() {
     <>
       <StyledPage>
         <StyledPageTitle style={{ gridTemplateRow: "1", marginBottom: "40px" }}>
-          Schedules
+          Schedule
         </StyledPageTitle>
         {currentTab === 1 && (
           <DaySchedulePage

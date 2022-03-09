@@ -37,6 +37,7 @@ const EmployeeTimeOffViewPage = () => {
     fetchTimeOff();
   }, [user._id, renderPage, setTimeOffRequests]);
 
+
   async function updateTimeOff(updatedTimeOff) {
     console.log("posting to user Id", user._id, "with Data", updatedTimeOff);
     await fetch(`/api/timeOff/update?id=${timeOffValues._id}`, {
@@ -102,7 +103,6 @@ const EmployeeTimeOffViewPage = () => {
                 height: "100vh",
               }}
               color={"var(--mainHeader)"}
-              loading={loading}
               size={300}
             />
           </div>
@@ -228,7 +228,7 @@ const EmployeeTimeOffViewPage = () => {
         <div>
           <h3>Are you sure you want to DELETE your time off request?</h3>
         </div>
-        <StyledButton
+        <StyledButton style={{marginRight: "1em"}}
           onClick={() => {
             deleteTimeOff();
             setModalConfirmIsOpen(false);

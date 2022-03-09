@@ -10,7 +10,6 @@ const StyledPageTitle = styled.h1`
   padding-top: 15px;
   margin: auto;
   text-align: center;
-  text-shadow: 1px 2px 3px #2f2f30;
-  font-family: "Georgia", Times New Roman, Times, serif;
+  font-family: "Roboto", sans-serif;
 `;
 export default StyledPageTitle;

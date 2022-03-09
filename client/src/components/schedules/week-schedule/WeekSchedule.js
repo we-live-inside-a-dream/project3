@@ -13,7 +13,7 @@ import TimeOffLegend from "./TimeOffLegend";
 import EditSchedule from "../../edit-schedule/EditSchedule";
 import Modal from "../../reusable/Modal";
 
-function WeekSchedule({ setCurrentTab, currentTab }) {
+function WeekSchedule({ setCurrentTab, currentTab, scheduleEdit }) {
   moment().format();
   const [startDay, setStartDay] = useState(
     moment().startOf("week").format("yyyy-MM-DD").toString()
@@ -48,7 +48,10 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
       setActiveEmployeeList(nameIdList);
     };
     //this function finds an array of dates depending on the start and end date chosen by the inputs.  these dates are then formatted
-
+    console.log(
+      "FROM THE WEEK SCHEDULE PAGE::::::::::::::::::::",
+      scheduleEdit
+    );
     const fetchAllTheDays = async function () {
       async function fetchWeek() {
         let theQueryWeek = await fetch(`/api/schedule/week?day0=${startDay}`);
@@ -116,31 +119,35 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
     );
     // dayOfweek is the index for days array monday=0, sunday=6
     const availableToday = currentEmployee?.days[dayOfWeek];
-    if (!availableToday?.available) {
-      return "#FC4445";
-    } else if (!availableToday?.allDay) {
-      return "gold";
-    } else {
-      return "#32cd32";
+    if (scheduleEdit === true) {
+      if (!availableToday?.available) {
+        return "#FC4445";
+      } else if (!availableToday?.allDay) {
+        return "gold";
+      } else {
+        return "#32cd32";
+      }
     }
   }
   function isEmployeeBookedOff(id, date) {
-    let empBookedTimeOff = timeoffs.find(
-      (timeOff) => timeOff.employeeProfileId === id
-    );
-    if (
-      empBookedTimeOff?.startDate <= date &&
-      empBookedTimeOff?.endDate >= date &&
-      empBookedTimeOff.allDay === true
-    ) {
-      return "full";
-    } else if (
-      empBookedTimeOff?.startDate === date &&
-      empBookedTimeOff?.endDate === date &&
-      empBookedTimeOff.allDay === false
-    ) {
-      return "part";
-    } else return null;
+    if (scheduleEdit === true) {
+      let empBookedTimeOff = timeoffs.find(
+        (timeOff) => timeOff.employeeProfileId === id
+      );
+      if (
+        empBookedTimeOff?.startDate <= date &&
+        empBookedTimeOff?.endDate >= date &&
+        empBookedTimeOff.allDay === true
+      ) {
+        return "full";
+      } else if (
+        empBookedTimeOff?.startDate === date &&
+        empBookedTimeOff?.endDate === date &&
+        empBookedTimeOff.allDay === false
+      ) {
+        return "part";
+      } else return null;
+    }
   }
 
   // useEffect(()=>{
@@ -210,10 +217,16 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
           />
         </div>
         <div style={{ display: "inline-flex", alignContent: "baseline" }}>
-          <WeekScheduleLegend
-            style={{ marginLeft: "15px", paddingBottom: "0px" }}
-          />
-          <TimeOffLegend style={{ marginLeft: "15px", paddingBottom: "0px" }} />
+          {scheduleEdit === true ? (
+            <>
+              <WeekScheduleLegend
+                style={{ marginLeft: "15px", paddingBottom: "0px" }}
+              />
+              <TimeOffLegend
+                style={{ marginLeft: "15px", paddingBottom: "0px" }}
+              />
+            </>
+          ) : null}
         </div>
         {/* <div className="emptyDivForSpacing"> </div> */}
         <div
@@ -296,6 +309,7 @@ function WeekSchedule({ setCurrentTab, currentTab }) {
                           width: "10px",
                           alignSelf: "center",
                           transform: "translate(1200%, -350%)",
+
                           backgroundColor: isEmployeeavailable(
                             employee._id,
                             date

@@ -9,6 +9,7 @@ function NamePicTableData({
   lastName,
   setModalOpen,
   position,
+  canEdit,
 }) {
   return (
     <div
@@ -52,7 +53,7 @@ function NamePicTableData({
         }}
       >
         <p>{`${firstName} ${lastName.slice(0, 1)}`}</p>
-        {edit && (
+        {canEdit === true && (
           <StyledEditButton
             style={{ position: "absolute", top: "0", right: "0" }}
             fontSize={"1em"}

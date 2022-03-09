@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import StyledButton from "../reusable/Inputs/StyledButton";
 
-function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
+function StyledScheduleButtonGroup({
+  setCurrentTab,
+  currentTab,
+  showPositions,
+}) {
   const [activeButton, setActiveButton] = useState();
   const [addOne, setAddone] = useState(false);
   // console.log("CURRENT TAB AND ACTIVE BUTTON", currentTab, activeButton);
@@ -12,7 +16,7 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
 
   function handleClick() {
     setAddone((prevCheck) => !prevCheck);
-    if (currentTab % 2 == 0) {
+    if (currentTab % 2 === 0) {
       setCurrentTab((prevTab) => prevTab - 1);
     } else {
       setCurrentTab((prevTab) => prevTab + 1);
@@ -46,11 +50,11 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         "var(--styledButtonBackground)";
 
   let buttonPositions =
-    currentTab % 2 == 0
+    currentTab % 2 === 0
       ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
   let buttonEmployee =
-    currentTab % 2 == 1
+    currentTab % 2 === 1
       ? "var(--styledButtonHoverBackground)"
       : "var(--styledButtonBackground)";
   return (
@@ -100,36 +104,44 @@ function StyledScheduleButtonGroup({ setCurrentTab, currentTab }) {
         </StyledButton>
       </div>
       <div style={{ margin: "0 0 0 1em", minWidth: "11.6em" }}>
-        <StyledButton
-          onClick={() => handleClick()}
-          style={{
-            backgroundColor: buttonPositions,
-            margin: "0px",
-            border: "2px solid var(--styledButtonGroupBorder)",
-            borderRight: "0px",
-            borderRadius: "3px 0 0 3px",
-            padding: ".8rem 0 .8rem 0",
-            width: "5.8em",
-            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-          }}
-        >
-          POSITION
-        </StyledButton>
-        <StyledButton
-          onClick={() => handleClick()}
-          style={{
-            backgroundColor: buttonEmployee,
-            margin: "0px",
-            border: "2px solid var(--styledButtonGroupBorder)",
-            borderLeft: "0px",
-            borderRadius: "0 3px 3px 0",
-            padding: ".8rem 0 .8rem 0",
-            width: "5.8em",
-            "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-          }}
-        >
-          EMPLOYEE
-        </StyledButton>
+        {currentTab !== 5 ? (
+          <>
+            <StyledButton
+              onClick={() => handleClick()}
+              style={{
+                backgroundColor: buttonPositions,
+                margin: "0px",
+                border: "2px solid var(--styledButtonGroupBorder)",
+                borderRight: "0px",
+                borderRadius: "3px 0 0 3px",
+                padding: ".8rem 0 .8rem 0",
+                width: "5.8em",
+                "&:Hover": {
+                  border: "2px solid var(--styledButtonHoverBorder)",
+                },
+              }}
+            >
+              POSITION
+            </StyledButton>
+            <StyledButton
+              onClick={() => handleClick()}
+              style={{
+                backgroundColor: buttonEmployee,
+                margin: "0px",
+                border: "2px solid var(--styledButtonGroupBorder)",
+                borderLeft: "0px",
+                borderRadius: "0 3px 3px 0",
+                padding: ".8rem 0 .8rem 0",
+                width: "5.8em",
+                "&:Hover": {
+                  border: "2px solid var(--styledButtonHoverBorder)",
+                },
+              }}
+            >
+              EMPLOYEE
+            </StyledButton>
+          </>
+        ) : null}
       </div>
     </>
   );

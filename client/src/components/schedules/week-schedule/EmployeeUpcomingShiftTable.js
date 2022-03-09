@@ -124,6 +124,7 @@ function EmployeeUpcomingShiftList() {
         </tbody>
       </StyledTable>
       <StyledButton
+        style={{ marginTop: "1em" }}
         onClick={() => setShiftsUpForGrabsIsOpen(!shiftsUpForGrabsIsOpen)}
       >
         VIEW AVAILABLE SHIFTS

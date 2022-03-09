@@ -7,7 +7,12 @@ import EventViewDiv from "./EventViewDiv";
 import EventEditForm from "../events/EventEditForm";
 import Modal from "../reusable/Modal";
 
-const CalendarScratch = function ({ setCurrentTab, currentTab }) {
+const CalendarScratch = function ({
+  setCurrentTab,
+  currentTab,
+  showButtonGroup,
+  showPositions,
+}) {
   const [revealEventDetails, setRevealEventDetails] = useState(false);
   const [eventToReveal, setEventToReveal] = useState(null);
   const [nav, setNav] = useState(0);
@@ -152,6 +157,8 @@ const CalendarScratch = function ({ setCurrentTab, currentTab }) {
       )}
 
       <CalendarDateHeader
+        showButtonGroup={showButtonGroup}
+        showPositions={showPositions}
         dateDisplay={dateDisplay}
         onNext={() => setNav(nav + 1)}
         onBack={() => setNav(nav - 1)}

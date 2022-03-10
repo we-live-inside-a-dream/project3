@@ -2,8 +2,6 @@ import { useEffect, useState, useContext } from "react";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import {
-  // StyledEmployeeForm,
-  StyledFormWrapper,
   StyledForm,
   StyledInput,
   StyledButton,
@@ -16,7 +14,7 @@ import {
   lastNameValidation,
   statusValidation,
   positionValidation,
-  passwordValidation,
+  // passwordValidation,
   permissionsValidation,
 } from "../validateForms.js";
 import { useManagerSettings } from "../reusable/context/ManagerSettingsProvider";
@@ -49,8 +47,6 @@ const EmployeeEditForm = ({
   const [positions, setPositions] = useState([]);
   const [status, setStatus] = useState([]);
   const [permissions, setPermissions] = useState([]);
-  // const [defaultStatus, setDefaultStatus] = useState([]);
-  // const [defaultPermissions, setDefaultPermissions] = useState([]);
   const [emailMessageVal, setEmailMessageVal] = useState(null);
   const [phoneMessageVal, setPhoneMessageVal] = useState(null);
   const [fnameMessageVal, setFnameMessageVal] = useState(null);
@@ -66,10 +62,6 @@ const EmployeeEditForm = ({
   let navigate = useNavigate();
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
-
-  console.log("EXISTINGVALUES,", existingValues);
-  console.log("THE PERMISSIONS FOR THIS USER ARE:", user.permissions);
-  console.log("THE NAME  OF THIS USER IS ", user.firstName);
 
   useEffect(() => {
     if (existingValues) {
@@ -91,18 +83,15 @@ const EmployeeEditForm = ({
       setStatus(currentStatus);
     }
   }, [existingValues]);
-  console.log("CURRENT STATUS %%%%%%%%%%%%%%%%", status);
 
   useEffect(() => {
     if (existingValues) {
       let currentPermissions = permissionsData.find((line) =>
         existingValues?.permissions?.includes(line.value)
       );
-      console.log("$$$$, current permissions", currentPermissions);
       setPermissions(currentPermissions);
     }
   }, [existingValues]);
-  console.log("CURRENT PERMISSIONS %%%%%%%%%%%%%%%%", permissions);
 
   useEffect(() => {
     if (existingValues) {
@@ -124,27 +113,19 @@ const EmployeeEditForm = ({
   }
 
   const handlePositionChange = (newPositions) => {
-    console.log(newPositions);
     setPositions(newPositions);
-    console.log("this is positions", newPositions);
     setPosMessageVal(positionValidation(newPositions));
-    console.log("Positions", positions);
   };
-  console.log("this is positions", positions);
 
   const handlePermissionsChange = (newPermission) => {
     setPermissions(newPermission);
-    console.log("this is permissions", permissions);
     setPermissMessageVal(permissionsValidation(newPermission));
-    console.log("Permissions", permissions);
   };
-  console.log("this is permissions", permissions);
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
     setStatusMessageVal(statusValidation(newStatus));
   };
-  console.log("status", status);
 
   async function createEmployee(newEmployee) {
     let response = await fetch("/api/employeeProfile/create", {
@@ -155,9 +136,7 @@ const EmployeeEditForm = ({
       body: JSON.stringify(newEmployee),
     });
     let id = await response.json();
-    console.log("just before the id is set to ", id);
     setId(id);
-    console.log("the id for the created employee is:", response);
     // setCurrentTab(2);
   }
   let validation;
@@ -171,43 +150,43 @@ const EmployeeEditForm = ({
       statusMessageVal ||
       permissMessageVal
     ) {
-      console.log(
-        "email:",
-        emailMessageVal,
-        "phone:",
-        phoneMessageVal,
-        "first:",
-        fnameMessageVal,
-        "last:",
-        lnameMessageVal,
-        "position:",
-        posMessageVal,
-        "status:",
-        statusMessageVal,
-        "permissions:",
-        permissMessageVal
-      );
+      // console.log(
+      //   "email:",
+      //   emailMessageVal,
+      //   "phone:",
+      //   phoneMessageVal,
+      //   "first:",
+      //   fnameMessageVal,
+      //   "last:",
+      //   lnameMessageVal,
+      //   "position:",
+      //   posMessageVal,
+      //   "status:",
+      //   statusMessageVal,
+      //   "permissions:",
+      //   permissMessageVal
+      // );
 
       validation = "please make sure that all fields are valid";
       return validation;
-    } else
-      console.log(
-        "email:",
-        emailMessageVal,
-        "phone:",
-        phoneMessageVal,
-        "first:",
-        fnameMessageVal,
-        "last:",
-        lnameMessageVal,
-        "position:",
-        posMessageVal,
-        "status:",
-        statusMessageVal,
-        "permissions:",
-        permissMessageVal
-      );
-    validation = null;
+    }
+    // console.log(
+    //   "email:",
+    //   emailMessageVal,
+    //   "phone:",
+    //   phoneMessageVal,
+    //   "first:",
+    //   fnameMessageVal,
+    //   "last:",
+    //   lnameMessageVal,
+    //   "position:",
+    //   posMessageVal,
+    //   "status:",
+    //   statusMessageVal,
+    //   "permissions:",
+    //   permissMessageVal
+    // );
+    else validation = null;
     return validation;
   }
 
@@ -223,6 +202,7 @@ const EmployeeEditForm = ({
         positions: positions.map((p) => p.value),
         status: [status.value],
         permissions: [permissions.value],
+        imageUrl: `${firstName?.toLowerCase()}.jpg`,
       };
     } else {
       newEmployeeInfo = {
@@ -233,6 +213,7 @@ const EmployeeEditForm = ({
         positions: positions.map((p) => p.value),
         status: [status.value],
         permissions: [permissions.value],
+        imageUrl: `${firstName?.toLowerCase()}.jpg`,
       };
     }
     validateForm();
@@ -244,10 +225,10 @@ const EmployeeEditForm = ({
       console.log("just before tab is set to 2");
       setCurrentCreateTab(12);
     } else if (existingValues && validation === null) {
-      await onSave(newEmployeeInfo);
-      console.log("THIS IS THE USERS PERMISSIONS", user.permissions);
-      user.permissions.includes("manager") ||
-      user.permissions.includes("admimnistrator")
+      await createEmployee(newEmployeeInfo);
+      // console.log("THIS IS THE USERS PERMISSIONS", user.permissions);
+      user?.permissions[0] === "manager" ||
+      user?.permissions[0] === "administrator"
         ? navigate("/human-resources")
         : navigate("/profile");
     } else setShown(true);

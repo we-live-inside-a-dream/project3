@@ -61,10 +61,11 @@ router.post("/create", async (req, res) => {
     firstName = firstName.trim(),
     lastName = lastName.trim(),
     email = email.trim(),
-    // password = password.trim(),
+    password = password.trim(),
     phoneNumber = phoneNumber.trim(),
     positions = positions.trim(),
     status = status.trim(),
+    imageUrl = imageUrl.trim(),
   } = req.body;
   if (
     firstName == "" ||
@@ -112,13 +113,21 @@ router.post("/create", async (req, res) => {
           firstName,
           lastName,
           email,
-          // password,
+          password,
           phoneNumber,
           positions,
           status,
+          imageUrl,
         });
         //handle account verification
-        sendVerificationEmail({ _id: employeeProfileId, email: email }, res);
+        console.log(
+          "FROM CREATEROUTE::::::::::::::::: ID:",
+          employeeProfileId._id
+        );
+        sendVerificationEmail(
+          { _id: employeeProfileId._id, email: email },
+          res
+        );
         createAvailability(employeeProfileId, firstName, lastName);
         if (!employeeProfileId) res.status(500).send("Failed to create.");
         res.status(200).json(employeeProfileId);

@@ -2,92 +2,6 @@ import { be } from "date-fns/locale";
 import React from "react";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
-// function PositionPicTableData({
-//   //   existingValues,
-//   edit,
-//   onClick,
-//   name,
-//   position,
-// }) {
-//   return (
-//     <div
-//       style={{
-//         display: "grid",
-//         width: "12rem",
-//         gridTemplateColumns: "5% 25% 70%",
-//       }}
-//     >
-//       <div style={{ gridRow: "1" }}></div>
-//       <div>
-//         <div
-//           style={{
-//             gridRow: "1",
-//             backgroundColor: "grey",
-//             height: "2.5rem",
-//             width: "2.5rem",
-//             margin: "auto",
-//             marginTop: "10px",
-//             alignSelf: "center",
-//             borderRadius: "50%",
-//             color: "white",
-//             fontSize: "2rem",
-//             textAlign: "center",
-//             border: "3px solid var(--nameIconBorder)",
-//           }}
-//         >
-//           {position[0] + position[1]}
-
-//           {/* {edit && (
-//             <StyledEditButton
-//               style={{ fontSize: "1rem", gridRow: "1" }}
-//               onClick={onClick}
-//             >
-//               ✎
-//             </StyledEditButton>
-//           )}  */}
-//         </div>
-//       </div>
-//       <div>
-//         <div
-//           style={{
-//             margin: "3px 3px 5px 0px",
-//             color: "var(--accentColorTitle)",
-//             fontWeight: "600",
-//             textAlign: "left",
-//             display: "grid",
-//             gridTemplateColumns: "1",
-//             // display: "flex",
-//           }}
-//         >
-//           <p>{`${position}`}</p>
-
-//           {edit && (
-//             <StyledEditButton
-//               onClick={onClick}
-//               style={{ fontSize: "1rem", gridRow: "1" }}
-//             >
-//               ✎
-//             </StyledEditButton>
-//           )}
-//         </div>
-//         <p
-//           style={{
-//             color: "#545454",
-//             fontSize: "1 rem",
-//             fontWeight: "500",
-//             gridRow: "2",
-//             gridColumn: "3",
-//             marginTop: "0px",
-//             textAlign: "left",
-//           }}
-//         >
-//           {name}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// }
-
 function PositionPicTableData({
   //   existingValues,
   edit,
@@ -109,15 +23,16 @@ function PositionPicTableData({
         <div
           style={{
             gridRow: "1",
-            backgroundColor: "grey",
-            height: "2.5rem",
-            width: "2.5rem",
+            // backgroundColor: "var(--nameIconBorder)",
+            backgroundColor: "white",
+            height: "2.8rem",
+            width: "2.8rem",
             margin: "auto",
             marginTop: "8px",
             alignSelf: "center",
             borderRadius: "50%",
-            color: "white",
-            fontSize: "2.2rem",
+            color: "var(--nameIconBorder)",
+            fontSize: "2rem",
             textAlign: "center",
             border: "3px solid var(--nameIconBorder)",
             position: "relative",

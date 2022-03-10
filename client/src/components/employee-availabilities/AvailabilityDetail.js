@@ -8,12 +8,14 @@ import EditMaxHours from "./EditMaxHours";
 import AvailabilityModal from "./AvailabilityModal";
 import NamePicTableData from "../reusable/NamePicTableData";
 import StyledPage from "../reusable/styled-page/StyledPage";
+import { useManagerSettings } from "../../components/reusable/context/ManagerSettingsProvider";
 
 function EmployeeAvailabilityDetail({
   userId,
   availabilityId,
   userAvailability,
   imageUrl,
+  employeeProfileEdit,
 }) {
   const [modalDay, setModalDay] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,6 +31,8 @@ function EmployeeAvailabilityDetail({
     lastName: "",
     employeeProfileId: "",
   });
+  const [perms, setPerms] = useState();
+  const value = useManagerSettings();
 
   let params = useParams();
   useEffect(() => {
@@ -38,6 +42,7 @@ function EmployeeAvailabilityDetail({
     if (availabilityId) {
       setId(availabilityId);
     }
+
     // if (userId) {
     //   // setId(userId);
     //   setAvailability(userAvailability);
@@ -46,6 +51,12 @@ function EmployeeAvailabilityDetail({
     //   setMaxHoursPerWeek(userAvailability?.maxHoursPerWeek);
     // }
   }, [availabilityId, params]);
+  useEffect(() => {
+    if (value) {
+      setPerms(value.employeeProfileEdit);
+    }
+    console.log("FROM THE EMPLOYEE DETAIL PAGE", perms);
+  }, [perms, value]);
 
   useEffect(() => {
     if (!id) return;
@@ -132,9 +143,11 @@ function EmployeeAvailabilityDetail({
               <NamePicTableData
                 firstName={firstName}
                 lastName={lastName}
+                imageUrl={`${firstName?.toLowerCase()}.jpg`}
                 edit="edit"
                 onClick={() => setModalOpen(true)}
-                imageUrl={imageUrl}
+                // imageUrl={imageUrl}
+                canEdit={true}
               />
               <td>
                 {maxHoursPerWeek}

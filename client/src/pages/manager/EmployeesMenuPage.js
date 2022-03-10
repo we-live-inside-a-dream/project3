@@ -31,7 +31,7 @@ function EmployeesMenuPage() {
             <StyledEmployeePageButtonGroup
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
-              style={{ margin: "40px auto", padding: "0px" }}
+              style={{ margin: "40px auto auto auto", padding: "0px" }}
             />
           </div>
         </div>

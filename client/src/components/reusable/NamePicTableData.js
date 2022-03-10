@@ -12,7 +12,6 @@ function NamePicTableData({
   canEdit,
   imageUrl,
 }) {
-  console.log("THE IMAGE URL IS >>>>>>>>>>>>>>>>>>>>>>>>", imageUrl);
   return (
     <div
       style={{
@@ -63,6 +62,7 @@ function NamePicTableData({
           <img
             src={"/images/" + imageUrl}
             alt={firstName}
+            style={{ border: "none" }}
 
             // style={{ backgroundPosition: "center" }}
           />

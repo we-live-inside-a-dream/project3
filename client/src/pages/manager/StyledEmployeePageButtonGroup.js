@@ -36,7 +36,7 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         marginRight: "auto",
         marginLeft: "auto",
         padding: "1em",
-        marginBottom: "2%",
+        marginBottom: "1%",
         marginTop: "1%",
         display: "flex",
         justifyContent: "center",
@@ -83,34 +83,6 @@ function StyledEmployeePageButtonGroup({ setCurrentTab, currentTab }) {
         }}
       >
         AVAILABILITIES
-      </StyledButton>
-      <StyledButton
-        onClick={() => {
-          setCurrentTab(4);
-          setActiveButton(4);
-        }}
-        style={{
-          backgroundColor: buttonOtherOne,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        PAYROLL
-      </StyledButton>
-      <StyledButton
-        onClick={() => {
-          setCurrentTab(5);
-          setActiveButton(5);
-        }}
-        style={{
-          backgroundColor: buttonOtherTwo,
-          margin: "0px",
-          border: "2px solid var(--styledButtonGroupBorder)",
-          "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
-        }}
-      >
-        FILES
       </StyledButton>
     </div>
   );

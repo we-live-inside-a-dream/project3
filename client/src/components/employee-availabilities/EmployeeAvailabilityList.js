@@ -101,7 +101,7 @@ function EmployeeAvailabilityList({ employeeProfileEdit }) {
                     edit="edit"
                     canEdit={employeeProfileEdit}
                     onClick={() => selectAvailabilityById(availability._id)}
-                    imageUrl={`${availability?.firstName}.jpg`}
+                    imageUrl={`${availability?.firstName?.toLowerCase()}.jpg`}
                   />
                 </td>
 

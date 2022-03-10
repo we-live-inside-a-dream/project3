@@ -246,6 +246,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
+              margin: "auto 8px 0 8px",
               color: "var(--accentColorTitle)",
             }}
           >
@@ -253,6 +254,7 @@ function WeekSchedulePosition({ setCurrentTab, currentTab, scheduleEdit }) {
           </h2>
 
           <BasicDatePicker
+            padding={"1rem,14px"}
             value={startDay}
             onChange={(value) => {
               onInputUpdate(value, setStartDay);

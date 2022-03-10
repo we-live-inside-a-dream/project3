@@ -67,6 +67,7 @@ function StyledScheduleButtonGroup({
           }}
           style={{
             backgroundColor: buttonDay,
+            height: "100%",
             margin: "0px",
             border: "2px solid var(--styledButtonGroupBorder)",
             "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
@@ -81,6 +82,7 @@ function StyledScheduleButtonGroup({
           }}
           style={{
             backgroundColor: buttonWeek,
+            height: "100%",
             margin: "0px",
             border: "2px solid var(--styledButtonGroupBorder)",
             "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
@@ -95,6 +97,7 @@ function StyledScheduleButtonGroup({
           }}
           style={{
             backgroundColor: buttonMonth,
+            height: "100%",
             margin: "0px",
             border: "2px solid var(--styledButtonGroupBorder)",
             "&:Hover": { border: "2px solid var(--styledButtonHoverBorder)" },
@@ -110,12 +113,13 @@ function StyledScheduleButtonGroup({
               onClick={() => handleClick()}
               style={{
                 backgroundColor: buttonPositions,
+                height: "100%",
                 margin: "0px",
                 border: "2px solid var(--styledButtonGroupBorder)",
                 borderRight: "0px",
                 borderRadius: "3px 0 0 3px",
-                padding: ".8rem 0 .8rem 0",
-                width: "5.8em",
+                padding: ".8rem 0.8rem .8rem 0.8rem",
+                // width: "5.8em",
                 "&:Hover": {
                   border: "2px solid var(--styledButtonHoverBorder)",
                 },
@@ -127,12 +131,13 @@ function StyledScheduleButtonGroup({
               onClick={() => handleClick()}
               style={{
                 backgroundColor: buttonEmployee,
+                height: "100%",
                 margin: "0px",
                 border: "2px solid var(--styledButtonGroupBorder)",
                 borderLeft: "0px",
                 borderRadius: "0 3px 3px 0",
-                padding: ".8rem 0 .8rem 0",
-                width: "5.8em",
+                padding: ".8rem 0.8rem .8rem 0.8rem",
+                // width: "5.8em",
                 "&:Hover": {
                   border: "2px solid var(--styledButtonHoverBorder)",
                 },

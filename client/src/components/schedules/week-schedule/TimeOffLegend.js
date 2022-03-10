@@ -17,7 +17,7 @@ function TimeOffLegend() {
           backgroundColor: "black",
           lineHeight: ".5",
           display: "inline-block",
-          margin: " 0px 8px",
+          margin: " auto 8px",
           gridRow: "1",
           justifyContent: "left",
         }}
@@ -34,7 +34,7 @@ function TimeOffLegend() {
           border: "2px solid black",
           lineHeight: ".5",
           display: "inline-block",
-          margin: " 0px 8px",
+          margin: " auto 8px",
           gridRow: "2",
           justifyContent: "left",
         }}

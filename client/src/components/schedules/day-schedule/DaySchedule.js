@@ -143,7 +143,7 @@ function DaySchedule({ setCurrentTab, currentTab, scheduleEdit }) {
           }}
         >
           <BasicDatePicker
-            style={{ display: "inline" }}
+            style={{ display: "inline", height: "100%" }}
             value={day}
             onChange={(value) => {
               onInputUpdate(value, setDay);

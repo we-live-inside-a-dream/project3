@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import ApprovalsBox from "./ApprovalsBox";
 import SettingsBox from "./SettingsBox";
 import HelpBox from "./HelpBox";
+import ClockLoader from "react-spinners/ClockLoader";
 
 let dashGridStyle = {
   display: "flex",
@@ -43,7 +44,32 @@ const DashboardGridNav = function () {
 
   return (
     <>
-      {!perms && "Loading..."}
+      {!perms &&  <div
+            style={{
+              height: "320px",
+              width: "320px",
+              borderRadius: "50%",
+              border: "3px solid var(--mainHeader)",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              right: "0",
+              bottom: "0",
+              margin: "auto",
+            }}
+          >
+            <ClockLoader
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "Center",
+                width: "100%",
+                height: "100vh",
+              }}
+              color={"var(--mainHeader)"}
+              size={300}
+            />
+          </div>}
       {perms && (
         <div style={dashGridStyle}>
           {perms?.scheduleView === true ? <ScheduleBox /> : null}

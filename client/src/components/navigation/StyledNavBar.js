@@ -6,7 +6,7 @@ export const NavbarContainer = styled.nav`
   background-color: var(--navBackground);
   display: flex;
   flex-direction: column;
-  box-shadow: 5px 5px 5px 8px;
+  box-shadow: 5px 5px 5px 5px;
   z-index: 500;
 `;
 

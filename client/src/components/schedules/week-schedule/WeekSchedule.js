@@ -252,7 +252,7 @@ function WeekSchedule({ setCurrentTab, currentTab, scheduleEdit }) {
             Week start:
           </h2>
           <BasicDatePicker
-            style={{ height: "100%" }}
+            padding={"1rem,14px"}
             value={startDay}
             onChange={(value) => {
               onInputUpdate(value, setStartDay);

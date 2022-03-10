@@ -11,12 +11,26 @@ export default function Conversation({ id, conversation }) {
   const value = useSocket();
   let read = value.unread;
 
+  let imageUrl = function (name) {
+    let nameArray = name.split(" ");
+    let first = nameArray[0];
+    let url = `${first.toLowerCase()}.jpg`;
+    return url;
+  };
+
   return (
     <>
       <StyledConverstion>
         {/* <div style={{ border: "1px solid black", position: "relative" }}> */}
         {conversation?.members?.map((m) => {
-          if (m.value !== id) return <NameIcon name={m.label} key={m.value} />;
+          if (m.value !== id)
+            return (
+              <NameIcon
+                imageUrl={imageUrl(m.label)}
+                name={m.label}
+                key={m.value}
+              />
+            );
         })}
 
         {read?.includes(conversation._id) ? (

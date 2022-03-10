@@ -1,7 +1,7 @@
 import React from "react";
 import StyledEditButton from "../reusable/Inputs/StyledEditButton";
 
-function NameIcon({ name }) {
+function NameIcon({ name, imageUrl }) {
   return (
     <div
       style={{
@@ -16,16 +16,30 @@ function NameIcon({ name }) {
       <div>
         <div
           style={{
-            gridRow: "1",
-            backgroundColor: "grey",
-            height: "2.5rem",
-            width: "2.5rem",
+            // gridRow: "1",
+            // backgroundImage: "url(" + imageUrl + ")",
+            backgroundColor: " var(--nameIconBorder)",
+            // height: "32px",
+            // width: "32px",
+            height: "2.4rem",
+            width: "2.4rem",
             margin: "auto",
-            alignSelf: "center",
+            marginTop: "8px",
+            overflow: "hidden",
             borderRadius: "50%",
             border: "3px solid var(--nameIconBorder)",
+            position: "relative",
+            display: "flex",
           }}
-        ></div>
+        >
+          <img
+            src={"/images/" + imageUrl}
+            alt={name}
+            style={{ border: "none" }}
+
+            // style={{ backgroundPosition: "center" }}
+          />
+        </div>
       </div>
 
       <div
@@ -37,7 +51,7 @@ function NameIcon({ name }) {
           textAlign: "left",
         }}
       >
-        <p>{name}</p>
+        <p>{`  ${name}`}</p>
         <p
           style={{
             color: "#545454",

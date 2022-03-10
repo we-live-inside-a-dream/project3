@@ -183,7 +183,7 @@ export const ChatMessageInput = styled.textarea`
 // `;
 
 export const StyledConverstion = styled.div`
-  border: 1px solid black;
+  border: 1px solid lightGrey;
   position: relative;
   cursor: pointer;
   &:hover {

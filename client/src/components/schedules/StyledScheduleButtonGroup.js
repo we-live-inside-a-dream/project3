@@ -118,8 +118,8 @@ function StyledScheduleButtonGroup({
                 border: "2px solid var(--styledButtonGroupBorder)",
                 borderRight: "0px",
                 borderRadius: "3px 0 0 3px",
-                padding: ".8rem 0 .8rem 0",
-                width: "5.8em",
+                padding: ".8rem 0.8rem .8rem 0.8rem",
+                // width: "5.8em",
                 "&:Hover": {
                   border: "2px solid var(--styledButtonHoverBorder)",
                 },
@@ -136,8 +136,8 @@ function StyledScheduleButtonGroup({
                 border: "2px solid var(--styledButtonGroupBorder)",
                 borderLeft: "0px",
                 borderRadius: "0 3px 3px 0",
-                padding: ".8rem 0 .8rem 0",
-                width: "5.8em",
+                padding: ".8rem 0.8rem .8rem 0.8rem",
+                // width: "5.8em",
                 "&:Hover": {
                   border: "2px solid var(--styledButtonHoverBorder)",
                 },

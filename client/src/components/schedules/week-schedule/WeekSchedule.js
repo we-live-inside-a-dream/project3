@@ -245,12 +245,14 @@ function WeekSchedule({ setCurrentTab, currentTab, scheduleEdit }) {
               fontWeight: "400",
               fontFamily: "Arial, Helvetica, sans-serif",
               textAlign: "right",
+              margin: "auto 8px 0 8px",
               color: "var(--accentColorTitle)",
             }}
           >
             Week start:
           </h2>
           <BasicDatePicker
+            style={{ height: "100%" }}
             value={startDay}
             onChange={(value) => {
               onInputUpdate(value, setStartDay);

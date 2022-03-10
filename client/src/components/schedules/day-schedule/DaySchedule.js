@@ -143,6 +143,7 @@ function DaySchedule({ setCurrentTab, currentTab, scheduleEdit }) {
           }}
         >
           <BasicDatePicker
+            padding="1rem 14px"
             style={{ display: "inline" }}
             value={day}
             onChange={(value) => {

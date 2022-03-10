@@ -24,6 +24,8 @@ const typeData = [
   { value: "sick-day", label: "Sick Day" },
 ];
 
+
+
 const EmployeeTimeOffForm = ({
   existingValues,
   onSave,
@@ -180,10 +182,12 @@ const EmployeeTimeOffForm = ({
         </div>
         <div></div>
 
+      <div>
         <label>
           Start Day:
           <RedStar />
-          <BasicDatePicker
+          </label>
+          <BasicDatePicker 
             type="date"
             id="single-day"
             name="day"
@@ -195,7 +199,7 @@ const EmployeeTimeOffForm = ({
               );
             }}
           />
-        </label>
+        </div>
 
         <label>
           End Day:

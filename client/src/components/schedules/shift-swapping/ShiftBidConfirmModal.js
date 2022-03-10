@@ -6,7 +6,7 @@ import {
 } from "../../reusable/Inputs/StyledEmployeeForm";
 import AuthenticationContext from "../../login/AuthenticationContext";
 
-function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
+function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen, reload }) {
   const authContext = useContext(AuthenticationContext);
   let user = authContext.user;
 
@@ -54,7 +54,7 @@ function ShiftSwapConformModal({ shift, setShiftBidModalIsOpen }) {
     };
     await updateShift(newShiftSwapRequest);
     console.log("New Shift...", newShiftSwapRequest);
-
+    reload();
     setShiftBidModalIsOpen(false);
   }
 

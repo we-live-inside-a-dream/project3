@@ -15,9 +15,9 @@ function EmployeeUpcomingShiftList() {
   const [swapConfirmModalIsOpen, setSwapConfirmModalIsOpen] = useState(false);
   const [shiftsUpForGrabsIsOpen, setShiftsUpForGrabsIsOpen] = useState(false);
   const authContext = useContext(AuthenticationContext);
+  const [render, setRender] = useState(false);
   let user = authContext.user;
   let id = user?._id;
-  console.log(id);
 
   let today = moment().format("yyyy-MM-DD");
 
@@ -30,9 +30,13 @@ function EmployeeUpcomingShiftList() {
       setShifts(nameIdList);
     };
     getUpcomingShiftsById();
-  }, [id, today]);
-  console.log("THE EMPLOYEE's shift LIST IS", shifts);
-  console.log("today is ", today);
+  }, [id, today, render]);
+
+  const reload = () => {
+    setRender((prevCheck) => !prevCheck);
+  };
+  // console.log("THE EMPLOYEE's shift LIST IS", shifts);
+  // console.log("today is ", today);
 
   const formatTime = function (time) {
     let newTime = moment(time, "hh:mma").format("h:mma");
@@ -147,6 +151,7 @@ function EmployeeUpcomingShiftList() {
         onClose={() => setSwapConfirmModalIsOpen(false)}
       >
         <ShiftSwapConfirmModal
+          reload={reload}
           shifts={shifts}
           setShifts={setShifts}
           shift={detailShift}

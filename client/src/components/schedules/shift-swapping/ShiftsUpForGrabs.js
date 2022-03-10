@@ -11,6 +11,7 @@ function ShiftsUpForGrabs() {
   const [shiftBidModalIsOpen, setShiftBidModalIsOpen] = useState(false);
   const [detailShift, setDetailShift] = useState();
   const authContext = useContext(AuthenticationContext);
+  const [render, setRender] = useState(false);
   let user = authContext.user;
 
   useEffect(() => {
@@ -23,8 +24,12 @@ function ShiftsUpForGrabs() {
     }
 
     fetchAvailableShifts();
-  }, [user?._id]);
-  console.log("THESE ARE THE AVAILABLE SHIFTS", availableShifts);
+  }, [user?._id, render]);
+
+  const reload = () => {
+    setRender((prevCheck) => !prevCheck);
+  };
+  // console.log("THESE ARE THE AVAILABLE SHIFTS", availableShifts);
   const formatTime = function (time) {
     let newTime = moment(time, "hh:mma").format("h:mma");
     return newTime;
@@ -95,6 +100,7 @@ function ShiftsUpForGrabs() {
         onClose={() => setShiftBidModalIsOpen(false)}
       >
         <ShiftBidConfirmModal
+          reload={reload}
           shift={detailShift}
           employee={user}
           setShiftBidModalIsOpen={setShiftBidModalIsOpen}

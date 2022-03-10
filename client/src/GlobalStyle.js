@@ -34,7 +34,8 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
   --mainHeader: #3f87c7;
-  --accentColorTitle: #2f2f30;
+  //--accentColorTitle: #2f2f30;
+  --accentColorTitle:#063970;
   --navColorTitle: #063970;
   --lightTangerine: #99ccfa;
   --loginButtonMain: #579ddc;

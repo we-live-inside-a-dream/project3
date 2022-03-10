@@ -22,6 +22,7 @@ const typeData = [
   { value: "vacation-unpaid", label: "Vacation Unpaid" },
   { value: "mental-health-day", label: "Mental Health Day" },
   { value: "sick-day", label: "Sick Day" },
+  { value: "flex-day", label: "Flex Day" },
 ];
 
 const EmployeeTimeOffForm = ({

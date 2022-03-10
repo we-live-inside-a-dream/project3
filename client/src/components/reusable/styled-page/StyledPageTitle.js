@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledPageTitle = styled.h1`
   color: var(--accentColorTitle);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 3.2rem;
   padding-bottom: 0px;
   margin-top: 10px;

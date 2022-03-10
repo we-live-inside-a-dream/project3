@@ -52,7 +52,7 @@ async function listByWeekDays(start) {
     .toString();
   let weekList = Schedule.find({
     date: { $gte: start, $lte: end },
-  });
+  }).sort({ date: 1 });
   // console.log("from scheduleModel: ", weekList);
   return weekList;
 }
@@ -64,7 +64,9 @@ async function findById(id) {
   return Schedule.findById(id);
 }
 async function findByEmployeeProfileId(id, today) {
-  return Schedule.find({ employeeId: id, date: { $gte: today } });
+  return Schedule.find({ employeeId: id, date: { $gte: today } }).sort({
+    date: 1,
+  });
 }
 async function update(id, newScheduleData) {
   return Schedule.findByIdAndUpdate(id, newScheduleData, {

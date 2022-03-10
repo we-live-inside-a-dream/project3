@@ -224,6 +224,7 @@ const EmployeeTimeOffForm = ({
             </p>
           ) : null}
           <BasicDatePicker
+            // style={{ width: "200px" }}
             type="date"
             id="single-day"
             name="day"
